@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../../templates/templateAdmin.xhtml">
+
+            <ui:define name="Title">
+                Groupe des utilisateur
+            </ui:define>
+
+            <ui:define name="breadCrumb">
+                <p:menuitem value="Liste des groupes" outcome="listGroupeUtilisateur.xhtml" />
+            </ui:define>
+
+            <ui:define name="MyContent">
+                <h:form id="form">
+
+                    <p:panel id="idPanel_NewModule">
+                        <p:messages id="message_globale" showDetail="true" autoUpdate="true" closable="true" />
+                        <p:button value="Nouveau" outcome="addGroupeUtilisateur"/> 
+
+                        <p:dataTable id="idListGoupeTab" var="VarGroupe" 
+                                     value="#{groupeUtilisateurController.listeGroupe}"
+                                     widgetVar="wListModuleTab" rows="10"
+                                     paginator="true" emptyMessage="Liste vide" resizableColumns="true" 
+                                     rowsPerPageTemplate="5, 10, 15" style="font-family: serif;"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+                                     {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                            <f:facet name="header">
+                                <p:commandButton id="toggler" type="button" value="colones" style="float:right" icon="ui-icon-calculator" />
+                                <p:columnToggler datasource="idListGoupeTab" trigger="toggler" />
+                            </f:facet>
+                            <p:column sortBy="#{VarGroupe.libelle}" filterBy="#{VarGroupe.libelle}" 
+                                      filterMatchMode="contains" width="100">
+                                <f:facet name="header">
+                                    <h:outputText value="Groupe"/>
+                                </f:facet>
+                                <h:outputText value="#{VarGroupe.libelle}"/>
+                            </p:column>
+                            <p:column sortBy="#{VarGroupe.description}" filterBy="#{VarGroupe.description}" 
+                                      filterMatchMode="contains" width="200">
+                                <f:facet name="header">
+                                    <h:outputText value="Description"/>
+                                </f:facet>
+                                <h:outputText value="#{VarGroupe.description}"/>
+                            </p:column>
+                            <p:column sortBy="#{VarGroupe.adminUtilisateurList.size()}" style="width: 75px;">
+                                <f:facet name="header">
+                                    <h:outputText value="Liste des utilisateurs"/>
+                                </f:facet>
+                                <h:outputText value="#{VarGroupe.adminUtilisateurList.size()} utilisateur(s)" id="idUtilisateurGroupe" 
+                                              style="border-bottom: 1px dotted;"/>
+                                <p:tooltip for="idUtilisateurGroupe" showEffect="clip" hideEffect="clip">
+                                    <p:dataList value="#{VarGroupe.adminUtilisateurList}" var="util" type="ordered">
+                                        <f:facet name="header">
+                                            Liste des utilisateurs
+                                        </f:facet>
+                                        #{util.nom}, #{util.prenom}<p:spacer width="15"/>
+                                    </p:dataList>
+                                </p:tooltip>
+                            </p:column>
+                            <p:column headerText="Actions" width="50">
+                                <div align="center">
+                                    <p:commandButton  image="ui-icon-search" title="Visualisation du détail" action="showGroupeUtilisateur" >  
+                                        <f:param name="id" value="#{VarGroupe.id}"/>
+                                    </p:commandButton>  
+
+                                    <p:commandButton image="ui-icon-pencil"  title="Modification"  action="editGroupeUtilisateur">
+                                        <f:param name="id" value="#{VarGroupe.id}"/>
+                                    </p:commandButton>  
+                                    <p:commandButton image="ui-icon-close" actionListener="#{groupeUtilisateurController.deleteGroupe(VarGroupe)}" 
+                                                     update=":form" title="Suppression">
+                                        <p:confirm header="Confirmation" message="Vous confirmer cette action?" icon="ui-icon-alert" />
+                                    </p:commandButton>  
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+
+                    </p:panel>
+
+                </h:form>
+            </ui:define>
+
+            <ui:define name="mesDialog">
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

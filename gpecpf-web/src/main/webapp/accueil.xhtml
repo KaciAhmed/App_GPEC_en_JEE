@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAccueil.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        Titre index
+    </ui:define>  
+    <ui:define name="breadCrumb">
+        
+
+    </ui:define>
+    <ui:define  name="MyContent">
+        <p:menuitem value="accueil_module_trc" url="#" /> 
+        <br/><br/>
+        <a:row>
+            <a:column span="10" offset="1">
+                <h2  style="font-weight: bold ;">Accueil Module</h2>
+            </a:column>
+        </a:row>
+        <a:column span="10" offset="1"  >
+            <a:tiles >
+                <a:tilesitem href="#" value=" Groupe fonctionnalités pricipales 1"        description=" La Caisse, gestion des encaissement caisse d'une agence commercial"  icon="fa fa-archive"  bg-color="red" slide="down" tile-wide="true" />
+                <a:tilesitem href="#" value=" Groupe fonctionnalités pricipales 2"     description=" Gestion des encaissemensts hors caisse"    icon="fa fa-university"   slide="down" tile-wide="false"/>
+                <a:tilesitem href="#" value=" Interfaces"       description=" Gestion des interfaces avec les systmes commercial et comptabilté"   icon="fa fa-usb" slide="down" tile-wide="false" />
+                <a:tilesitem href="#" value=" Editions"         description=" Editions des états de sortie module "     icon="fa fa-print" slide="down"                        tile-wide="false" />
+                <a:tilesitem href="#" value=" Supervision"      description=" Supervision des données de module"                           icon="fa fa-wifi" slide="down"      tile-wide="false" />
+                <a:tilesitem href="#" value=" Configuration"    description=" Configuration système"                                       icon="fa fa-cogs"                   tile-wide="false" />
+                <a:tilesitem href="#" value=" Paramétrage"      description=" Paramétrage de l'envirenement"                               icon="fa fa-wrench"    slide="down" tile-wide="false" />
+                <a:tilesitem href="#" value=" Tableau de bord"  description=" Reporting analytique et décisionnelles de module"            icon="fa fa-bar-chart" slide="down" tile-wide="false" />
+                <a:tilesitem href="#" value=" Données de bases" description=" Gestion des données de bases pour le module"                 icon="fa fa-cubes"     slide="down" tile-wide="false" />
+                <a:tilesitem href="#" value="Données de réferences" description=" Gestion des données de références utilisées par module" icon="fa fa-share-alt" slide="down" tile-wide="false" />
+
+            </a:tiles>
+        </a:column> 
+    </ui:define>  
+
+</ui:composition>

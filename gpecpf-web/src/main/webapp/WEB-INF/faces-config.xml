@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <application>
+        <view-handler>
+            dz.elit.gpecpf.commun.util.LoginViewHandler
+        </view-handler>
+        <resource-bundle >
+            <base-name>bundle.bundleAdmin</base-name>
+            <var>bundleAdmin</var>
+        </resource-bundle>
+        <resource-bundle >
+            <base-name>bundle.bundleCommun</base-name>
+            <var>bundleCommun</var>
+        </resource-bundle>
+    </application>
+    <application>
+        <action-listener>org.primefaces.application.DialogActionListener</action-listener>
+        <navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+        <view-handler>org.primefaces.application.DialogViewHandler</view-handler>
+    </application>
+
+</faces-config>

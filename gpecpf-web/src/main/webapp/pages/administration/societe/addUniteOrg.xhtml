@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.titre_nouveau_unite_org} 
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleAdmin.titre_unite_orbanisationnelle}" />
+            <a:menuitem value="#{bundleAdmin.lien_liste_unite_org}" href="listUniteOrg.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_nouveau}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>
+            <h3 class="page-title">
+                <i class=""></i> Fiche Unité Organisationnelle
+            </h3>
+            <p:panel id="panel" styleClass="no-border row">
+                <p:tabView  id="tabView">
+                    <p:tab title="#{bundleAdmin.lbl_information_generale}">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_code}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="code" value="#{addUniteOrgController.societe.code}" required="true" label="#{bundleCommun.lbl_code}" />
+                                    <p:message for="code" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_unite_parent}" span="4" />
+                                <a:column span="8" >
+                                    <a:row>
+                                        <a:column span="2" >
+                                            <p:commandButton  icon="fa fa-mars" styleClass="GrayButton"  immediate="true"  onclick="PF('dialogUniteParents').show();"/>
+                                        </a:column>
+                                        <a:column span="3" >
+                                            <h:outputLabel  id="codeParent" value="#{addUniteOrgController.societeSelected.code}" />
+                                        </a:column>
+                                        <a:column span="7" >
+                                            <h:outputLabel  id="descriptionParent" value="#{addUniteOrgController.societeSelected.denominationAr}" />
+                                        </a:column>
+                                    </a:row>
+                                </a:column>
+                            </a:column>
+                        </a:row>
+
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_denomination_ar} " span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="denomination_ar" value="#{addUniteOrgController.societe.denominationAr}" required="true" label="#{bundleAdmin.lbl_denomination_ar}" />
+                                    <p:message for="denomination_ar" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_denomination_fr}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="denomination_fr" value="#{addUniteOrgController.societe.denominationFr}" required="true" label="#{bundleAdmin.lbl_denomination_fr}" />
+                                    <p:message for="denomination_fr" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_capital_social}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="capital_soc" value="#{addUniteOrgController.societe.capitalSocial}" label="#{bundleAdmin.lbl_capital_social}" />
+                                    <p:message for="capital_soc" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_form_juridique}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="form_juridique" value="#{addUniteOrgController.societe.formeJuridique}" label="#{bundleAdmin.lbl_form_juridique}" size="40" />
+                                    <p:message for="form_juridique" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_adresse}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputTextarea id="adresse1" value="#{addUniteOrgController.societe.adresseRaisonSociale}" cols="60" label="#{bundleCommun.lbl_adresse}" />
+                                    <p:message for="adresse1" />
+                                </a:column>
+                            </a:column>  
+
+                        </a:row>
+
+                    </p:tab>
+                    <p:tab title="#{bundleAdmin.lbl_information_registre_de_commerce}">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_numero}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="numero_registre_comm" value="#{addUniteOrgController.societe.numRegistreCommerce}" label="#{bundleCommun.lbl_numero}" />
+                                    <p:message for="numero_registre_comm" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_date_delivrance}" span="4" />
+                                <a:column span="8" >
+                                    <p:calendar id="date_delivrance" value="#{addUniteOrgController.societe.dateDelivrance}" pattern="dd/MM/yyyy" label="#{bundleAdmin.lbl_date_delivrance}" readonlyInput="true"
+                                                locale="fr" navigator="true"   >                        
+                                    </p:calendar>
+                                    <p:message for="date_delivrance" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_date_debut_activite}" span="4" />
+                                <a:column span="8" >
+                                    <p:calendar id="date_debut_activite" value="#{addUniteOrgController.societe.dateDebutActivite}" pattern="dd/MM/yyyy" label="#{bundleAdmin.lbl_date_debut_activite}" readonlyInput="true"
+                                                locale="fr" navigator="true"   >                        
+                                    </p:calendar>
+                                    <p:message for="date_debut_activite" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_numéro_article_imposition}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="num_article_impo_rc" value="#{addUniteOrgController.societe.numArticleImposition}" label="#{bundleAdmin.lbl_numéro_article_imposition}" />
+                                    <p:message for="num_article_impo_rc" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_numero_fiscal}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="num_fisc_rc" value="#{addUniteOrgController.societe.numFiscal}" label="#{bundleAdmin.lbl_numero_fiscal}" />
+                                    <p:message for="num_fisc_rc" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_nis}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="nis" value="#{addUniteOrgController.societe.nis}" label="#{bundleAdmin.lbl_nis}" />
+                                    <p:message for="num_article_impo_rc" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_wilaya}" span="4" />
+                                <a:column span="8" >
+                                    <p:selectOneMenu  id="wilaya2" value="#{addUniteOrgController.societe.wilayaRegistreCommerce}" label="#{bundleCommun.lbl_wilaya}" >
+                                        <f:selectItem itemLabel="#{bundleCommun.titre_selectionner_wilaya}" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{addUniteOrgController.wilayasRegistreCommerceMap}" />
+                                        <p:ajax listener="#{addUniteOrgController.onWilayaRegistreCommerceChange}" update="commune2" />
+                                    </p:selectOneMenu>
+                                    <p:message for="wilaya2" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_commune}" span="4" />
+                                <a:column span="8" >
+                                    <p:selectOneMenu  id="commune2" value="#{addUniteOrgController.societe.communeRegistreCommerce}" label="#{bundleCommun.lbl_commune}">
+                                        <f:selectItem itemLabel="#{bundleCommun.titre_selectionner_commune}" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{addUniteOrgController.communesRegistreCommerceMap}"/>
+                                    </p:selectOneMenu> 
+                                    <p:message for="commune2" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_tin}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="tin" value="#{addUniteOrgController.societe.tin}" label="#{bundleAdmin.lbl_tin}"  />
+                                    <p:message for="tin" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_adresse_registre_commerce}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputTextarea id="adresse2" value="#{addUniteOrgController.societe.adresseRegistreCommerce}" cols="50" label="#{bundleAdmin.lbl_adresse_registre_commerce}" />
+                                    <p:message for="adresse2" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+
+                    </p:tab>
+                    <p:tab id="tabSecuriteSociale" title="#{bundleAdmin.lbl_information_securite_sociale}">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_numéro_securite_social}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="code_activite_fiscale" value="#{addUniteOrgController.societe.codeActiviteFiscal}" label="#{bundleAdmin.lbl_numéro_securite_social}" />
+                                    <p:message for="code_activite_fiscale" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_regime_fiscal}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="regime_fiscal" value="#{addUniteOrgController.societe.regimeFiscal}" label="#{bundleAdmin.lbl_regime_fiscal}"  />
+                                    <p:message for="regime_fiscal" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_commune}" span="4" />
+                                <a:column span="8" >
+                                    <p:selectOneMenu  id="commune" value="#{addUniteOrgController.societe.communeSecuriteSociale}" label="#{bundleCommun.lbl_commune}">
+                                        <f:selectItem itemLabel="#{bundleCommun.titre_selectionner_commune}" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{addUniteOrgController.communesMap}"/>
+                                    </p:selectOneMenu> 
+                                    <p:message for="commune" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_wilaya}" span="4" />
+                                <a:column span="8" >
+                                    <p:selectOneMenu  id="wilaya" value="#{addUniteOrgController.societe.wilayaSecuriteSociale}" label="#{bundleCommun.lbl_wilaya}" >
+                                        <f:selectItem itemLabel="#{bundleCommun.titre_selectionner_wilaya}" itemValue="" noSelectionOption="true"/>
+                                        <f:selectItems value="#{addUniteOrgController.wilayasMap}" />
+                                        <p:ajax listener="#{addUniteOrgController.onWilayaChange}" update="commune" />
+                                    </p:selectOneMenu>
+                                    <p:message for="wilaya" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_adresse_securite_sociale}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputTextarea id="adresse3" value="#{addUniteOrgController.societe.adresseSecuriteSociale}" cols="50" label="#{bundleAdmin.lbl_adresse_securite_sociale}">
+                                    </p:inputTextarea>
+                                    <p:message for="adresse3" />
+                                </a:column>
+                            </a:column> 
+                        </a:row>
+                    </p:tab>
+                    <p:tab title="#{bundleCommun.lbl_contact}">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_num_tel_a}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputMask id="tel_a" value="#{addUniteOrgController.societe.teleA}" mask="(999) 99-99-99" label="#{bundleCommun.lbl_num_tel_a}" >
+                                    </p:inputMask>
+                                    <p:message for="tel_a" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_num_tel_b}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputMask id="tel_b" value="#{addUniteOrgController.societe.teleB}" mask="(999) 99-99-99" label="#{bundleCommun.lbl_num_tel_b}" >
+                                    </p:inputMask>
+                                    <p:message for="tel_b" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_num_fax_a}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputMask id="fax_a" value="#{addUniteOrgController.societe.faxA}" mask="(999) 99-99-99" label="#{bundleCommun.lbl_num_fax_a}" size="40" >
+                                    </p:inputMask>
+                                    <p:message for="fax_a" />
+
+                                </a:column>
+                            </a:column>   
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_num_fax_b}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputMask id="fax_b" value="#{addUniteOrgController.societe.faxB}" mask="(999) 99-99-99" label="#{bundleCommun.lbl_num_fax_b}" >
+                                    </p:inputMask>
+                                    <p:message for="fax_b" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_email}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="email" value="#{addUniteOrgController.societe.email}" label="#{bundleCommun.lbl_email}" >
+                                    </p:inputText>
+                                    <p:message for="email" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_site_web}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="site_web" value="#{addUniteOrgController.societe.siteWeb}" label="#{bundleCommun.lbl_site_web}" size="40" >
+                                    </p:inputText>
+                                    <p:message for="site_web" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                    </p:tab>
+                </p:tabView>
+            </p:panel>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addUniteOrgController.create()}" ajax="false"  icon="fa fa-check-square-o" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" icon="fa fa-reply" action="listUniteOrg" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>        
+    </ui:define>
+
+    <ui:define name="MyDialog">
+        <h:form id="formDialogs">
+            <p:dialog id="dialogUniteParentsId" header="#{bundleAdmin.lien_liste_unite_org}" modal="true" widgetVar="dialogUniteParents" width="540" position="center" >
+                <h:panelGroup id="panelUniteParents">
+                    <p:dataTable value="#{addUniteOrgController.listUniteOrgs}" var="uniteParent" 
+                                 selectionMode="single" selection="#{addUniteOrgController.societeSelected}" rowKey="#{uniteParent.id}"                                
+                                 emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorAlwaysVisible="false" rows="10">
+                        <p:ajax event="rowSelect" update=":form:tabView:codeParent :form:tabView:descriptionParent" oncomplete="PF('dialogUniteParents').hide();" />
+                        <p:column headerText="#{bundleAdmin.lbl_code}">
+                            <h:outputText value="#{uniteParent.affichage}"/>
+                        </p:column> 
+                        <p:column headerText="#{bundleAdmin.lbl_denomination_ar}">
+                            <h:outputText value="#{uniteParent.denominationAr}"/>
+                        </p:column> 
+                        <p:column headerText="#{bundleAdmin.lbl_denomination_fr}">
+                            <h:outputText value="#{uniteParent.denominationFr}"/>
+                        </p:column> 
+                    </p:dataTable>
+                </h:panelGroup>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

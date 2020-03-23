@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:a="http://elit.dz/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="Title">
+        #{bundleCommun.titre_visibilite}
+    </ui:define>
+
+    <ui:define name="breadCrumb"> 
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleAdmin.titre_visibilite}" />
+            <a:menuitem value="#{bundleAdmin.titre_visibilite}" href="droitVisibilite.xhtml" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="F_Gen">
+            <a:row>
+                <a:pagetitle value="Visibilité des données" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>                
+            </a:row>
+
+            <a:row>
+                <a:panel header=" #{bundleAdmin.titre_visibilite}" iconheader="fa fa-list-ul" id="idPanel">
+                    <a:row>
+                        <a:label value="Utilisateur :" span="1"/>
+                        <a:column span="3">
+                            <p:inputText id="prenomUtilisateur" disabled="true" value="#{droitVisibiliteController.utilisateurAdt.prenom}" readonly="true"/>
+                        </a:column>
+                        <a:column span="1">                            
+                            <p:commandButton value="..." id="btUtilisateurListe" immediate="true" onclick="PF('wListUtilisateur').show()"/>
+                        </a:column>
+                        <a:column span="5">
+                            <p:inputText id="nomUtilisateur" required="true" value="#{droitVisibiliteController.utilisateurAdt.nom}" disabled="true"/>
+                        </a:column>
+                    </a:row>
+
+                    <a:row>
+                        <a:label value="Module :" span="1"/>
+                        <a:column span="3">
+                            <p:inputText id="module" disabled="true" value="#{droitVisibiliteController.module.code}" readonly="true"/>
+                        </a:column>
+                        <a:column span="1">                            
+                            <p:commandButton value="..." id="selectModule" immediate="true" onclick="PF('wListModule').show()"/>
+                        </a:column>
+                        <a:column span="5">
+                            <p:inputText id="moduleCode" required="true" value="#{droitVisibiliteController.module.libelle}" disabled="true"/>
+                        </a:column>
+                    </a:row>
+
+                    <a:row>
+                        <a:label value="Entité :" span="1"/>
+                        <a:column span="3">
+                            <p:inputText id="entity" disabled="true" value="#{droitVisibiliteController.objetVisibilite.entity}" readonly="true"/>
+                        </a:column>
+                        <a:column span="1">                            
+                            <p:commandButton value="..." id="selectEntite" immediate="true" onclick="PF('wListEntity').show()" />
+                        </a:column>
+                        <a:column span="5">
+                            <p:inputText id="entityCode" required="true" value="#{droitVisibiliteController.objetVisibilite.libelle}" disabled="true"/>
+                        </a:column>
+                    </a:row>
+
+                    <a:row>
+                        <p:commandButton value="Chercher" icon="fa fa-search" id="chercher" 
+                                         actionListener="#{droitVisibiliteController.creerTree()}" update="treeDroit"/>
+                    </a:row>
+                </a:panel>
+                <a:panel header=" #{bundleAdmin.titre_visibilite}" iconheader="fa fa-list-ul" id="idPanelTree">
+                    <p:tree id="treeDroit" value="#{droitVisibiliteController.hierarchieUnite}" var="node" 
+                            orientation="#{droitVisibiliteController.position}" selectionMode="checkbox" 
+                            propagateSelectionUp="false"  propagateSelectionDown="false" >
+                        <p:ajax event="select" listener="#{droitVisibiliteController.selectUnite(node)}"/>
+                        <p:ajax event="unselect" listener="#{droitVisibiliteController.unselectUnite(node)}"/>
+                        <p:treeNode>
+                            <h:outputText value="#{node.code}" id="infoNode"/>
+                            <p:tooltip for="infoNode" showEffect="clip" hideEffect="clip">
+                                <h:outputText value="#{node.denominationFr}"/>
+                            </p:tooltip>
+                        </p:treeNode>
+                    </p:tree>
+                    <br/>
+                    <p:commandButton value="Valider" style="float: left;" icon="fa fa-check"
+                                     actionListener="#{droitVisibiliteController.addDroit()}" update="idPanel, idPanelTree" />
+                    <br/><br/>
+                </a:panel>
+            </a:row>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="MyDialog">
+        <h:form id="fListUtilisateur">
+            <p:dialog header="Liste des utilisateurs" widgetVar="wListUtilisateur"
+                      resizable="false" id="idListUtilisateur" modal="true">
+
+                <p:dataTable id="idListUtilisateurTab" var="VarUtilisateur" 
+                             value="#{droitVisibiliteController.listeUtilisateur}" 
+                             widgetVar="wListUtilisateurTab" rows="10"
+                             paginator="true" emptyMessage="Liste vide" resizableColumns="true" 
+                             style="width: 700px; font-family: serif;"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                             selection="#{droitVisibiliteController.utilisateurAdt}" rowKey="#{VarUtilisateur.id}">
+                    <f:facet name="header">                                
+                        Séléctioner un utilisateur
+                    </f:facet>
+                    <p:column selectionMode="single" style="width:16px; text-align:center"/>
+                    <p:column filterBy="#{VarUtilisateur.adminUniteOrganisationnelle.code}" 
+                              sortBy="#{VarUtilisateur.adminUniteOrganisationnelle.code}" width="75">
+                        <f:facet name="header">
+                            <h:outputText value="Structure"/>
+                        </f:facet>
+                        <h:outputText value="#{VarUtilisateur.adminUniteOrganisationnelle.code}"/>
+                    </p:column>
+                    <p:column filterBy="#{VarUtilisateur.nom}, #{VarUtilisateur.prenom}" 
+                              sortBy="#{VarUtilisateur.nom}, #{VarUtilisateur.prenom}" width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Nom"/>
+                        </f:facet>
+                        <h:outputText value="#{VarUtilisateur.nom}, #{VarUtilisateur.prenom}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton value="Valider" id="bdValiderChef" onclick="PF('wListUtilisateur').hide()" icon="fa fa-check" 
+                                 style="float: left;" update=":F_Gen:nomUtilisateur, :F_Gen:prenomUtilisateur"/>
+                <p:commandButton value="Non" onclick="PF('wListUtilisateur').hide();" type="button" style="float: left;"/>
+
+            </p:dialog>
+        </h:form>
+
+        <h:form id="fListModule">
+            <p:dialog header="Liste des modules" widgetVar="wListModule"
+                      resizable="false" id="idListModule" modal="true">
+
+                <p:dataTable id="idListModuleTab" var="VarModule" 
+                             value="#{droitVisibiliteController.listeModule}"
+                             widgetVar="wListModuleTab" rows="10"
+                             paginator="true" emptyMessage="Liste vide" resizableColumns="true" 
+                             rowsPerPageTemplate="5, 10" style="width: 700px; font-family: serif;"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                             selection="#{droitVisibiliteController.module}" rowKey="#{VarModule.id}">
+                    <f:facet name="header">                                
+                        Séléctioner un module
+                    </f:facet>
+                    <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                    <p:column filterBy="#{VarModule.code}" sortBy="#{VarModule.code}" width="120">
+                        <f:facet name="header">
+                            <h:outputText value="Code"/>
+                        </f:facet>
+                        <h:outputText value="#{VarModule.code}"/>
+                    </p:column>
+                    <p:column filterBy="#{VarModule.libelle}" sortBy="#{VarModule.libelle}">
+                        <f:facet name="header">
+                            <h:outputText value="Libellé"/>
+                        </f:facet>
+                        <h:outputText value="#{VarModule.libelle}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton value="Valider" id="bdValiderModule" 
+                                 actionListener="#{droitVisibiliteController.remplireObjetVisibilite()}"
+                                 update=":F_Gen:module, :F_Gen:moduleCode, :fListEntity"
+                                 oncomplete="PF('wListModule').hide()" icon="fa fa-check" style="float: left;"/>
+                <p:commandButton value="Annuler" onclick="PF('wListModule').hide();" type="button" style="float: left;"/>
+
+
+            </p:dialog>
+        </h:form>
+
+        <h:form id="fListEntity">
+            <p:dialog header="Liste des entities" widgetVar="wListEntity"
+                      resizable="false" id="idListEntity" modal="true">
+
+                <p:dataTable id="idListEntityTab" var="VarEntity" 
+                             value="#{droitVisibiliteController.listeAdminObjetVisibilite}"
+                             widgetVar="wListEntityTab" rows="10"
+                             paginator="true" emptyMessage="Liste vide" resizableColumns="true" 
+                             rowsPerPageTemplate="5, 10" style="width: 700px; font-family: serif;"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                             selection="#{droitVisibiliteController.objetVisibilite}" rowKey="#{VarEntity.id}">
+                    <f:facet name="header">                                
+                        Séléctioner un objets
+                    </f:facet>
+                    <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                    <p:column filterBy="#{VarEntity.entity}" sortBy="#{VarEntity.entity}" width="120">
+                        <f:facet name="header">
+                            <h:outputText value="Entity"/>
+                        </f:facet>
+                        <h:outputText value="#{VarEntity.entity}"/>
+                    </p:column>
+                    <p:column filterBy="#{VarEntity.libelle}" sortBy="#{VarEntity.libelle}">
+                        <f:facet name="header">
+                            <h:outputText value="Libellé"/>
+                        </f:facet>
+                        <h:outputText value="#{VarEntity.libelle}"/>
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton value="Valider" id="bdValiderModule" 
+                                 update=":F_Gen:entity, :F_Gen:entityCode"
+                                 oncomplete="PF('wListEntity').hide()" icon="fa fa-check" style="float: left;"/>
+                <p:commandButton value="Annuler" onclick="PF('wListEntity').hide();" type="button" style="float: left;"/>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

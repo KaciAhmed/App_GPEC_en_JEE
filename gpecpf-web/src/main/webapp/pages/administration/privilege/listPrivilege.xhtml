@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title" > 
+        #{bundleAdmin.titre_liste_privileges}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb  >
+            <a:menuitem value="#{bundleAdmin.titre_gestion_profil}" />
+            <a:menuitem value="#{bundleAdmin.titre_liste_privileges}" outcome="listPrivilege" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form"> 
+            <a:pagetitle value="Privilèges" />
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>            
+            <a:panel isPadding="true" >                   
+                <a:label value="#{bundleAdmin.lbl_module}:" span="1" />
+                <a:column span="3" >
+                    <p:selectOneMenu id="module" value="#{listPrivilegeController.module.id}" styleClass="form-control" >
+                        <f:selectItem   itemLabel="#{bundleAdmin.titre_selectionner_module}" itemValue="" />
+                        <f:selectItems value="#{listPrivilegeController.listModules}" var="module" itemLabel="#{module.libelle}" itemValue="#{module.id}"/>
+                    </p:selectOneMenu>
+                </a:column>
+                <a:label value="#{bundleAdmin.lbl_code}:" span="1" />
+                <a:column span="2" >
+                    <p:inputText id="code" value="#{listPrivilegeController.code}" label="#{bundleAdmin.lbl_code}" />                                    
+                </a:column>
+                <a:label value="#{bundleAdmin.lbl_description}:" size="col-md-1" />
+                <a:column span="2" >
+                    <p:inputText id="description" value="#{listPrivilegeController.description}" label="#{bundleAdmin.lbl_description}" />                                    
+                </a:column>
+                <a:column span="2" >
+                    <p:commandButton value="#{bundleCommun.btn_chercher}" action="#{listPrivilegeController.rechercher()}" styleClass="CyanButton" icon="fa fa-search" ajax="false" />
+                </a:column>
+            </a:panel>
+
+            <a:row>
+                <a:panel header=" #{bundleAdmin.lien_liste_privilèges}"  iconheader="fa fa-list-ul">
+                    <p:dataTable id="datetable" value="#{listPrivilegeController.listPrivileges}" reflow="true" var="privilege" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="10" >
+                        <p:column headerText="#{bundleAdmin.lbl_code}" width="200" >
+                            <h:outputText value="#{privilege.code}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleAdmin.lbl_description}"> 
+                            <h:outputText value="#{privilege.description}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleAdmin.lbl_module}">
+                            <h:outputText value="#{privilege.adminModule.description}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleCommun.lbl_actions}" width="40">
+                            <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="editPrivilege" ajax="false" rendered="#{mySessionController.isUserInRole('ADMIN_004_003')}">
+                                <f:param name="id" value="#{privilege.id}"/>
+                            </p:commandButton>  
+                        </p:column>
+                    </p:dataTable>
+                </a:panel>
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>

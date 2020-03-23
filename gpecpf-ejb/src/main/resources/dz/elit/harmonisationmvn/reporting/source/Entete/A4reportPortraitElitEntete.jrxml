@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportPortraitA4Elit" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="861976e3-fa48-4cbf-902a-a74ecef03c33">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Tue Dec 23 15:32:40 WAT 2014"/>
+	<parameter name="entreprisFr" class="java.lang.String"/>
+	<parameter name="entreprisAr" class="java.lang.String"/>
+	<parameter name="iMgDir" class="java.io.InputStream"/>
+	<parameter name="iSoRapport" class="java.lang.String"/>
+	<parameter name="IgnorePagination" class="java.lang.Boolean"/>
+	<parameter name="dateCreation" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="?column?" class="java.lang.Integer"/>
+	<title>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3bf3d4bf-3660-44b1-8e87-0a3513a8cee6" x="65" y="0" width="407" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="18" isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{entreprisAr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="05511ae7-ab81-4862-9575-cdb1a638b0ee" x="65" y="35" width="407" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{entreprisFr}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="5948f04b-1782-4e31-b283-f80a45b1080b" x="0" y="0" width="65" height="60"/>
+				<imageExpression><![CDATA[$P{iMgDir}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="f0bf36d5-f5e6-449b-898b-33c201ad06f1" x="0" y="60" width="574" height="1" forecolor="#6666FF"/>
+			</line>
+			<staticText>
+				<reportElement uuid="07a9fad0-3d03-482e-823f-cc5040f5a9f2" x="472" y="0" width="36" height="35"/>
+				<box topPadding="3" bottomPadding="3" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="7a710fb3-ef41-46d8-8ca4-02f0d8476b6c" x="508" y="0" width="66" height="35"/>
+				<box topPadding="3" bottomPadding="3" rightPadding="0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2d8bd1ad-25f2-4fad-9a1c-ecd03389b307" x="472" y="35" width="36" height="25">
+					<printWhenExpression><![CDATA[$P{dateCreation}!=null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="3" bottomPadding="3" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[créé le:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="ed62f79f-f0bd-45f9-a753-267bbd348815" x="508" y="35" width="66" height="25">
+					<printWhenExpression><![CDATA[$P{dateCreation}!=null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="3" bottomPadding="3" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateCreation}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<noData>
+		<band height="61">
+			<line>
+				<reportElement uuid="d2862482-d674-43f6-83c6-62cc352fc700" x="0" y="60" width="574" height="1" forecolor="#6666FF"/>
+			</line>
+			<textField>
+				<reportElement uuid="bf7ad2c9-58c4-4565-b100-e7b53ee6910d" x="65" y="0" width="407" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Arial" size="18" isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{entreprisAr}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="d95ad4c6-21c7-4311-935f-1c45ea775039" x="0" y="0" width="65" height="60"/>
+				<imageExpression><![CDATA[$P{iMgDir}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="d0ad73fe-0455-46b7-a3d3-674097dcb735" x="472" y="35" width="36" height="25">
+					<printWhenExpression><![CDATA[$P{dateCreation}!=null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="3" bottomPadding="3" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[créé le:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="66c8f586-d114-4d18-bfc4-f91543946df2" x="65" y="35" width="407" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="false"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{entreprisFr}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="239ceaf8-9155-4a80-815a-eb281280fe6c" x="472" y="0" width="36" height="35"/>
+				<box topPadding="3" bottomPadding="3" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="179e7e85-299b-467c-928a-4f9a27684090" x="508" y="0" width="66" height="35"/>
+				<box topPadding="3" bottomPadding="3" rightPadding="0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="54eb2f50-a363-43c1-942f-bb17884ce54b" x="508" y="35" width="66" height="25">
+					<printWhenExpression><![CDATA[$P{dateCreation}!=null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="3" bottomPadding="3" rightPadding="0"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateCreation}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

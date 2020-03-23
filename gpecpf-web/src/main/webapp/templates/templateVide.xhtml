@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://elit.dz/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link href="#{request.contextPath}/resources/css/theme-style.css" rel="stylesheet" type="text/css"/>
+        <meta http-equiv="Server" content="none"/>
+       <title>
+            <ui:insert name="Title">
+            </ui:insert> 
+        </title>
+    </h:head>
+    
+    <h:body >
+        <ui:include src="header.xhtml"></ui:include>
+        <a:pagecontainer>           
+            
+                <ui:insert name="breadCrumb" />
+                <a:container fluid="true" style="margin-top: 10px;">
+                    <ui:insert name="MyContent"/>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="#{bundleCommun.btn_oui}" type="button" styleClass="ui-confirmdialog-yes" />
+                        <p:commandButton value="#{bundleCommun.btn_non}" type="button" styleClass="ui-confirmdialog-no"  />
+                    </p:confirmDialog>
+                </a:container>
+            
+        </a:pagecontainer>
+        <div class="clearfix">
+        </div>
+        
+        <div class="page-footer-fixed" >
+            <div class="page-footer" >
+                <div class="page-footer-inner">
+                    #{mySessionController.libelleAnnee} © ELIT
+                </div>
+                <div class="scroll-to-top" style="display: block;">
+                    <i class="icon-arrow-up"></i>
+                </div>
+            </div>  
+        </div>
+        <ui:insert name="MyDialog"/>
+         <h:form id="formDialog">
+            <p:dialog id="themDlg" header="Modifier thème"   widgetVar="themeDialog"  height="90" width="300">
+                <p:panel >                    
+                    <p:outputLabel value="Choisir un thème "  />                    
+                    <p:selectOneMenu value="#{mySessionController.theme}" onchange="$('#formDialog').submit()"  >  
+                        <f:selectItems value="#{myApplicationController.themes}" />  
+                    </p:selectOneMenu> 
+                    <p:commandButton id="btn"  actionListener="#{mySessionController.updateUtilisateur()}"  ajax="false"  style="display: none"/>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+      
+    </h:body>
+</html>

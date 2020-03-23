@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://elit.dz/ui">
+
+    <h:head >
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta http-equiv="Server" content="none"/>
+        <title>
+            <ui:insert name="Title">
+            </ui:insert> 
+        </title>       
+    </h:head>
+
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <a:pagecontainer>            
+                <a:container fluid="true" style="margin-top: 20px;">
+                    <ui:insert name="MyContent"/>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="#{bundleCommun.btn_oui}" type="button" styleClass="ui-confirmdialog-yes" />
+                        <p:commandButton value="#{bundleCommun.btn_non}" type="button" styleClass="ui-confirmdialog-no"  />
+                    </p:confirmDialog>
+                </a:container>
+        </a:pagecontainer>          
+        <ui:insert name="MyDialog"/>      
+        
+    </h:body>
+</html>

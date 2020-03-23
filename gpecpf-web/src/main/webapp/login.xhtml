@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://elit.dz/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title> #{bundleCommun.lbl_login}  </title>
+
+        <h:outputStylesheet library="css" name="style.css"/>
+
+    </h:head>
+
+    <h:body>
+        <a:container fluid="true">
+            <a:row styleClass="top"  >
+                <a:column span="5"  styleClass="logo" >
+                    <img    src="#{request.contextPath}/resources/images/images-login/login.jpg"   />
+                </a:column> 
+                <a:column span="4"  > 
+                        <form name="formLogin"  id="LoginForm" method="POST" action="j_security_check">
+                            <a:row>
+                                <a:column span="2">
+                                    <img  src="#{request.contextPath}/resources/images/images-login/logo.png"  style="float: left;" /> 
+                                </a:column>
+                                <a:column span="10">
+                                    <span class="span_name_slogon">gpecpf</span>
+                                </a:column>
+                            </a:row>
+                            <br/><br/>
+                            <a:row styleClass="label">
+                                <a:column span="3" >
+                                    #{bundleCommun.lbl_login}
+                                </a:column>
+                            </a:row>
+                            <a:row >
+                                <a:column span="9">
+                                    <input class="form-control margin_color_input" name="j_username" type="text"  placeholder="#{bundleCommun.lbl_login}" />
+                                </a:column>
+                            </a:row>
+                            <a:row styleClass="label">
+                                <a:column span="3">
+                                    #{bundleCommun.lbl_password}
+                                </a:column>
+                            </a:row>
+                            <a:row>
+                                <a:column span="9">
+                                    <input class="form-control margin_color_input" name="j_password" type="password"   placeholder="#{bundleCommun.lbl_password}"/>
+                                </a:column>
+                            </a:row>
+                            <a:row nomargin="true">
+                                <a:column span="12">
+                                    <button type="submit"  class="btnn green-haze">
+                                        #{bundleCommun.lbl_connecter} 
+                                        <i class="m-icon-swapright m-icon-white"></i>
+                                    </button>
+                                   
+                                </a:column>
+
+                            </a:row>
+                            <a:row nomargin="true">
+                                <a:column span="12" rendered="#{mySessionController.loginValue==0}" >
+                                    <div class="message_info"> #{bundleCommun.msg_entrer_login}</div>  
+                                </a:column>
+                                <a:column span="12" rendered="#{mySessionController.loginValue==1}" >
+                                    <div class="message_erreur"> #{bundleCommun.msg_saisir_login} </div>  
+                                </a:column>
+                                <a:column span="12" rendered="#{mySessionController.loginValue==2}" >
+                                    <div class="message_erreur"> #{bundleCommun.msg_login_incorrect} </div>
+                                </a:column>
+                            </a:row>
+
+                        </form>
+                   
+                </a:column> 
+
+
+            </a:row>
+        </a:container>
+
+    </h:body>
+
+</html>

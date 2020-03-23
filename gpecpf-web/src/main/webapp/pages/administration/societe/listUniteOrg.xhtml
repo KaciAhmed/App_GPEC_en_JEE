@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.titre_liste_unite_org}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleAdmin.titre_unite_orbanisationnelle}" />
+            <a:menuitem value="#{bundleAdmin.lien_liste_unite_org}" href="listUniteOrg.xhtml" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row>
+                <a:pagetitle value="Unités Organisationnelles" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" title="#{bundleAdmin.titre_nouveau_unite_org}" outcome="addUniteOrg" rendered="#{mySessionController.isUserInRole('ADMIN_005_001')}" />
+            </a:row>
+            <a:row>
+                <a:panel header=" #{bundleAdmin.lien_liste_unite_org}"  iconheader="fa fa-list-ul">
+                    <p:dataTable value="#{listUniteOrgController.listUniteOrgs}" reflow="true" var="uniteOrg" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorAlwaysVisible="true" paginatorPosition="bottom" rows="10" >
+                        <p:column headerText="#{bundleAdmin.lbl_code}">
+                            <h:outputText value="#{uniteOrg.affichage}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleAdmin.lbl_denomination_ar}">
+                            <h:outputText value="#{uniteOrg.denominationAr}"/>                           
+                        </p:column>
+                        <p:column headerText="#{bundleAdmin.lbl_denomination_fr}">
+                            <h:outputText value="#{uniteOrg.denominationFr}"/>                           
+                        </p:column>
+                        <p:column headerText="#{bundleCommun.lbl_actions}" width="115">
+                            <p:commandButton  icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showUniteOrg" ajax="false" rendered="#{mySessionController.isUserInRole('ADMIN_005_004')}">  
+                                <f:param name="id" value="#{uniteOrg.id}" />
+                            </p:commandButton>
+                            <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="editUniteOrg" ajax="false" rendered="#{mySessionController.isUserInRole('ADMIN_005_002')}" >
+                                <f:param name="id" value="#{uniteOrg.id}"></f:param>
+                            </p:commandButton>  
+                            <p:commandButton icon="fa fa-times" actionListener="#{listUniteOrgController.remove(uniteOrg)}" title="#{bundleCommun.lbl_suppression}" update=":form" rendered="#{mySessionController.isUserInRole('ADMIN_005_003')}" >
+                                <p:confirm header="#{bundleCommun.lbl_confirmation}" message="#{bundleCommun.msg_confirm_vs_suppr_enregistrement}" icon="ui-icon-alert" />
+                            </p:commandButton>                    
+                        </p:column>
+                    </p:dataTable>
+                </a:panel>
+            </a:row>
+        </h:form>        
+    </ui:define>
+</ui:composition>

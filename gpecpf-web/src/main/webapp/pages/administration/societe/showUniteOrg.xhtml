@@ -1,0 +1,258 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:a="http://elit.dz/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="Title">
+        #{bundleAdmin.titre_consulter_unite_org} 
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleAdmin.titre_unite_orbanisationnelle}" />
+            <a:menuitem value="#{bundleAdmin.lien_liste_unite_org}" href="listUniteOrg.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row>
+                <a:pagetitle value="Fiche Unité Organisationnelle" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            </a:row>
+            <p:panel id="panel" styleClass="no-border" >
+                <p:tabView  id="tabView"  >
+                    <p:tab title="#{bundleAdmin.lbl_information_generale}">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_code}" span="4" />
+                                <a:column span="8" >
+                                    <p:outputLabel id="code"  value="#{editUniteOrgController.societe.code}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_unite_parent}" span="4" />
+                                <a:column span="8" >
+                                    <a:row>
+                                        <a:column span="4" >
+                                            <h:outputLabel id="codeParent" value="#{editUniteOrgController.societeSelected.code}" />
+                                        </a:column>
+                                        <a:column span="8" >
+                                            <h:outputLabel id="descriptionParent" value="#{editUniteOrgController.societeSelected.denominationAr}" />
+                                        </a:column>
+                                    </a:row>
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_denomination_ar} " span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel id="denomination_ar" value="#{editUniteOrgController.societe.denominationAr}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_denomination_fr}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel id="denomination_fr" value="#{editUniteOrgController.societe.denominationFr}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_capital_social}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel id="capital_soc" value="#{editUniteOrgController.societe.capitalSocial}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_form_juridique}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel id="form_juridique" value="#{editUniteOrgController.societe.formeJuridique}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_adresse}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel id="adresse1" value="#{editUniteOrgController.societe.adresseRaisonSociale}" />
+                                </a:column>
+                            </a:column> 
+                        </a:row>
+                    </p:tab>
+                    <p:tab title="#{bundleAdmin.lbl_information_registre_de_commerce}">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_numero}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel id="numero_registre_comm" value="#{editUniteOrgController.societe.numRegistreCommerce}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_date_delivrance}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="date_delivrance" value="#{editUniteOrgController.societe.dateDelivrance}" >
+                                        <f:convertDateTime dateStyle="full" pattern="dd/MM/yyyy" timeZone="EST" type="date" /> 
+                                    </h:outputLabel>
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_date_debut_activite}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="date_debut_activite" value="#{editUniteOrgController.societe.dateDebutActivite}" >
+                                        <f:convertDateTime dateStyle="full" pattern="dd/MM/yyyy" timeZone="EST" type="date" /> 
+                                    </h:outputLabel>
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_numéro_article_imposition}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="num_article_impo_rc" value="#{editUniteOrgController.societe.numArticleImposition}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_numero_fiscal}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="num_fisc_rc" value="#{editUniteOrgController.societe.numFiscal}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_nis}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="nis" value="#{editUniteOrgController.societe.nis}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_wilaya}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="wilaya2" value="#{editUniteOrgController.societe.wilayaRegistreCommerce}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_commune}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="commune2" value="#{editUniteOrgController.societe.communeRegistreCommerce}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_tin}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="tin" value="#{editUniteOrgController.societe.tin}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_adresse_registre_commerce}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="adresse2" value="#{editUniteOrgController.societe.adresseRegistreCommerce}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                    </p:tab>
+                    <p:tab id="tabSecuriteSociale" title="#{bundleAdmin.lbl_information_securite_sociale}">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_numéro_securite_social}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="code_activite_fiscale" value="#{editUniteOrgController.societe.codeActiviteFiscal}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_regime_fiscal}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="regime_fiscal" value="#{editUniteOrgController.societe.regimeFiscal}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                             <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_wilaya}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="wilaya" value="#{editUniteOrgController.societe.wilayaSecuriteSociale}" />
+                                </a:column>
+                            </a:column>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_commune}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="commune" value="#{editUniteOrgController.societe.communeSecuriteSociale}" />
+                                </a:column>
+                            </a:column>                           
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleAdmin.lbl_adresse_securite_sociale}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="adresse3" value="#{editUniteOrgController.societe.adresseSecuriteSociale}" />
+                                </a:column>
+                            </a:column> 
+                        </a:row>
+                    </p:tab>
+
+                    <p:tab title="#{bundleCommun.lbl_contact}">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_num_tel_a}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="tel_a" value="#{editUniteOrgController.societe.teleA}" />
+                                </a:column>
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_num_tel_b}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="tel_b" value="#{editUniteOrgController.societe.teleB}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_num_fax_a}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="fax_a" value="#{editUniteOrgController.societe.faxA}" />
+                                    <p:message for="fax_a" />
+                                </a:column>
+                            </a:column>   
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_num_fax_b}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="fax_b" value="#{editUniteOrgController.societe.faxB}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+
+                                <a:label value="#{bundleCommun.lbl_email}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="email" value="#{editUniteOrgController.societe.email}" />
+                                </a:column>
+
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleCommun.lbl_site_web}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputLabel  id="site_web" value="#{editUniteOrgController.societe.siteWeb}" />
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                    </p:tab>
+                </p:tabView>
+            </p:panel>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" icon="fa fa-reply" action="listUniteOrg" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>     
+    </ui:define>
+</ui:composition>

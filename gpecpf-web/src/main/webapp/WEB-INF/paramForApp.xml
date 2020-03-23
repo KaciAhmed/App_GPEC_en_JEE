@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+    <!-- Ajouter dans le fichier 'domain.xml' de galassfich
+    dans la balise  <security-service> les parametres de realm
+    debut -->
+
+    <auth-realm name="HarmoRealm" classname="com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm">
+          <property name="digest-algorithm" value="SHA-256"></property>
+          <property name="user-name-column" value="login"></property>
+          <property name="password-column" value="pwd"></property>
+          <property name="group-name-column" value="user_privilege"></property>
+          <property name="group-table" value="sch_admin.user_groupe_security"></property>
+          <property name="user-table" value="sch_admin.admin_utilisateur"></property>
+          <property name="datasource-jndi" value="HarmoJNDI"></property>
+          <property name="jaas-context" value="jdbcRealm"></property>
+    </auth-realm>
+    <!-- fin param realm -->   
+</root>

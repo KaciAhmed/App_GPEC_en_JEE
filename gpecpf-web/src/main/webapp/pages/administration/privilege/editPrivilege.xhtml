@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.titre_modifier_privilege}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>         
+            <a:menuitem value="#{bundleAdmin.titre_gestion_profil}" />
+            <a:menuitem value="#{bundleAdmin.titre_liste_privileges}" outcome="listPrivilege" />
+            <a:menuitem value="#{bundleCommun.btn_modifier}" outcome="#" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>
+            <h3 class="page-title">
+                Fiche Privilège
+            </h3>
+            <p:panel id="panel" styleClass="no-border">
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleAdmin.lbl_module}" span="4" />
+                        <a:column span="8" >
+                            <p:selectOneMenu id="module" disabled="true" value="#{editPrivilegeController.privilege.adminModule.id}"  >
+                                <f:selectItems value="#{editPrivilegeController.listModules}" var="module" itemLabel="#{module.libelle}" itemValue="#{module.id}"/>
+                            </p:selectOneMenu>  
+                        </a:column>
+                    </a:column> 
+                </a:row>
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleAdmin.lbl_code}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="lib" value="#{editPrivilegeController.privilege.code}" disabled="true" /> 
+                        </a:column>
+                    </a:column>
+                </a:row>
+
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleAdmin.lbl_description}" span="4" />
+                        <a:column span="8" >
+                            <p:inputTextarea id="desc" cols="60" value="#{editPrivilegeController.privilege.description}" required="true" label="#{bundleAdmin.lbl_description}" autoResize="false"/>
+                            <p:message for="desc"/> 
+                        </a:column>
+                    </a:column>
+                </a:row>
+            </p:panel>
+            <a:row id="pgbtn">
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{editPrivilegeController.edit()}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" icon="fa fa-reply" action="listPrivilege" styleClass="GrayButton" ajax="false" />
+            </a:row>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

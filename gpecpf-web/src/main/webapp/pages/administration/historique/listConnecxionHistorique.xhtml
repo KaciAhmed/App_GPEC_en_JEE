@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.lien_liste_connexion_historique}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleAdmin.titre_historique}" />
+            <a:menuitem value="#{bundleAdmin.lien_liste_connexion_historique}" href="listConnecxionHistorique.xhtml" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row>
+                <a:pagetitle value="Historiques des connexions" />                
+            </a:row>
+            <a:panel isPadding="true">
+                <a:label  value="#{bundleAdmin.lbl_login}" span="1" /> 
+                <a:column span="2" >
+                    <p:inputText id="utilisateur" value="#{listAdminConnecxionHistoriqueController.utilisateur}"  label="#{bundleAdmin.lbl_login}" />
+                </a:column> 
+                <a:label  value="#{bundleAdmin.lbl_adresse_ip} "  span="1"/> 
+                <a:column span="2" >
+                    <p:inputText id="adresseIp" value="#{listAdminConnecxionHistoriqueController.adresseIp}"  label="#{bundleAdmin.lbl_adresse_ip}" />
+                </a:column>
+                <a:column span="3" >
+                    <a:row>
+                        <a:label   value="#{bundleAdmin.lbl_date_connexion} " span="7" /> 
+                        <a:column span="5" >
+                            <p:calendar id="dateConnexion"  value="#{listAdminConnecxionHistoriqueController.dateConnexion}" 
+                                        pattern="dd/MM/yyyy"  label="#{bundleAdmin.lbl_date_connexion}"
+                                        readonlyInput="true" locale="fr"  navigator="true" >   
+                            </p:calendar>                                   
+                        </a:column>                
+                    </a:row>
+                </a:column>
+                <a:column span="2" >
+                    <p:commandButton value="#{bundleCommun.btn_chercher}" styleClass="CyanButton" icon="fa fa-search" action="#{listAdminConnecxionHistoriqueController.search()}" ajax="false" />  
+                </a:column>
+            </a:panel>
+            <a:row> 
+                <a:panel header=" #{bundleAdmin.lien_liste_connexion_historique}" iconheader="fa fa-list-ul">
+                    <p:dataTable id="historique" value="#{listAdminConnecxionHistoriqueController.lazyAdminConnecxionHistorique}" reflow="true" lazy="true" var="adminConnecxionHistorique" emptyMessage="#{bundleCommun.msg_list_vide}"  paginator="true" paginatorAlwaysVisible="true" 
+                                 paginatorPosition="bottom" rows="10"  > 
+                        <p:column headerText="#{bundleAdmin.lbl_login}" >
+                            <h:outputText value="#{adminConnecxionHistorique.utilisateur}"/>
+                        </p:column> 
+                        <p:column headerText="#{bundleAdmin.lbl_adresse_ip}" >
+                            <h:outputText value="#{adminConnecxionHistorique.adresseIp}"/>
+                        </p:column> 
+                        <p:column headerText="#{bundleAdmin.lbl_date_connexion}" >
+                            <h:outputText value="#{adminConnecxionHistorique.dateConnexion}">
+                                <f:converter converterId="dateTimeConverter" />
+                            </h:outputText> 
+                        </p:column>
+                        <p:column headerText="#{bundleAdmin.lbl_date_deconnexion}">
+                            <h:outputText value="#{adminConnecxionHistorique.dateDeconnexion}">
+                                <f:converter converterId="dateTimeConverter" />
+                            </h:outputText> 
+                        </p:column>                    
+                    </p:dataTable>
+                </a:panel>
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>

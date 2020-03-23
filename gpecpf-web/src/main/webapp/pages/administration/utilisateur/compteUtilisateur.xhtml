@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateVide.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.titre_compte_utilisateur}
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="Fiche utilisateur"/>
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/> 
+            <a:panel header="Mon compte" isPadding="true">
+                <a:row>
+                    <a:column span="12">
+                        <p:panel id="panel" styleClass="no-border">
+                            <p:tabView  id="tabView">
+                                <p:tab title="#{bundleCommun.titre_information_generale}">
+                                    <a:row>
+                                        <a:column span="6" > 
+                                            <a:label  value="#{bundleCommun.lbl_login}  " span="4"/> 
+                                            <a:column span="8" >
+                                                <h:outputText id="out" />
+                                                <p:inputText id="login" disabled="true" value="#{editUtilisateurController.utilisateur.login}" required="true" label="#{bundleCommun.lbl_login}" size="40" />
+                                                <p:message for="login" />
+                                            </a:column>
+                                        </a:column>
+                                    </a:row>
+                                    <a:row>
+                                        <a:column span="6" > 
+                                            <a:label  value="#{bundleAdmin.lbl_etat_de_compte} " span="4"/>  
+                                            <a:column span="8" >
+                                                <p:selectOneRadio value="#{editUtilisateurController.etatCompte}" disabled="true">
+                                                    <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire_jamais}" itemValue="#{1}"/>
+                                                    <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire}" itemValue="#{2}"/>
+                                                    <f:selectItem itemLabel="#{bundleAdmin.lbl_inactif}" itemValue="#{3}"/>
+                                                    <f:ajax execute="@this" render="datedebutactive datefinactive"/>
+                                                </p:selectOneRadio>
+                                            </a:column>
+                                        </a:column>
+                                    </a:row>
+
+                                    <a:row>
+                                        <a:column span="6" > 
+                                            <a:label  value="#{bundleAdmin.lbl_date_activation} " span="4"/>  
+                                            <a:column span="8" >
+                                                <p:calendar  id="datedebutactive" disabled="true" value="#{editUtilisateurController.utilisateur.dateActivation}" mindate="#{editUtilisateurController.dateDuJour}" pattern="dd/MM/yyyy" required="true" label="#{bundleAdmin.lbl_date_activation}" readonlyInput="true"
+                                                             locale="fr" navigator="true"     > 
+                                                    <f:ajax event="dateSelect" execute="@this" render="datefinactive"/>
+                                                </p:calendar>
+                                                <p:message for="datedebutactive" />
+                                            </a:column>
+                                        </a:column>
+                                    </a:row>
+                                    <a:row>
+                                        <a:column span="6" > 
+                                            <a:label  value="#{bundleAdmin.lbl_date_expiration} " span="4"/> 
+                                            <a:column span="8" >                         
+                                                <p:calendar id="datefinactive" disabled="true" value="#{editUtilisateurController.utilisateur.dateExpiration}" mindate="#{editUtilisateurController.utilisateur.dateActivation}" pattern="dd/MM/yyyy" label="#{bundleAdmin.lbl_date_expiration}" readonlyInput="true"
+                                                            locale="fr" navigator="true"   >                        
+                                                </p:calendar>
+                                                <p:message for="datefinactive" />
+                                            </a:column>
+                                        </a:column>
+                                    </a:row>
+
+                                    <a:row>
+                                        <a:column span="6" >
+                                            <a:label value="#{bundleAdmin.lbl_unite_rattachement}" span="4" />  
+                                            <a:column span="8" >
+                                                <p:inputText id="codeUnite" value="#{editUtilisateurController.utilisateur.adminUniteOrganisationnelle.code}" label="#{bundleAdmin.lbl_code}" disabled="true" size="20" />
+                                            </a:column>
+                                        </a:column>
+                                    </a:row>
+                                </p:tab>
+                                <p:tab id="tabProfils" title="#{bundleAdmin.lbl_permissions_utilisateurs}">
+                                    <a:row>
+                                        <a:column>
+                                            <p:dataTable id="tableProfils" value="#{editUtilisateurController.utilisateur.listAdminProfil}" var="profil" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                                <p:column headerText="#{bundleAdmin.lbl_libelle}">
+                                                    <h:outputText value="#{profil.libelle}" />
+                                                </p:column>
+                                                <p:column headerText="#{bundleAdmin.lbl_description}">
+                                                    <h:outputText value="#{profil.description}" />
+                                                </p:column>
+                                            </p:dataTable>
+                                        </a:column>
+                                    </a:row>
+                                </p:tab>
+                                <p:tab title="#{bundleAdmin.lbl_contact}">
+                                    <a:row>
+                                        <a:column span="6">
+                                            <a:label value="#{bundleAdmin.lbl_telphone_de_buireau} " span="4"/>  
+                                            <a:column span="8">
+                                                <p:inputText id="telephone" value="#{editUtilisateurController.utilisateur.telephoneBureau}" label="#{bundleAdmin.lbl_telphone_de_buireau}" size="40" />
+                                                <p:message for="telephone" />
+                                            </a:column>
+                                        </a:column>
+                                        <a:column span="6">
+                                            <a:label  value="#{bundleAdmin.lbl_telephone_mobile} " span="4"/>  
+                                            <a:column span="8">
+                                                <p:inputText id="mobile" value="#{editUtilisateurController.utilisateur.telephoneMobile}" label="#{bundleAdmin.lbl_telephone_mobile}" size="40" />
+                                                <p:message for="mobile" />
+                                            </a:column>
+                                        </a:column>
+                                    </a:row>
+
+                                    <a:row>
+                                        <a:column span="6">
+                                            <a:label  value="#{bundleAdmin.lbl_fax} " span="4"/>  
+                                            <a:column span="8">
+                                                <p:inputText id="fax" value="#{editUtilisateurController.utilisateur.fax}" label="#{bundleAdmin.lbl_fax}" size="40" />
+                                                <p:message for="fax" />
+                                            </a:column>
+                                        </a:column>
+                                        <a:column span="6">
+                                            <a:label  value="#{bundleAdmin.lbl_email} " span="4"/>  
+                                            <a:column span="8">
+                                                <p:inputText  id="email" value="#{editUtilisateurController.utilisateur.email}" label="#{bundleAdmin.lbl_email}" size="40" /> 
+                                            </a:column>
+                                        </a:column>
+                                    </a:row>
+
+                                    <a:row>
+                                        <a:column span="6">
+                                            <a:label  value="#{bundleAdmin.lbl_adresse1} " span="4"/>  
+                                            <a:column span="8">
+                                                <p:inputTextarea id="Adresse1" value="#{editUtilisateurController.utilisateur.telephoneMobile}" 
+                                                                 label="#{bundleAdmin.lbl_adresse1}" cols="60" />
+                                            </a:column>
+                                        </a:column>
+                                        <a:column span="6">
+                                            <a:label  value="#{bundleAdmin.lbl_adresse2} " span="4"/>  
+                                            <a:column span="8">
+                                                <p:inputTextarea id="Adresse2" value="#{editUtilisateurController.utilisateur.telephoneMobile}" 
+                                                                 label="#{bundleAdmin.lbl_adresse2}" cols="60" />
+                                            </a:column>
+                                        </a:column>
+                                    </a:row>
+                                    <a:row>
+                                        <p:commandButton value="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" action="#{editUtilisateurController.edit()}" ajax="false" disabled="#{editUtilisateurController.disabled}"/> 
+                                    </a:row>
+                                </p:tab>
+                                <p:tab id="tabModifierPwd" title="Changer le mot de passe">
+                                    <h:form id="formPass">
+                                        <a:row>
+
+                                            <a:column span="6">
+                                                <a:label  value="#{bundleCommun.titre_ancien_mot_de_passe}" span="4"/>  
+                                                <a:column span="8">
+                                                    <p:password id="oldpwd" value="#{editUtilisateurController.ancienPwd}" 
+                                                                label="#{bundleCommun.titre_ancien_mot_de_passe}" />
+                                                    <p:message for="oldpwd" />
+                                                </a:column>
+                                            </a:column>
+                                        </a:row>
+                                        <a:row>
+                                            <a:column span="6">
+                                                <a:label  value="#{bundleCommun.titre_nouveau_mot_de_passe}" span="4"/>  
+                                                <a:column span="8">
+                                                    <p:password id="newpwd" size="50" value="#{editUtilisateurController.nouveauPwd}" 
+                                                                label="#{bundleCommun.titre_nouveau_mot_de_passe}" />
+                                                    <p:message for="newpwd" />
+                                                </a:column>
+                                            </a:column>
+                                        </a:row>
+
+                                        <a:row>
+                                            <a:column span="6">
+                                                <a:label  value="#{bundleCommun.titre_confirmer_le_nouveau_mot_de_passe}" span="4"/>  
+                                                <a:column span="8">
+                                                    <p:password id="confirmepwd" size="50" value="#{editUtilisateurController.confirmPwd}" 
+                                                                label="#{bundleCommun.titre_confirmer_le_nouveau_mot_de_passe} " />
+                                                    <p:message for="confirmepwd" />
+                                                </a:column>
+                                            </a:column>
+                                        </a:row> 
+                                        <a:row>
+                                            <p:commandButton value="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" 
+                                                             action="#{editUtilisateurController.editPwdUtilisateur()}" ajax="false" disabled="#{editUtilisateurController.disabled}"/> 
+                                        </a:row>
+                                    </h:form>
+                                </p:tab> 
+
+                            </p:tabView>  
+
+                        </p:panel>
+                        <a:row>
+                            <p:commandButton value="#{bundleCommun.btn_annuler}" immediate="true" icon="fa fa-reply" action="listUtilisateur" styleClass="GrayButton" ajax="false" />
+                        </a:row>
+                    </a:column>
+                </a:row>
+            </a:panel>
+        </h:form> 
+    </ui:define>
+</ui:composition>

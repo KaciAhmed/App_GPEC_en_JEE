@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pas encors activé</title>
+
+        <h:outputStylesheet library="css" name="css-erreur/bootstrap.css" />
+        <h:outputStylesheet library="css" name="css-erreur/bootstrap-responsive.css" />        
+        <h:outputStylesheet library="css" name="css-erreur/style.css" />
+
+        <h:outputScript library="js" name="erreur-js/bootstrap.js" />
+        <h:outputScript library="js" name="erreur-js/bootstrap.min.js" />
+        <h:outputScript library="js" name="erreur-js/jquery-1.9.0.min.js" />
+        <h:outputScript library="js" name="erreur-js/script.js" />
+    </h:head>
+    <h:body>
+        <div class="row-fluid row-1" style="background-image:url(#{request.contextPath}/resources/images/images-erreur/gray.jpg);  ">
+            <div style="float:left; ">
+                <img src="#{request.contextPath}/resources/images/images-header/logo.png" />
+            </div>
+            <div class="row-2" > gpecpf </div>
+        </div>
+        <div id="box" class="container">
+            <div class="row-fluid">
+                <div class="span4"></div>
+                <div class="span4">
+
+                    <div class="span4">
+                        <img src="#{request.contextPath}/resources/images/images-erreur/warning2.png" />
+                    </div>
+
+                    <div class="span8 row-3" >
+                        <div class="row-fluid row-4" ></div>
+                        <div class="row-fluid row-5" >PAS ENCORS ACTIF</div>
+                    </div>
+
+                </div>
+                <div class="span4 "></div>
+            </div>
+
+            <div class="row-fluid row-6" >
+
+                <div class="span4"></div>
+
+                <div class="span4">
+
+                    <div class="row-fluid row-7" > Votre compte n'est pas encore activé.  </div>
+                    <!--<div class="row-fluid row-8" > Cliquez <b><a href="#" style="text-decoration:underline;">ici</a></b> pour revenir à la page précedente. </div>-->
+                    <p align="center" style="font-style: italic"  > <font color="#CC0000" >Contacter votre administrateur pour l'activer  </font> </p>
+                    <div class="row-fluid">
+                        <div class="span8"></div>
+                        <div class="span4 row-9" >Harmonisation&copy;</div>
+                    </div>
+
+
+                </div>
+
+                <div class="span4"> </div>
+
+
+            </div>
+            <div>
+                <p:accordionPanel  activeIndex="50" >
+                    <p:tab title="">
+                        <!--<h:inputTextarea value="{erreurManagedBean.stackTrace}"  />-->
+                        #{erreurController.stackTrace}
+                    </p:tab>
+                </p:accordionPanel>
+            </div>
+        </div>
+
+
+    </h:body>
+</html>
+

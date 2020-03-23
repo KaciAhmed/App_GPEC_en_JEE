@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.titre_modifier_module}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleCommun.titre_configuration}" />
+            <a:menuitem value="#{bundleAdmin.lien_liste_module}" href="listModule.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_modifier}"  last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">    
+        <h:form id="form">
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>
+            <h:panelGrid id="pgbtn" columns="4" cellspacing="10px">
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{editModuleController.edit()}" ajax="false" icon="ui-icon-disk" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listModule" ajax="false" icon="ui-icon-arrowrefresh-1-w" />
+            </h:panelGrid>
+            <p:panel id="panel">
+                <h:panelGrid columns="2" cellspacing="5" >
+                    <p:outputLabel value="#{bundleAdmin.lbl_libelle}"/>
+                    <p:inputText value="#{editModuleController.module.libelle}" size="90"/>
+                    <p:outputLabel value="#{bundleAdmin.lbl_description}"/>
+                    <p:inputTextarea value="#{editModuleController.module.description}"/>
+                </h:panelGrid>                
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

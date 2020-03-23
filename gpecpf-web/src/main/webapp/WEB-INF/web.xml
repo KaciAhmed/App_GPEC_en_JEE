@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+        <param-name>ELIT_USETHEME</param-name>
+        <param-value>#{mySessionController.theme}</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>none</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param> 
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+      <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/octet-stream</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/font-woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/font-woff2</mime-type>
+    </mime-mapping>  
+    <mime-mapping>
+        <extension>svg</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>  
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+        <!--pour utiliser le meme cookies pour plusieur app-->
+<!--    <cookie-config>
+            <path>/</path>
+        </cookie-config>-->
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>gpecpfRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/pages/erreur/erreurLogin.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>Ceer un utilisateur </description>
+        <role-name>ADMIN_002_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un utilisateur </description>
+        <role-name>ADMIN_002_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un utilisateur </description>
+        <role-name>ADMIN_002_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un utilisateur </description>
+        <role-name>ADMIN_002_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un utilisateur </description>
+        <role-name>ADMIN_002_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un utilisateur </description>
+        <role-name>ADMIN_002_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Réinitialiser le mot de passe d'un utilisateur </description>
+        <role-name>ADMIN_002_007</role-name>
+    </security-role>
+    <security-role>
+        <description>Activer et Désactiver un utilisateur </description>
+        <role-name>ADMIN_002_008</role-name>
+    </security-role>
+    <security-role>
+        <description>Céer un profil </description>
+        <role-name>ADMIN_003_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un profil </description>
+        <role-name>ADMIN_003_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un profil </description>
+        <role-name>ADMIN_003_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un profil </description>
+        <role-name>ADMIN_003_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un profil </description>
+        <role-name>ADMIN_003_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un profil </description>
+        <role-name>ADMIN_003_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un privilège </description>
+        <role-name>ADMIN_004_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un privilège </description>
+        <role-name>ADMIN_004_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un privilège </description>
+        <role-name>ADMIN_004_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Céer une unité organisationnelle  </description>
+        <role-name>ADMIN_005_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une unité organisationnelle </description>
+        <role-name>ADMIN_005_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une unité organisationnelle </description>
+        <role-name>ADMIN_005_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une unité organisationnelle </description>
+        <role-name>ADMIN_005_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une unité organisationnelle </description>
+        <role-name>ADMIN_005_005</role-name>
+    </security-role>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/pages/erreur/erreur4043.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages/erreur/erreur404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/pages/erreur/erreur403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pages/erreur/erreur500.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.NullPointerException</exception-type>
+        <location>/pages/erreur/erreur4043.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>javax.el.PropertyNotFoundException</exception-type>
+        <location>/pages/erreur/erreur4043.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>javax.el.ELException</exception-type>
+        <location>/pages/erreur/erreur4043.xhtml</location>
+    </error-page>
+    <security-constraint>
+        <display-name>ADMIN_002_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ADMIN_002_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/utilisateur/addUtilisateur.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN_002_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ADMIN_002_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ADMIN_002_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/utilisateur/editUtilisateur.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN_002_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ADMIN_002_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ADMIN_002_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/utilisateur/listUtilisateur.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN_002_006</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ADMIN_003_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ADMIN_003_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/profil/addProfil.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN_003_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ADMIN_003_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ADMIN_003_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/profil/editProfil.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN_003_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ADMIN_003_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ADMIN_003_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/profil/listProfil.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN_003_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ADMIN_004_003_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ADMIN_004_003_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/privilege/editPrivilege.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN_004_003</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>ADMIN_004_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>ADMIN_004_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/administration/privilege/listPrivilege.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMIN_004_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-role>
+        <description/>
+        <role-name>INACTIF</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>EXPIRE</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>PAS_ENCORS_ACTIF</role-name>
+    </security-role>
+</web-app>

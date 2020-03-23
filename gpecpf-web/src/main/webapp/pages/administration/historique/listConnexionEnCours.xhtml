@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui" >
+
+    <ui:define name="Title" >
+        #{bundleAdmin.titre_liste_connexion_en_cours}
+    </ui:define >
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleAdmin.titre_historique}" />
+            <a:menuitem value="#{bundleAdmin.titre_liste_connexion_en_cours}" href="listUtilisateurEncourConnecter.xhtml" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row >
+                <a:pagetitle value="Connexion en cours" />
+            </a:row>
+            <a:row>
+                <a:panel header=" #{bundleAdmin.lien_liste_connexion_en_cours}"  iconheader="fa fa-list-ul">
+                    <p:dataTable value="#{listConnexionEnCours.listeConnexionEncours}" var="connexion" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="10" >
+                        <p:column headerText="#{bundleAdmin.lbl_login}">
+                            <h:outputText value="#{connexion.utilisateur}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleAdmin.lbl_date_connexion}">
+                            <h:outputText value="#{connexion.dateConnexion}">
+                                <f:converter converterId="dateTimeConverter" />
+                            </h:outputText>                           
+                        </p:column>
+                        <p:column headerText="#{bundleAdmin.lbl_adresse1}">
+                            <h:outputText value="#{connexion.adresseIp}"/>                           
+                        </p:column>                   
+                    </p:dataTable> 
+                </a:panel>
+            </a:row>
+        </h:form>        
+    </ui:define>
+</ui:composition>

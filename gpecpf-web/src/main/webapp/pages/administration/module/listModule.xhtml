@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.lien_liste_module}
+    </ui:define>
+
+    <ui:define name="breadCrumb"> 
+        <a:breadcrumb >
+            <a:menuitem value="#{bundleCommun.titre_configuration}" />
+            <a:menuitem value="#{bundleAdmin.lien_liste_module}" href="listModule.xhtml" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row>
+                <a:pagetitle value="Modules" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>                
+            </a:row>
+            <h:panelGrid columns="1" cellspacing="5">                
+            </h:panelGrid>
+            <a:row >
+                <a:panel header=" #{bundleAdmin.lien_liste_module}" iconheader="fa fa-list-ul">
+                    <p:dataTable value="#{listModuleController.listModules}" var="module" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="10" >
+                        <p:column headerText="#{bundleAdmin.lbl_code}">
+                            <h:outputText value="#{module.code}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleAdmin.lbl_libelle}">
+                            <h:outputText value="#{module.libelle}"/>                           
+                        </p:column>                
+                        <p:column headerText="#{bundleAdmin.lbl_description}">
+                            <h:outputText value="#{module.description}"/>                           
+                        </p:column>              
+                        <p:column headerText="#{bundleCommun.lbl_actions}" width="85">
+                            <p:commandButton icon="fa fa-arrow-circle-up" title="#{bundleCommun.btn_monter}" action="#{listModuleController.moveToTop()}" ajax="false" disabled="#{module.ordre==1}" rendered="true">
+                                <f:param name="id" value="#{module.id}"></f:param>
+                            </p:commandButton>
+                            <p:commandButton icon="fa fa-arrow-circle-down" title="#{bundleCommun.btn_descendre}" action="#{listModuleController.moveToBottom()}" ajax="false" disabled="#{module.ordre==listModuleController.listModules.size()}" rendered="true">
+                                <f:param name="id" value="#{module.id}"></f:param>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </a:panel>
+            </a:row>
+        </h:form>        
+    </ui:define>
+</ui:composition>

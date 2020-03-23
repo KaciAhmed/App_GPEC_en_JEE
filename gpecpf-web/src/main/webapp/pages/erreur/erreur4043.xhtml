@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://elit.dz/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>Erreur 4043</title>
+       
+    </h:head>
+    <h:body styleClass="page-err-full-page">
+       
+            <a:row  styleClass="header">
+                <a:column span="4" >
+                    <img src="#{request.contextPath}/resources/images/images-header/logo.png"  class="logo" />
+                    <h4 >
+                        gpecpf 
+                    </h4> 
+                </a:column>
+
+            </a:row> 
+
+            <a:row styleClass="page-err">
+                <a:column span="12"  >
+                    <div class="number4043">
+                        4043
+                    </div>
+                    <div class="details">
+                        <h3>Oops! Vous avez une erreur.</h3>
+                        <p >
+                            La page que vous avez consultée contient des erreurs.<br/>
+                            <a href="index.html">
+                                Retour vers l'accueil </a>
+                            ou consulter le log en cliquer ci-desous.
+                        </p>
+                        <p:commandButton value="Log" styleClass="BlueButton"   oncomplete="PF('dlg').show()" ></p:commandButton>
+                    </div>
+                </a:column>
+
+            </a:row>
+       
+        <p:dialog widgetVar="dlg" responsive="true" header="Log" modal="true" >
+            <a:container>
+                <a:row>
+                    <a:column span="12">
+                        #{erreurController.stackTrace}
+                    </a:column>
+                </a:row>
+
+            </a:container>
+        </p:dialog>
+    </h:body>
+</html>
+

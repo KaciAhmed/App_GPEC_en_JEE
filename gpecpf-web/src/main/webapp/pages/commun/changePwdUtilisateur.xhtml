@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateVide.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.titre_compte_utilisateur}
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <br/>
+            <a:pagetitle value="#{bundleCommun.titre_modificatio_mot_de_passe}" />
+            <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+
+            <a:panel header="#{bundleCommun.titre_modificatio_mot_de_passe} " isPadding="true">
+                <a:row>
+                    
+                    <a:column span="7">
+                        <a:label  value="#{bundleCommun.titre_ancien_mot_de_passe}" span="4"/>  
+                        <a:column span="8">
+                            <p:password id="oldpwd" value="#{editUtilisateurController.ancienPwd}" required="true" label="#{bundleCommun.titre_ancien_mot_de_passe}" />
+                            <p:message for="oldpwd" />
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="7">
+                        <a:label  value="#{bundleCommun.titre_nouveau_mot_de_passe}" span="4"/>  
+                        <a:column span="8">
+                            <p:password id="newpwd" size="50" value="#{editUtilisateurController.nouveauPwd}" required="true" label="#{bundleCommun.titre_nouveau_mot_de_passe}" />
+                            <p:message for="newpwd" />
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="7">
+                        <a:label  value="#{bundleCommun.titre_confirmer_le_nouveau_mot_de_passe}" span="4"/>  
+                        <a:column span="8">
+                            <p:password id="confirmepwd" size="50" value="#{editUtilisateurController.confirmPwd}" required="true" label="#{bundleCommun.titre_confirmer_le_nouveau_mot_de_passe} " />
+                            <p:message for="confirmepwd" />
+                        </a:column>
+                    </a:column>
+                </a:row>               
+            </a:panel>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{editUtilisateurController.editPwdUtilisateur()}" icon="fa  fa-check-square-o" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>

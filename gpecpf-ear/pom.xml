@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>gpecpf</artifactId>
+        <groupId>dz.elit</groupId>
+        <version>1.0</version>
+    </parent>
+
+    <groupId>dz.elit</groupId>
+    <artifactId>gpecpf-ear</artifactId>
+    <version>1.0</version>
+    <packaging>ear</packaging>
+
+    <name>gpecpf-ear</name>
+    <developers>
+        <developer>
+            <name>TOUZENE Mohamed Wassim</name>
+            <organization>DPGI/ELIT</organization>
+            <email>touzene.mohamedwassim@elit.dz</email>
+        </developer>
+        <developer>
+            <name>LEGHETTAS Rabah</name>
+            <organization>DPGI/ELIT</organization>
+            <email>leghettas.rabah@elit.dz</email>
+        </developer>
+        <developer>
+            <name>CHEKOR Samir</name>
+            <organization>DPGI/ELIT</organization>
+            <email>chekor.samir@elit.dz</email>
+        </developer>
+        <developer>
+            <name>MEHAOUI Houssem</name>
+            <organization>DPGI/ELIT</organization>
+            <email>mehaoui.houssem@elit.dz</email>
+        </developer>
+        <developer>
+            <name>LAIDANI Youcef</name>
+            <organization>DPGI/ELIT</organization>
+            <email>laidani.youcef@elit.dz</email>
+        </developer>
+        <developer>
+            <name>KESRAOUI Mourad</name>
+            <organization>DPGI/ELIT</organization>
+            <email>kesraoui.mourad@elit.dz</email>
+        </developer>
+    </developers>
+
+    <description>Ce prototype, developpe dans le cadre du projet « Harmonisation et standardisation des SI » dans le respect des recommandations issues de l’audit des systèmes d’information existants.
+        Ce composant reutilisable par l’ensemble des projets en cours couvre les processus suivants :
+        Gestion des utilisateurs \  Gestion des profils  \  Gestion des modules \ Gestion des privileges \ Gestion des unites organisationnelles 
+        \ Gestion des authentifications et des autorisations \ Gestion des pages d’erreurs \ Gestion de la tracabilité.
+        \ Ainsi qu'un template graphique proposant une interface intuitive, ergonomique, standard et simple d'utilisation.</description>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <version>6</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <modules></modules>
+                    <!--pour changer le context root de l'application-->
+                    <!--                                        
+                    <applicationName>harmonisationmvn-web</applicationName>
+                    <modules>
+                        <webModule>
+                            <groupId>dz.elit</groupId>
+                            <artifactId>harmonisationmvn-web</artifactId>
+                            <contextRoot>/erp/harmonisationmvn</contextRoot>
+                            <excluded>false</excluded>
+                        </webModule>
+                    </modules>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>dz.elit</groupId>
+            <artifactId>gpecpf-ejb</artifactId>
+            <version>1.0</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>dz.elit</groupId>
+            <artifactId>gpecpf-web</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+</project>

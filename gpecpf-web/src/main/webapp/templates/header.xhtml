@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://elit.dz/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:component >
+        <h:form id="header">
+            <a:menubar href="#{request.contextPath}/accueil.xhtml" logo="#{request.contextPath}/resources/images/images-header/logo.png" logostyle="height:40px;margin-top:5px;" >
+                <a:menucontainer pull="right" position="right" >
+                    <a:notificationmenu number="3"  value="View all"  label="10 pending notifications" >
+                        <f:facet name="header" >
+                            <a:menuitem value="View all" href="#{request.contextPath}/pages/administration/profil/listProfil.xhtml"  button="true"/>
+                        </f:facet> 
+                        <a:menuitem value="new message "  time="just now"  />
+                        <a:menuitem value="new user"  time="3 min"/>
+                        <a:menuitem value="new client registred"  time="10 min"/>
+                        <a:menuitem value="new user"  time="15 min"/>
+                        <a:menuitem value="new client registred"  time="20 min"/>
+                    </a:notificationmenu>
+
+                    <a:menuitems value="#{mySessionController.libelleUser}">
+                        <a:menuitem  value="Mon Compte" outcome="/pages/administration/utilisateur/compteUtilisateur" iconAwesome="fa fa-user"  >
+                            <f:param name="compte" value="compte"></f:param> 
+                        </a:menuitem>
+                        <a:menuitem value="Préference" onclick="PrimeFaces.ab({s:&quot;header&quot;,onco:function(xhr, status, args){PF('themeDialog').show(); ; }}); return false;" iconAwesome="fa fa-cog fa-spin"  />
+                        <a:menuitem></a:menuitem>
+                        <a:menuitem value="Déconnexion" action="#{mySessionController.logout()}"  iconAwesome="fa fa-sign-out" />
+                        <a:menuitem></a:menuitem>
+                        <a:menuitem value="Aide"   iconAwesome="fa fa-question-circle" />
+                        <a:menuitem value="A propos"   iconAwesome="fa fa-info-circle" />
+                    </a:menuitems>
+
+
+                </a:menucontainer>
+                <a:menucontainer pull="right"  position="left" >
+                    <c:forEach items="#{mySessionController.listModules}" var="module"  begin="0" end="3">
+                        <a:menuitem href="#{module.urlModule}" value="#{module.libelle}"   />
+                    </c:forEach>
+
+                    <c:if test="#{mySessionController.listModules.size() gt 4}">
+                        <a:menuitems value="Plus"  >
+                            <c:forEach  items="#{mySessionController.listModules}" var="module" begin="4">
+                                <a:menuitem  href="#{module.urlModule}" value="#{module.libelle}" />
+                            </c:forEach>                         
+                        </a:menuitems>      
+
+                    </c:if>                              
+                </a:menucontainer>
+            </a:menubar>
+
+        </h:form>
+
+
+
+    </ui:component>
+</html>
+
