@@ -22,7 +22,13 @@ import javax.persistence.Query;
  *
  * @author ayadi
  */
+/* définir que cette ejb qui ressemble a un ejb session qu'il ne peut 
+   avoir qu'une seule instance dans un conteneur 
+   et Exécution de code au lancement ou à l'arrêt de l'application 
+*/
 @Singleton
+
+// demander l'initialisation du singleton au lancement de l'aaplication 
 @Startup
 public class InitialiseDataBase {
 

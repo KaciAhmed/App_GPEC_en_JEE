@@ -13,12 +13,14 @@ import java.security.NoSuchAlgorithmException;
  * @author ayadi
  */
 public abstract class StaticUtil {
-
+    /* shéma utilisé dans  la bdd*/
     public static final String ADMINISTRATION_SCHEMA = "sch_admin";
-    public static final String UNIT_NAME = "gpecpf-ejbPU";
+    
+    /* nom de l'unité de persistance de type "nom de la bdd-ejbPU" PU pour 
+    persistance unit*/
+     public static final String UNIT_NAME = "gpecpf-ejbPU";
     
    // mot de passe par défeault
-
     public static String getDefaultEncryptPassword() {
         return getEncryptPassword("Sonelgaz.1");
     }
