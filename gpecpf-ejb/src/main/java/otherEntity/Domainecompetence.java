@@ -5,6 +5,7 @@
  */
 package otherEntity;
 
+import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "domainecompetence")
+@Table(name = "domainecompetence",schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Domainecompetence.findAll", query = "SELECT d FROM Domainecompetence d")

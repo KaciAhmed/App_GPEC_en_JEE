@@ -5,6 +5,7 @@
  */
 package otherEntity;
 
+import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -21,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Dell
  */
 @Entity
-@Table(name = "notecompetenceemploye")
+@Table(name = "notecompetenceemploye",schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Notecompetenceemploye.findAll", query = "SELECT n FROM Notecompetenceemploye n")

@@ -5,6 +5,7 @@
  */
 package otherEntity;
 
+import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Dell
  */
 @Entity
-@Table(name = "notification")
+@Table(name = "notification",schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n")

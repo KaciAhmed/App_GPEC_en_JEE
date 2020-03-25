@@ -5,6 +5,7 @@
  */
 package otherEntity;
 
+import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "evaluation")
+@Table(name = "evaluation",schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Evaluation.findAll", query = "SELECT e FROM Evaluation e")
