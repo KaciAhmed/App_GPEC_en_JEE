@@ -33,21 +33,22 @@ public class AdminUtilisateurFacade extends AbstractFacade<AdminUtilisateur> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+/* L'annotation @EJB permet de préciser les sessions beans que 
+le container EJB va instancier et initialiser automatiquement.*/
     @EJB
     private AdminProfilFacade profilFacade;
 
     public AdminUtilisateurFacade() {
         super(AdminUtilisateur.class);
     }
-
+// récupérer l'utilisateurs du login passé en parametre
     public AdminUtilisateur findByLogin(String login) {
         Query query = em.createNamedQuery("AdminUtilisateur.findByLogin");
         query.setParameter("login", login);
         List<AdminUtilisateur> list = query.getResultList();
         return list.isEmpty() ? null : list.get(0);
     }
-
+// récupérer les utilisateurs qui ont le nom, prénom et login passé en parametre
     public List<AdminUtilisateur> findByNomPrenomLogin(String nom, String prenom, String login) {
         StringBuilder queryStringBuilder = new StringBuilder("SELECT a FROM AdminUtilisateur AS a WHERE 1=1 ");
         if (nom != null && !nom.equals("")) {
@@ -73,12 +74,12 @@ public class AdminUtilisateurFacade extends AbstractFacade<AdminUtilisateur> {
             q.setParameter("login", login + "%");
         }
 
-        //Implimentation de visibilité
+        //Implémentation de visibilité
         JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
 
         return q.getResultList();
     }
-
+// vérifier si un login éxiste
     private boolean isExisteLogin(String login) {
         AdminUtilisateur utilisateur = findByLogin(login);
         if (utilisateur == null) {
@@ -88,7 +89,7 @@ public class AdminUtilisateurFacade extends AbstractFacade<AdminUtilisateur> {
         }
     }
 
-    @Override
+   
     public void create(AdminUtilisateur utilisateur) throws MyException, Exception {
         if (isExisteLogin(utilisateur.getLogin())) {
             throw new MyException("Le login " + utilisateur.getLogin() + " existe déjà ");
@@ -100,21 +101,27 @@ public class AdminUtilisateurFacade extends AbstractFacade<AdminUtilisateur> {
         }
     }
 
-    public void edit(AdminUtilisateur utilisateur, List<AdminProfil> profilsRomoved) throws MyException, Exception {
+    public void edit(AdminUtilisateur utilisateur, 
+            List<AdminProfil> profilsRomoved) throws MyException, Exception {
         {
+            /* mise ajour de la liste des profile d'un utilisateur dans la bdd
+               c'est utile quand on appéle avec profilsRomoved=null
+             */
             for (AdminProfil profil : utilisateur.getListAdminProfil()) {
                 profilFacade.edit(profil);
             }
-            // liste des profils de utilisateur  
+            /* supprimer l'utilisateur de la list des utilisateurs des profile
+            passé en parametre et mettre à jour ces profiles dans la bdd*/  
             for (AdminProfil profilRemoved : profilsRomoved) {
                 profilRemoved.getListAdminUtilisateurs().remove(utilisateur);
                 profilFacade.edit(profilRemoved);
             }
+            // mettre à jour l'utilisateur dans la bdd
             super.edit(utilisateur);
         }
     }
 
-    @Override
+    /* supprimer un utilisateur est le supprimer de la liste de ces profille*/
     public void remove(AdminUtilisateur utilisateur) throws Exception {
         for (AdminProfil profil : utilisateur.getListAdminProfil()) {
             profil.getListAdminUtilisateurs().remove(utilisateur);

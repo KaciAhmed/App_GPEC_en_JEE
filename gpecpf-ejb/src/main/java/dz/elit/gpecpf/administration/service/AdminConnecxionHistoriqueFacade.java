@@ -28,21 +28,27 @@ public class AdminConnecxionHistoriqueFacade extends AbstractFacade<AdminConnecx
     public AdminConnecxionHistoriqueFacade() {
         super(AdminConnecxionHistorique.class);
     }
-
-    public List<AdminConnecxionHistorique> findByParams(int first, int pageSize, String utilisateur, String adresseIp, Date dateConnexion) {
+/* récupérer les ligne qui coréspondent aux connéxions d'un utilisateur
+    avec une addresse ip et à une date de connexion données
+*/ 
+    public List<AdminConnecxionHistorique> findByParams
+        (int first, int pageSize, String utilisateur, 
+                String adresseIp, Date dateConnexion) {
         Query q = setSelectQuery(utilisateur, adresseIp, dateConnexion);        
         q.setFirstResult(first);
         q.setMaxResults(pageSize);
         return q.getResultList();
     }
-
-    private Query setSelectQuery(String utilisateur, String adresseIp, Date dateConnexion) {
+  // utiliser en haut
+    private Query setSelectQuery(String utilisateur, String adresseIp, 
+            Date dateConnexion) {
         StringBuilder queryStringBuilder = new StringBuilder("SELECT a FROM AdminConnecxionHistorique AS a WHERE 1=1 ");
         Query q = setCondition(queryStringBuilder, utilisateur, adresseIp, dateConnexion);
         return q;
     }
-
-    private Query setCondition(StringBuilder queryStringBuilder, String utilisateur, String adresseIp, Date dateConnexion) {
+  // utiliser en haut
+    private Query setCondition(StringBuilder queryStringBuilder, 
+            String utilisateur, String adresseIp, Date dateConnexion) {
         if (utilisateur != null && !utilisateur.equals("")) {
             queryStringBuilder.append(" AND  a.utilisateur like :utilisateur ");
         }
@@ -65,16 +71,20 @@ public class AdminConnecxionHistoriqueFacade extends AbstractFacade<AdminConnecx
         }
         return q;
     }
-    
-    public Query setCountQuery(String utilisateur, String adresseIp, Date dateConnexion) {
-        StringBuilder queryStringBuilder = new StringBuilder("SELECT COUNT(a) FROM AdminConnecxionHistorique AS a WHERE 1=1 ");
-        Query q = setCondition(queryStringBuilder, utilisateur, adresseIp, dateConnexion);
-        return q;
-    }
-    
+ 
+  
+      /* récupérer le nombre connéxions d'un utilisateur
+    avec une addresse ip et à une date donné
+*/ 
    public int count(String utilisateur, String adresseIp, Date dateConnexion){
        Query q = setCountQuery(utilisateur, adresseIp, dateConnexion); 
        return ((Long) q.getSingleResult()).intValue();
    } 
+   // utiliser en haut
+     public Query setCountQuery(String utilisateur, String adresseIp, Date dateConnexion) {
+        StringBuilder queryStringBuilder = new StringBuilder("SELECT COUNT(a) FROM AdminConnecxionHistorique AS a WHERE 1=1 ");
+        Query q = setCondition(queryStringBuilder, utilisateur, adresseIp, dateConnexion);
+        return q;
+    }
 
 }

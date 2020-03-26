@@ -19,6 +19,9 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class AdminObjetVisibiliteFacade extends AbstractFacade<AdminObjetVisibilite> {
 
+    
+     // sans commentaire 
+    
     @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
     private EntityManager em;
 

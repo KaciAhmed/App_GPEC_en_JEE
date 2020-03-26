@@ -19,6 +19,8 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class AdminConnexionEncoursFacade extends AbstractFacade<AdminConnexionEncours> {
 
+// sans commentaire
+    
     @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
     private EntityManager em;
 

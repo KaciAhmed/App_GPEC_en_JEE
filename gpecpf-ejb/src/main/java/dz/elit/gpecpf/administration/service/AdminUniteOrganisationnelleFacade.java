@@ -33,16 +33,19 @@ public class AdminUniteOrganisationnelleFacade  extends AbstractFacade<AdminUnit
         super(AdminUniteOrganisationnelle.class);
     }  
     
-    @Override
+    // création d'une unité organisationnél
     public void create(AdminUniteOrganisationnelle uniteOrg) throws Exception{
         super.create(uniteOrg);
     }
+    
+    // chercher une unité organisationnél en utilisant son code 
     public AdminUniteOrganisationnelle findByCode(String code) {
         Query query = em.createNamedQuery("AdminUniteOrganisationnelle.findByCode");
         query.setParameter("code", code);
         List<AdminUniteOrganisationnelle> list = query.getResultList();
         return list.isEmpty() ? null : list.get(0);
     }
+    // rechercher tout les unité organisationnel ordonné par trie
     public List<AdminUniteOrganisationnelle> findAllOrderByTrie() {
         return this.findAllOrderByAttribut("trie");
     }

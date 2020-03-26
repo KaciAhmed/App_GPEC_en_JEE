@@ -15,6 +15,9 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class AdminWilayaFacade extends  AbstractFacade<AdminWilaya> {
+    
+     // sans commentaire 
+    
     @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
     private EntityManager em;
 

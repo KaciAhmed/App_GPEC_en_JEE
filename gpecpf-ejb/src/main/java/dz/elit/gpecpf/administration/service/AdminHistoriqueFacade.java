@@ -16,7 +16,8 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class AdminHistoriqueFacade extends AbstractFacade<AdminHistorique> {
 
-
+// sans commentaire
+    
     @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
     private EntityManager em;
 

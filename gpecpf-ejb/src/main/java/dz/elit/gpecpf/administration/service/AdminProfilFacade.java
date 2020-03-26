@@ -28,7 +28,9 @@ public class AdminProfilFacade extends AbstractFacade<AdminProfil> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+/*L'annotation @EJB permet de préciser les sessions beans que 
+le container EJB va instancier et initialiser automatiquement.
+*/
     @EJB
     private AdminUtilisateurFacade utilisateurFacade;
 
@@ -36,7 +38,9 @@ public class AdminProfilFacade extends AbstractFacade<AdminProfil> {
         super(AdminProfil.class);
     }
 
-    @Override
+   /* créer un profille est mettre à jour 
+     les utilisateurs qui posséde se profile
+    */
     public void create(AdminProfil profil) throws MyException, Exception {
         if (isLibelleProfilExiste(profil)) {
             throw new MyException("Le libelle existe déjà");
@@ -47,29 +51,45 @@ public class AdminProfilFacade extends AbstractFacade<AdminProfil> {
         }
 
     }
-
+   /* vérifier si le libellé d'un profile existe*/
     private boolean isLibelleProfilExiste(AdminProfil profil) {
         Query q = em.createNamedQuery("AdminProfil.findByLibelleWithoutCurrentId");
         q.setParameter("libelle", profil.getLibelle());
         q.setParameter("id", profil.getId());
         return !q.getResultList().isEmpty();
     }
-
-    public void edit(AdminProfil profil, List<AdminUtilisateur> utilisateursRemoved) throws MyException, Exception {
-        if (isLibelleProfilExiste(profil)) {
+     // ajouter le profile au utilisateur de ce profile 
+    /* supprimer le profile de la liste des profiles des utilisateur dans la 
+        liste utilisateursRemoved
+    */
+    // metre a jour la table du profil
+    public void edit(AdminProfil profil, 
+                            List<AdminUtilisateur> utilisateursRemoved)
+                                      throws MyException, Exception 
+    {
+       /* if (isLibelleProfilExiste(profil)) {
             throw new MyException("Le libelle existe déjà");
-        }
+        }*/
+        /* ajouter le profile à tout les utilisateur de sa liste d'utilisateurs
+           si le profile est modifier il va remplacer l'ancien dans la liste
+            des utilisateur
+           
+        */
         for (AdminUtilisateur utilisateur : profil.getListAdminUtilisateurs()) {
             utilisateur.getListAdminProfil().add(profil);
+           //  mettre a jour l'utilisateur dans la bdd
             utilisateurFacade.edit(utilisateur, new ArrayList<AdminProfil>());// edit(utilisateur);
         }
+        // supprimer le profile des utilsateur de utilisateursRemoved
         for (AdminUtilisateur utilisateur : utilisateursRemoved) {
             utilisateur.getListAdminProfil().remove(profil);
+            //  mettre a jour l'utilisateur dans la bdd
             utilisateurFacade.edit(utilisateur, new ArrayList<AdminProfil>());// edit(utilisateur);
         }
+        //  mettre a jour le profile dans la bdd
         super.edit(profil);
     }
-
+// supprimer un profile est mettre à un jour les utilisateurs qui le posséde
     public void remove(AdminProfil profil) throws MyException, Exception {
         if (isProfilAffectForUser(profil)) {
             throw new MyException("Il y a des utilisateurs ayant ce profil, vous ne peuvez pas le supprimer ");
@@ -87,6 +107,8 @@ public class AdminProfilFacade extends AbstractFacade<AdminProfil> {
 //        }
 //        super.remove(profil);
 //    }
+    
+   // vérifier si un profile est affécté
     private boolean isProfilAffectForUser(AdminProfil profil) {
         Query q = em.createNamedQuery("AdminUtilisateur.findByProfil");
         q.setParameter("profil", profil);
@@ -94,7 +116,7 @@ public class AdminProfilFacade extends AbstractFacade<AdminProfil> {
         return !list.isEmpty() && list.size() >= 1;
 
     }
-    
+    // rechercher un profile via son id
     public AdminProfil findById(String id) {
         Query query = em.createNamedQuery("AdminProfil.findById");
         //query.setParameter("id", id);

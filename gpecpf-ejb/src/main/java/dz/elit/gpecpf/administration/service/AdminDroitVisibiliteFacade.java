@@ -74,7 +74,7 @@ public class AdminDroitVisibiliteFacade extends AbstractFacade<AdminDroitVisibil
 
         }
     }
-
+// supprimer la liste des droits de visibilté
     public void removeListeDroit(List<AdminDroitVisibilite> listeDroit) throws Exception {
         for (AdminDroitVisibilite droit : listeDroit) {
             remove(droit);
