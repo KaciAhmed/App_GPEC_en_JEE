@@ -55,7 +55,8 @@
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
             <a:submenu start="true" value="#{bundleEmp.titre_gestion_poste}" icon="">
-                <a:menuitem value="#{bundleEmp.titre_consulter_poste}" icon="" outcome="/pages/emp/poste/showPos.xhtml"
+                <a:menuitem value="#{bundleEmp.titre_consulter_poste}" icon=""
+                            outcome="/pages/emp/poste/showPos.xhtml"
                     rendered="#{mySessionController.isUserInRole('EMP_001_005')}" />
             </a:submenu>
             <a:submenu value="#{bundleEmp.titre_gestion_employe}" icon="">

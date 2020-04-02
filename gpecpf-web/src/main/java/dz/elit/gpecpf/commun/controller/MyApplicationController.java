@@ -16,6 +16,10 @@ import javax.faces.bean.ManagedBean;
  * @author AYADI hakim && CHEKOR Samir && LEGHATTAS rabah && LAIDANI Youcef 
  * ManagedBean avec un scope application pour les informations static
  */
+
+/* «Eager = true» indique que le bean géré est créé avant d'être demandé pour la première fois 
+ce bean contient un name donc il poura etre injecter dans un autre bean 
+(on pourra apeler les méthode de ce bean via un attribut de l'autre bean)*/
 @ManagedBean(name = "myApplicationController", eager = true)
 @ApplicationScoped
 public class MyApplicationController extends AbstractController implements Serializable {

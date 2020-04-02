@@ -13,7 +13,7 @@
                 <a:menucontainer pull="right" position="right" >
                     <a:notificationmenu number="3"  value="View all"  label="10 pending notifications" >
                         <f:facet name="header" >
-                            <a:menuitem value="View all" href="#{request.contextPath}/pages/administration/profil/listProfil.xhtml"  button="true"/>
+                            <a:menuitem value="View all" href="/pages/administration/profil/listProfil.xhtml"  button="true"/>
                         </f:facet> 
                         <a:menuitem value="new message "  time="just now"  />
                         <a:menuitem value="new user"  time="3 min"/>
@@ -33,9 +33,9 @@
                         <a:menuitem value="Aide"   iconAwesome="fa fa-question-circle" />
                         <a:menuitem value="A propos"   iconAwesome="fa fa-info-circle" />
                     </a:menuitems>
-
-
+                    
                 </a:menucontainer>
+                
                 <a:menucontainer pull="right"  position="left" >
                     <c:forEach items="#{mySessionController.listModules}" var="module"  begin="0" end="3">
                         <a:menuitem href="#{module.urlModule}" value="#{module.libelle}"   />
@@ -53,9 +53,6 @@
             </a:menubar>
 
         </h:form>
-
-
-
-    </ui:component>
+ </ui:component>
 </html>
 

@@ -76,7 +76,11 @@ public class MySessionController implements Serializable {
         libelleAnnee = c.get(Calendar.YEAR);
         initUser();
     }
-
+/* FacesContext permet de représenter les informations contextuelles associées au traitement d'une requête
+    afin de produire la réponse correspondante */
+    
+    /*Redirect a request to the specified URL, and cause the responseComplete() method to be called
+    on the FacesContext instance for the current request. */
     public void moduleNavigation(String moduleURL) {
         try {
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -144,7 +148,7 @@ public class MySessionController implements Serializable {
         context.setViewRoot(viewRoot);
         context.renderResponse();
     }
-
+  // récupérer la liste des modules dans l'attribut listeModules et metre les infos de connexion dans la bdd
     public void initInterfaceUser(String login) {
         listModules = moduleFacade.getListModule(login);
         initConnecxionHistorique();
@@ -156,22 +160,27 @@ public class MySessionController implements Serializable {
         }
         return listModules.size() > 6 ? "block" : "none";
     }
-
+/* FacesContext permet de représenter les informations contextuelles associées au traitement d'une requête
+    afin de produire la réponse correspondante 
+    */
     public void initUser() {
         connectionEnCours = new AdminConnexionEncours();
+        // récupérer l'entité qui est entrain de s'authentifier
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         if (principal != null) {
+            // principal.getName() retourne le login insérer 
             utilisateurCourant = utilisateurFacade.findByLogin(principal.getName());
+            // récupérer la liste des modules dans l'attribut listeModules et metre les infos de connexion dans la bdd
             initInterfaceUser(principal.getName());
 
-            //put the informations of Utilisateur in the session
+            //mettre les informations de l'utilisateur dans la session pour que le server la reconaisse
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.getExternalContext().getSessionMap().put(principal.getName(), utilisateurCourant);
         } else {
             utilisateurCourant = null;
         }
     }
-
+  // récupérer le session id du navigateur 
     private String processSSOCookie() {
         String ssoID = "";
         HttpServletRequest request
@@ -188,7 +197,7 @@ public class MySessionController implements Serializable {
 
         return ssoID;
     }
-
+// récupérer l'adresse ip
     private String getAdresseIp() {
         try {
             return ((javax.servlet.http.HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
@@ -198,22 +207,25 @@ public class MySessionController implements Serializable {
     }
 
     private void initConnecxionHistorique() {
-        //Historique de connextion
+        //créer un objet Historique de connextion
         connecxionHistorique = new AdminConnecxionHistorique();
         connecxionHistorique.setDateConnexion(new Date());
         connecxionHistorique.setAdresseIp(getAdresseIp());
         connecxionHistorique.setUtilisateur((utilisateurCourant != null ? utilisateurCourant.getLogin() : null));
+      // enregistrer la valeur du jsessionID
         connecxionHistorique.setIdunique(processSSOCookie());
         try {
+            // enregistré le connéction dans la table admin connéxion hystorique
             connecxionHistoriqueFacade.create(connecxionHistorique);
-            //Connexion en cours
+            //Maj de l'objet Connexion en cours
             connectionEnCours.setUtilisateur((utilisateurCourant != null ? (utilisateurCourant.getNom() + " " + utilisateurCourant.getPrenom()) : null));
             connectionEnCours.setDateConnexion(new Date());
             connectionEnCours.setAdresseIp(getAdresseIp());
 
             //add conextion au application scoped
             //myApplicationController.addConnexion(connecxionHistorique);
-            //2eme politique add conextion in the database
+            
+            //2eme politique add conextion en cour in the database
             adminConnexionEncoursFacade.create(connectionEnCours);
 
         } catch (Exception ex) {
@@ -222,14 +234,6 @@ public class MySessionController implements Serializable {
 
     }
 
-    private void updateConnecxionHistorique() {
-        connecxionHistorique.setDateDeconnexion(new Date());
-        try {
-            connecxionHistoriqueFacade.edit(connecxionHistorique);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
     /**
      *
@@ -266,10 +270,19 @@ public class MySessionController implements Serializable {
         //myApplicationController.removeConnexion(connecxionHistorique);
 
         try {
-            //new politique of connextion en cours
+            //supprimer la connexion en cours et la rendre a null dans la bdd
             adminConnexionEncoursFacade.remove(connectionEnCours);
         } catch (Exception e) {
             System.out.println("Exception = " + e);
+        }
+    }
+    // ajouter la date de déconexion quand on appuis sur déconexion 
+    private void updateConnecxionHistorique() {
+        connecxionHistorique.setDateDeconnexion(new Date());
+        try {
+            connecxionHistoriqueFacade.edit(connecxionHistorique);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -316,7 +329,7 @@ public class MySessionController implements Serializable {
         }
     }
 
-    //  getter && setter
+    // ---------------- getter && setter--------------------------------------------
     public Integer getLibelleAnnee() {
         return libelleAnnee;
     }

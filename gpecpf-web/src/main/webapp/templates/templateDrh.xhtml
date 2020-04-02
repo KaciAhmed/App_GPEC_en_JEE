@@ -55,20 +55,22 @@
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
             <a:submenu start="true" value="#{bundleDrh.titre_gestion_employe}" icon="">
-                <a:menuitem value="#{bundleDrh.titre_liste_employe}" icon="" outcome="/pages/drh/employe/listEmp.xhtml"
-                    rendered="#{mySessionController.isUserInRole('DRH_001_006')}" />
+                <a:menuitem value="#{bundleDrh.titre_liste_employe}" icon="" 
+                            outcome="/pages/drh/employe/listEmp.xhtml"
+                            rendered="#{mySessionController.isUserInRole('DRH_001_006')}" />
             </a:submenu>
             <a:submenu value="#{bundleDrh.titre_gestion_poste}" icon="">
-                <a:menuitem value="#{bundleDrh.titre_liste_poste}" icon="" outcome="/pages/drh/poste/listPos.xhtml"
-                    rendered="#{mySessionController.isUserInRole('DRH_002_006')}" />
+                <a:menuitem value="#{bundleDrh.titre_liste_poste}" icon=""
+                            outcome="/pages/drh/poste/listPos.xhtml"
+                            rendered="#{mySessionController.isUserInRole('DRH_002_006')}" />
             </a:submenu>
             <a:submenu value="#{bundleDrh.titre_gestion_compagne}" icon="">
                 <a:menuitem value="#{bundleDrh.titre_nouveau_compagne}" icon=""
-                    outcome="/pages/drh/compagne/addCom.xhtml"
-                    rendered="#{mySessionController.isUserInRole('DRH_003_001')}" />
+                            outcome="/pages/drh/compagne/addCom.xhtml"
+                            rendered="#{mySessionController.isUserInRole('DRH_003_001')}" />
                 <a:menuitem value="#{bundleDrh.titre_liste_compagne}" icon=""
-                    outcome="/pages/drh/compagne/listCom.xhtml"
-                    rendered="#{mySessionController.isUserInRole('DRH_003_006')}" />
+                            outcome="/pages/drh/compagne/listCom.xhtml"
+                            rendered="#{mySessionController.isUserInRole('DRH_003_006')}" />
             </a:submenu>
             <a:submenu value="#{bundleDrh.titre_gestion_reporting}" icon="">
                 <a:menuitem value="#{bundleDrh.titre_nouveau_reporting}" icon=""

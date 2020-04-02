@@ -38,15 +38,9 @@ import javax.servlet.http.HttpSession;
 public class LoginFilter implements Filter {
 
     private static final int MINUTEBLOCAGE = 2;
-
-    /**
-     *
-     */
+    
     public static final int NBRETENTAVIE = 3;
 
-    /**
-     *
-     */
     public static final String DATEBLOCAGENAME = "dateBlocage";
     public static final String VERROU_PAGE = "/pages/erreur/verrou.xhtml";
     public static final String ATTRIBUT_LOGIN_ERREUR = "login_error";
@@ -84,6 +78,8 @@ public class LoginFilter implements Filter {
         Principal loginUser = httpRequest.getUserPrincipal();
 
         if (loginUser != null) {
+            //chercher l'utilisateur 
+               // obtenir un objet de type AdminUtilisateurFacade et chercher l'utilisateur avec findByLogin
             AdminUtilisateur utilisateur = lookupAdminUtilisateurFacade().findByLogin(loginUser.getName());
 //           if( !utilisateur.getActive()){
 //             httpResponse.sendRedirect(httpRequest.getContextPath() + "/pages/erreur/inactive.xhtml");
@@ -95,13 +91,16 @@ public class LoginFilter implements Filter {
              } else if (httpRequest.isUserInRole("PAS_ENCORS_ACTIF")) {
              httpResponse.sendRedirect(httpRequest.getContextPath() + "/pages/erreur/pasEncorsActif.xhtml");
              }else*/
+            // vérifier le mdp et rediriger vers la page corréspendante soit acceui soit changement de mdp
             if (utilisateur.getPwd().equals(StaticUtil.getDefaultEncryptPassword())) {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/pages/commun/changePwdUtilisateur.xhtml");
             } else {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/accueil.xhtml");
             }
-        } else {
+        } else { 
             Object object = session.getAttribute(LoginFilter.DATEBLOCAGENAME);
+            /* fonction de class anonyme pour vérifer si la date de vérouillage de l'utilisateur est avent la
+               date courante si oui on redirige vers vérous page */
             if (object == null || !(object instanceof Date)) {
                 chain.doFilter(request, response);
             } else {
@@ -155,6 +154,7 @@ public class LoginFilter implements Filter {
         this.filterConfig = filterConfig;
     }
 
+    // obtenir un objet de type AdminUtilisateurFacade
     private AdminUtilisateurFacade lookupAdminUtilisateurFacade() {
         try {
             Context c = new InitialContext();
@@ -202,6 +202,7 @@ public class LoginFilter implements Filter {
      *
      * @param msg
      */
+    // ajouter un message au fichier log
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
     }
