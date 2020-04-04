@@ -15,6 +15,22 @@
             <base-name>bundle.bundleCommun</base-name>
             <var>bundleCommun</var>
         </resource-bundle>
+        <resource-bundle >
+            <base-name>bundle.bundleDrh</base-name>
+            <var>bundleDrh</var>
+        </resource-bundle>
+         <resource-bundle >
+            <base-name>bundle.bundleEmp</base-name>
+            <var>bundleEmp</var>
+        </resource-bundle>
+        <resource-bundle >
+            <base-name>bundle.bundleGesemp</base-name>
+            <var>bundleGesemp</var>
+        </resource-bundle>
+         <resource-bundle >
+            <base-name>bundle.bundleReferentiel</base-name>
+            <var>bundleReferentiel</var>
+        </resource-bundle>    
     </application>
     <application>
         <action-listener>org.primefaces.application.DialogActionListener</action-listener>

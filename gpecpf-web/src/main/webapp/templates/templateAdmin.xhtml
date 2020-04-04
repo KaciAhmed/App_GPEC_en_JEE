@@ -48,7 +48,9 @@
             <a:sidebar   toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200" >
 
                 <a:submenu start="true"  value="#{bundleAdmin.titre_gestion_utilisateur}" icon="fa fa-users">
-                    <a:menuitem value="#{bundleAdmin.titre_liste_utilisateur}" icon="fa fa-file"   outcome="/pages/administration/utilisateur/listUtilisateur.xhtml" rendered="#{mySessionController.isUserInRole('ADMIN_002_006')}" />
+                    <a:menuitem value="#{bundleAdmin.titre_liste_utilisateur}" icon="fa fa-file"  
+                                outcome="/pages/administration/utilisateur/listUtilisateur.xhtml" 
+                                rendered="#{mySessionController.isUserInRole('ADMIN_002_006')}" />
                 </a:submenu>
                 <a:submenu value="#{bundleAdmin.titre_gestion_profil}" icon="fa fa-hospital-o">
                     <a:menuitem value="#{bundleAdmin.titre_liste_profils}" icon="fa fa-file" outcome="/pages/administration/profil/listProfil.xhtml" rendered="#{mySessionController.isUserInRole('ADMIN_003_006')}" />

@@ -42,7 +42,6 @@ public class InitialiseDataBase {
         //em.createNativeQuery("CREATE SCHEMA sch_admin ").executeUpdate();
         //em.flush();
         if (!isBaseVide()) {
-            System.out.println("--------------------Base NON  VIDE A ROUJI-----------------------------------");
             return;
         } 
         // *** creation de VIEW pour la gestion des droit d'acces ************************
