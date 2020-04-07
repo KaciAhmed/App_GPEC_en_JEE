@@ -99,7 +99,7 @@ public class ListUtilisateurController extends AbstractController implements Ser
     }
 
     private void findList() {
-        //listUtilisateurs = utilisateurFacade.findAllOrderByAttribut("login");
+        listUtilisateurs = utilisateurFacade.findAllOrderByAttribut("login");
         rechercher();
     }
 

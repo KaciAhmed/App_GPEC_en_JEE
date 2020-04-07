@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -20,7 +22,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -43,11 +44,10 @@ public class Poste implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Size(max = 50)
     @Column(name = "code")
     private String code;
@@ -74,17 +74,30 @@ public class Poste implements Serializable {
     public Poste() {
     }
 
-    public Poste(String id) {
+    public Poste(Integer id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Poste(Integer id, String code, String libelle, String description, String telburaux, Collection<Mission> missionCollection, Collection<Historiqueemployeposte> historiqueemployeposteCollection, Emploi idemploi, Typeposte idtypeposte) {
+        this.id = id;
+        this.code = code;
+        this.libelle = libelle;
+        this.description = description;
+        this.telburaux = telburaux;
+        this.missionCollection = missionCollection;
+        this.historiqueemployeposteCollection = historiqueemployeposteCollection;
+        this.idemploi = idemploi;
+        this.idtypeposte = idtypeposte;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
+    
 
     public String getCode() {
         return code;

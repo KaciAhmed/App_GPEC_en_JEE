@@ -13,6 +13,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +24,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -50,11 +51,10 @@ public class Employe implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Size(max = 50)
     @Column(name = "nom")
     private String nom;
@@ -103,15 +103,31 @@ public class Employe implements Serializable {
     public Employe() {
     }
 
-    public Employe(String id) {
+    public Employe(Integer id, String nom, String prenom, String email, String username, String password, String adresse, Date creerle, Date modiferle, String tel, Collection<Employe> employeCollection, Employe creerpar, Collection<Employe> employeCollection1, Employe modifierpar, Collection<Evaluation> evaluationCollection, Collection<Notification> notificationCollection, Collection<Historiqueemployeposte> historiqueemployeposteCollection) {
         this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.adresse = adresse;
+        this.creerle = creerle;
+        this.modiferle = modiferle;
+        this.tel = tel;
+        this.employeCollection = employeCollection;
+        this.creerpar = creerpar;
+        this.employeCollection1 = employeCollection1;
+        this.modifierpar = modifierpar;
+        this.evaluationCollection = evaluationCollection;
+        this.notificationCollection = notificationCollection;
+        this.historiqueemployeposteCollection = historiqueemployeposteCollection;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

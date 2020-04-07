@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -41,11 +43,10 @@ public class Competence implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Size(max = 50)
     @Column(name = "code")
     private String code;
@@ -74,15 +75,24 @@ public class Competence implements Serializable {
     public Competence() {
     }
 
-    public Competence(String id) {
+    public Competence(Integer id, String code, String libelle, String description, Competencecompose idcomcom, Domainecompetence iddomcom, Typecompetence idtypcom, Collection<Competencesimple> competencesimpleCollection, Collection<Competencecompose> competencecomposeCollection, Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
         this.id = id;
+        this.code = code;
+        this.libelle = libelle;
+        this.description = description;
+        this.idcomcom = idcomcom;
+        this.iddomcom = iddomcom;
+        this.idtypcom = idtypcom;
+        this.competencesimpleCollection = competencesimpleCollection;
+        this.competencecomposeCollection = competencecomposeCollection;
+        this.notecompetenceemployeCollection = notecompetenceemployeCollection;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

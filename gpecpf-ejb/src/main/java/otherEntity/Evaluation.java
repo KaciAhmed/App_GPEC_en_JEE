@@ -13,6 +13,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +24,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -47,11 +48,10 @@ public class Evaluation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Column(name = "dateeva")
     @Temporal(TemporalType.DATE)
     private Date dateeva;
@@ -82,15 +82,24 @@ public class Evaluation implements Serializable {
     public Evaluation() {
     }
 
-    public Evaluation(String id) {
+    public Evaluation(Integer id, Date dateeva, String archive, String etat, String avisemp, String avishiern1, String avishiern2, Compagneevaluation idcompagne, Employe idemploye, Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
         this.id = id;
+        this.dateeva = dateeva;
+        this.archive = archive;
+        this.etat = etat;
+        this.avisemp = avisemp;
+        this.avishiern1 = avishiern1;
+        this.avishiern2 = avishiern2;
+        this.idcompagne = idcompagne;
+        this.idemploye = idemploye;
+        this.notecompetenceemployeCollection = notecompetenceemployeCollection;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

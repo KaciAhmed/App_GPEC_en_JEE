@@ -54,7 +54,7 @@ public class Notecompetenceemploye implements Serializable {
         this.notecompetenceemployePK = notecompetenceemployePK;
     }
 
-    public Notecompetenceemploye(String idevaluation, String idcompetence) {
+    public Notecompetenceemploye(Integer idevaluation, Integer idcompetence) {
         this.notecompetenceemployePK = new NotecompetenceemployePK(idevaluation, idcompetence);
     }
 

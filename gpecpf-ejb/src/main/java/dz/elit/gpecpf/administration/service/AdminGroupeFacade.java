@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ */ 
 package dz.elit.gpecpf.administration.service;
 
 import dz.elit.gpecpf.administration.entity.AdminDroitVisibilite;
@@ -20,7 +20,7 @@ import javax.persistence.Query;
 /**
  *
  * @author laidani.youcef
- */
+ */ 
 @Stateless
 public class AdminGroupeFacade extends AbstractFacade<AdminGroupe> {
 
@@ -48,7 +48,7 @@ public class AdminGroupeFacade extends AbstractFacade<AdminGroupe> {
                 // créer le groupe dans la bdd
             this.create(groupe);
             /* synchroniser l'état des entité utilisateur avec 
-                les modification éfféctuer sur la bdd*/
+                les modification éfféctuer sur la bdd*/ 
             for (int i = 0; i < groupe.getListMembre().size(); i++) {
                 em.refresh(em.find(AdminUtilisateur.class, groupe.getListMembre().get(i).getId()));
             }

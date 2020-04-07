@@ -11,6 +11,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,11 +39,10 @@ public class Competencecompose implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @OneToMany(mappedBy = "idcomcom")
     private Collection<Competence> competenceCollection;
     @JoinColumn(name = "idcommer", referencedColumnName = "id")
@@ -51,15 +52,17 @@ public class Competencecompose implements Serializable {
     public Competencecompose() {
     }
 
-    public Competencecompose(String id) {
+    public Competencecompose(Integer id, Collection<Competence> competenceCollection, Competence idcommer) {
         this.id = id;
+        this.competenceCollection = competenceCollection;
+        this.idcommer = idcommer;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
