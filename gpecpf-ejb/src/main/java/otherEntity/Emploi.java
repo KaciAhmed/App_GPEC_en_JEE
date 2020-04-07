@@ -11,6 +11,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,11 +40,10 @@ public class Emploi implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Size(max = 50)
     @Column(name = "code")
     private String code;
@@ -58,18 +59,22 @@ public class Emploi implements Serializable {
     public Emploi() {
     }
 
-    public Emploi(String id) {
+    public Emploi(Integer id, String code, String libelle, String description, Collection<Poste> posteCollection) {
         this.id = id;
+        this.code = code;
+        this.libelle = libelle;
+        this.description = description;
+        this.posteCollection = posteCollection;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-
+   
     public String getCode() {
         return code;
     }

@@ -12,6 +12,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -40,11 +42,10 @@ public class Compagneevaluation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Column(name = "datedeb")
     @Temporal(TemporalType.DATE)
     private Date datedeb;
@@ -57,18 +58,21 @@ public class Compagneevaluation implements Serializable {
     public Compagneevaluation() {
     }
 
-    public Compagneevaluation(String id) {
+    public Compagneevaluation(Integer id, Date datedeb, Date datefin, Collection<Evaluation> evaluationCollection) {
         this.id = id;
+        this.datedeb = datedeb;
+        this.datefin = datefin;
+        this.evaluationCollection = evaluationCollection;
     }
-
-    public String getId() {
+    
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-
+    
     public Date getDatedeb() {
         return datedeb;
     }

@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ */ 
 package dz.elit.gpecpf.administration.entity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 /**
  *
  * @author laidani.youcef
- */
+ */ 
 
 @Entity
 @Table(name = "admin_objet_visibilite", schema = StaticUtil.ADMINISTRATION_SCHEMA)
@@ -44,11 +44,11 @@ public class AdminObjetVisibilite implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 2147483647)
-    @Column(name = "entity", length = 2147483647)
+    @Size(max = 214)
+    @Column(name = "entity", length = 214)
     private String entity;
     @Size(max = 2147483647)
-    @Column(name = "libelle", length = 2147483647)
+    @Column(name = "libelle", length = 214)
     private String libelle;
     @OneToMany(mappedBy = "idObjetVisibilite")
     private List<AdminDroitVisibilite> adminDroitVisibiliteList;

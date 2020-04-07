@@ -1,12 +1,64 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateRefer.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
 
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_modifier_domaine_competence}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>         
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_domaine_competence }" />
+            <a:menuitem value="#{bundleReferentiel.titre_liste_domaine_competence}" outcome="listPrivilege" />
+            <a:menuitem value="#{bundleCommun.btn_modifier}" outcome="#" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>
+            <h3 class="page-title">
+                Fiche Domaine Compétence 
+            </h3>
+            <p:panel id="panel" styleClass="no-border" style="width: 60%;">
+                <a:row style="padding-top: 20px; margin-bottom: 20px;">
+                    <a:column span="11" >
+                             <a:label value="#{bundleReferentiel.lbl_code}" span="2" />
+                        <a:column span="9" >
+                            <p:inputText id="code" value="#{editDomaineCompetenceController.domaine.code}"  /> 
+                        </a:column> 
+                       
+                    </a:column> 
+                </a:row>
+                <a:row style="margin-bottom: 20px;">
+                    <a:column span="11" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="2" />
+                        <a:column span="9" >
+                            <p:inputText id="lib" value="#{editDomaineCompetenceController.domaine.libelle}"  /> 
+                        </a:column>
+                    </a:column>
+                </a:row>
+
+                <a:row style="margin-bottom: 20px;">
+                    <a:column span="11" >
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="2" />
+                        <a:column span="9" >
+                            <p:inputTextarea id="desc" cols="60" rows="15" value="#{editDomaineCompetenceController.domaine.description}" required="true" label="#{bundleReferentiel.lbl_description}" autoResize="false"/>
+                            <p:message for="desc"/> 
+                        </a:column>
+                    </a:column>
+                </a:row>
+            </p:panel>
+            <a:row id="pgbtn">
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{editDomaineCompetenceController.edit()}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" icon="fa fa-reply" action="listDom" styleClass="GrayButton" ajax="false" />
+            </a:row>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

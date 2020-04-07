@@ -35,42 +35,58 @@ public class CustomQueryRedirectors implements QueryRedirector {
 
         ReadAllQuery readAllQuery = (ReadAllQuery) query;
 
-        //Récuperer la première expression
+        //Récuperer le critére de séléction  se qui est dans le where de la requette
         Expression firstExpression = readAllQuery.getSelectionCriteria();
 
         //récupérer l'utilisateur depuit la Session
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         AdminUtilisateur utilisateur = (AdminUtilisateur) facesContext.getExternalContext().getSessionMap().get(principal.getName());
+        /*Expression builder : Autoriser la création d'instances d'expression. Les expressions sont 
+        des représentations Java au niveau objet des clauses SQL "where". 
+        Les expressions tentent de refléter le code Java aussi étroitement que possible.
 
+Exemple :
+
+        Employé ExpressionBuilder = new ExpressionBuilder ();
+        employee.get ("firstName"). equal ("Bob"). and (employee.get ("lastName"). equal ("Smith"))
+
+         >> code Java équivalent: (employee.getFirstName (). equals ("Bob")) && (employee.getLastName (). equals ("Smith"))
+
+         >> SQL équivalent: (F_NAME = 'Bob') AND (L_NAME = 'Smith')
+        */
+        
+        /* Obtenir le générateur d'expression qui doit être utilisé pour cette requête. Ce générateur d'expressions doit
+        être utilisé pour créer toutes les expressions utilisées par cette requête.*/
         ExpressionBuilder builder = readAllQuery.getExpressionBuilder();
         
         //Récuperer les information Creer_Par cette utilisateur
-        Expression expression_creer_par = builder.getField("creer_par").equal(utilisateur.getId());
+       Expression expression_creer_par = builder.getField("creer_par").equal(utilisateur.getId());
 
         //Récuperer les donnée qui sont visible par Unité organisationnelle de l'utilisateur et des groupe des appartien cette utilisateur 
         List<AdminDroitVisibilite> listeDroitUtilisateurAndGroupe = new ArrayList<>();
         listeDroitUtilisateurAndGroupe.addAll(utilisateur.getAdminDroitVisibiliteList());
         for (AdminGroupe groupe : utilisateur.getListAdminGroupe()) {
-            listeDroitUtilisateurAndGroupe.addAll(groupe.getAdminDroitVisibiliteList());
-        }
-        Map<String, List<Integer>> collections = mesDroisVisibilite(listeDroitUtilisateurAndGroupe);
+           listeDroitUtilisateurAndGroupe.addAll(groupe.getAdminDroitVisibiliteList());
+             }
+     
+           Map<String, List<Integer>> collections = mesDroisVisibilite(listeDroitUtilisateurAndGroupe);
 
-        Expression expression_droit_unite = null;
+       Expression expression_droit_unite = null;
         if (collections.get(query.getReferenceClass().getSimpleName()) != null) {
             expression_droit_unite = builder.getField("id_unite_organisationnelle_createur").in(
                     collections.get(query.getReferenceClass().getSimpleName()));
         } else {
             expression_droit_unite = builder.getField("id_unite_organisationnelle_createur").equal(0);
         }
-
+        
         if (firstExpression != null) {
-            readAllQuery.setSelectionCriteria(firstExpression.and(expression_creer_par.or(expression_droit_unite)));
+            readAllQuery.setSelectionCriteria(firstExpression);
         } else {
             readAllQuery.setSelectionCriteria(expression_creer_par.or(expression_droit_unite));
         }
-
-        readAllQuery.setDoNotRedirect(true);
+      
+      //  readAllQuery.setDoNotRedirect(true);
 
         return query.execute((AbstractSession) session, (AbstractRecord) arguments);
 
