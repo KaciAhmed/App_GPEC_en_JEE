@@ -58,7 +58,7 @@ public class Historiqueemployeposte implements Serializable {
         this.historiqueemployepostePK = historiqueemployepostePK;
     }
 
-    public Historiqueemployeposte(Integer idemploye, Integer idposte) {
+    public Historiqueemployeposte(String idemploye, String idposte) {
         this.historiqueemployepostePK = new HistoriqueemployepostePK(idemploye, idposte);
     }
 

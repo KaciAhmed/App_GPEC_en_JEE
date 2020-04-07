@@ -52,7 +52,7 @@
                             <a:menuitem iconAwesome="fa fa-file-code-o" value="CSV"  />
                         </a:dropButton>
                     </f:facet>
-                    <p:dataTable  value="#{listUtilisateurController.listUtilisateurs}" var="utilisateur" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
+                    <p:dataTable value="#{listUtilisateurController.listUtilisateurs}" var="utilisateur" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
                         <p:column headerText="#{bundleAdmin.lbl_login}">
                             <h:outputText value="#{utilisateur.login}"/>
                         </p:column>
@@ -77,7 +77,7 @@
                         </p:column>
                         <p:column headerText="#{bundleCommun.lbl_actions}" width="150">
                             <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showUtilisateur" ajax="false" rendered="#{mySessionController.isUserInRole('ADMIN_002_005')}">  
-                                
+                                <f:param name="id" value="#{utilisateur.id}" />
                             </p:commandButton>  
                             <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="editUtilisateur" ajax="false" rendered="#{mySessionController.isUserInRole('ADMIN_002_002')}">
                                 <f:param name="id" value="#{utilisateur.id}"></f:param>

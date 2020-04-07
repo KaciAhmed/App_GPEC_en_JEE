@@ -1,72 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/templateRefer.xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:a="http://elit.dz/ui">
-
-    <ui:define name="Title">
-        #{bundleReferentiel.titre_ajouter_domaine_competence}
-    </ui:define>
-
-    <ui:define name="breadCrumb">
-        <a:breadcrumb>           
-            <a:menuitem value="#{bundleReferentiel.titre_gestion_domaine_competence }" />
-            <a:menuitem value="#{bundleReferentiel.titre_nouveau_domaine_competence}" />
-            
-          
-        </a:breadcrumb>
-    </ui:define>
-      <ui:param name="aa" value="aaaaaaaaaaaaa" />
-    <ui:define name="MyContent">
-        <h:form id="form">
-            <a:row nomargin="true">
-                <a:pagetitle value="Nouveau Domaine de compétence" />
-                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
-            </a:row>
-            <p:panel id="panel"  styleClass="no-border row" style="width: 60%; margin-left: 20%;margin-top: 2%">
-                <a:row>
-                    <a:pagetitle value="Information du  domaine de compétence" />
-                </a:row>
-               <a:row>
-                    <a:column span="12" >
-                        <a:label value="#{bundleCommun.lbl_code}" span="2" />
-                        <a:column span="10" >
-                            <p:inputText id="code" required="true" value="#{addDomaineCompetenceController.domaine.code}" /> 
-                            <p:message for="code"/>                                    
-                        </a:column>
-                    </a:column>
-                </a:row>
-                <a:row>
-                    <a:column span="12" >
-                        <a:label value="#{bundleCommun.lbl_liblle}" span="2" />
-                        <a:column span="10" >
-                            <p:inputText id="lib" required="true" value="#{addDomaineCompetenceController.domaine.libelle}" /> 
-                            <p:message for="lib"/>                                    
-                        </a:column>
-                    </a:column>
-                </a:row>
-
-                <a:row>
-                    <a:column span="12" >
-                        <a:label value="#{bundleAdmin.lbl_description}" span="2" />
-                        <a:column span="10" >
-                            <p:inputTextarea id="desc" required="true" rows="15" cols="60" value="#{addDomaineCompetenceController.domaine.description}" autoResize="false" />
-                            <p:message for="desc"/>                                    
-                        </a:column>
-                    </a:column>
-                </a:row>
-                             
-            </p:panel>
-            <a:row style="margin-left: 45%;margin-top: 2%;">
-                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addDomaineCompetenceController.create()}" icon="fa fa-check-square-o" ajax="false" />
-                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listDom" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
-            </a:row>
-        </h:form>
-    </ui:define>
-
-
-</ui:composition>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        Hello from Facelets
+    </h:body>
+</html>
 

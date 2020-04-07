@@ -21,17 +21,17 @@ public enum FilterMatchMode {
     GREATER_THAN_EQUALS("gte"),
     EQUALS("equals"),
     IN("in");
-    
-    private final String uiParam;
-    
+
     private FilterMatchMode() {
         this.uiParam = null;
     }
 
+    private final String uiParam;
+
     FilterMatchMode(String uiParam) {
         this.uiParam = uiParam;
     }
-// cherhcer l'objet corréspendent à lma chaine du filtre demander
+
     public static FilterMatchMode fromUiParam(String uiParam) {
         for (FilterMatchMode matchMode : values()) {
             if (matchMode.uiParam.equals(uiParam)) {

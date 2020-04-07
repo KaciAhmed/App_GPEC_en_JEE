@@ -27,7 +27,7 @@ public abstract class AbstractController {
     private void init() {
         initController();
     }
-//récupérer une map qui contient l'attribut qui corréspend au filtre ainsi que son matchmod(exple startwith ,endwith ... voir enum filtermatchmode)
+
     public Map getConstraints(DataTable dt) {
         if (dt != null) {
             Map<String, FilterMatchMode> constraints = new HashMap<>(dt.getColumns().size());
@@ -47,7 +47,7 @@ public abstract class AbstractController {
         }
         return null;
     }
-// récupérer un liste de champs (attribut) avec leurs valeurs et le matchmode auquel ils corréspende
+
     public List<FieldValueMatchMode> getFilter(Map<String, Object> filters, DataTable dt) {
         Map<String, FilterMatchMode> mapMatchMode = getConstraints(dt);
         List<FieldValueMatchMode> fieldValueMatchMode = new ArrayList();

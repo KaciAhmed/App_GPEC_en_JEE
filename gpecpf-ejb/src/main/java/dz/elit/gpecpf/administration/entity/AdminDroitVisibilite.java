@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */ 
+ */
 package dz.elit.gpecpf.administration.entity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  *
  * @author laidani.youcef
- */ 
+ */
 @Entity
 @Table(name = "admin_droit_visibilite", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
@@ -149,4 +149,3 @@ public class AdminDroitVisibilite implements Serializable {
     }
 
 }
- 

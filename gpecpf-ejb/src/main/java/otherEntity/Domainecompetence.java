@@ -5,17 +5,12 @@
  */
 package otherEntity;
 
-import dz.elit.gpecpf.administration.entity.Audit;
-import dz.elit.gpecpf.commun.service.QuerySessionLog;
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -43,10 +38,11 @@ public class Domainecompetence implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @Size(max = 50)
     @Column(name = "code")
     private String code;
@@ -62,21 +58,18 @@ public class Domainecompetence implements Serializable {
     public Domainecompetence() {
     }
 
-    public Domainecompetence(Integer id, String code, String libelle, String description, Collection<Competence> competenceCollection) {
+    public Domainecompetence(String id) {
         this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-        this.description = description;
-        this.competenceCollection = competenceCollection;
     }
-    public Integer getId() {
+
+    public String getId() {
         return id;
     }
-    
-    public void setId(Integer id) {
+
+    public void setId(String id) {
         this.id = id;
     }
-    
+
     public String getCode() {
         return code;
     }
@@ -133,5 +126,6 @@ public class Domainecompetence implements Serializable {
     @Override
     public String toString() {
         return "otherEntity.Domainecompetence[ id=" + id + " ]";
-    }    
+    }
+    
 }

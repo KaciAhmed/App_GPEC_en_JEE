@@ -27,12 +27,11 @@
             </a:row>
             <a:row>
                 <a:panel header=" #{bundleAdmin.lien_liste_profils}" iconheader="fa fa-list-ul">
-                 
-                    <p:dataTable binding="#{listProfilController.dataTable}" value="#{listProfilController.lazyAdminProfil}" var="profil" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" lazy="true" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="true"  rows="10" >
+                    <p:dataTable binding="#{listProfilController.dataTable}" value="#{listProfilController.lazyAdminProfil}" var="profil" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" lazy="true" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="true" rows="10">
                         <p:column headerText="#{bundleAdmin.lbl_libelle}" filterBy="#{profil.libelle}" filterMatchMode="contains" width="200" >
                             <h:outputText value="#{profil.libelle}"/>
                         </p:column>
-                        <p:column headerText="#{bundleAdmin.lbl_description}" filterBy="#{profil.description}" filterMatchMode="contains" filterValue="                 Rechercher par description ">
+                        <p:column headerText="#{bundleAdmin.lbl_description}" filterBy="#{profil.description}" filterMatchMode="contains">
                             <h:outputText value="#{profil.description}"/>
                         </p:column>
                         <p:column headerText="#{bundleAdmin.titre_nombre_privileges}" width="200">

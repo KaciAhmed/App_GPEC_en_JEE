@@ -21,38 +21,38 @@ public class HistoriqueemployepostePK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "idemploye")
-    private Integer idemploye;
+    private String idemploye;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "idposte")
-    private Integer idposte;
+    private String idposte;
 
     public HistoriqueemployepostePK() {
     }
 
-    public HistoriqueemployepostePK(Integer idemploye, Integer idposte) {
+    public HistoriqueemployepostePK(String idemploye, String idposte) {
         this.idemploye = idemploye;
         this.idposte = idposte;
     }
 
-    public Integer getIdemploye() {
+    public String getIdemploye() {
         return idemploye;
     }
 
-    public void setIdemploye(Integer idemploye) {
+    public void setIdemploye(String idemploye) {
         this.idemploye = idemploye;
     }
 
-    public Integer getIdposte() {
+    public String getIdposte() {
         return idposte;
     }
 
-    public void setIdposte(Integer idposte) {
+    public void setIdposte(String idposte) {
         this.idposte = idposte;
     }
-    
-    
 
     @Override
     public int hashCode() {

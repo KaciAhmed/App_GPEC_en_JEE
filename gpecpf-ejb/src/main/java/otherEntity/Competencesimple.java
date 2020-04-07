@@ -10,8 +10,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -36,10 +34,11 @@ public class Competencesimple implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @JoinColumn(name = "idcommer", referencedColumnName = "id")
     @ManyToOne
     private Competence idcommer;
@@ -47,19 +46,18 @@ public class Competencesimple implements Serializable {
     public Competencesimple() {
     }
 
-    public Competencesimple(Integer id, Competence idcommer) {
+    public Competencesimple(String id) {
         this.id = id;
-        this.idcommer = idcommer;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
-    
+
     public Competence getIdcommer() {
         return idcommer;
     }

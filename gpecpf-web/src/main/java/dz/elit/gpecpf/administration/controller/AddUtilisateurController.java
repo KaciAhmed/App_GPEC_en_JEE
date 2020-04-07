@@ -89,7 +89,7 @@ public class AddUtilisateurController extends AbstractController implements Seri
                 }
                 utilisateurFacade.create(utilisateur);
                 setDisabled(true);
-                initAddUtilisateur();
+                //initAddUtilisateur();
                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur enregistré avec succè");
             } catch (MyException ex) {
                 MyUtil.addErrorMessage(ex.getMessage());
@@ -114,7 +114,7 @@ public class AddUtilisateurController extends AbstractController implements Seri
         listUniteOrganisationnelle = uniteOrganisationnelleFacade.findAllOrderByAttribut("id");
         uniteOrganisationnelleSelected = new AdminUniteOrganisationnelle();
     }
-// ajout est suppression de profile
+
     public void addProfilsForUtilisateur() {
         if (!listProfilsSelected.isEmpty()) {
             utilisateur.addListProfils(listProfilsSelected);

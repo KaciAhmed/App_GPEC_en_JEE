@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package dz.elit.gpecpf.administration.service;
+
 import dz.elit.gpecpf.administration.entity.AdminProfil;
 import dz.elit.gpecpf.administration.entity.AdminUtilisateur;
 import dz.elit.gpecpf.commun.exception.MyException;
@@ -64,13 +65,13 @@ le container EJB va instancier et initialiser automatiquement.*/
         Query q = em.createQuery(queryStringBuilder.toString());
 
         if (nom != null && !nom.equals("")) {
-            q.setParameter("nom","%"+ nom + "%");
+            q.setParameter("nom", nom + "%");
         }
         if (prenom != null && !prenom.equals("")) {
-            q.setParameter("prenom","%"+ prenom + "%");
+            q.setParameter("prenom", prenom + "%");
         }
         if (login != null && !login.equals("")) {
-            q.setParameter("login","%"+ login + "%");
+            q.setParameter("login", login + "%");
         }
 
         //Implémentation de visibilité

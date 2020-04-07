@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */ 
+ */
 package dz.elit.gpecpf.administration.service;
 
 import dz.elit.gpecpf.administration.entity.AdminObjetVisibilite;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
 /**
  *
  * @author laidani.youcef
- */ 
+ */
 @Stateless
 public class AdminObjetVisibiliteFacade extends AbstractFacade<AdminObjetVisibilite> {
 

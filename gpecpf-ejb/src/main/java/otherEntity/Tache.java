@@ -10,8 +10,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,11 +35,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Tache implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @Size(max = 50)
     @Column(name = "code")
     private String code;
@@ -55,21 +54,18 @@ public class Tache implements Serializable {
     public Tache() {
     }
 
-    public Tache(Integer id, String code, String description, Activite idactivite) {
+    public Tache(String id) {
         this.id = id;
-        this.code = code;
-        this.description = description;
-        this.idactivite = idactivite;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
-    
+
     public String getCode() {
         return code;
     }

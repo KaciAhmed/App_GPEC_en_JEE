@@ -60,7 +60,7 @@
     <security-constraint>
         <display-name>REFER_001_006_Constraint</display-name>
         <web-resource-collection>
-            <web-resource-name>REFER_001_006</web-resource-name>
+            <web-resource-name>REFER_0018006</web-resource-name>
             <description/>
             <url-pattern>/pages/referentiel/type/listType.xhtml</url-pattern>
         </web-resource-collection>
@@ -90,7 +90,6 @@
         </web-resource-collection>
         <auth-constraint>
             <description>Créer une compétence</description>
-            <role-name>REFER_003_001</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -103,42 +102,6 @@
         <auth-constraint>
             <description>Lister les compétences</description>
             <role-name>REFER_003_006</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>REFER_002_005_Constraint</display-name>
-        <web-resource-collection>
-            <web-resource-name>REFER_002_005_Constraint</web-resource-name>
-            <description/>
-            <url-pattern>/pages/referentiel/domaine/showDom.xhtml</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>REFER_002_005</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>REFER_001_005_Constraint</display-name>
-        <web-resource-collection>
-            <web-resource-name>REFER_001_005_Constraint</web-resource-name>
-            <description/>
-            <url-pattern>/pages/referentiel/type/showType.xhtml</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>REFER_001_005</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>REFER_002_006_Constraint</display-name>
-        <web-resource-collection>
-            <web-resource-name>REFER_002_006_Constraint</web-resource-name>
-            <description/>
-            <url-pattern>/pages/referentiel/domaine/listDom</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>REFER_002_006</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>
@@ -378,11 +341,7 @@
         <role-name>PAS_ENCORS_ACTIF</role-name>
     </security-role>
     <security-role>
-        <description>Consulter un type de compétence</description>
-        <role-name>REFER_001_005</role-name>
-    </security-role>
-    <security-role>
-        <description>Lister les type de compétence </description>
+        <description>liste des compétence</description>
         <role-name>REFER_001_006</role-name>
     </security-role>
     <security-role>
@@ -390,23 +349,7 @@
         <role-name>REFER_002_001</role-name>
     </security-role>
     <security-role>
-        <description>Modifier un domaine de compétence</description>
-        <role-name>REFER_002_002</role-name>
-    </security-role>
-    <security-role>
-        <description>Supprimer un domaine de compétence </description>
-        <role-name>REFER_002_003</role-name>
-    </security-role>
-    <security-role>
-        <description>Rechercher un domaine de compétence</description>
-        <role-name>REFER_002_004</role-name>
-    </security-role>
-    <security-role>
-        <description>Consulter un domaine de compétence</description>
-        <role-name>REFER_002_005</role-name>
-    </security-role>
-    <security-role>
-        <description>Lister les domaine de compétence </description>
+        <description>Lister les domaine de compétence</description>
         <role-name>REFER_002_006</role-name>
     </security-role>
     <security-role>
@@ -414,47 +357,7 @@
         <role-name>REFER_003_001</role-name>
     </security-role>
     <security-role>
-        <description>Modifier une compétence</description>
-        <role-name>REFER_003_002</role-name>
-    </security-role>
-    <security-role>
-        <description>Supprimer une compétence</description>
-        <role-name>REFER_003_003</role-name>
-    </security-role>
-    <security-role>
-        <description>Rechercher une compétence </description>
-        <role-name>REFER_003_004</role-name>
-    </security-role>
-    <security-role>
-        <description>Consulter une compétence</description>
-        <role-name>REFER_003_005</role-name>
-    </security-role>
-    <security-role>
         <description>Lister les compétences</description>
         <role-name>REFER_003_006</role-name>
-    </security-role>
-    <security-role>
-        <description>Créer une tâche</description>
-        <role-name>REFER_004_001</role-name>
-    </security-role>
-    <security-role>
-        <description>Modifier une tâche </description>
-        <role-name>REFER_004_002</role-name>
-    </security-role>
-    <security-role>
-        <description>Supprimer une tâche</description>
-        <role-name>REFER_004_003</role-name>
-    </security-role>
-    <security-role>
-        <description>Rechercher une tâche </description>
-        <role-name>REFER_004_004</role-name>
-    </security-role>
-    <security-role>
-        <description>Consulter une tâche</description>
-        <role-name>REFER_004_005</role-name>
-    </security-role>
-    <security-role>
-        <description>Lister les tâches </description>
-        <role-name>REFER_004_006</role-name>
     </security-role>
 </web-app>

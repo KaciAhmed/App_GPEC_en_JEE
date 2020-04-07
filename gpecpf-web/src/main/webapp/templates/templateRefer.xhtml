@@ -55,62 +55,64 @@
     <ui:include src="header.xhtml"></ui:include>
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
-            <a:submenu start="true" value="#{bundleReferentiel.titre_gestion_type}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_acceuil_type}" icon="fa fa-file" 
+            <a:submenu start="true" value="#{bundleReferentiel.titre_gestion_type}" icon="fa fa-users">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_type}" icon="fa fa-file" 
                             outcome="/pages/referentiel/type/listType.xhtml" 
                             rendered="#{mySessionController.isUserInRole('REFER_001_006')}" />
              </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_domaine_competence}" icon="fa fa-tasks">
-                
-                <a:menuitem value="#{bundleReferentiel.titre_acceuil_domaine_competence}" icon="fa fa-file"
+            <a:submenu value="#{bundleReferentiel.titre_gestion_domaine}" icon="">
+                <a:menuitem value="#{bundleReferentiel.titre_nouveau_domaine}" icon=""
+                    outcome="/pages/referentiel/domaine/addDom.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_002_001')}" />
+                <a:menuitem value="#{bundleReferentiel.titre_liste_domaine}" icon=""
                     outcome="/pages/referentiel/domaine/listDom.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_002_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_competence}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_competence}" icon="fa fa-file"
+            <a:submenu value="#{bundleReferentiel.titre_gestion_competence}" icon="">
+                <a:menuitem value="#{bundleReferentiel.titre_nouveau_competence}" icon=""
                     outcome="/pages/referentiel/competence/addComp.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_003_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_competence}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_liste_competence}" icon=""
                     outcome="/pages/referentiel/competence/listComp.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_003_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_tache}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_tache}" icon="fa fa-file"
+            <a:submenu value="#{bundleReferentiel.titre_gestion_tache}" icon="">
+                <a:menuitem value="#{bundleReferentiel.titre_nouveau_tache}" icon=""
                     outcome="/pages/referentiel/tache/addTac.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_004_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_tache}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_liste_tache}" icon=""
                     outcome="/pages/referentiel/tache/listTac.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_004_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_activite}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_activite}" icon="fa fa-file"
+            <a:submenu value="#{bundleReferentiel.titre_gestion_activite}" icon="">
+                <a:menuitem value="#{bundleReferentiel.titre_nouveau_activite}" icon=""
                     outcome="/pages/referentiel/activite/addAct.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_005_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_activite}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_liste_activite}" icon=""
                     outcome="/pages/referentiel/activite/listAct.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_005_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_mission}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_mission}" icon="fa fa-file"
+            <a:submenu value="#{bundleReferentiel.titre_gestion_mission}" icon="">
+                <a:menuitem value="#{bundleReferentiel.titre_nouveau_mission}" icon=""
                     outcome="/pages/referentiel/mission/addMiss.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_006_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_mission}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_liste_mission}" icon=""
                     outcome="/pages/referentiel/mission/listMiss.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_006_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_emploi}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_emploi}" icon="fa fa-file"
+            <a:submenu value="#{bundleReferentiel.titre_gestion_emploi}" icon="">
+                <a:menuitem value="#{bundleReferentiel.titre_nouveau_emploi}" icon=""
                     outcome="/pages/referentiel/emploi/addEmp.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_007_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_emploi}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_liste_emploi}" icon=""
                     outcome="/pages/referentiel/emploi/listEmp.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_007_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_poste}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_poste}" icon="fa fa-file"
+            <a:submenu value="#{bundleReferentiel.titre_gestion_poste}" icon="">
+                <a:menuitem value="#{bundleReferentiel.titre_nouveau_poste}" icon=""
                     outcome="/pages/referentiel/poste/addPos.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_008_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_poste}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_liste_poste}" icon=""
                     outcome="/pages/referentiel/poste/listPos.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_008_006')}" />
             </a:submenu>

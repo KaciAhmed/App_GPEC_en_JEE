@@ -11,8 +11,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -39,10 +37,11 @@ public class Typeposte implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @Size(max = 50)
     @Column(name = "code")
     private String code;
@@ -55,18 +54,15 @@ public class Typeposte implements Serializable {
     public Typeposte() {
     }
 
-    public Typeposte(Integer id, String code, String libelle, Collection<Poste> posteCollection) {
+    public Typeposte(String id) {
         this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-        this.posteCollection = posteCollection;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -6,7 +6,6 @@
 package otherEntity;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -22,37 +21,39 @@ public class NotecompetenceemployePK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "idevaluation")
-    private Integer idevaluation;
+    private String idevaluation;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "idcompetence")
-    private Integer  idcompetence;
+    private String idcompetence;
 
     public NotecompetenceemployePK() {
     }
 
-    public NotecompetenceemployePK(Integer idevaluation, Integer  idcompetence) {
+    public NotecompetenceemployePK(String idevaluation, String idcompetence) {
         this.idevaluation = idevaluation;
         this.idcompetence = idcompetence;
     }
 
-    public Integer getIdevaluation() {
+    public String getIdevaluation() {
         return idevaluation;
     }
 
-    public void setIdevaluation(Integer idevaluation) {
+    public void setIdevaluation(String idevaluation) {
         this.idevaluation = idevaluation;
     }
 
-    public Integer getIdcompetence() {
+    public String getIdcompetence() {
         return idcompetence;
     }
 
-    public void setIdcompetence(Integer idcompetence) {
+    public void setIdcompetence(String idcompetence) {
         this.idcompetence = idcompetence;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -61,22 +62,17 @@ public class NotecompetenceemployePK implements Serializable {
         return hash;
     }
 
-       @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof NotecompetenceemployePK)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        NotecompetenceemployePK other = (NotecompetenceemployePK) object;
+        if ((this.idevaluation == null && other.idevaluation != null) || (this.idevaluation != null && !this.idevaluation.equals(other.idevaluation))) {
             return false;
         }
-        final NotecompetenceemployePK other = (NotecompetenceemployePK) obj;
-        if (!Objects.equals(this.idevaluation, other.idevaluation)) {
-            return false;
-        }
-        if (!Objects.equals(this.idcompetence, other.idcompetence)) {
+        if ((this.idcompetence == null && other.idcompetence != null) || (this.idcompetence != null && !this.idcompetence.equals(other.idcompetence))) {
             return false;
         }
         return true;
@@ -86,7 +82,5 @@ public class NotecompetenceemployePK implements Serializable {
     public String toString() {
         return "otherEntity.NotecompetenceemployePK[ idevaluation=" + idevaluation + ", idcompetence=" + idcompetence + " ]";
     }
-
- 
     
 }
