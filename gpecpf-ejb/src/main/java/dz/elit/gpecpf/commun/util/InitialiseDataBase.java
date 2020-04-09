@@ -17,6 +17,7 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import otherEntity.Typecompetence;
 
 /**
  *
@@ -227,7 +228,14 @@ public class InitialiseDataBase {
         // Initialisation Autres modules
         // Utiliser le meme principe
 //-------------------------------------------------------------------------------------------------------------------
-        //***************** Fin Initialisation Module Administration *************************************************************************
+ // Initialiser les types de compétence 
+
+                em.persist(new Typecompetence("TYPE_COMP_001", "SAVOIR", "Les connaissances théoriques acquises pendant le parcours scolaire et lors des différentes expériences professionnelle"));
+                em.persist(new Typecompetence("TYPE_COMP_002", "SAVOIR-FAIRE", "ensemble de connaissances pratiques, la maîtrise d’un poste, d’un marché ou d’un produit spécifique"));
+                em.persist(new Typecompetence("TYPE_COMP_003", "SAVOIR-ÊTRE PROFESSIONNEL", "représente un ensemble de manières d’agir et de capacités relationnelles utiles pour interagir dans un contexte professionnel"));
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//***************** Fin Initialisation Module Administration *************************************************************************
         // Initialisation Autres modules
         // Utiliser le meme principe
         //***** Creation d'un profil Administrateur pour l'utilisateur admin **************************************

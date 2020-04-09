@@ -59,6 +59,12 @@ public class Typecompetence implements Serializable {
     public Typecompetence() {
     }
 
+    public Typecompetence(String code, String libelle, String description) {
+        this.code = code;
+        this.libelle = libelle;
+        this.description = description;
+    }
+    
     public Typecompetence(Integer id, String code, String libelle, String description, Collection<Competence> competenceCollection) {
         this.id = id;
         this.code = code;

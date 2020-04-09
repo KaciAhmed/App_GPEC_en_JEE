@@ -28,7 +28,6 @@ public class EditDomaineCompetenceController  extends AbstractController impleme
     
 @EJB
 private DomaineCompetenceFacade domaineCompFacade;
-
  
    private Domainecompetence  domaine;
    
@@ -38,16 +37,12 @@ private DomaineCompetenceFacade domaineCompFacade;
     protected void initController() {
   
        String id = MyUtil.getRequestParameter("id");
-       
        if (id != null) {
        domaine= domaineCompFacade.find(Integer.parseInt(id));
-
+       
        }
     }
-    
-  
-    
-    
+
         public void edit() {
         try {
             domaineCompFacade.edit(domaine);

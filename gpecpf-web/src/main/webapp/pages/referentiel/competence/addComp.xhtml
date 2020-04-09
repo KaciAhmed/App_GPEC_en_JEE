@@ -14,7 +14,7 @@
     <ui:define name="breadCrumb">
         <a:breadcrumb>           
             <a:menuitem value="#{bundleReferentiel.titre_gestion_competence}" />
-            <a:menuitem value="#{bundleAdmin.lien_liste_profils}" href="listProfil.xhtml" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_competence}" href="listProfil.xhtml" />
             <a:menuitem value="#{bundleCommun.btn_nouveau}" last="true"/>
           
         </a:breadcrumb>
@@ -23,13 +23,22 @@
     <ui:define name="MyContent">
         <h:form id="form">
             <a:row nomargin="true">
-                <a:pagetitle value="Fiche Profil" />
+                <a:pagetitle value="Fiche compétence" />
                 <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
             </a:row>
             <p:panel id="panel" styleClass="no-border row">
+                 <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="code" required="true" value="#{addProfilController.profil.libelle}" /> 
+                            <p:message for="code"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
                 <a:row>
-                    <a:column span="6" >
-                        <a:label value="#{bundleAdmin.lbl_libelle}" span="4" />
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
                         <a:column span="8" >
                             <p:inputText id="lib" required="true" value="#{addProfilController.profil.libelle}" /> 
                             <p:message for="lib"/>                                    
@@ -38,19 +47,45 @@
                 </a:row>
 
                 <a:row>
-                    <a:column span="6" >
-                        <a:label value="#{bundleAdmin.lbl_description}" span="4" />
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
                         <a:column span="8" >
                             <p:inputTextarea id="desc" required="true"  cols="60" value="#{addProfilController.profil.description}" autoResize="false" />
                             <p:message for="desc"/>                                    
                         </a:column>
                     </a:column>
                 </a:row>
+                 <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_compétence_composé}" span="4" />
+                        <a:column span="8" >
+                            <p:selectOneMenu id="est_compose" value="#{addProfilController.module.id}" required="true"  >
+                                    <f:selectItem   itemLabel="#{bundleReferentiel.lbl_compétence_est_composé}" itemValue="" />
+                                    <f:selectItem   itemLabel="Oui" itemValue="oui" />
+                                    <f:selectItem   itemLabel="non" itemValue="non" />
+                                </p:selectOneMenu>
+                            <p:message for="est_compose"/> 
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row style="margin-bottom: 2%">
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_sous_compétence_q}" span="4" />
+                        <a:column span="8" >
+                            <p:selectOneMenu id="est_sous_comp" value="#{addProfilController.module.id}" required="true"  >
+                                    <f:selectItem   itemLabel="#{bundleReferentiel.lbl_est_sous_compétence}" itemValue="" />
+                                    <f:selectItem   itemLabel="Oui" itemValue="oui" />
+                                    <f:selectItem   itemLabel="non" itemValue="non" />
+                                </p:selectOneMenu>
+                            <p:message for="est_sous_comp"/> 
+                        </a:column>
+                    </a:column>
+                </a:row>
                 <a:row >
                     <a:column span="12" >
                         <p:tabView id="tabView">
-                            <p:tab title="#{bundleAdmin.lbl_privileges}">
-                                <a:panel header=" #{bundleAdmin.titre_liste_privileges}" iconheader="fa fa-list-ul">
+                            <p:tab title="Domaine de compétence">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_domaine_competence}" iconheader="fa fa-list-ul">
                                     <f:facet name="header">                                            
                                         <p:commandButton title="#{bundleAdmin.titre_ajouter_privilege}"  icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogPrivileges').show();"/> 
                                     </f:facet>
@@ -67,8 +102,8 @@
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>
-                            <p:tab title="#{bundleAdmin.lbl_membre}">
-                                <a:panel header=" #{bundleAdmin.lien_liste_membre}" iconheader="fa fa-list-ul">
+                            <p:tab title="Type compétence">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_type_competence}" iconheader="fa fa-list-ul">
                                     <f:facet name="header">                                            
                                         <p:commandButton title="#{bundleAdmin.titre_ajouter_membres}" icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogUtilisateurs').show();"/> 
                                     </f:facet>
@@ -102,8 +137,8 @@
     <ui:define name="MyDialog">
         <h:form id="FormDialog">
             <p:dialog widgetVar="dialogPrivileges" header="#{bundleAdmin.titre_ajouter_privilege}" modal="true"   responsive="true">
-                <a:container>
-                    <a:row style="background-color: #FFF;padding: 20px;">
+                
+                    <a:row style="background-color:#FFF;padding: 20px;">
                         <div style="" >
                             <a:label value="#{bundleAdmin.lbl_module}" span="1" />
                             <a:column span="3" >
@@ -156,7 +191,7 @@
                             </f:facet>
                         </p:dataTable>
                     </a:row>
-                </a:container>
+                
             </p:dialog>
         </h:form>
 

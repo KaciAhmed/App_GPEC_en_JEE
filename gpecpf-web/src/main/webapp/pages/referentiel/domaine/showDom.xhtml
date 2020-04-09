@@ -21,14 +21,14 @@
 
     <ui:define name="MyContent">
         <h:form id="form">
-            <a:pagetitle value="Fiche Profil" />
+            <a:pagetitle value="Fiche domaine de compétence" />
             <p:messages id="msgs" globalOnly="true" showDetail="true"/>
             <p:panel id="panel" styleClass="no-border row">
                  <a:row>
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="code"  value="#{editDomaineCompetenceController.domaine.code}" /> 
+                            <p:inputText id="code"  value="#{editDomaineCompetenceController.domaine.code}" disabled="true"/> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -36,7 +36,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="lib"  value="#{editDomaineCompetenceController.domaine.libelle}" /> 
+                            <p:inputText id="lib"  value="#{editDomaineCompetenceController.domaine.libelle}"  disabled="true" /> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -44,11 +44,11 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
                         <a:column span="8" >
-                            <p:inputTextarea id="desc" cols="60" value="#{editDomaineCompetenceController.domaine.description}" autoResize="false" />
+                            <p:inputTextarea id="desc" cols="60" value="#{editDomaineCompetenceController.domaine.description}" autoResize="false"  disabled="true"/>
                         </a:column>
                     </a:column>
                 </a:row>
-                <a:row style="height: 300px">
+                <a:row>
                     <a:column span="12">
                         <p:tabView id="tabView">
                            

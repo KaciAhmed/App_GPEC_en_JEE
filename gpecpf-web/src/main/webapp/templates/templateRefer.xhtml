@@ -55,8 +55,8 @@
     <ui:include src="header.xhtml"></ui:include>
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
-            <a:submenu start="true" value="#{bundleReferentiel.titre_gestion_type}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_acceuil_type}" icon="fa fa-file" 
+            <a:submenu start="true" value="#{bundleReferentiel.titre_gestion_type_competence}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_acceuil_type_competence}" icon="fa fa-file" 
                             outcome="/pages/referentiel/type/listType.xhtml" 
                             rendered="#{mySessionController.isUserInRole('REFER_001_006')}" />
              </a:submenu>
@@ -67,10 +67,7 @@
                     rendered="#{mySessionController.isUserInRole('REFER_002_006')}" />
             </a:submenu>
             <a:submenu value="#{bundleReferentiel.titre_gestion_competence}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_competence}" icon="fa fa-file"
-                    outcome="/pages/referentiel/competence/addComp.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_003_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_competence}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_acceuil_competence}" icon="fa fa-file"
                     outcome="/pages/referentiel/competence/listComp.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_003_006')}" />
             </a:submenu>

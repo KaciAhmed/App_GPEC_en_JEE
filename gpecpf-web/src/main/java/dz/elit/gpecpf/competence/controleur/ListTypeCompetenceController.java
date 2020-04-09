@@ -9,7 +9,7 @@ import dz.elit.gpecpf.commun.controller.Imprimer;
 import dz.elit.gpecpf.commun.reporting.engine.Reporting;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.CompetenceFacade;
+import dz.elit.gpecpf.gestion_des_competences.service.TypeCompetenceFacade;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,72 +26,44 @@ import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.primefaces.context.RequestContext;
-import otherEntity.Competence;
-
-
+import otherEntity.Typecompetence;
 
 /**
  *
  * @author Dell
  */
-
 @ManagedBean
 @ViewScoped
-public class ListCompetenceController extends AbstractController implements Serializable{
+public class ListTypeCompetenceController  extends AbstractController implements Serializable {
     
-      @EJB
-      private CompetenceFacade compFacade;
-      
-      @ManagedProperty(value = "#{imprimer}")
+    @EJB
+    private TypeCompetenceFacade typeCompFacade;
+    
+     @ManagedProperty(value = "#{imprimer}")
     private Imprimer ctrImprimer;
-      
-      private List<Competence> listCompetences ;
-      
-         //Les variables de recherche
-    private String code;
-    private String libelle;
-    private String description;
+     
+     private List<Typecompetence> listTypeCompetences;
+    
+    private Typecompetence typeComp;
 
-    public ListCompetenceController() {
+    public ListTypeCompetenceController() {
     }
     
     
-     @Override //PostConstruct
-    protected void initController() 
-    {    
-      //  findList()  ;  
-    }
+      @Override//@PostConstruct
+    protected void initController() {
+  
+     findList()  ; 
 
-    public ListCompetenceController(String code, String libelle, String description) {
-        this.code = code;
-        this.libelle = libelle;
-        this.description = description;
+       }
+        
+       public void findList() {
+      
+        listTypeCompetences= typeCompFacade.findAll();
+        
     }
-    
-    private void findList() {
-       listCompetences =compFacade.findAllOrderByAttribut("code");
-        rechercher();
-    }
-    public void rechercher() {
-       listCompetences=compFacade.findByCodeLibelleDescription(code, libelle, description);
-        if (listCompetences.isEmpty() || listCompetences.size() < 1) {
-            MyUtil.addInfoMessage(MyUtil.getBundleAdmin("msg_resultat_recherche_null"));
-        }
-    }
-    public void remove(Competence comp) 
-    {
-     try {
-            compFacade.remove(comp);
-              MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
-             findList();
-         } catch (Exception ex) 
-           {
-             ex.printStackTrace();
-             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-           }   
-    }
-    
-    public void download() throws SQLException, IOException 
+   
+        public void download() throws SQLException, IOException 
     {
         String rapportLien = "/dz/elit/harmo/commun/reporting/source/listUtilisateur.jasper";
         InputStream rapport = getClass().getResourceAsStream(rapportLien);
@@ -102,7 +74,7 @@ public class ListCompetenceController extends AbstractController implements Seri
         String iSoRapport = "iSoRapport";
         InputStream urlLogo = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/images-login/logo.png");
         Map parametres = new HashMap();
-        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listCompetences);
+        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listTypeCompetences);
         parametres.put("rapportNom", rapportNom);
         parametres.put("entreprisFr", entreprisFr);
         parametres.put("entreprisAr", entreprisAr);
@@ -121,17 +93,17 @@ public class ListCompetenceController extends AbstractController implements Seri
         options.put("contentWidth", 310);
         RequestContext.getCurrentInstance().openDialog("/pages/commun/download.xhtml", options, null);
     }
-    public String telecharger() throws IOException, JRException {
+        public String telecharger() throws IOException, JRException {
 
         Map<String, String> param = new HashMap<>();
         param.put("rapportNom", "Test");
 
         Reporting.printEtat(getClass().getResourceAsStream("/dz/elit/gpecpf/reporting/source/test.jasper"),
-                param, new JRBeanCollectionDataSource(listCompetences));
+                param, new JRBeanCollectionDataSource(listTypeCompetences));
         return "";
 
     }
-        public void creerRapportUnique() throws JRException, FileNotFoundException {
+           public void creerRapportUnique() throws JRException, FileNotFoundException {
 
         String rapportLien = "/reporting/source/listUtilisateur.jasper";
         InputStream rapport = getClass().getResourceAsStream(rapportLien);
@@ -142,7 +114,7 @@ public class ListCompetenceController extends AbstractController implements Seri
         String SUBREPORT_DIR = getClass().getResource("/dz/elit/harmo/commun/reporting/source/Entete/").getFile();
         InputStream urlLogo = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/images-login/logo.png");
         Map parametres = new HashMap();
-        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listCompetences);
+        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listTypeCompetences);
         parametres.put("rapportNom", rapportNom);
         parametres.put("entreprisFr", entreprisFr);
         parametres.put("entreprisAr", entreprisAr);
@@ -151,8 +123,34 @@ public class ListCompetenceController extends AbstractController implements Seri
         parametres.put("SUBREPORT_DIR", SUBREPORT_DIR);
 
         Reporting.downloadReportPdf(rapport, data, parametres);
+
     }
-        // getter && setter
+           
+           // getter && setter 
+
+    public TypeCompetenceFacade getTypeCompFacade() {
+        return typeCompFacade;
+    }
+
+    public void setTypeCompFacade(TypeCompetenceFacade typeCompFacade) {
+        this.typeCompFacade = typeCompFacade;
+    }
+
+    public List<Typecompetence> getListTypeCompetences() {
+        return listTypeCompetences;
+    }
+
+    public void setListTypeCompetences(List<Typecompetence> listTypeCompetences) {
+        this.listTypeCompetences = listTypeCompetences;
+    }
+
+    public Typecompetence getTypeComp() {
+        return typeComp;
+    }
+
+    public void setTypeComp(Typecompetence typeComp) {
+        this.typeComp = typeComp;
+    }
 
     public Imprimer getCtrImprimer() {
         return ctrImprimer;
@@ -161,37 +159,6 @@ public class ListCompetenceController extends AbstractController implements Seri
     public void setCtrImprimer(Imprimer ctrImprimer) {
         this.ctrImprimer = ctrImprimer;
     }
-
-    public List<Competence> getListCompetences() {
-        return listCompetences;
-    }
-
-    public void setListCompetences(List<Competence> listCompetences) {
-        this.listCompetences = listCompetences;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-        
+           
+    
 }
