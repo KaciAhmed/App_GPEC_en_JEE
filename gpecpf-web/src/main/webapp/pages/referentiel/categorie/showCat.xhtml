@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateRefer.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:a="http://elit.dz/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_consulter_domaine_competence}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_domaine_competence}" />
+            <a:menuitem value="#{bundleReferentiel.titre_liste_domaine_competence}" href="listDom.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="Fiche domaine de compétence" />
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>
+            <p:panel id="panel" styleClass="no-border row">
+                 <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="code"  value="#{editDomaineCompetenceController.domaine.code}" disabled="true"/> 
+                        </a:column>
+                    </a:column> 
+                </a:row>
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="lib"  value="#{editDomaineCompetenceController.domaine.libelle}"  disabled="true" /> 
+                        </a:column>
+                    </a:column> 
+                </a:row>
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
+                        <a:column span="8" >
+                            <p:inputTextarea id="desc" cols="60" value="#{editDomaineCompetenceController.domaine.description}" autoResize="false"  disabled="true"/>
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="12">
+                        <p:tabView id="tabView">
+                           
+                            <p:tab title="#{bundleReferentiel.lbl_competence}">
+                                <a:panel header=" #{bundleReferentiel.lien_liste_competence}" iconheader="fa fa-list-ul">
+                                    <p:dataTable id="tableCompetence" value="#{editDomaineCompetenceController.domaine.competenceCollection}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{competence.code}" filterMatchMode="contains">
+                                            <h:outputText value="#{competence.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{competence.libelle}" filterMatchMode="contains">
+                                            <h:outputText value="#{competence.libelle}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{competence.description}" filterMatchMode="contains">
+                                            <h:outputText value="#{competence.description}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>  
+                    </a:column>
+
+                </a:row>                
+            </p:panel>
+
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listDom" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -141,6 +141,42 @@
             <role-name>REFER_002_006</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>REFER_009_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_009_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/categorie/addCat.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_009_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_009_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_009_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/categorie/editCat.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_009_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_009_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_009_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/categorie/listCat.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_009_006</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>gpecpfRealm</realm-name>
@@ -456,5 +492,29 @@
     <security-role>
         <description>Lister les tâches </description>
         <role-name>REFER_004_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une catégorie de compétence </description>
+        <role-name>REFER_009_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une catégorie de compétence </description>
+        <role-name>REFER_009_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une catégorie de compétence </description>
+        <role-name>REFER_009_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une catégorie de compétence</description>
+        <role-name>REFER_009_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une catégorie de compétence </description>
+        <role-name>REFER_009_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister les catégories de compétence </description>
+        <role-name>REFER_009_006</role-name>
     </security-role>
 </web-app>

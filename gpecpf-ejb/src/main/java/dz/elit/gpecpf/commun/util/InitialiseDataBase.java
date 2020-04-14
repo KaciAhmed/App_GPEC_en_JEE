@@ -172,6 +172,21 @@ public class InitialiseDataBase {
 		em.persist(new AdminPrivilege("REFER_008_004", "Rechercher un poste ", adminModule));
 		em.persist(new AdminPrivilege("REFER_008_005", "Consulter un poste ", adminModule));
 		em.persist(new AdminPrivilege("REFER_008_006", "Lister les postes ", adminModule));
+                //categorie de competence
+                em.persist(new AdminPrivilege("REFER_009_001", "Créer une catégorie de compétence ", adminModule));
+		em.persist(new AdminPrivilege("REFER_009_002", "Modifier une catégorie de compétence ", adminModule));
+		em.persist(new AdminPrivilege("REFER_009_003", "Supprimer une catégorie de compétence ", adminModule));
+		em.persist(new AdminPrivilege("REFER_009_004", "Rechercher une catégorie de compétence ", adminModule));
+		em.persist(new AdminPrivilege("REFER_009_005", "Consulter une catégorie de compétence ", adminModule));
+		em.persist(new AdminPrivilege("REFER_009_006", "Lister les catégories de compétence ", adminModule));
+                //comportement relatif à une competence
+                em.persist(new AdminPrivilege("REFER_010_001", "Créer une comportement ", adminModule));
+		em.persist(new AdminPrivilege("REFER_010_002", "Modifier un comportement ", adminModule));
+		em.persist(new AdminPrivilege("REFER_010_003", "Supprimer un comportement ", adminModule));
+		em.persist(new AdminPrivilege("REFER_010_004", "Rechercher un comportement ", adminModule));
+		em.persist(new AdminPrivilege("REFER_010_005", "Consulter un comportement ", adminModule));
+		em.persist(new AdminPrivilege("REFER_010_006", "Lister les comportements ", adminModule));
+                
 		em.flush();
 		// Fin Module du referentiel
 		// Gestionnaire des employés
