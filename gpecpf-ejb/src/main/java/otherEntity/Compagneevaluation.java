@@ -22,7 +22,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -31,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "compagneevaluation",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "compagneevaluation", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Compagneevaluation.findAll", query = "SELECT c FROM Compagneevaluation c")
@@ -44,6 +43,7 @@ public class Compagneevaluation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Column(name = "datedeb")
@@ -56,6 +56,10 @@ public class Compagneevaluation implements Serializable {
     private Collection<Evaluation> evaluationCollection;
 
     public Compagneevaluation() {
+    }
+
+    public Compagneevaluation(Integer id) {
+        this.id = id;
     }
 
     public Compagneevaluation(Integer id, Date datedeb, Date datefin, Collection<Evaluation> evaluationCollection) {
@@ -72,7 +76,7 @@ public class Compagneevaluation implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public Date getDatedeb() {
         return datedeb;
     }

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "emploi",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "emploi", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Emploi.findAll", query = "SELECT e FROM Emploi e")
@@ -42,6 +42,7 @@ public class Emploi implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -66,6 +67,10 @@ public class Emploi implements Serializable {
         this.description = description;
         this.posteCollection = posteCollection;
     }
+    
+    public Emploi(Integer id) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;
@@ -74,7 +79,7 @@ public class Emploi implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-   
+
     public String getCode() {
         return code;
     }

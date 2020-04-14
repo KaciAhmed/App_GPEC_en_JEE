@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -33,23 +34,21 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "evaluation",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "evaluation", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Evaluation.findAll", query = "SELECT e FROM Evaluation e")
     , @NamedQuery(name = "Evaluation.findById", query = "SELECT e FROM Evaluation e WHERE e.id = :id")
     , @NamedQuery(name = "Evaluation.findByDateeva", query = "SELECT e FROM Evaluation e WHERE e.dateeva = :dateeva")
     , @NamedQuery(name = "Evaluation.findByArchive", query = "SELECT e FROM Evaluation e WHERE e.archive = :archive")
-    , @NamedQuery(name = "Evaluation.findByEtat", query = "SELECT e FROM Evaluation e WHERE e.etat = :etat")
-    , @NamedQuery(name = "Evaluation.findByAvisemp", query = "SELECT e FROM Evaluation e WHERE e.avisemp = :avisemp")
-    , @NamedQuery(name = "Evaluation.findByAvishiern1", query = "SELECT e FROM Evaluation e WHERE e.avishiern1 = :avishiern1")
-    , @NamedQuery(name = "Evaluation.findByAvishiern2", query = "SELECT e FROM Evaluation e WHERE e.avishiern2 = :avishiern2")})
+    , @NamedQuery(name = "Evaluation.findByEtat", query = "SELECT e FROM Evaluation e WHERE e.etat = :etat")})
 public class Evaluation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Column(name = "dateeva")
@@ -61,38 +60,33 @@ public class Evaluation implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "etat")
     private String etat;
-    @Size(max = 2147483647)
-    @Column(name = "avisemp")
-    private String avisemp;
-    @Size(max = 2147483647)
-    @Column(name = "avishiern1")
-    private String avishiern1;
-    @Size(max = 2147483647)
-    @Column(name = "avishiern2")
-    private String avishiern2;
     @JoinColumn(name = "idcompagne", referencedColumnName = "id")
     @ManyToOne
     private Compagneevaluation idcompagne;
     @JoinColumn(name = "idemploye", referencedColumnName = "id")
     @ManyToOne
     private Employe idemploye;
+    @OneToMany(mappedBy = "idevaluation")
+    private Collection<Avis> avisCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluation")
     private Collection<Notecompetenceemploye> notecompetenceemployeCollection;
 
     public Evaluation() {
     }
 
-    public Evaluation(Integer id, Date dateeva, String archive, String etat, String avisemp, String avishiern1, String avishiern2, Compagneevaluation idcompagne, Employe idemploye, Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
+    public Evaluation(Integer id, Date dateeva, String archive, String etat, Compagneevaluation idcompagne, Employe idemploye, Collection<Avis> avisCollection, Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
         this.id = id;
         this.dateeva = dateeva;
         this.archive = archive;
         this.etat = etat;
-        this.avisemp = avisemp;
-        this.avishiern1 = avishiern1;
-        this.avishiern2 = avishiern2;
         this.idcompagne = idcompagne;
         this.idemploye = idemploye;
+        this.avisCollection = avisCollection;
         this.notecompetenceemployeCollection = notecompetenceemployeCollection;
+    }
+    
+    public Evaluation(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -127,30 +121,6 @@ public class Evaluation implements Serializable {
         this.etat = etat;
     }
 
-    public String getAvisemp() {
-        return avisemp;
-    }
-
-    public void setAvisemp(String avisemp) {
-        this.avisemp = avisemp;
-    }
-
-    public String getAvishiern1() {
-        return avishiern1;
-    }
-
-    public void setAvishiern1(String avishiern1) {
-        this.avishiern1 = avishiern1;
-    }
-
-    public String getAvishiern2() {
-        return avishiern2;
-    }
-
-    public void setAvishiern2(String avishiern2) {
-        this.avishiern2 = avishiern2;
-    }
-
     public Compagneevaluation getIdcompagne() {
         return idcompagne;
     }
@@ -165,6 +135,15 @@ public class Evaluation implements Serializable {
 
     public void setIdemploye(Employe idemploye) {
         this.idemploye = idemploye;
+    }
+
+    @XmlTransient
+    public Collection<Avis> getAvisCollection() {
+        return avisCollection;
+    }
+
+    public void setAvisCollection(Collection<Avis> avisCollection) {
+        this.avisCollection = avisCollection;
     }
 
     @XmlTransient

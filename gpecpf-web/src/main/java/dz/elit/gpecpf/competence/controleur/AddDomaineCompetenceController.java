@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dz.elit.gpecpf.competence.controleur;
+/*package dz.elit.gpecpf.competence.controleur;
 
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
@@ -24,7 +24,7 @@ import otherEntity.Domainecompetence;
 /**
  *
  * @author Dell
- */
+ *//*
 @ManagedBean
 
 public class AddDomaineCompetenceController extends AbstractController implements Serializable {
@@ -69,3 +69,4 @@ public class AddDomaineCompetenceController extends AbstractController implement
     }
 
 }
+*/

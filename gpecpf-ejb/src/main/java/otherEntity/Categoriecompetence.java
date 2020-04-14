@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,15 +30,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "domainecompetence", schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "categoriecompetence", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Domainecompetence.findAll", query = "SELECT d FROM Domainecompetence d")
-    , @NamedQuery(name = "Domainecompetence.findById", query = "SELECT d FROM Domainecompetence d WHERE d.id = :id")
-    , @NamedQuery(name = "Domainecompetence.findByCode", query = "SELECT d FROM Domainecompetence d WHERE d.code = :code")
-    , @NamedQuery(name = "Domainecompetence.findByLibelle", query = "SELECT d FROM Domainecompetence d WHERE d.libelle = :libelle")
-    , @NamedQuery(name = "Domainecompetence.findByDescription", query = "SELECT d FROM Domainecompetence d WHERE d.description = :description")})
-public class Domainecompetence implements Serializable {
+    @NamedQuery(name = "Categoriecompetence.findAll", query = "SELECT c FROM Categoriecompetence c")
+    , @NamedQuery(name = "Categoriecompetence.findById", query = "SELECT c FROM Categoriecompetence c WHERE c.id = :id")
+    , @NamedQuery(name = "Categoriecompetence.findByCode", query = "SELECT c FROM Categoriecompetence c WHERE c.code = :code")
+    , @NamedQuery(name = "Categoriecompetence.findByLibelle", query = "SELECT c FROM Categoriecompetence c WHERE c.libelle = :libelle")})
+public class Categoriecompetence implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,26 +52,27 @@ public class Domainecompetence implements Serializable {
     @Size(max = 255)
     @Column(name = "libelle")
     private String libelle;
-    @Size(max = 2147483647)
-    @Column(name = "description")
-    private String description;
-    @OneToMany(mappedBy = "iddomcom")
+    @OneToMany(mappedBy = "idcatmere")
+    private Collection<Categoriecompetence> categoriecompetenceCollection;
+    @JoinColumn(name = "idcatmere", referencedColumnName = "id")
+    @ManyToOne
+    private Categoriecompetence idcatmere;
+    @OneToMany(mappedBy = "idcatcom")
     private Collection<Competence> competenceCollection;
 
-    public Domainecompetence() {
+    public Categoriecompetence() {
     }
 
-    public Domainecompetence(Integer id, String code, String libelle, String description, Collection<Competence> competenceCollection) {
+    public Categoriecompetence(Integer id, String code, String libelle, Collection<Categoriecompetence> categoriecompetenceCollection, Categoriecompetence idcatmere, Collection<Competence> competenceCollection) {
         this.id = id;
         this.code = code;
         this.libelle = libelle;
-        this.description = description;
+        this.categoriecompetenceCollection = categoriecompetenceCollection;
+        this.idcatmere = idcatmere;
         this.competenceCollection = competenceCollection;
     }
     
-    
-
-    public Domainecompetence(Integer id) {
+    public Categoriecompetence(Integer id) {
         this.id = id;
     }
 
@@ -98,12 +100,21 @@ public class Domainecompetence implements Serializable {
         this.libelle = libelle;
     }
 
-    public String getDescription() {
-        return description;
+    @XmlTransient
+    public Collection<Categoriecompetence> getCategoriecompetenceCollection() {
+        return categoriecompetenceCollection;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategoriecompetenceCollection(Collection<Categoriecompetence> categoriecompetenceCollection) {
+        this.categoriecompetenceCollection = categoriecompetenceCollection;
+    }
+
+    public Categoriecompetence getIdcatmere() {
+        return idcatmere;
+    }
+
+    public void setIdcatmere(Categoriecompetence idcatmere) {
+        this.idcatmere = idcatmere;
     }
 
     @XmlTransient
@@ -125,10 +136,10 @@ public class Domainecompetence implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Domainecompetence)) {
+        if (!(object instanceof Categoriecompetence)) {
             return false;
         }
-        Domainecompetence other = (Domainecompetence) object;
+        Categoriecompetence other = (Categoriecompetence) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -137,7 +148,7 @@ public class Domainecompetence implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Domainecompetence[ id=" + id + " ]";
+        return "otherEntity.Categoriecompetence[ id=" + id + " ]";
     }
     
 }

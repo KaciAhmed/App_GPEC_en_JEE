@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Dell
  */
 @Entity
-@Table(name = "notecompetenceemploye",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "notecompetenceemploye", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Notecompetenceemploye.findAll", query = "SELECT n FROM Notecompetenceemploye n")
@@ -54,7 +54,7 @@ public class Notecompetenceemploye implements Serializable {
         this.notecompetenceemployePK = notecompetenceemployePK;
     }
 
-    public Notecompetenceemploye(Integer idevaluation, Integer idcompetence) {
+    public Notecompetenceemploye(int idevaluation, int idcompetence) {
         this.notecompetenceemployePK = new NotecompetenceemployePK(idevaluation, idcompetence);
     }
 

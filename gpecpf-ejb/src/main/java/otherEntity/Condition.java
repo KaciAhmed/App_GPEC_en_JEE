@@ -14,9 +14,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,15 +30,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "domainecompetence", schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "condition", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Domainecompetence.findAll", query = "SELECT d FROM Domainecompetence d")
-    , @NamedQuery(name = "Domainecompetence.findById", query = "SELECT d FROM Domainecompetence d WHERE d.id = :id")
-    , @NamedQuery(name = "Domainecompetence.findByCode", query = "SELECT d FROM Domainecompetence d WHERE d.code = :code")
-    , @NamedQuery(name = "Domainecompetence.findByLibelle", query = "SELECT d FROM Domainecompetence d WHERE d.libelle = :libelle")
-    , @NamedQuery(name = "Domainecompetence.findByDescription", query = "SELECT d FROM Domainecompetence d WHERE d.description = :description")})
-public class Domainecompetence implements Serializable {
+    @NamedQuery(name = "Condition.findAll", query = "SELECT c FROM Condition c")
+    , @NamedQuery(name = "Condition.findById", query = "SELECT c FROM Condition c WHERE c.id = :id")
+    , @NamedQuery(name = "Condition.findByCode", query = "SELECT c FROM Condition c WHERE c.code = :code")
+    , @NamedQuery(name = "Condition.findByDescription", query = "SELECT c FROM Condition c WHERE c.description = :description")})
+public class Condition implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,29 +49,26 @@ public class Domainecompetence implements Serializable {
     @Size(max = 50)
     @Column(name = "code")
     private String code;
-    @Size(max = 255)
-    @Column(name = "libelle")
-    private String libelle;
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
-    @OneToMany(mappedBy = "iddomcom")
-    private Collection<Competence> competenceCollection;
+    @JoinTable(name = "postecondition", joinColumns = {
+        @JoinColumn(name = "idcond", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idposte", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<Poste> posteCollection;
 
-    public Domainecompetence() {
+    public Condition() {
     }
 
-    public Domainecompetence(Integer id, String code, String libelle, String description, Collection<Competence> competenceCollection) {
+    public Condition(Integer id, String code, String description, Collection<Poste> posteCollection) {
         this.id = id;
         this.code = code;
-        this.libelle = libelle;
         this.description = description;
-        this.competenceCollection = competenceCollection;
+        this.posteCollection = posteCollection;
     }
     
-    
-
-    public Domainecompetence(Integer id) {
+    public Condition(Integer id) {
         this.id = id;
     }
 
@@ -90,14 +88,6 @@ public class Domainecompetence implements Serializable {
         this.code = code;
     }
 
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -107,12 +97,12 @@ public class Domainecompetence implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Competence> getCompetenceCollection() {
-        return competenceCollection;
+    public Collection<Poste> getPosteCollection() {
+        return posteCollection;
     }
 
-    public void setCompetenceCollection(Collection<Competence> competenceCollection) {
-        this.competenceCollection = competenceCollection;
+    public void setPosteCollection(Collection<Poste> posteCollection) {
+        this.posteCollection = posteCollection;
     }
 
     @Override
@@ -125,10 +115,10 @@ public class Domainecompetence implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Domainecompetence)) {
+        if (!(object instanceof Condition)) {
             return false;
         }
-        Domainecompetence other = (Domainecompetence) object;
+        Condition other = (Condition) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -137,7 +127,7 @@ public class Domainecompetence implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Domainecompetence[ id=" + id + " ]";
+        return "otherEntity.Condition[ id=" + id + " ]";
     }
     
 }

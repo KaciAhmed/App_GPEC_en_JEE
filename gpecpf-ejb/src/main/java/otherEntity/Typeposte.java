@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "typeposte",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "typeposte", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Typeposte.findAll", query = "SELECT t FROM Typeposte t")
@@ -41,6 +41,7 @@ public class Typeposte implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -60,6 +61,10 @@ public class Typeposte implements Serializable {
         this.code = code;
         this.libelle = libelle;
         this.posteCollection = posteCollection;
+    }
+    
+    public Typeposte(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Dell
  */
 @Entity
-@Table(name = "notification",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "notification", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Notification.findAll", query = "SELECT n FROM Notification n")
@@ -45,6 +45,7 @@ public class Notification implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Column(name = "date")
@@ -73,6 +74,10 @@ public class Notification implements Serializable {
         this.lien = lien;
         this.verifiee = verifiee;
         this.idemp = idemp;
+    }
+    
+    public Notification(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,34 +28,45 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "competencecompose",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "wilaya", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Competencecompose.findAll", query = "SELECT c FROM Competencecompose c")
-    , @NamedQuery(name = "Competencecompose.findById", query = "SELECT c FROM Competencecompose c WHERE c.id = :id")})
-public class Competencecompose implements Serializable {
+    @NamedQuery(name = "Wilaya.findAll", query = "SELECT w FROM Wilaya w")
+    , @NamedQuery(name = "Wilaya.findById", query = "SELECT w FROM Wilaya w WHERE w.id = :id")
+    , @NamedQuery(name = "Wilaya.findByCode", query = "SELECT w FROM Wilaya w WHERE w.code = :code")
+    , @NamedQuery(name = "Wilaya.findByNom", query = "SELECT w FROM Wilaya w WHERE w.nom = :nom")})
+public class Wilaya implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
-    @OneToMany(mappedBy = "idcomcom")
-    private Collection<Competence> competenceCollection;
-    @JoinColumn(name = "idcommer", referencedColumnName = "id")
-    @ManyToOne
-    private Competence idcommer;
+    @Size(max = 50)
+    @Column(name = "code")
+    private String code;
+    @Size(max = 255)
+    @Column(name = "nom")
+    private String nom;
+    @OneToMany(mappedBy = "idwilaya")
+    private Collection<Commune> communeCollection;
 
-    public Competencecompose() {
+    public Wilaya() {
     }
 
-    public Competencecompose(Integer id, Collection<Competence> competenceCollection, Competence idcommer) {
+    public Wilaya(Integer id) {
         this.id = id;
-        this.competenceCollection = competenceCollection;
-        this.idcommer = idcommer;
     }
 
+    public Wilaya(Integer id, String code, String nom, Collection<Commune> communeCollection) {
+        this.id = id;
+        this.code = code;
+        this.nom = nom;
+        this.communeCollection = communeCollection;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -66,21 +75,29 @@ public class Competencecompose implements Serializable {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
     @XmlTransient
-    public Collection<Competence> getCompetenceCollection() {
-        return competenceCollection;
+    public Collection<Commune> getCommuneCollection() {
+        return communeCollection;
     }
 
-    public void setCompetenceCollection(Collection<Competence> competenceCollection) {
-        this.competenceCollection = competenceCollection;
-    }
-
-    public Competence getIdcommer() {
-        return idcommer;
-    }
-
-    public void setIdcommer(Competence idcommer) {
-        this.idcommer = idcommer;
+    public void setCommuneCollection(Collection<Commune> communeCollection) {
+        this.communeCollection = communeCollection;
     }
 
     @Override
@@ -93,10 +110,10 @@ public class Competencecompose implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Competencecompose)) {
+        if (!(object instanceof Wilaya)) {
             return false;
         }
-        Competencecompose other = (Competencecompose) object;
+        Wilaya other = (Wilaya) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -105,7 +122,7 @@ public class Competencecompose implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Competencecompose[ id=" + id + " ]";
+        return "otherEntity.Wilaya[ id=" + id + " ]";
     }
     
 }

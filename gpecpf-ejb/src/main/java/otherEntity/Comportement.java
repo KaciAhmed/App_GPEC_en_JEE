@@ -27,29 +27,44 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Dell
  */
 @Entity
-@Table(name = "competencesimple",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "comportement", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Competencesimple.findAll", query = "SELECT c FROM Competencesimple c")
-    , @NamedQuery(name = "Competencesimple.findById", query = "SELECT c FROM Competencesimple c WHERE c.id = :id")})
-public class Competencesimple implements Serializable {
+    @NamedQuery(name = "Comportement.findAll", query = "SELECT c FROM Comportement c")
+    , @NamedQuery(name = "Comportement.findById", query = "SELECT c FROM Comportement c WHERE c.id = :id")
+    , @NamedQuery(name = "Comportement.findByCode", query = "SELECT c FROM Comportement c WHERE c.code = :code")
+    , @NamedQuery(name = "Comportement.findByDescription", query = "SELECT c FROM Comportement c WHERE c.description = :description")})
+public class Comportement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "idcommer", referencedColumnName = "id")
+    @Size(max = 50)
+    @Column(name = "code")
+    private String code;
+    @Size(max = 2147483647)
+    @Column(name = "description")
+    private String description;
+    @JoinColumn(name = "idcomp", referencedColumnName = "id")
     @ManyToOne
-    private Competence idcommer;
+    private Competence idcomp;
 
-    public Competencesimple() {
+    public Comportement() {
     }
 
-    public Competencesimple(Integer id, Competence idcommer) {
+    public Comportement(Integer id, String code, String description, Competence idcomp) {
         this.id = id;
-        this.idcommer = idcommer;
+        this.code = code;
+        this.description = description;
+        this.idcomp = idcomp;
+    }
+    
+    public Comportement(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -59,13 +74,29 @@ public class Competencesimple implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    public Competence getIdcommer() {
-        return idcommer;
+
+    public String getCode() {
+        return code;
     }
 
-    public void setIdcommer(Competence idcommer) {
-        this.idcommer = idcommer;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Competence getIdcomp() {
+        return idcomp;
+    }
+
+    public void setIdcomp(Competence idcomp) {
+        this.idcomp = idcomp;
     }
 
     @Override
@@ -78,10 +109,10 @@ public class Competencesimple implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Competencesimple)) {
+        if (!(object instanceof Comportement)) {
             return false;
         }
-        Competencesimple other = (Competencesimple) object;
+        Comportement other = (Comportement) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -90,7 +121,7 @@ public class Competencesimple implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Competencesimple[ id=" + id + " ]";
+        return "otherEntity.Comportement[ id=" + id + " ]";
     }
     
 }

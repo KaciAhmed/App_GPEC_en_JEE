@@ -30,15 +30,16 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "mission", schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "formation", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Mission.findAll", query = "SELECT m FROM Mission m")
-    , @NamedQuery(name = "Mission.findById", query = "SELECT m FROM Mission m WHERE m.id = :id")
-    , @NamedQuery(name = "Mission.findByCode", query = "SELECT m FROM Mission m WHERE m.code = :code")
-    , @NamedQuery(name = "Mission.findByLibelle", query = "SELECT m FROM Mission m WHERE m.libelle = :libelle")
-    , @NamedQuery(name = "Mission.findByDescription", query = "SELECT m FROM Mission m WHERE m.description = :description")})
-public class Mission implements Serializable {
+    @NamedQuery(name = "Formation.findAll", query = "SELECT f FROM Formation f")
+    , @NamedQuery(name = "Formation.findById", query = "SELECT f FROM Formation f WHERE f.id = :id")
+    , @NamedQuery(name = "Formation.findByCode", query = "SELECT f FROM Formation f WHERE f.code = :code")
+    , @NamedQuery(name = "Formation.findByDescription", query = "SELECT f FROM Formation f WHERE f.description = :description")
+    , @NamedQuery(name = "Formation.findByTypeform", query = "SELECT f FROM Formation f WHERE f.typeform = :typeform")
+    , @NamedQuery(name = "Formation.findByExigence", query = "SELECT f FROM Formation f WHERE f.exigence = :exigence")})
+public class Formation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,33 +51,37 @@ public class Mission implements Serializable {
     @Size(max = 50)
     @Column(name = "code")
     private String code;
-    @Size(max = 255)
-    @Column(name = "libelle")
-    private String libelle;
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
-    @JoinTable(name = "postemisssion", joinColumns = {
-        @JoinColumn(name = "idmission", referencedColumnName = "id")}, inverseJoinColumns = {
+    @Size(max = 255)
+    @Column(name = "typeform")
+    private String typeform;
+    @Size(max = 2147483647)
+    @Column(name = "exigence")
+    private String exigence;
+    @ManyToMany(mappedBy = "formationCollection")
+    private Collection<Employe> employeCollection;
+    @JoinTable(name = "posteformation", joinColumns = {
+        @JoinColumn(name = "idform", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "idposte", referencedColumnName = "id")})
     @ManyToMany
     private Collection<Poste> posteCollection;
-    @ManyToMany(mappedBy = "missionCollection")
-    private Collection<Activite> activiteCollection;
 
-    public Mission() {
+    public Formation() {
     }
 
-    public Mission(Integer id, String code, String libelle, String description, Collection<Poste> posteCollection, Collection<Activite> activiteCollection) {
+    public Formation(Integer id, String code, String description, String typeform, String exigence, Collection<Employe> employeCollection, Collection<Poste> posteCollection) {
         this.id = id;
         this.code = code;
-        this.libelle = libelle;
         this.description = description;
+        this.typeform = typeform;
+        this.exigence = exigence;
+        this.employeCollection = employeCollection;
         this.posteCollection = posteCollection;
-        this.activiteCollection = activiteCollection;
     }
     
-    public Mission(Integer id) {
+    public Formation(Integer id) {
         this.id = id;
     }
 
@@ -96,20 +101,37 @@ public class Mission implements Serializable {
         this.code = code;
     }
 
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTypeform() {
+        return typeform;
+    }
+
+    public void setTypeform(String typeform) {
+        this.typeform = typeform;
+    }
+
+    public String getExigence() {
+        return exigence;
+    }
+
+    public void setExigence(String exigence) {
+        this.exigence = exigence;
+    }
+
+    @XmlTransient
+    public Collection<Employe> getEmployeCollection() {
+        return employeCollection;
+    }
+
+    public void setEmployeCollection(Collection<Employe> employeCollection) {
+        this.employeCollection = employeCollection;
     }
 
     @XmlTransient
@@ -119,15 +141,6 @@ public class Mission implements Serializable {
 
     public void setPosteCollection(Collection<Poste> posteCollection) {
         this.posteCollection = posteCollection;
-    }
-
-    @XmlTransient
-    public Collection<Activite> getActiviteCollection() {
-        return activiteCollection;
-    }
-
-    public void setActiviteCollection(Collection<Activite> activiteCollection) {
-        this.activiteCollection = activiteCollection;
     }
 
     @Override
@@ -140,10 +153,10 @@ public class Mission implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Mission)) {
+        if (!(object instanceof Formation)) {
             return false;
         }
-        Mission other = (Mission) object;
+        Formation other = (Formation) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -152,7 +165,7 @@ public class Mission implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Mission[ id=" + id + " ]";
+        return "otherEntity.Formation[ id=" + id + " ]";
     }
     
 }

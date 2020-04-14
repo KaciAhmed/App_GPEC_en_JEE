@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "competence",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "competence", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Competence.findAll", query = "SELECT c FROM Competence c")
@@ -45,6 +45,7 @@ public class Competence implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -56,36 +57,37 @@ public class Competence implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
-    @JoinColumn(name = "idcomcom", referencedColumnName = "id")
+    @OneToMany(mappedBy = "idcomp")
+    private Collection<Comportement> comportementCollection;
+    @JoinColumn(name = "idcatcom", referencedColumnName = "id")
     @ManyToOne
-    private Competencecompose idcomcom;
+    private Categoriecompetence idcatcom;
     @JoinColumn(name = "iddomcom", referencedColumnName = "id")
     @ManyToOne
     private Domainecompetence iddomcom;
     @JoinColumn(name = "idtypcom", referencedColumnName = "id")
     @ManyToOne
     private Typecompetence idtypcom;
-    @OneToMany(mappedBy = "idcommer")
-    private Collection<Competencesimple> competencesimpleCollection;
-    @OneToMany(mappedBy = "idcommer")
-    private Collection<Competencecompose> competencecomposeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "competence")
     private Collection<Notecompetenceemploye> notecompetenceemployeCollection;
 
     public Competence() {
     }
 
-    public Competence(Integer id, String code, String libelle, String description, Competencecompose idcomcom, Domainecompetence iddomcom, Typecompetence idtypcom, Collection<Competencesimple> competencesimpleCollection, Collection<Competencecompose> competencecomposeCollection, Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
+    public Competence(Integer id, String code, String libelle, String description, Collection<Comportement> comportementCollection, Categoriecompetence idcatcom, Domainecompetence iddomcom, Typecompetence idtypcom, Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
         this.id = id;
         this.code = code;
         this.libelle = libelle;
         this.description = description;
-        this.idcomcom = idcomcom;
+        this.comportementCollection = comportementCollection;
+        this.idcatcom = idcatcom;
         this.iddomcom = iddomcom;
         this.idtypcom = idtypcom;
-        this.competencesimpleCollection = competencesimpleCollection;
-        this.competencecomposeCollection = competencecomposeCollection;
         this.notecompetenceemployeCollection = notecompetenceemployeCollection;
+    }
+    
+    public Competence(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -120,12 +122,21 @@ public class Competence implements Serializable {
         this.description = description;
     }
 
-    public Competencecompose getIdcomcom() {
-        return idcomcom;
+    @XmlTransient
+    public Collection<Comportement> getComportementCollection() {
+        return comportementCollection;
     }
 
-    public void setIdcomcom(Competencecompose idcomcom) {
-        this.idcomcom = idcomcom;
+    public void setComportementCollection(Collection<Comportement> comportementCollection) {
+        this.comportementCollection = comportementCollection;
+    }
+
+    public Categoriecompetence getIdcatcom() {
+        return idcatcom;
+    }
+
+    public void setIdcatcom(Categoriecompetence idcatcom) {
+        this.idcatcom = idcatcom;
     }
 
     public Domainecompetence getIddomcom() {
@@ -142,24 +153,6 @@ public class Competence implements Serializable {
 
     public void setIdtypcom(Typecompetence idtypcom) {
         this.idtypcom = idtypcom;
-    }
-
-    @XmlTransient
-    public Collection<Competencesimple> getCompetencesimpleCollection() {
-        return competencesimpleCollection;
-    }
-
-    public void setCompetencesimpleCollection(Collection<Competencesimple> competencesimpleCollection) {
-        this.competencesimpleCollection = competencesimpleCollection;
-    }
-
-    @XmlTransient
-    public Collection<Competencecompose> getCompetencecomposeCollection() {
-        return competencecomposeCollection;
-    }
-
-    public void setCompetencecomposeCollection(Collection<Competencecompose> competencecomposeCollection) {
-        this.competencecomposeCollection = competencecomposeCollection;
     }
 
     @XmlTransient

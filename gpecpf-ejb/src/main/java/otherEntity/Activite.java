@@ -15,11 +15,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "activite",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "activite", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Activite.findAll", query = "SELECT a FROM Activite a")
@@ -42,6 +43,7 @@ public class Activite implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -50,23 +52,32 @@ public class Activite implements Serializable {
     @Size(max = 255)
     @Column(name = "libelle")
     private String libelle;
-    @OneToMany(mappedBy = "idactivite")
+    @JoinTable(name = "activitetache", joinColumns = {
+        @JoinColumn(name = "idactivite", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idtache", referencedColumnName = "id")})
+    @ManyToMany
     private Collection<Tache> tacheCollection;
-    @JoinColumn(name = "idmission", referencedColumnName = "id")
-    @ManyToOne
-    private Mission idmission;
+    @JoinTable(name = "misssionactivite", joinColumns = {
+        @JoinColumn(name = "idactivite", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idmission", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<Mission> missionCollection;
 
     public Activite() {
     }
 
-    public Activite(Integer id, String code, String libelle, Collection<Tache> tacheCollection, Mission idmission) {
+    public Activite(Integer id, String code, String libelle, Collection<Tache> tacheCollection, Collection<Mission> missionCollection) {
         this.id = id;
         this.code = code;
         this.libelle = libelle;
         this.tacheCollection = tacheCollection;
-        this.idmission = idmission;
+        this.missionCollection = missionCollection;
     }
- 
+    
+    public Activite(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -100,12 +111,13 @@ public class Activite implements Serializable {
         this.tacheCollection = tacheCollection;
     }
 
-    public Mission getIdmission() {
-        return idmission;
+    @XmlTransient
+    public Collection<Mission> getMissionCollection() {
+        return missionCollection;
     }
 
-    public void setIdmission(Mission idmission) {
-        this.idmission = idmission;
+    public void setMissionCollection(Collection<Mission> missionCollection) {
+        this.missionCollection = missionCollection;
     }
 
     @Override

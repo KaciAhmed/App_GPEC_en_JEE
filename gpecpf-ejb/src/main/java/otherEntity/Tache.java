@@ -7,27 +7,28 @@ package otherEntity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Dell
  */
 @Entity
-@Table(name = "tache",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "tache", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tache.findAll", query = "SELECT t FROM Tache t")
@@ -37,9 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Tache implements Serializable {
 
     private static final long serialVersionUID = 1L;
-   @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -48,18 +50,21 @@ public class Tache implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
-    @JoinColumn(name = "idactivite", referencedColumnName = "id")
-    @ManyToOne
-    private Activite idactivite;
+    @ManyToMany(mappedBy = "tacheCollection")
+    private Collection<Activite> activiteCollection;
 
     public Tache() {
     }
 
-    public Tache(Integer id, String code, String description, Activite idactivite) {
+    public Tache(Integer id, String code, String description, Collection<Activite> activiteCollection) {
         this.id = id;
         this.code = code;
         this.description = description;
-        this.idactivite = idactivite;
+        this.activiteCollection = activiteCollection;
+    }
+    
+    public Tache(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -69,7 +74,7 @@ public class Tache implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public String getCode() {
         return code;
     }
@@ -86,12 +91,13 @@ public class Tache implements Serializable {
         this.description = description;
     }
 
-    public Activite getIdactivite() {
-        return idactivite;
+    @XmlTransient
+    public Collection<Activite> getActiviteCollection() {
+        return activiteCollection;
     }
 
-    public void setIdactivite(Activite idactivite) {
-        this.idactivite = idactivite;
+    public void setActiviteCollection(Collection<Activite> activiteCollection) {
+        this.activiteCollection = activiteCollection;
     }
 
     @Override

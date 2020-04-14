@@ -10,7 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -22,43 +21,41 @@ public class HistoriqueemployepostePK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "idemploye")
-    private Integer idemploye;
+    private int idemploye;
     @Basic(optional = false)
     @NotNull
     @Column(name = "idposte")
-    private Integer idposte;
+    private int idposte;
 
     public HistoriqueemployepostePK() {
     }
 
-    public HistoriqueemployepostePK(Integer idemploye, Integer idposte) {
+    public HistoriqueemployepostePK(int idemploye, int idposte) {
         this.idemploye = idemploye;
         this.idposte = idposte;
     }
 
-    public Integer getIdemploye() {
+    public int getIdemploye() {
         return idemploye;
     }
 
-    public void setIdemploye(Integer idemploye) {
+    public void setIdemploye(int idemploye) {
         this.idemploye = idemploye;
     }
 
-    public Integer getIdposte() {
+    public int getIdposte() {
         return idposte;
     }
 
-    public void setIdposte(Integer idposte) {
+    public void setIdposte(int idposte) {
         this.idposte = idposte;
     }
-    
-    
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idemploye != null ? idemploye.hashCode() : 0);
-        hash += (idposte != null ? idposte.hashCode() : 0);
+        hash += (int) idemploye;
+        hash += (int) idposte;
         return hash;
     }
 
@@ -69,10 +66,10 @@ public class HistoriqueemployepostePK implements Serializable {
             return false;
         }
         HistoriqueemployepostePK other = (HistoriqueemployepostePK) object;
-        if ((this.idemploye == null && other.idemploye != null) || (this.idemploye != null && !this.idemploye.equals(other.idemploye))) {
+        if (this.idemploye != other.idemploye) {
             return false;
         }
-        if ((this.idposte == null && other.idposte != null) || (this.idposte != null && !this.idposte.equals(other.idposte))) {
+        if (this.idposte != other.idposte) {
             return false;
         }
         return true;

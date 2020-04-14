@@ -17,6 +17,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,6 +26,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -33,26 +36,35 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "employe",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "employe", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Employe.findAll", query = "SELECT e FROM Employe e")
     , @NamedQuery(name = "Employe.findById", query = "SELECT e FROM Employe e WHERE e.id = :id")
     , @NamedQuery(name = "Employe.findByNom", query = "SELECT e FROM Employe e WHERE e.nom = :nom")
     , @NamedQuery(name = "Employe.findByPrenom", query = "SELECT e FROM Employe e WHERE e.prenom = :prenom")
+    , @NamedQuery(name = "Employe.findByDtNaissance", query = "SELECT e FROM Employe e WHERE e.dtNaissance = :dtNaissance")
     , @NamedQuery(name = "Employe.findByEmail", query = "SELECT e FROM Employe e WHERE e.email = :email")
     , @NamedQuery(name = "Employe.findByUsername", query = "SELECT e FROM Employe e WHERE e.username = :username")
     , @NamedQuery(name = "Employe.findByPassword", query = "SELECT e FROM Employe e WHERE e.password = :password")
     , @NamedQuery(name = "Employe.findByAdresse", query = "SELECT e FROM Employe e WHERE e.adresse = :adresse")
     , @NamedQuery(name = "Employe.findByCreerle", query = "SELECT e FROM Employe e WHERE e.creerle = :creerle")
     , @NamedQuery(name = "Employe.findByModiferle", query = "SELECT e FROM Employe e WHERE e.modiferle = :modiferle")
-    , @NamedQuery(name = "Employe.findByTel", query = "SELECT e FROM Employe e WHERE e.tel = :tel")})
+    , @NamedQuery(name = "Employe.findByGrade", query = "SELECT e FROM Employe e WHERE e.grade = :grade")
+    , @NamedQuery(name = "Employe.findByDtrecrutement", query = "SELECT e FROM Employe e WHERE e.dtrecrutement = :dtrecrutement")
+    , @NamedQuery(name = "Employe.findByClassement", query = "SELECT e FROM Employe e WHERE e.classement = :classement")
+    , @NamedQuery(name = "Employe.findByCodeservice", query = "SELECT e FROM Employe e WHERE e.codeservice = :codeservice")
+    , @NamedQuery(name = "Employe.findByCodebg", query = "SELECT e FROM Employe e WHERE e.codebg = :codebg")
+    , @NamedQuery(name = "Employe.findByTel", query = "SELECT e FROM Employe e WHERE e.tel = :tel")
+    , @NamedQuery(name = "Employe.findBySpecialit\u00e9", query = "SELECT e FROM Employe e WHERE e.specialit\u00e9 = :specialit\u00e9")
+    , @NamedQuery(name = "Employe.findByAutre", query = "SELECT e FROM Employe e WHERE e.autre = :autre")})
 public class Employe implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -61,6 +73,9 @@ public class Employe implements Serializable {
     @Size(max = 50)
     @Column(name = "prenom")
     private String prenom;
+    @Column(name = "dt_naissance")
+    @Temporal(TemporalType.DATE)
+    private Date dtNaissance;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
     @Column(name = "email")
@@ -80,19 +95,38 @@ public class Employe implements Serializable {
     @Column(name = "modiferle")
     @Temporal(TemporalType.DATE)
     private Date modiferle;
+    @Size(max = 50)
+    @Column(name = "grade")
+    private String grade;
+    @Column(name = "dtrecrutement")
+    @Temporal(TemporalType.DATE)
+    private Date dtrecrutement;
+    @Size(max = 50)
+    @Column(name = "classement")
+    private String classement;
+    @Size(max = 50)
+    @Column(name = "codeservice")
+    private String codeservice;
+    @Size(max = 50)
+    @Column(name = "codebg")
+    private String codebg;
     @Size(max = 20)
     @Column(name = "tel")
     private String tel;
-    @OneToMany(mappedBy = "creerpar")
-    private Collection<Employe> employeCollection;
-    @JoinColumn(name = "creerpar", referencedColumnName = "id")
+    @Size(max = 50)
+    @Column(name = "specialit\u00e9")
+    private String specialité;
+    @Size(max = 50)
+    @Column(name = "autre")
+    private String autre;
+    @JoinTable(name = "employeformation", joinColumns = {
+        @JoinColumn(name = "idemploye", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "idform", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<Formation> formationCollection;
+    @JoinColumn(name = "idcommune", referencedColumnName = "id")
     @ManyToOne
-    private Employe creerpar;
-    @OneToMany(mappedBy = "modifierpar")
-    private Collection<Employe> employeCollection1;
-    @JoinColumn(name = "modifierpar", referencedColumnName = "id")
-    @ManyToOne
-    private Employe modifierpar;
+    private Commune idcommune;
     @OneToMany(mappedBy = "idemploye")
     private Collection<Evaluation> evaluationCollection;
     @OneToMany(mappedBy = "idemp")
@@ -103,24 +137,34 @@ public class Employe implements Serializable {
     public Employe() {
     }
 
-    public Employe(Integer id, String nom, String prenom, String email, String username, String password, String adresse, Date creerle, Date modiferle, String tel, Collection<Employe> employeCollection, Employe creerpar, Collection<Employe> employeCollection1, Employe modifierpar, Collection<Evaluation> evaluationCollection, Collection<Notification> notificationCollection, Collection<Historiqueemployeposte> historiqueemployeposteCollection) {
+    public Employe(Integer id, String nom, String prenom, Date dtNaissance, String email, String username, String password, String adresse, Date creerle, Date modiferle, String grade, Date dtrecrutement, String classement, String codeservice, String codebg, String tel, String specialité, String autre, Collection<Formation> formationCollection, Commune idcommune, Collection<Evaluation> evaluationCollection, Collection<Notification> notificationCollection, Collection<Historiqueemployeposte> historiqueemployeposteCollection) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
+        this.dtNaissance = dtNaissance;
         this.email = email;
         this.username = username;
         this.password = password;
         this.adresse = adresse;
         this.creerle = creerle;
         this.modiferle = modiferle;
+        this.grade = grade;
+        this.dtrecrutement = dtrecrutement;
+        this.classement = classement;
+        this.codeservice = codeservice;
+        this.codebg = codebg;
         this.tel = tel;
-        this.employeCollection = employeCollection;
-        this.creerpar = creerpar;
-        this.employeCollection1 = employeCollection1;
-        this.modifierpar = modifierpar;
+        this.specialité = specialité;
+        this.autre = autre;
+        this.formationCollection = formationCollection;
+        this.idcommune = idcommune;
         this.evaluationCollection = evaluationCollection;
         this.notificationCollection = notificationCollection;
         this.historiqueemployeposteCollection = historiqueemployeposteCollection;
+    }
+    
+    public Employe(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -145,6 +189,14 @@ public class Employe implements Serializable {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public Date getDtNaissance() {
+        return dtNaissance;
+    }
+
+    public void setDtNaissance(Date dtNaissance) {
+        this.dtNaissance = dtNaissance;
     }
 
     public String getEmail() {
@@ -195,6 +247,46 @@ public class Employe implements Serializable {
         this.modiferle = modiferle;
     }
 
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public Date getDtrecrutement() {
+        return dtrecrutement;
+    }
+
+    public void setDtrecrutement(Date dtrecrutement) {
+        this.dtrecrutement = dtrecrutement;
+    }
+
+    public String getClassement() {
+        return classement;
+    }
+
+    public void setClassement(String classement) {
+        this.classement = classement;
+    }
+
+    public String getCodeservice() {
+        return codeservice;
+    }
+
+    public void setCodeservice(String codeservice) {
+        this.codeservice = codeservice;
+    }
+
+    public String getCodebg() {
+        return codebg;
+    }
+
+    public void setCodebg(String codebg) {
+        this.codebg = codebg;
+    }
+
     public String getTel() {
         return tel;
     }
@@ -203,38 +295,37 @@ public class Employe implements Serializable {
         this.tel = tel;
     }
 
+    public String getSpecialité() {
+        return specialité;
+    }
+
+    public void setSpecialité(String specialité) {
+        this.specialité = specialité;
+    }
+
+    public String getAutre() {
+        return autre;
+    }
+
+    public void setAutre(String autre) {
+        this.autre = autre;
+    }
+
     @XmlTransient
-    public Collection<Employe> getEmployeCollection() {
-        return employeCollection;
+    public Collection<Formation> getFormationCollection() {
+        return formationCollection;
     }
 
-    public void setEmployeCollection(Collection<Employe> employeCollection) {
-        this.employeCollection = employeCollection;
+    public void setFormationCollection(Collection<Formation> formationCollection) {
+        this.formationCollection = formationCollection;
     }
 
-    public Employe getCreerpar() {
-        return creerpar;
+    public Commune getIdcommune() {
+        return idcommune;
     }
 
-    public void setCreerpar(Employe creerpar) {
-        this.creerpar = creerpar;
-    }
-
-    @XmlTransient
-    public Collection<Employe> getEmployeCollection1() {
-        return employeCollection1;
-    }
-
-    public void setEmployeCollection1(Collection<Employe> employeCollection1) {
-        this.employeCollection1 = employeCollection1;
-    }
-
-    public Employe getModifierpar() {
-        return modifierpar;
-    }
-
-    public void setModifierpar(Employe modifierpar) {
-        this.modifierpar = modifierpar;
+    public void setIdcommune(Commune idcommune) {
+        this.idcommune = idcommune;
     }
 
     @XmlTransient

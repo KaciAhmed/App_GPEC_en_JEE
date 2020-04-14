@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Dell
  */
 @Entity
-@Table(name = "historiqueemployeposte",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "historiqueemployeposte", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Historiqueemployeposte.findAll", query = "SELECT h FROM Historiqueemployeposte h")
@@ -58,7 +58,7 @@ public class Historiqueemployeposte implements Serializable {
         this.historiqueemployepostePK = historiqueemployepostePK;
     }
 
-    public Historiqueemployeposte(Integer idemploye, Integer idposte) {
+    public Historiqueemployeposte(int idemploye, int idposte) {
         this.historiqueemployepostePK = new HistoriqueemployepostePK(idemploye, idposte);
     }
 
