@@ -43,7 +43,6 @@ public class Commune implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -63,15 +62,6 @@ public class Commune implements Serializable {
     public Commune() {
     }
 
-    public Commune(Integer id, String code, String nom, Collection<Uniteorganisationnel> uniteorganisationnelCollection, Collection<Employe> employeCollection, Wilaya idwilaya) {
-        this.id = id;
-        this.code = code;
-        this.nom = nom;
-        this.uniteorganisationnelCollection = uniteorganisationnelCollection;
-        this.employeCollection = employeCollection;
-        this.idwilaya = idwilaya;
-    }
-    
     public Commune(Integer id) {
         this.id = id;
     }

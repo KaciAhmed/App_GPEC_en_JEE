@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
 public class HistoriqueemployepostePK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idemploye")
     private int idemploye;
     @Basic(optional = false)

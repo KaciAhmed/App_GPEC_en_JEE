@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*package dz.elit.gpecpf.competence.controleur;
+package dz.elit.gpecpf.competence.controleur;
 
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
@@ -24,7 +24,7 @@ import otherEntity.Domainecompetence;
 /**
  *
  * @author Dell
- *//*
+ */
 @ManagedBean
 
 public class AddDomaineCompetenceController extends AbstractController implements Serializable {
@@ -42,7 +42,8 @@ public class AddDomaineCompetenceController extends AbstractController implement
             initAddDomaineCompetence();
     }
         public void create() {
-        try {           
+        try {      
+           
                 domaineFacade.create(domaine);
                // initAddDomaineCompetence();
                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Domaine enregistré avec succè");
@@ -69,4 +70,3 @@ public class AddDomaineCompetenceController extends AbstractController implement
     }
 
 }
-*/

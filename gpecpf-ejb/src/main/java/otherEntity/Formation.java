@@ -45,7 +45,6 @@ public class Formation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -71,16 +70,6 @@ public class Formation implements Serializable {
     public Formation() {
     }
 
-    public Formation(Integer id, String code, String description, String typeform, String exigence, Collection<Employe> employeCollection, Collection<Poste> posteCollection) {
-        this.id = id;
-        this.code = code;
-        this.description = description;
-        this.typeform = typeform;
-        this.exigence = exigence;
-        this.employeCollection = employeCollection;
-        this.posteCollection = posteCollection;
-    }
-    
     public Formation(Integer id) {
         this.id = id;
     }

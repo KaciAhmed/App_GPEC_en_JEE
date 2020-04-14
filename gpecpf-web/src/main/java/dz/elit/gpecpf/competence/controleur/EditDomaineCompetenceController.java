@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- *//*
+ */
 package dz.elit.gpecpf.competence.controleur;
 
 import dz.elit.gpecpf.commun.util.AbstractController;
@@ -21,7 +21,7 @@ import otherEntity.Domainecompetence;
 /**
  *
  * @author Dell
- *//*
+ */
 @ManagedBean
 @ViewScoped
 public class EditDomaineCompetenceController  extends AbstractController implements Serializable{
@@ -50,6 +50,7 @@ private DomaineCompetenceFacade domaineCompFacade;
         } catch (Exception ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+            
         }
     }
         
@@ -62,8 +63,5 @@ private DomaineCompetenceFacade domaineCompFacade;
     public void setDomaine(Domainecompetence domaine) {
         this.domaine = domaine;
     }
-
- 
-        
+     
 }
-*/

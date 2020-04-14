@@ -43,7 +43,6 @@ public class Categoriecompetence implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -63,15 +62,6 @@ public class Categoriecompetence implements Serializable {
     public Categoriecompetence() {
     }
 
-    public Categoriecompetence(Integer id, String code, String libelle, Collection<Categoriecompetence> categoriecompetenceCollection, Categoriecompetence idcatmere, Collection<Competence> competenceCollection) {
-        this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-        this.categoriecompetenceCollection = categoriecompetenceCollection;
-        this.idcatmere = idcatmere;
-        this.competenceCollection = competenceCollection;
-    }
-    
     public Categoriecompetence(Integer id) {
         this.id = id;
     }

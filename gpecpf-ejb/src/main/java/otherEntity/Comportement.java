@@ -40,7 +40,6 @@ public class Comportement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -56,13 +55,6 @@ public class Comportement implements Serializable {
     public Comportement() {
     }
 
-    public Comportement(Integer id, String code, String description, Competence idcomp) {
-        this.id = id;
-        this.code = code;
-        this.description = description;
-        this.idcomp = idcomp;
-    }
-    
     public Comportement(Integer id) {
         this.id = id;
     }

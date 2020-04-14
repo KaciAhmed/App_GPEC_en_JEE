@@ -43,7 +43,6 @@ public class Compagneevaluation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Column(name = "datedeb")
@@ -62,13 +61,6 @@ public class Compagneevaluation implements Serializable {
         this.id = id;
     }
 
-    public Compagneevaluation(Integer id, Date datedeb, Date datefin, Collection<Evaluation> evaluationCollection) {
-        this.id = id;
-        this.datedeb = datedeb;
-        this.datefin = datefin;
-        this.evaluationCollection = evaluationCollection;
-    }
-    
     public Integer getId() {
         return id;
     }

@@ -58,7 +58,6 @@ public class Poste implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -124,32 +123,6 @@ public class Poste implements Serializable {
     public Poste() {
     }
 
-    public Poste(Integer id, String code, String denomination, String defsomaire, Integer anneeexperience, String denomant, String classant, String codeant, String qualrequise, String classement, Date datecreation, Date datemaj, Date dateelabpec, Collection<Mission> missionCollection, Collection<Moyen> moyenCollection, Collection<Condition> conditionCollection, Collection<Formation> formationCollection, Collection<Historiqueemployeposte> historiqueemployeposteCollection, Emploi idemploi, Collection<Poste> posteCollection, Poste idpostmere, Typeposte idtypeposte, Uniteorganisationnel iduo) {
-        this.id = id;
-        this.code = code;
-        this.denomination = denomination;
-        this.defsomaire = defsomaire;
-        this.anneeexperience = anneeexperience;
-        this.denomant = denomant;
-        this.classant = classant;
-        this.codeant = codeant;
-        this.qualrequise = qualrequise;
-        this.classement = classement;
-        this.datecreation = datecreation;
-        this.datemaj = datemaj;
-        this.dateelabpec = dateelabpec;
-        this.missionCollection = missionCollection;
-        this.moyenCollection = moyenCollection;
-        this.conditionCollection = conditionCollection;
-        this.formationCollection = formationCollection;
-        this.historiqueemployeposteCollection = historiqueemployeposteCollection;
-        this.idemploi = idemploi;
-        this.posteCollection = posteCollection;
-        this.idpostmere = idpostmere;
-        this.idtypeposte = idtypeposte;
-        this.iduo = iduo;
-    }
-    
     public Poste(Integer id) {
         this.id = id;
     }

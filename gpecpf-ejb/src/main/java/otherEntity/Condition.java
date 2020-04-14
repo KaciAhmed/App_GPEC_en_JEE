@@ -43,7 +43,6 @@ public class Condition implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -61,13 +60,6 @@ public class Condition implements Serializable {
     public Condition() {
     }
 
-    public Condition(Integer id, String code, String description, Collection<Poste> posteCollection) {
-        this.id = id;
-        this.code = code;
-        this.description = description;
-        this.posteCollection = posteCollection;
-    }
-    
     public Condition(Integer id) {
         this.id = id;
     }

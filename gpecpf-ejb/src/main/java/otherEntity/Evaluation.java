@@ -48,7 +48,6 @@ public class Evaluation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Column(name = "dateeva")
@@ -74,17 +73,6 @@ public class Evaluation implements Serializable {
     public Evaluation() {
     }
 
-    public Evaluation(Integer id, Date dateeva, String archive, String etat, Compagneevaluation idcompagne, Employe idemploye, Collection<Avis> avisCollection, Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
-        this.id = id;
-        this.dateeva = dateeva;
-        this.archive = archive;
-        this.etat = etat;
-        this.idcompagne = idcompagne;
-        this.idemploye = idemploye;
-        this.avisCollection = avisCollection;
-        this.notecompetenceemployeCollection = notecompetenceemployeCollection;
-    }
-    
     public Evaluation(Integer id) {
         this.id = id;
     }

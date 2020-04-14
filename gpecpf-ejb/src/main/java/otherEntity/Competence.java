@@ -45,7 +45,6 @@ public class Competence implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -74,18 +73,6 @@ public class Competence implements Serializable {
     public Competence() {
     }
 
-    public Competence(Integer id, String code, String libelle, String description, Collection<Comportement> comportementCollection, Categoriecompetence idcatcom, Domainecompetence iddomcom, Typecompetence idtypcom, Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
-        this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-        this.description = description;
-        this.comportementCollection = comportementCollection;
-        this.idcatcom = idcatcom;
-        this.iddomcom = iddomcom;
-        this.idtypcom = idtypcom;
-        this.notecompetenceemployeCollection = notecompetenceemployeCollection;
-    }
-    
     public Competence(Integer id) {
         this.id = id;
     }

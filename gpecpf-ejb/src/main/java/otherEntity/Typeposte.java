@@ -41,7 +41,6 @@ public class Typeposte implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -56,13 +55,6 @@ public class Typeposte implements Serializable {
     public Typeposte() {
     }
 
-    public Typeposte(Integer id, String code, String libelle, Collection<Poste> posteCollection) {
-        this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-        this.posteCollection = posteCollection;
-    }
-    
     public Typeposte(Integer id) {
         this.id = id;
     }

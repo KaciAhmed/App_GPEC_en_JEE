@@ -41,7 +41,6 @@ public class Wilaya implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -60,13 +59,6 @@ public class Wilaya implements Serializable {
         this.id = id;
     }
 
-    public Wilaya(Integer id, String code, String nom, Collection<Commune> communeCollection) {
-        this.id = id;
-        this.code = code;
-        this.nom = nom;
-        this.communeCollection = communeCollection;
-    }
-    
     public Integer getId() {
         return id;
     }

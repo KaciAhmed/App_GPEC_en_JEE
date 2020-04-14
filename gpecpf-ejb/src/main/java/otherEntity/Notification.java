@@ -45,7 +45,6 @@ public class Notification implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Column(name = "date")
@@ -67,15 +66,6 @@ public class Notification implements Serializable {
     public Notification() {
     }
 
-    public Notification(Integer id, Date date, String libelle, String lien, String verifiee, Employe idemp) {
-        this.id = id;
-        this.date = date;
-        this.libelle = libelle;
-        this.lien = lien;
-        this.verifiee = verifiee;
-        this.idemp = idemp;
-    }
-    
     public Notification(Integer id) {
         this.id = id;
     }

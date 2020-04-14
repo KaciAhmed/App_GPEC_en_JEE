@@ -41,7 +41,6 @@ public class Tache implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -56,13 +55,6 @@ public class Tache implements Serializable {
     public Tache() {
     }
 
-    public Tache(Integer id, String code, String description, Collection<Activite> activiteCollection) {
-        this.id = id;
-        this.code = code;
-        this.description = description;
-        this.activiteCollection = activiteCollection;
-    }
-    
     public Tache(Integer id) {
         this.id = id;
     }

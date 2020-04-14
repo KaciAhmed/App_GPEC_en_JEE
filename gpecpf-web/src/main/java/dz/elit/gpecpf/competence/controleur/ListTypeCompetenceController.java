@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- *//*
+ */
 package dz.elit.gpecpf.competence.controleur;
 
 import dz.elit.gpecpf.commun.controller.Imprimer;
@@ -31,7 +31,7 @@ import otherEntity.Typecompetence;
 /**
  *
  * @author Dell
- *//*
+ */
 @ManagedBean
 @ViewScoped
 public class ListTypeCompetenceController  extends AbstractController implements Serializable {
@@ -162,4 +162,3 @@ public class ListTypeCompetenceController  extends AbstractController implements
            
     
 }
-*/

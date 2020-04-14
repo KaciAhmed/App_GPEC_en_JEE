@@ -44,7 +44,6 @@ public class Avis implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 2147483647)
@@ -63,14 +62,6 @@ public class Avis implements Serializable {
     public Avis() {
     }
 
-    public Avis(Integer id, String avis, String hote, Date dateavis, Evaluation idevaluation) {
-        this.id = id;
-        this.avis = avis;
-        this.hote = hote;
-        this.dateavis = dateavis;
-        this.idevaluation = idevaluation;
-    }
-    
     public Avis(Integer id) {
         this.id = id;
     }

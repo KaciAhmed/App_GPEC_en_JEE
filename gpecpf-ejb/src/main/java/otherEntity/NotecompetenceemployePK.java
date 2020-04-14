@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
 public class NotecompetenceemployePK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idevaluation")
     private int idevaluation;
     @Basic(optional = false)

@@ -42,7 +42,6 @@ public class Emploi implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -60,14 +59,6 @@ public class Emploi implements Serializable {
     public Emploi() {
     }
 
-    public Emploi(Integer id, String code, String libelle, String description, Collection<Poste> posteCollection) {
-        this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-        this.description = description;
-        this.posteCollection = posteCollection;
-    }
-    
     public Emploi(Integer id) {
         this.id = id;
     }

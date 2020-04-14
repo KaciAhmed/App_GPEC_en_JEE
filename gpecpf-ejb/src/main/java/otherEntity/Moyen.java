@@ -43,7 +43,6 @@ public class Moyen implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -61,13 +60,6 @@ public class Moyen implements Serializable {
     public Moyen() {
     }
 
-    public Moyen(Integer id, String code, String description, Collection<Poste> posteCollection) {
-        this.id = id;
-        this.code = code;
-        this.description = description;
-        this.posteCollection = posteCollection;
-    }
-    
     public Moyen(Integer id) {
         this.id = id;
     }

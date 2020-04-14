@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Dell
  */
 @Entity
-@Table(name = "uniteorganisationnel",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "uniteorganisationnel", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Uniteorganisationnel.findAll", query = "SELECT u FROM Uniteorganisationnel u")
@@ -51,7 +51,6 @@ public class Uniteorganisationnel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -85,19 +84,6 @@ public class Uniteorganisationnel implements Serializable {
     public Uniteorganisationnel() {
     }
 
-    public Uniteorganisationnel(Integer id, String code, String denomination, Double capitalsocial, Date datedebactivite, String email, String formejuridique, String tel, Commune idcommune, Collection<Poste> posteCollection) {
-        this.id = id;
-        this.code = code;
-        this.denomination = denomination;
-        this.capitalsocial = capitalsocial;
-        this.datedebactivite = datedebactivite;
-        this.email = email;
-        this.formejuridique = formejuridique;
-        this.tel = tel;
-        this.idcommune = idcommune;
-        this.posteCollection = posteCollection;
-    }
-    
     public Uniteorganisationnel(Integer id) {
         this.id = id;
     }

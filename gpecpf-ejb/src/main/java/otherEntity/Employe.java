@@ -64,7 +64,6 @@ public class Employe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -137,32 +136,6 @@ public class Employe implements Serializable {
     public Employe() {
     }
 
-    public Employe(Integer id, String nom, String prenom, Date dtNaissance, String email, String username, String password, String adresse, Date creerle, Date modiferle, String grade, Date dtrecrutement, String classement, String codeservice, String codebg, String tel, String specialité, String autre, Collection<Formation> formationCollection, Commune idcommune, Collection<Evaluation> evaluationCollection, Collection<Notification> notificationCollection, Collection<Historiqueemployeposte> historiqueemployeposteCollection) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dtNaissance = dtNaissance;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.adresse = adresse;
-        this.creerle = creerle;
-        this.modiferle = modiferle;
-        this.grade = grade;
-        this.dtrecrutement = dtrecrutement;
-        this.classement = classement;
-        this.codeservice = codeservice;
-        this.codebg = codebg;
-        this.tel = tel;
-        this.specialité = specialité;
-        this.autre = autre;
-        this.formationCollection = formationCollection;
-        this.idcommune = idcommune;
-        this.evaluationCollection = evaluationCollection;
-        this.notificationCollection = notificationCollection;
-        this.historiqueemployeposteCollection = historiqueemployeposteCollection;
-    }
-    
     public Employe(Integer id) {
         this.id = id;
     }

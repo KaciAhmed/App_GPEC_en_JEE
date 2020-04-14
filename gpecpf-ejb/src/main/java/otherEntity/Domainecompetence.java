@@ -42,7 +42,6 @@ public class Domainecompetence implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -59,16 +58,6 @@ public class Domainecompetence implements Serializable {
 
     public Domainecompetence() {
     }
-
-    public Domainecompetence(Integer id, String code, String libelle, String description, Collection<Competence> competenceCollection) {
-        this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-        this.description = description;
-        this.competenceCollection = competenceCollection;
-    }
-    
-    
 
     public Domainecompetence(Integer id) {
         this.id = id;

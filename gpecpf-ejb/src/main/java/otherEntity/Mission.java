@@ -44,7 +44,6 @@ public class Mission implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
@@ -67,15 +66,6 @@ public class Mission implements Serializable {
     public Mission() {
     }
 
-    public Mission(Integer id, String code, String libelle, String description, Collection<Poste> posteCollection, Collection<Activite> activiteCollection) {
-        this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-        this.description = description;
-        this.posteCollection = posteCollection;
-        this.activiteCollection = activiteCollection;
-    }
-    
     public Mission(Integer id) {
         this.id = id;
     }
