@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/templateRefer.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_modifier_tache}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_tache}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_tache}" href="listTac.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_modifier}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="Fiche Tache" />
+            <p:messages id="msgs" globalOnly="true" showDetail="true" />
+            <p:panel id="panel" styleClass="no-border row">
+                <a:row>
+                    <a:column span="6">
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8">
+                            <p:inputText id="cod" required="true" value="#{editTacheController.tache.code}" />
+                            <p:message for="cod" />
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="6">
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
+                        <a:column span="8">
+                            <p:inputTextarea id="desc" required="true" cols="60"
+                                value="#{editTacheController.tache.description}" />
+                            <p:message for="desc" />
+                        </a:column>
+                    </a:column>
+                </a:row>
+            </p:panel>
+            <a:row>
+                <p:commandButton action="#{editTacheController.edit()}" value="#{bundleCommun.btn_valider}"
+                    icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listTac" icon="fa fa-reply"
+                    styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>

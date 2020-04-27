@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateRefer.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_liste_mission}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_mission}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_mission}" href="listMiss.xhtml" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">          
+            <a:row >  
+                <a:pagetitle value="Missions" />
+                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" outcome="addMiss" title="#{bundleReferentiel.titre_nouveau_mission}" rendered="#{mySessionController.isUserInRole('REFER_006_001')}" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            </a:row>
+            <a:row>
+                <a:panel header=" #{bundleReferentiel.lien_liste_mission}" iconheader="fa fa-list-ul">
+                    <p:dataTable binding="#{listMissionController.dataTable}" value="#{listMissionController.lazyMission}" var="mission" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" lazy="true" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="true" rows="10">
+                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{mission.code}" filterMatchMode="contains" width="200" >
+                            <h:outputText value="#{mission.code}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{mission.libelle}" filterMatchMode="contains">
+                            <h:outputText value="#{mission.libelle}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{mission.description}" filterMatchMode="contains">
+                            <h:outputText value="#{mission.description}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleCommun.lbl_actions}" width="120">
+                            <p:commandButton  icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" ajax="false" action="showMiss" rendered="#{mySessionController.isUserInRole('REFER_006_005')}" >  
+                                <f:param name="id" value="#{mission.id}"/>
+                            </p:commandButton>
+                            <p:commandButton icon="fa fa-pencil-square-o"  title="#{bundleCommun.titre_modification}" ajax="false" action="editMiss" rendered="#{mySessionController.isUserInRole('REFER_006_002')}">
+                                <f:param name="id" value="#{mission.id}"/>
+                            </p:commandButton>  
+                            <p:commandButton icon="fa fa-times" actionListener="#{listMissionController.remove(mission)}" update=":form" title="#{bundleCommun.titre_suppression}" rendered="#{mySessionController.isUserInRole('REFER_006_003')}" >
+                                <p:confirm header="#{bundleCommun.titre_confirmation}" message="#{bundleCommun.msg_confirmez_vs_action}" icon="ui-icon-alert" />
+                            </p:commandButton>  
+                        </p:column>
+                    </p:dataTable>
+                </a:panel>
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>
