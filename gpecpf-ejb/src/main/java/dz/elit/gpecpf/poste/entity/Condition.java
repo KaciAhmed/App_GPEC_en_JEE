@@ -3,67 +3,59 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otherEntity;
+package dz.elit.gpecpf.poste.entity;
 
-import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import dz.elit.gpecpf.commun.util.StaticUtil;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dell
+ * @author N
  */
 @Entity
-@Table(name = "condition", schema = StaticUtil.ADMINISTRATION_SCHEMA)
-@XmlRootElement
+@Table(name = "condition",schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @NamedQueries({
-    @NamedQuery(name = "Condition.findAll", query = "SELECT c FROM Condition c")
-    , @NamedQuery(name = "Condition.findById", query = "SELECT c FROM Condition c WHERE c.id = :id")
-    , @NamedQuery(name = "Condition.findByCode", query = "SELECT c FROM Condition c WHERE c.code = :code")
-    , @NamedQuery(name = "Condition.findByDescription", query = "SELECT c FROM Condition c WHERE c.description = :description")})
+    @NamedQuery(name = "Condition.findByCodeWithoutCurrentId", query = "SELECT t FROM Condition t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
 public class Condition implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @Basic(optional = false)    
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "code")
+    @Size(min = 1, max = 20)
+    @Column(name = "code",nullable=false,unique=true,length = 20)
+    @NotNull
     private String code;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "description")
     private String description;
-    @JoinTable(name = "postecondition", joinColumns = {
-        @JoinColumn(name = "idcond", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "idposte", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Poste> posteCollection;
-
+    
     public Condition() {
     }
 
     public Condition(Integer id) {
         this.id = id;
     }
-
+    
+    public Condition(Integer id, String code, String description) {
+        this.id = id;
+        this.code = code;
+        this.description = description;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -85,18 +77,9 @@ public class Condition implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+		this.description = description;
     }
-
-    @XmlTransient
-    public Collection<Poste> getPosteCollection() {
-        return posteCollection;
-    }
-
-    public void setPosteCollection(Collection<Poste> posteCollection) {
-        this.posteCollection = posteCollection;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -119,7 +102,7 @@ public class Condition implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Condition[ id=" + id + " ]";
+        return "dz.elit.gpecpf.poste.entity.Condition[ id=" + id + " ]";
     }
     
 }

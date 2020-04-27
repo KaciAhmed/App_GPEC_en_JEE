@@ -1,12 +1,76 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateRefer.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:a="http://elit.dz/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
 
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_consulter_mission}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_mission}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_mission}" href="listMiss.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="Fiche Mission" />
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>
+            <p:panel id="panel" styleClass="no-border row">
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="cod"  value="#{editMissionController.mission.code}" /> 
+                        </a:column>
+                    </a:column> 
+                </a:row>
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="lib"  value="#{editMissionController.mission.libelle}" /> 
+                        </a:column>
+                    </a:column> 
+                </a:row>
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
+                        <a:column span="8" >
+                            <p:inputTextarea id="desc" cols="60" value="#{editMissionController.mission.description}" autoResize="false" />
+                        </a:column>
+                    </a:column>
+                </a:row>   
+                <a:row style="height: 300px">
+                    <a:column span="12">
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.lbl_activites}">
+                                <a:panel header=" #{bundleReferentiel.lien_liste_activite}" iconheader="fa fa-list-ul">
+                                    <p:dataTable id="tableActivites" value="#{editMissionController.mission.listActivites}" var="activite" rowKey="#{activite.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{activite.code}" filterMatchMode="contains">
+                                            <h:outputText value="#{activite.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{activite.libelle}" filterMatchMode="contains">
+                                            <h:outputText value="#{activite.libelle}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>  
+                    </a:column>
+                </a:row> 
+            </p:panel>
+
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listMiss" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>

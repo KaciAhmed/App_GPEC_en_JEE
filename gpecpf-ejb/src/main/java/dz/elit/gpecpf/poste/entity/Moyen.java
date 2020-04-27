@@ -3,67 +3,65 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otherEntity;
+package dz.elit.gpecpf.poste.entity;
 
-import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.Table;
+import dz.elit.gpecpf.commun.util.StaticUtil;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import otherEntity.Poste;
 
 /**
  *
- * @author Dell
+ * @author N
  */
 @Entity
-@Table(name = "moyen", schema = StaticUtil.ADMINISTRATION_SCHEMA)
-@XmlRootElement
+@Table(name = "moyen",schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @NamedQueries({
-    @NamedQuery(name = "Moyen.findAll", query = "SELECT m FROM Moyen m")
-    , @NamedQuery(name = "Moyen.findById", query = "SELECT m FROM Moyen m WHERE m.id = :id")
-    , @NamedQuery(name = "Moyen.findByCode", query = "SELECT m FROM Moyen m WHERE m.code = :code")
-    , @NamedQuery(name = "Moyen.findByDescription", query = "SELECT m FROM Moyen m WHERE m.description = :description")})
+    @NamedQuery(name = "Moyen.findByCodeWithoutCurrentId", query = "SELECT t FROM Moyen t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
 public class Moyen implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @Basic(optional = false)    
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "code")
+    @Size(min = 1, max = 20)
+    @Column(name = "code",nullable=false,unique=true,length = 20)
+    @NotNull
     private String code;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "description")
     private String description;
-    @JoinTable(name = "postemoyen", joinColumns = {
-        @JoinColumn(name = "idmoyen", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "idposte", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Poste> posteCollection;
-
+	
+	@ManyToMany(mappedBy = "listMoyen")
+	private List<Poste> listPoste;
+    
     public Moyen() {
     }
 
     public Moyen(Integer id) {
         this.id = id;
     }
-
+    
+    public Moyen(Integer id, String code, String description) {
+        this.id = id;
+        this.code = code;
+        this.description = description;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -85,18 +83,9 @@ public class Moyen implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+		this.description = description;
     }
-
-    @XmlTransient
-    public Collection<Poste> getPosteCollection() {
-        return posteCollection;
-    }
-
-    public void setPosteCollection(Collection<Poste> posteCollection) {
-        this.posteCollection = posteCollection;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -119,7 +108,7 @@ public class Moyen implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Moyen[ id=" + id + " ]";
+        return "dz.elit.gpecpf.poste.entity.Moyen[ id=" + id + " ]";
     }
     
 }

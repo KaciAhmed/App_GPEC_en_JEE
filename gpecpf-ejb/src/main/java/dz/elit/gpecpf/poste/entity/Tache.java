@@ -3,62 +3,59 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otherEntity;
+package dz.elit.gpecpf.poste.entity;
 
-import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import dz.elit.gpecpf.commun.util.StaticUtil;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dell
+ * @author N
  */
 @Entity
-@Table(name = "tache", schema = StaticUtil.ADMINISTRATION_SCHEMA)
-@XmlRootElement
+@Table(name = "tache",schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @NamedQueries({
-    @NamedQuery(name = "Tache.findAll", query = "SELECT t FROM Tache t")
-    , @NamedQuery(name = "Tache.findById", query = "SELECT t FROM Tache t WHERE t.id = :id")
-    , @NamedQuery(name = "Tache.findByCode", query = "SELECT t FROM Tache t WHERE t.code = :code")
-    , @NamedQuery(name = "Tache.findByDescription", query = "SELECT t FROM Tache t WHERE t.description = :description")})
+    @NamedQuery(name = "Tache.findByCodeWithoutCurrentId", query = "SELECT t FROM Tache t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
 public class Tache implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @Basic(optional = false)    
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
-    @Column(name = "code")
+    @Size(min = 1, max = 20)
+    @Column(name = "code",nullable=false,unique=true,length = 20)
+    @NotNull
     private String code;
-    @Size(max = 2147483647)
+    @Size(max = 255)
     @Column(name = "description")
     private String description;
-    @ManyToMany(mappedBy = "tacheCollection")
-    private Collection<Activite> activiteCollection;
-
+    
     public Tache() {
     }
 
     public Tache(Integer id) {
         this.id = id;
     }
-
+    
+    public Tache(Integer id, String code, String description) {
+        this.id = id;
+        this.code = code;
+        this.description = description;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -80,18 +77,9 @@ public class Tache implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+		this.description = description;
     }
-
-    @XmlTransient
-    public Collection<Activite> getActiviteCollection() {
-        return activiteCollection;
-    }
-
-    public void setActiviteCollection(Collection<Activite> activiteCollection) {
-        this.activiteCollection = activiteCollection;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -114,7 +102,7 @@ public class Tache implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Tache[ id=" + id + " ]";
+        return "dz.elit.gpecpf.poste.entity.Tache[ id=" + id + " ]";
     }
     
 }

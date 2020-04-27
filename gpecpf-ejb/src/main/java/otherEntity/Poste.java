@@ -6,6 +6,9 @@
 package otherEntity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
+import dz.elit.gpecpf.poste.entity.Condition;
+import dz.elit.gpecpf.poste.entity.Mission;
+import dz.elit.gpecpf.poste.entity.Moyen;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;

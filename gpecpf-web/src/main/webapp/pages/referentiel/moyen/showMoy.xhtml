@@ -8,27 +8,27 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="Title">
-        #{bundleReferentiel.titre_consulter_tache}
+        #{bundleReferentiel.titre_consulter_moyen}
     </ui:define>
 
     <ui:define name="breadCrumb">
         <a:breadcrumb>
-            <a:menuitem value="#{bundleReferentiel.titre_gestion_tache}" />
-            <a:menuitem value="#{bundleReferentiel.lien_liste_tache}" href="listTac.xhtml" />
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_moyen}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_moyen}" href="listMoy.xhtml" />
             <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
         </a:breadcrumb>
     </ui:define>
 
     <ui:define name="MyContent">
         <h:form id="form">
-            <a:pagetitle value="Fiche Tache" />
+            <a:pagetitle value="Fiche Moyen" />
             <p:messages id="msgs" globalOnly="true" showDetail="true"/>
             <p:panel id="panel" styleClass="no-border row">
                 <a:row>
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="cod"  value="#{editTacheController.tache.code}" /> 
+                            <p:inputText id="cod"  value="#{editMoyenController.moyen.code}" /> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -36,14 +36,14 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
                         <a:column span="8" >
-                            <p:inputTextarea id="desc" cols="60" value="#{editTacheController.tache.description}" autoResize="false" />
+                            <p:inputTextarea id="desc" cols="60" value="#{editMoyenController.moyen.description}" autoResize="false" />
                         </a:column>
                     </a:column>
                 </a:row>                
             </p:panel>
 
             <a:row>
-                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listTac" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listMoy" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
             </a:row>
         </h:form>
     </ui:define>
