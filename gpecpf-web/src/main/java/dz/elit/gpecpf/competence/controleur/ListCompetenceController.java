@@ -59,7 +59,7 @@ public class ListCompetenceController extends AbstractController implements Seri
      @Override //PostConstruct
     protected void initController() 
     {    
-      //  findList()  ;  
+        findList()  ;  
     }
 
     public ListCompetenceController(String code, String libelle, String description) {

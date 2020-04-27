@@ -31,7 +31,7 @@
                     <a:column span="7" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="code" required="true" value="#{addProfilController.profil.libelle}" /> 
+                            <p:inputText id="code" required="true" value="#{addCompetenceController.comp.code}" /> 
                             <p:message for="code"/>                                    
                         </a:column>
                     </a:column>
@@ -40,7 +40,7 @@
                     <a:column span="7" >
                         <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="lib" required="true" value="#{addProfilController.profil.libelle}" /> 
+                            <p:inputText id="lib" required="true" value="#{addCompetenceController.comp.libelle}" /> 
                             <p:message for="lib"/>                                    
                         </a:column>
                     </a:column>
@@ -50,34 +50,8 @@
                     <a:column span="7" >
                         <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
                         <a:column span="8" >
-                            <p:inputTextarea id="desc" required="true"  cols="60" value="#{addProfilController.profil.description}" autoResize="false" />
+                            <p:inputTextarea id="desc" required="true"  cols="60" value="#{addCompetenceController.comp.description}" autoResize="false" />
                             <p:message for="desc"/>                                    
-                        </a:column>
-                    </a:column>
-                </a:row>
-                 <a:row>
-                    <a:column span="7" >
-                        <a:label value="#{bundleReferentiel.lbl_compétence_composé}" span="4" />
-                        <a:column span="8" >
-                            <p:selectOneMenu id="est_compose" value="#{addProfilController.module.id}" required="true"  >
-                                    <f:selectItem   itemLabel="#{bundleReferentiel.lbl_compétence_est_composé}" itemValue="" />
-                                    <f:selectItem   itemLabel="Oui" itemValue="oui" />
-                                    <f:selectItem   itemLabel="non" itemValue="non" />
-                                </p:selectOneMenu>
-                            <p:message for="est_compose"/> 
-                        </a:column>
-                    </a:column>
-                </a:row>
-                <a:row style="margin-bottom: 2%">
-                    <a:column span="7" >
-                        <a:label value="#{bundleReferentiel.lbl_sous_compétence_q}" span="4" />
-                        <a:column span="8" >
-                            <p:selectOneMenu id="est_sous_comp" value="#{addProfilController.module.id}" required="true"  >
-                                    <f:selectItem   itemLabel="#{bundleReferentiel.lbl_est_sous_compétence}" itemValue="" />
-                                    <f:selectItem   itemLabel="Oui" itemValue="oui" />
-                                    <f:selectItem   itemLabel="non" itemValue="non" />
-                                </p:selectOneMenu>
-                            <p:message for="est_sous_comp"/> 
                         </a:column>
                     </a:column>
                 </a:row>
@@ -87,17 +61,14 @@
                             <p:tab title="Domaine de compétence">
                                 <a:panel header=" #{bundleReferentiel.titre_liste_domaine_competence}" iconheader="fa fa-list-ul">
                                     <f:facet name="header">                                            
-                                        <p:commandButton title="#{bundleAdmin.titre_ajouter_privilege}"  icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogPrivileges').show();"/> 
+                                        <p:commandButton title="#{bundleReferentiel.titre_ajouter_domaine_competence}"  icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogDomaine').show();"/> 
                                     </f:facet>
-                                    <p:dataTable  id="tablePrivileges" value="#{addProfilController.profil.listAdminPrivilege}" var="privilege" rowKey="#{privilege.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
-                                        <p:column headerText="#{bundleAdmin.lbl_code}" filterBy="#{privilege.code}" filterMatchMode="contains">
-                                            <h:outputText value="#{privilege.code}"/>
+                                    <p:dataTable  id="tableDomaine" value="#{addCompetenceController.comp.iddomcom}" var="domaine" rowKey="#{domaine.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleCommun.lbl_code}" >
+                                            <h:outputText value="#{domaine.code}"/>
                                         </p:column>
-                                        <p:column headerText="#{bundleAdmin.lbl_description}" filterBy="#{privilege.description}" filterMatchMode="contains">
-                                            <h:outputText value="#{privilege.description}"/>
-                                        </p:column>
-                                        <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
-                                            <p:commandButton icon="fa fa-times" actionListener="#{addProfilController.removePrivilegesForProfil(privilege)}" update=":form:tabView:tablePrivileges :FormDialog:tablePrivilegesSeect" process="@this"/>
+                                        <p:column headerText="#{bundleCommun.lbl_liblle}" >
+                                            <h:outputText value="#{domaine.libelle}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </a:panel>
@@ -105,20 +76,14 @@
                             <p:tab title="Type compétence">
                                 <a:panel header=" #{bundleReferentiel.titre_liste_type_competence}" iconheader="fa fa-list-ul">
                                     <f:facet name="header">                                            
-                                        <p:commandButton title="#{bundleAdmin.titre_ajouter_membres}" icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogUtilisateurs').show();"/> 
+                                        <p:commandButton title="#{bundleReferentiel.titre_acceuil_type_competence}" icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogTypeComp').show();"/> 
                                     </f:facet>
-                                    <p:dataTable id="tableUtilisateurs" value="#{addProfilController.profil.listAdminUtilisateurs}" var="utilisateur" rowKey="#{utilisateur.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-                                        <p:column headerText="#{bundleAdmin.lbl_login}" filterBy="#{utilisateur.login}" filterMatchMode="contains" >
-                                            <h:outputText value="#{utilisateur.login}"/>
+                                    <p:dataTable id="tableTypeComp" value="#{addCompetenceController.comp.idtypcom}" var="type" rowKey="#{type.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                       <p:column headerText="#{bundleCommun.lbl_code}" >
+                                            <h:outputText value="#{type.code}"/>
                                         </p:column>
-                                        <p:column headerText="#{bundleAdmin.lbl_nom}" filterBy="#{utilisateur.nom}" filterMatchMode="contains">
-                                            <h:outputText value="#{utilisateur.nom}"/>
-                                        </p:column>
-                                        <p:column headerText="#{bundleAdmin.lbl_prenom}" filterBy="#{utilisateur.prenom}" filterMatchMode="contains">
-                                            <h:outputText value="#{utilisateur.prenom}"/>
-                                        </p:column>
-                                        <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
-                                            <p:commandButton icon="fa fa-times" actionListener="#{addProfilController.removeUtilisateurForProfil(utilisateur)}" update=":form:tabView:tableUtilisateurs :formDialogUser:tableUtilisateursSeect" process="@this"/>
+                                        <p:column headerText="#{bundleCommun.lbl_liblle}" >
+                                            <h:outputText value="#{type.libelle}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </a:panel>
@@ -128,7 +93,7 @@
                 </a:row>               
             </p:panel>
             <a:row>
-                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addProfilController.create()}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addCompetenceController.create()}" icon="fa fa-check-square-o" ajax="false" />
                 <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listProfil" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
             </a:row>
         </h:form>
@@ -136,53 +101,43 @@
 
     <ui:define name="MyDialog">
         <h:form id="FormDialog">
-            <p:dialog widgetVar="dialogPrivileges" header="#{bundleAdmin.titre_ajouter_privilege}" modal="true"   responsive="true">
+            <p:dialog widgetVar="dialogDomaine" header="#{bundleReferentiel.titre_ajouter_domaine_competence}" modal="true" width="60%" responsive="true">
                 
-                    <a:row style="background-color:#FFF;padding: 20px;">
+                    <a:row style="background-color: #FFF;padding-top:10px; padding-bottom: 10px;">
                         <div style="" >
-                            <a:label value="#{bundleAdmin.lbl_module}" span="1" />
-                            <a:column span="3" >
-                                <p:selectOneMenu id="somModule" value="#{addProfilController.module.id}"  >
-                                    <f:selectItem   itemLabel="#{bundleAdmin.titre_selectionner_module}" itemValue="" />
-                                    <f:selectItems value="#{addProfilController.listModules}" var="module" itemLabel="#{module.libelle}" itemValue="#{module.id}"/>
-                                    <p:ajax  listener="#{addProfilController.rechercher()}" update=":FormDialog:tablePrivilegesSeect"   />
-                                </p:selectOneMenu>
-                            </a:column>
-                            <a:label value="#{bundleAdmin.lbl_code}" span="1" />
-                            <a:column span="2" >
-                                <p:inputText id="code" value="#{addProfilController.code}" label="#{bundleAdmin.lbl_code}"   >                                    
-                                    <p:ajax event="keyup" update=":FormDialog:tablePrivilegesSeect" listener="#{addProfilController.rechercher()}" />
+                              <a:label value="#{bundleReferentiel.lbl_code}" span="2" />
+                            <a:column span="4" >
+                                <p:inputText id="code" value="#{addCompetenceController.codeDom}" label="#{bundleReferentiel.lbl_code}"   >                                    
+                                    <p:ajax event="keyup" update=":FormDialog:tableDomaineSeect" listener="#{addCompetenceController.chercherDomaine()}" />
                                 </p:inputText>    
                             </a:column>
-                            <a:label value="#{bundleAdmin.lbl_description}" span="1" />
-                            <a:column span="2" >
-                                <p:inputText id="description" value="#{addProfilController.description}" label="#{bundleAdmin.lbl_description}" > 
-                                    <p:ajax event="keyup" update=":FormDialog:tablePrivilegesSeect" listener="#{addProfilController.rechercher()}" />
+                            <a:label value="#{bundleReferentiel.lbl_libelle}" span="2" />
+                            <a:column span="4" >
+                                <p:inputText id="libelle" value="#{addCompetenceController.libDom}" label="#{bundleReferentiel.lbl_libelle}" > 
+                                    <p:ajax event="keyup" update=":FormDialog:tableDomaineSeect" listener="#{addCompetenceController.chercherDomaine()}" />
                                 </p:inputText>
-                            </a:column>
-                            <a:column span="1" >
-                                <p:commandButton value="#{bundleCommun.btn_chercher}" styleClass="CyanButton" icon="fa fa-search" action="#{listUtilisateurController.rechercher()}" ajax="false" />  
                             </a:column>
                         </div>
                     </a:row>
                     <a:row>
-                        <p:dataTable id="tablePrivilegesSeect" value="#{addProfilController.listPrivileges}" rowKey="#{privilege.id}" selection="#{addProfilController.listPrivilegesSelected}" reflow="true" rows="8" var="privilege" emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" >
-                            <p:column selectionMode="multiple" width="10"/>
-                            <p:column headerText="#{bundleAdmin.lbl_code}" >
-                                <h:outputText value="#{privilege.code}"/>
+                        <p:dataTable id="tableDomaineSeect" value="#{addCompetenceController.listDom}" var="domaine" rowKey="#{domaine.code}" selection="#{addCompetenceController.domaineCompSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" widgetVar="myWidgetVar2">
+                            <p:column selectionMode="single" width="10"/>
+                            <p:column headerText="#{bundleReferentiel.lbl_code}" >
+                                <h:outputText value="#{domaine.code}"/>
                             </p:column>
-                            <p:column headerText="#{bundleAdmin.lbl_description}" >
-                                <h:outputText value="#{privilege.description}"/>
+                            <p:column headerText="#{bundleReferentiel.lbl_libelle}" >
+                                <h:outputText value="#{domaine.libelle}"/>
                             </p:column>
                             <f:facet name="footer" >
                                 <div class="form-actions">
                                     <a:row nomargin="true">
-                                        <a:column span="6">
+                                        <a:column span="9">
                                             <a:row nomargin="true">
                                                 <a:column  span="9" id="pgbtndlg">
-                                                    <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tablePrivilegesSeect" actionListener="#{addProfilController.addPrivilegesForProfil()}" 
-                                                                     update=":form:tabView:tablePrivileges :FormDialog:tablePrivilegesSeect" oncomplete="PF('dialogPrivileges').hide();"/>                                          
-                                                    <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogPrivileges').hide()" />
+                                                    <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tableDomaineSeect" actionListener="#{addCompetenceController.addDomaineForComp()}" 
+                                                                  update=":form:tabView:tableDomaine :FormDialog:tableDomaineSeect"   oncomplete="PF('dialogDomaine').hide();"/>                                          
+                                                    <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogDomaine').hide()" />
+                                                    <p:commandButton value="Reset"  icon="fa fa-times" styleClass="RedButton" onclick="PF('myWidgetVar2').unselectAllRows()" />                                                                                               
                                                 </a:column>
                                             </a:row>   
                                         </a:column>
@@ -190,43 +145,58 @@
                                 </div>
                             </f:facet>
                         </p:dataTable>
-                    </a:row>
+                    </a:row>     
+            </p:dialog>
+        </h:form>
+        <h:form id="FormDialogType">
+            <p:dialog widgetVar="dialogTypeComp" header="#{bundleReferentiel.titre_ajouter_type_competence}" modal="true" width="60%" responsive="true">
                 
-            </p:dialog>
-        </h:form>
-
-        <h:form id="formDialogUser" >
-            <p:dialog  widgetVar="dialogUtilisateurs" header="#{bundleAdmin.titre_ajouter_utilisateur}" width="530"  modal="true" responsive="true" >               
-
-                <p:dataTable id="tableUtilisateursSeect" value="#{addProfilController.listUtilisateurs}" var="utilisateur" rowKey="#{utilisateur.id}" selection="#{addProfilController.listUtilisateursSelected}" rows="10" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" reflow="true">
-                    <p:column selectionMode="multiple" width="10"/>
-                    <p:column headerText="#{bundleAdmin.lbl_login}" filterBy="#{utilisateur.login}" filterMatchMode="contains">
-                        <h:outputText value="#{utilisateur.login}" />
-                    </p:column>
-                    <p:column headerText="#{bundleAdmin.lbl_nom}" filterBy="#{utilisateur.nom}" filterMatchMode="contains">
-                        <h:outputText value="#{utilisateur.nom}"/>
-                    </p:column>
-                    <p:column headerText="#{bundleAdmin.lbl_prenom}" filterBy="#{utilisateur.prenom}" filterMatchMode="contains">
-                        <h:outputText value="#{utilisateur.prenom}"/>
-                    </p:column>
-                    <f:facet name="footer" >
-                        <div class="form-actions">
-                            <a:row nomargin="true">
-                                <a:column span="6">
+                    <a:row style="background-color: #FFF;padding-top:10px; padding-bottom: 10px;">
+                        <div style="" >
+                              <a:label value="#{bundleReferentiel.lbl_code}" span="2" />
+                            <a:column span="4" >
+                                <p:inputText id="code" value="#{addCompetenceController.codeType}" label="#{bundleReferentiel.lbl_code}"   >                                    
+                                    <p:ajax event="keyup" update=":FormDialogType:tableTypeSeect" listener="#{addCompetenceController.chercherTypeComp()}" />
+                                </p:inputText>    
+                            </a:column>
+                            <a:label value="#{bundleReferentiel.lbl_libelle}" span="2" />
+                            <a:column span="4" >
+                                <p:inputText id="libelle" value="#{addCompetenceController.libType}" label="#{bundleReferentiel.lbl_libelle}" > 
+                                    <p:ajax event="keyup" update=":FormDialogType:tableTypeSeect" listener="#{addCompetenceController.chercherTypeComp()}" />
+                                </p:inputText>
+                            </a:column>
+                        </div>
+                    </a:row>
+                    <a:row>
+                        <p:dataTable id="tableTypeSeect" value="#{addCompetenceController.listType}" var="type" rowKey="#{type.code}" selection="#{addCompetenceController.typeCompSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" widgetVar="myWidgetVar">
+                            <p:column selectionMode="single" width="10"/>
+                            <p:column headerText="#{bundleReferentiel.lbl_code}" >
+                                <h:outputText value="#{type.code}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleReferentiel.lbl_libelle}" >
+                                <h:outputText value="#{type.libelle}"/>
+                            </p:column>
+                            <f:facet name="footer" >
+                                <div class="form-actions">
                                     <a:row nomargin="true">
-                                        <a:column  span="12" >
-                                            <p:commandButton title="#{bundleCommun.btn_valider}" value="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" process=":formDialogUser:tableUtilisateursSeect" action="#{addProfilController.addUtilisateursForProfil()}" 
-                                                             update=":form:tabView:tableUtilisateurs :formDialogUser:tableUtilisateursSeect" oncomplete="PF('dialogUtilisateurs').hide();"/>                                          
-                                            <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogUtilisateurs').hide()" />
+                                        <a:column span="9">
+                                            <a:row nomargin="true">
+                                                <a:column  span="9" id="pgbtndlg">
+                                                    <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialogType:tableTypeSeect" actionListener="#{addCompetenceController.addTypeForComp()}" 
+                                                                  update=":form:tabView:tableTypeComp :FormDialogType:tableTypeSeect"   oncomplete="PF('dialogTypeComp').hide();"/>                                          
+                                                    <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogTypeComp').hide()" />
+                                                    <p:commandButton value="Reset"  icon="fa fa-times" styleClass="RedButton" onclick="PF('myWidgetVar').unselectAllRows()" />                                                
+                                                </a:column>
+                                            </a:row>   
                                         </a:column>
-                                    </a:row>   
-                                </a:column>
-                            </a:row>
-                        </div>  
-                    </f:facet>
-                </p:dataTable>
+                                    </a:row>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </a:row>     
             </p:dialog>
         </h:form>
+  
     </ui:define>
 </ui:composition>
 

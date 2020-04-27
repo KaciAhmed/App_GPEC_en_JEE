@@ -66,12 +66,6 @@
                     outcome="/pages/referentiel/domaine/listDom.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_002_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_categorie_competence}" icon="fa fa-tasks">
-                
-                <a:menuitem value="#{bundleReferentiel.titre_acceuil_categorie_competence}" icon="fa fa-file"
-                    outcome="/pages/referentiel/categorie/listCat.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_009_006')}" />
-            </a:submenu>
             <a:submenu value="#{bundleReferentiel.titre_gestion_competence}" icon="fa fa-tasks">
                 <a:menuitem value="#{bundleReferentiel.titre_acceuil_competence}" icon="fa fa-file"
                     outcome="/pages/referentiel/competence/listComp.xhtml"

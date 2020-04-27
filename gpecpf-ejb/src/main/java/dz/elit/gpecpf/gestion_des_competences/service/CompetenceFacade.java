@@ -76,6 +76,31 @@ public class CompetenceFacade extends AbstractFacade<Competence> {
         return q.getResultList();
     }
     
+    public List<Competence> findByCodeLibelle(String code, String libelle)
+    {
+        StringBuilder queryStringBuilder = new StringBuilder("SELECT a FROM Competence AS a WHERE 1=1 ");
+        if (code != null && !code.equals("")) {
+            queryStringBuilder.append(" AND  a.code like :code ");
+        }
+        if (libelle != null && !libelle.equals("")) {
+            queryStringBuilder.append(" AND  a.libelle like :libelle ");
+        }
+        queryStringBuilder.append(" ORDER BY a.code ");
+
+        Query q = em.createQuery(queryStringBuilder.toString());
+
+        if (code != null && !code.equals("")) {
+            q.setParameter("code","%"+ code + "%");
+        }
+        if (libelle != null && !libelle.equals("")) {
+            q.setParameter("libelle","%"+ libelle + "%");
+        }
+        //Implémentation de visibilité
+       JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
+    
+        return q.getResultList();
+    }
+    
     private boolean isExisteCode(String code) 
     {
         Competence Comp = findByCode(code);

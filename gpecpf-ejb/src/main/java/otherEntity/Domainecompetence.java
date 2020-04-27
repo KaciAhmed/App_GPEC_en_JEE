@@ -9,11 +9,15 @@ import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -53,8 +57,11 @@ public class Domainecompetence implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
-    @OneToMany(mappedBy = "iddomcom")
-    private Collection<Competence> competenceCollection;
+    @OneToMany(mappedBy = "iddommere",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Collection<Domainecompetence> domainecompetenceCollection;
+    @JoinColumn(name = "iddommere", referencedColumnName = "id")
+    @ManyToOne
+    private Domainecompetence iddommere;
 
     public Domainecompetence() {
     }
@@ -96,12 +103,31 @@ public class Domainecompetence implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Competence> getCompetenceCollection() {
-        return competenceCollection;
+    public Collection<Domainecompetence> getDomainecompetenceCollection() {
+        return domainecompetenceCollection;
     }
 
-    public void setCompetenceCollection(Collection<Competence> competenceCollection) {
-        this.competenceCollection = competenceCollection;
+    public void setDomainecompetenceCollection(Collection<Domainecompetence> domainecompetenceCollection) {
+        this.domainecompetenceCollection = domainecompetenceCollection;
+    }
+
+    public Domainecompetence getIddommere() {
+        return iddommere;
+    }
+
+    public void setIddommere(Domainecompetence iddommere) {
+        this.iddommere = iddommere;
+    }
+    public void addDomPere(Domainecompetence domPere){
+       this.setIddommere(domPere);
+       domPere.getDomainecompetenceCollection().add(this);
+        
+    }
+     public void editDomPere(Domainecompetence domPere,Domainecompetence oldDomPere){
+       this.setIddommere(domPere);
+       domPere.getDomainecompetenceCollection().add(this);
+       oldDomPere.getDomainecompetenceCollection().remove(this);
+        
     }
 
     @Override

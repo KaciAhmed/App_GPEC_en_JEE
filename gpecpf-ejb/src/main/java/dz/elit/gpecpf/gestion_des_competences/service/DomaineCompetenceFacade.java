@@ -81,6 +81,31 @@ public class DomaineCompetenceFacade extends AbstractFacade<Domainecompetence>{
     
         return q.getResultList();
     }
+    
+        public List<Domainecompetence> findByCodeLibelle(String code, String libelle)
+    {
+        StringBuilder queryStringBuilder = new StringBuilder("SELECT a FROM Domainecompetence AS a WHERE 1=1 ");
+        if (code != null && !code.equals("")) {
+            queryStringBuilder.append(" AND  a.code like :code ");
+        }
+        if (libelle != null && !libelle.equals("")) {
+            queryStringBuilder.append(" AND  a.libelle like :libelle ");
+        }
+        queryStringBuilder.append(" ORDER BY a.code ");
+
+        Query q = em.createQuery(queryStringBuilder.toString());
+
+        if (code != null && !code.equals("")) {
+            q.setParameter("code","%"+ code + "%");
+        }
+        if (libelle != null && !libelle.equals("")) {
+            q.setParameter("libelle","%"+ libelle + "%");
+        }
+        //Implémentation de visibilité
+       JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
+    
+        return q.getResultList();
+    }
         
     private boolean isExisteCode(String code) 
     {

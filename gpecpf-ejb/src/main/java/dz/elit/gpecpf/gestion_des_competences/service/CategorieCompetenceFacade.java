@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *//*
 package dz.elit.gpecpf.gestion_des_competences.service;
 
 import dz.elit.gpecpf.commun.exception.MyException;
@@ -20,7 +20,7 @@ import otherEntity.Categoriecompetence;
 /**
  *
  * @author Dell
- */
+ *//*
 @Stateless
 public class CategorieCompetenceFacade extends AbstractFacade<Categoriecompetence> {
     
@@ -98,3 +98,4 @@ public class CategorieCompetenceFacade extends AbstractFacade<Categoriecompetenc
     }
     
 }
+*/

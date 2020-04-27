@@ -58,9 +58,6 @@ public class Competence implements Serializable {
     private String description;
     @OneToMany(mappedBy = "idcomp")
     private Collection<Comportement> comportementCollection;
-    @JoinColumn(name = "idcatcom", referencedColumnName = "id")
-    @ManyToOne
-    private Categoriecompetence idcatcom;
     @JoinColumn(name = "iddomcom", referencedColumnName = "id")
     @ManyToOne
     private Domainecompetence iddomcom;
@@ -118,14 +115,6 @@ public class Competence implements Serializable {
         this.comportementCollection = comportementCollection;
     }
 
-    public Categoriecompetence getIdcatcom() {
-        return idcatcom;
-    }
-
-    public void setIdcatcom(Categoriecompetence idcatcom) {
-        this.idcatcom = idcatcom;
-    }
-
     public Domainecompetence getIddomcom() {
         return iddomcom;
     }
@@ -150,7 +139,7 @@ public class Competence implements Serializable {
     public void setNotecompetenceemployeCollection(Collection<Notecompetenceemploye> notecompetenceemployeCollection) {
         this.notecompetenceemployeCollection = notecompetenceemployeCollection;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
