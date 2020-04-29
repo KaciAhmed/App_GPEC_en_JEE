@@ -5,14 +5,11 @@
  */
 package dz.elit.gpecpf.competence.controleur;
 
-
-import dz.elit.gpecpf.gestion_des_competences.service.DomaineCompetenceFacade;
-
 import dz.elit.gpecpf.commun.controller.Imprimer;
 import dz.elit.gpecpf.commun.reporting.engine.Reporting;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.commun.util.StaticUtil;
+import dz.elit.gpecpf.gestion_des_competences.service.ComportementCompetenceFacade;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,63 +27,55 @@ import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.primefaces.context.RequestContext;
-import otherEntity.Domainecompetence;
-/**
- *
- * @author Dell
- */
+import otherEntity.Comportement;
+
 @ManagedBean
 @ViewScoped
-public class ListDomaineCompetenceController extends AbstractController implements Serializable {
-
+public class ListComportementCompetenceController  extends AbstractController implements Serializable {
+    
     @EJB
-    private DomaineCompetenceFacade domaineCompFacade;
+      private ComportementCompetenceFacade ComportementFacade;
     
     @ManagedProperty(value = "#{imprimer}")
     private Imprimer ctrImprimer;
-      
-    private List<Domainecompetence> listDomaineCompetences;
     
-        //Les variables de recherche
+     private List<Comportement> listComportement ;
+     
+     //Les variables de recherche
     private String code;
-    private String libelle;
     private String description;
-    
-    public ListDomaineCompetenceController(){
-        
+
+    public ListComportementCompetenceController() {
     }
     
-      
-    @Override //PostConstruct
+     @Override //PostConstruct
     protected void initController() 
     {    
-        findList()  ;  
+        findList();  
     }
 
-    public ListDomaineCompetenceController(String code, String libelle, String description) {
+    public ListComportementCompetenceController(String code, String description) {
         this.code = code;
-        this.libelle = libelle;
         this.description = description;
     }
-    
-     private void findList() {
-       listDomaineCompetences=new ArrayList<>();
-       listDomaineCompetences = domaineCompFacade.findAllOrderByAttribut("code");
-       // rechercher();
+   
+    private void findList() {
+       listComportement=new ArrayList<>();
+       listComportement =ComportementFacade.findAllOrderByAttribut("code");
     }
-       public void rechercher() {
-        listDomaineCompetences= domaineCompFacade.findByCodeLibelleDescription(code, libelle, description);
-        if (listDomaineCompetences.isEmpty() || listDomaineCompetences.size() < 1) {
+    public void rechercher() {
+       listComportement=ComportementFacade.findByCodeDescription(code, description);
+        if (listComportement.isEmpty() || listComportement.size() < 1) {
             MyUtil.addInfoMessage(MyUtil.getBundleAdmin("msg_resultat_recherche_null"));
         }
     }
-       
-    public void remove(Domainecompetence domComp) 
+    
+    public void remove(Comportement comp) 
     {
      try {
-            domaineCompFacade.remove(domComp);
-              MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
-             findList();
+            ComportementFacade.remove(comp);
+            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
+            findList();
          } catch (Exception ex) 
            {
              ex.printStackTrace();
@@ -94,7 +83,7 @@ public class ListDomaineCompetenceController extends AbstractController implemen
            }   
     }
     
-    public void download() throws SQLException, IOException 
+        public void download() throws SQLException, IOException 
     {
         String rapportLien = "/dz/elit/harmo/commun/reporting/source/listUtilisateur.jasper";
         InputStream rapport = getClass().getResourceAsStream(rapportLien);
@@ -105,7 +94,7 @@ public class ListDomaineCompetenceController extends AbstractController implemen
         String iSoRapport = "iSoRapport";
         InputStream urlLogo = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/images-login/logo.png");
         Map parametres = new HashMap();
-        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listDomaineCompetences);
+        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listComportement);
         parametres.put("rapportNom", rapportNom);
         parametres.put("entreprisFr", entreprisFr);
         parametres.put("entreprisAr", entreprisAr);
@@ -124,13 +113,13 @@ public class ListDomaineCompetenceController extends AbstractController implemen
         options.put("contentWidth", 310);
         RequestContext.getCurrentInstance().openDialog("/pages/commun/download.xhtml", options, null);
     }
-      public String telecharger() throws IOException, JRException {
+    public String telecharger() throws IOException, JRException {
 
         Map<String, String> param = new HashMap<>();
         param.put("rapportNom", "Test");
 
         Reporting.printEtat(getClass().getResourceAsStream("/dz/elit/gpecpf/reporting/source/test.jasper"),
-                param, new JRBeanCollectionDataSource(listDomaineCompetences));
+                param, new JRBeanCollectionDataSource(listComportement));
         return "";
 
     }
@@ -145,7 +134,7 @@ public class ListDomaineCompetenceController extends AbstractController implemen
         String SUBREPORT_DIR = getClass().getResource("/dz/elit/harmo/commun/reporting/source/Entete/").getFile();
         InputStream urlLogo = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/images-login/logo.png");
         Map parametres = new HashMap();
-        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listDomaineCompetences);
+        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listComportement);
         parametres.put("rapportNom", rapportNom);
         parametres.put("entreprisFr", entreprisFr);
         parametres.put("entreprisAr", entreprisAr);
@@ -154,18 +143,8 @@ public class ListDomaineCompetenceController extends AbstractController implemen
         parametres.put("SUBREPORT_DIR", SUBREPORT_DIR);
 
         Reporting.downloadReportPdf(rapport, data, parametres);
-
     }
-        
-   // getter and setter
-
-    public DomaineCompetenceFacade getDomaineCompFacade() {
-        return domaineCompFacade;
-    }
-
-    public void setDomaineCompFacade(DomaineCompetenceFacade domaineCompFacade) {
-        this.domaineCompFacade = domaineCompFacade;
-    }
+    // getter && setter
 
     public Imprimer getCtrImprimer() {
         return ctrImprimer;
@@ -175,12 +154,12 @@ public class ListDomaineCompetenceController extends AbstractController implemen
         this.ctrImprimer = ctrImprimer;
     }
 
-    public List<Domainecompetence> getListDomaineCompetences() {
-        return listDomaineCompetences;
+    public List<Comportement> getListComportement() {
+        return listComportement;
     }
 
-    public void setListDomaineCompetences(List<Domainecompetence> listDomaineCompetences) {
-        this.listDomaineCompetences = listDomaineCompetences;
+    public void setListComportement(List<Comportement> listComportement) {
+        this.listComportement = listComportement;
     }
 
     public String getCode() {
@@ -188,16 +167,7 @@ public class ListDomaineCompetenceController extends AbstractController implemen
     }
 
     public void setCode(String code) {
-       
         this.code = code;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
     }
 
     public String getDescription() {
@@ -207,6 +177,5 @@ public class ListDomaineCompetenceController extends AbstractController implemen
     public void setDescription(String description) {
         this.description = description;
     }
-        
-    
+   
 }

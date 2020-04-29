@@ -12,6 +12,7 @@ import dz.elit.gpecpf.poste.entity.Moyen;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -98,12 +100,29 @@ public class Poste implements Serializable {
     @Column(name = "dateelabpec")
     @Temporal(TemporalType.DATE)
     private Date dateelabpec;
-    @ManyToMany(mappedBy = "posteCollection")
-    private Collection<Mission> missionCollection;
-    @ManyToMany(mappedBy = "posteCollection")
-    private Collection<Moyen> moyenCollection;
-    @ManyToMany(mappedBy = "posteCollection")
-    private Collection<Condition> conditionCollection;
+    @ManyToMany
+    @JoinTable(
+            name = "mission_poste",
+            joinColumns = @JoinColumn(name = "id_poste", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_mission", referencedColumnName = "id"),
+            schema = StaticUtil.ADMINISTRATION_SCHEMA
+    )
+    private List<Mission> listMission;
+    @ManyToMany
+    @JoinTable(
+            name = "moyen_poste",
+            joinColumns = @JoinColumn(name = "id_poste", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_moyen", referencedColumnName = "id"),
+            schema = StaticUtil.ADMINISTRATION_SCHEMA
+    )
+    private List<Moyen> listMoyen;
+    @JoinTable(
+            name = "condition_poste",
+            joinColumns = @JoinColumn(name = "id_poste", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_condition", referencedColumnName = "id"),
+            schema = StaticUtil.ADMINISTRATION_SCHEMA
+    )
+    private List<Condition> listCondition;
     @ManyToMany(mappedBy = "posteCollection")
     private Collection<Formation> formationCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "poste")
@@ -234,32 +253,33 @@ public class Poste implements Serializable {
         this.dateelabpec = dateelabpec;
     }
 
-    @XmlTransient
-    public Collection<Mission> getMissionCollection() {
-        return missionCollection;
+    public List<Mission> getListMission() {
+        return listMission;
     }
 
-    public void setMissionCollection(Collection<Mission> missionCollection) {
-        this.missionCollection = missionCollection;
+    public void setListMission(List<Mission> listMission) {
+        this.listMission = listMission;
     }
 
-    @XmlTransient
-    public Collection<Moyen> getMoyenCollection() {
-        return moyenCollection;
+    
+
+    public List<Condition> getListCondition() {
+        return listCondition;
     }
 
-    public void setMoyenCollection(Collection<Moyen> moyenCollection) {
-        this.moyenCollection = moyenCollection;
+    public List<Moyen> getListMoyen() {
+        return listMoyen;
     }
 
-    @XmlTransient
-    public Collection<Condition> getConditionCollection() {
-        return conditionCollection;
+    public void setListCondition(List<Condition> listCondition) {
+        this.listCondition = listCondition;
     }
 
-    public void setConditionCollection(Collection<Condition> conditionCollection) {
-        this.conditionCollection = conditionCollection;
+    public void setListMoyen(List<Moyen> listMoyen) {
+        this.listMoyen = listMoyen;
     }
+
+    
 
     @XmlTransient
     public Collection<Formation> getFormationCollection() {

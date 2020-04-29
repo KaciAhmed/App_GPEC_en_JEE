@@ -14,7 +14,7 @@
     <ui:define name="breadCrumb">
         <a:breadcrumb>           
             <a:menuitem value="#{bundleReferentiel.titre_gestion_competence}" />
-            <a:menuitem value="#{bundleReferentiel.lien_liste_competence}" href="listProfil.xhtml" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_competence}" href="listComp.xhtml" />
             <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
         </a:breadcrumb>
     </ui:define>
@@ -77,7 +77,7 @@
                                     <f:facet name="header">      
                                         
                                     </f:facet>
-                                    <p:dataTable id="tableTypeComp" value="#{editCompetenceController.comp.idtypcom}" var="type" rowKey="#{type.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                    <p:dataTable id="tableComportement" value="#{editCompetenceController.comp.idtypcom}" var="type" rowKey="#{type.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                                        <p:column headerText="#{bundleCommun.lbl_code}" >
                                             <h:outputText value="#{type.code}"/>
                                         </p:column>
@@ -87,11 +87,28 @@
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>
+                             <p:tab title="#{bundleReferentiel.titre_comportement_competence}">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_comportement_competence}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">      
+                                        
+                                    </f:facet>
+                                    <p:dataTable id="tableTypeComp" value="#{editCompetenceController.comp.comportementCollection}" var="comportement" rowKey="#{comportement.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                       <p:column headerText="#{bundleCommun.lbl_code}" >
+                                            <h:outputText value="#{comportement.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_description}" >
+                                            <h:outputText value="#{comportement.description}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
                         </p:tabView>
                     </a:column>
-                </a:row>               
+                </a:row>     
             </p:panel>
+              <a:row>
+                    <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listComp" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+              </a:row>
         </h:form>
     </ui:define>
 </ui:composition>
-

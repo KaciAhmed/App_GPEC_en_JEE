@@ -46,6 +46,7 @@ private DomaineCompetenceFacade domaineCompFacade;
        domaine= domaineCompFacade.find(Integer.parseInt(id));
        domPereSelected=domaine.getIddommere();
        oldDomPere=domaine.getIddommere();
+       lstDomPere.remove(domaine);
        }
     }
 

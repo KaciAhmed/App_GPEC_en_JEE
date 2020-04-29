@@ -36,12 +36,12 @@ public class EditCompetenceController extends AbstractController implements Seri
      private Domainecompetence domaineComp;
      private List<Domainecompetence> listDom;
      private Domainecompetence domSelected;
-     private Domainecompetence oldDom;
+
      
      private Typecompetence typeComp;
      private List<Typecompetence> listType;
      private Typecompetence typeSelected;
-     private Typecompetence oldType;
+
      
      // info pour chercher un domaine
      private String codeDom;
@@ -53,41 +53,37 @@ public class EditCompetenceController extends AbstractController implements Seri
     public EditCompetenceController() {
     }
     
-             @Override //PostConstruct
+     @Override //PostConstruct
     protected void initController() 
     {    
-        initAddComp();
-       listDom=domaineFacade.findAllOrderByAttribut("code");
-       listType=typeCompFacade.findAllOrderByAttribut("code");
-    
-            String id = MyUtil.getRequestParameter("id");
+        initEditComp();
+        String id = MyUtil.getRequestParameter("id");
         if (id != null) {
             comp = compFacade.find(Integer.parseInt(id));
-            domSelected=comp.getIddomcom();
-            oldDom=comp.getIddomcom();
-            
+            domSelected=comp.getIddomcom();   
             typeSelected=comp.getIdtypcom();
-            oldType=comp.getIdtypcom();
         }
     }
     
-    protected void initAddComp(){
+    protected void initEditComp(){
       comp=new Competence();
       listDom=new ArrayList<>();
+      listDom=domaineFacade.findAllOrderByAttribut("code");
       listType=new ArrayList<>();
+      listType=typeCompFacade.findAllOrderByAttribut("code");
      domaineComp=new Domainecompetence();
      typeComp=new Typecompetence();
     }
          
     public void edit() {
         try {
-            System.out.println("=============================code==="+comp.getCode());
-            compFacade.edit(comp);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Privilège modifié avec succès");
-        } catch (Exception ex) {
+       
+                compFacade.edit(comp);
+                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"compétence modifié avec succès");
+ 
+            } catch (Exception ex) {
             ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-            
+            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu   
         }     
     }
     public void chercherDomComp(){
@@ -97,42 +93,15 @@ public class EditCompetenceController extends AbstractController implements Seri
         listType=typeCompFacade.findByCodeLibelle(codeType,libType);
     }
     public void editDomForComp(){
-          if(domSelected==null && oldDom!=null)
-          { 
-              comp.setIddomcom(null);
-          }else{
-                if(oldDom==null && domSelected!=null ){
-                     comp.setIddomcom(domSelected);
-                     domSelected=new Domainecompetence();
-                }else{
-
-                    if(domSelected!=null && oldDom!=null && !domSelected.getCode().equals(oldDom.getCode()) ){
-
-                        comp.setIddomcom(domSelected);
-                        domSelected=new Domainecompetence();
-                        oldDom=new Domainecompetence();
-                    }
-                 }
-               }
+       // comp.setIddomcom(domSelected);
+        comp.editDomComp(domaineComp);
+      //  domSelected=new Domainecompetence();
     }    
     public void editTypeForComp(){
-          if(typeSelected==null && oldType!=null)
-          { 
-              comp.setIdtypcom(null);
-          }else{
-                if(oldType==null && typeSelected!=null ){
-                     comp.setIdtypcom(typeSelected);
-                     typeSelected=new Typecompetence();
-                }else{
+      //  comp.setIdtypcom(typeSelected);
+      comp.addTypeComp(typeSelected);
+       // typeSelected=new Typecompetence();
 
-                    if(typeSelected!=null && oldType!=null && !typeSelected.getCode().equals(oldType.getCode()) ){
-
-                        comp.setIdtypcom(typeSelected);
-                        typeSelected=new Typecompetence();
-                        oldType=new Typecompetence();
-                    }
-                 }
-              }
     }  
          
          // getter && setter 

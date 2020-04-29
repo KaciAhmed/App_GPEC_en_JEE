@@ -40,6 +40,7 @@ public class AddCompetenceController extends AbstractController implements Seria
      private Typecompetence typeCompSelected;
     
     private Competence comp;
+    
   // info pour chercher domaine  
     private String codeDom;
     private String libDom;
@@ -55,27 +56,37 @@ public class AddCompetenceController extends AbstractController implements Seria
     protected void initController() 
     {    
         initAddComp();
-        listDom=domaineFacade.findAllOrderByAttribut("code");
-     listType=typeCompFacade.findAllOrderByAttribut("code");
+        
+
     }
      protected void initAddComp(){
       comp=new Competence();
      listDom =new ArrayList<>();
+     listDom=domaineFacade.findAllOrderByAttribut("code");
      listType=new ArrayList<>();
+     listType=typeCompFacade.findAllOrderByAttribut("code");
      domaineCompSelected=new Domainecompetence();
      typeCompSelected=new Typecompetence();
     }
     
      public void chercherDomaine(){
-        listType=typeCompFacade.findByCodeLibelle(codeDom, libDom);
+          listDom=domaineFacade.findByCodeLibelle(codeDom, libDom);
     }
-     public void chercherTypeComp(){
-        listDom=domaineFacade.findByCodeLibelle(codeDom, libDom);
+
+    public void chercherTypeComp(){
+          listType=typeCompFacade.findByCodeLibelle(codeDom, libDom);
+    }
+    public void recupDomaine(){
+          listDom=domaineFacade.findAll();
+    }
+     public void recupTypeComp(){
+          listType=typeCompFacade.findAll();
     }
     public void addDomaineForComp(){
         
         if(domaineCompSelected.getCode()!=null){
-            comp.setIddomcom(domaineCompSelected);
+            //comp.setIddomcom(domaineCompSelected);
+            comp.addDomComp(domaineCompSelected);
             domaineCompSelected=new Domainecompetence();       
         }
 
@@ -87,11 +98,22 @@ public class AddCompetenceController extends AbstractController implements Seria
         }
 
     }
-         public void create() {
+    public void create() {
         try {
-            compFacade.create(comp);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Profil crée avec succès
-            initAddComp();
+               if(comp.getIddomcom()==null)
+                {
+                    MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_add_competence_dom"));
+                }else{  
+                        if(comp.getIdtypcom()==null)
+                        {
+                           MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_add_competence_type"));
+                       }else{
+                                 compFacade.create(comp);
+                                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Compétence crée avec succès
+                                 initAddComp();
+                             }    
+                } 
+
         } catch (MyException ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(ex.getMessage());

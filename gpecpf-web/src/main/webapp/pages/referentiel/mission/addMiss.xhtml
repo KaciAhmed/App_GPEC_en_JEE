@@ -87,7 +87,7 @@
 
     <ui:define name="MyDialog">
         <h:form id="FormDialog">
-            <p:dialog widgetVar="dialogActivites" header="#{bundleReferentiel.titre_ajouter_activite}" modal="true"   responsive="true">
+            <p:dialog widgetVar="dialogActivites" header="#{bundleReferentiel.titre_ajouter_activite}" modal="true"   responsive="true" width="65%">
                 <p:dataTable id="tableActivitesSeect" value="#{addMissionController.listActivites}" rowKey="#{activite.id}" selection="#{addMissionController.listActivitesSelected}" reflow="true" rows="8" var="activite" emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" >
                     <p:column selectionMode="multiple" width="10"/>
                     <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{activite.code}" filterMatchMode="contains">

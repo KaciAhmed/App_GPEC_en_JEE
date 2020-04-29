@@ -62,6 +62,8 @@ public class Domainecompetence implements Serializable {
     @JoinColumn(name = "iddommere", referencedColumnName = "id")
     @ManyToOne
     private Domainecompetence iddommere;
+    @OneToMany(mappedBy = "iddomcom")
+    private Collection<Competence> competenceCollection;
 
     public Domainecompetence() {
     }
@@ -120,8 +122,7 @@ public class Domainecompetence implements Serializable {
     }
     public void addDomPere(Domainecompetence domPere){
        this.setIddommere(domPere);
-       domPere.getDomainecompetenceCollection().add(this);
-        
+       domPere.getDomainecompetenceCollection().add(this);   
     }
      public void editDomPere(Domainecompetence domPere,Domainecompetence oldDomPere){
        this.setIddommere(domPere);
@@ -154,5 +155,14 @@ public class Domainecompetence implements Serializable {
     public String toString() {
         return "otherEntity.Domainecompetence[ id=" + id + " ]";
     }
+
+    public Collection<Competence> getCompetenceCollection() {
+        return competenceCollection;
+    }
+
+    public void setCompetenceCollection(Collection<Competence> competenceCollection) {
+        this.competenceCollection = competenceCollection;
+    }
+    
     
 }

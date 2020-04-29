@@ -91,6 +91,18 @@ public class Comportement implements Serializable {
         this.idcomp = idcomp;
     }
 
+    public void addCompetenceComportement(Competence comp){
+       this.setIdcomp(comp);
+       comp.getComportementCollection().add(this);  
+    }
+    public void editTypeComp(Competence comp){
+        Competence oldComp;
+        oldComp=this.idcomp;
+        this.setIdcomp(comp);
+        comp.getComportementCollection().add(this);
+        oldComp.getComportementCollection().remove(this);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

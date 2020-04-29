@@ -14,15 +14,15 @@
     <ui:define name="breadCrumb">
         <a:breadcrumb>
             <a:menuitem value="#{bundleReferentiel.titre_gestion_competence}" />
-            <a:menuitem value="#{bundleReferentiel.lien_liste_competence}"  href="listDom.xhtml" last="true" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_competence}"  href="listComp.xhtml" last="true" />
         </a:breadcrumb>
     </ui:define>
     
         <ui:define name="MyContent">
          <h:form id="form">
             <a:row >
-                <a:pagetitle value="Liste de compétence" />                
-                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" title="#{bundleReferentiel.titre_nouveau_domaine_competence}" outcome="addComp" rendered="#{mySessionController.isUserInRole('REFER_003_001')}" />
+                <a:pagetitle value="#{bundleReferentiel.titre_liste_competence}" />                
+                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" title="#{bundleReferentiel.titre_nouveau_competence}" outcome="addComp" rendered="#{mySessionController.isUserInRole('REFER_003_001')}" />
                 <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
             </a:row>
             <a:panel isPadding="true" >              

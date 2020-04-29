@@ -28,7 +28,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="cod"  value="#{editActiviteController.activite.code}" /> 
+                            <p:inputText id="cod"  value="#{editActiviteController.activite.code}" disabled="true"/> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -36,7 +36,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
                         <a:column span="8" >
-                            <p:inputTextarea id="desc" cols="60" value="#{editActiviteController.activite.libelle}" autoResize="false" />
+                            <p:inputTextarea id="desc" cols="60" value="#{editActiviteController.activite.libelle}" autoResize="false" disabled="true" />
                         </a:column>
                     </a:column>
                 </a:row>   

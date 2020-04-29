@@ -46,18 +46,24 @@ public class AddDomaineCompetenceController extends AbstractController implement
      public AddDomaineCompetenceController() {
     }
 
-     @Override//@PostConstruct
-    protected void initController() {
-            initAddDomaineCompetence();
-            lstDomPere=domaineFacade.findAllOrderByAttribut("code");
-    }
     public void addDomPereConst()
     {  
     }
+    
+    @Override//@PostConstruct
+    protected void initController() {
+            initAddDomaineCompetence();      
+    }
+    private void initAddDomaineCompetence() {
+      domaine=new Domainecompetence();
+      domPereSelected=new Domainecompetence(); 
+      lstDomPere=new ArrayList<>();
+      lstDomPere=domaineFacade.findAllOrderByAttribut("code");
+    }
+    
     public void create() {
         try {      
               domaineFacade.create(domaine);
-
                initAddDomaineCompetence();
                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Domaine enregistré avec succè");
             } catch (MyException ex) {
@@ -68,13 +74,7 @@ public class AddDomaineCompetenceController extends AbstractController implement
             }
         
     }
-    
-    private void initAddDomaineCompetence() {
-      domaine=new Domainecompetence();
-      lstDomPere=new ArrayList<>();
-      domPereSelected=new Domainecompetence(); 
-    }
-    
+  
     public void chercherDomPere(){
         lstDomPere=domaineFacade.findByCodeLibelle(codePere, libPere);
     }
@@ -86,7 +86,6 @@ public class AddDomaineCompetenceController extends AbstractController implement
             lstDomPere.removeAll((Collection<?>) domPereSelected);
             domPereSelected=new Domainecompetence(); 
         }
-
     }
             
        // getter est setter

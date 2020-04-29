@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,8 +70,8 @@ public class ListCompetenceController extends AbstractController implements Seri
     }
     
     private void findList() {
+       listCompetences=new ArrayList<>();
        listCompetences =compFacade.findAllOrderByAttribut("code");
-        rechercher();
     }
     public void rechercher() {
        listCompetences=compFacade.findByCodeLibelleDescription(code, libelle, description);
@@ -81,9 +82,14 @@ public class ListCompetenceController extends AbstractController implements Seri
     public void remove(Competence comp) 
     {
      try {
-            compFacade.remove(comp);
-              MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
-             findList();
+            if(!comp.getComportementCollection().isEmpty() ||comp.getComportementCollection().size()>0 )
+            {
+                MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_suppression_competence"));
+            }else{
+                    compFacade.remove(comp);
+                      MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
+                     findList();
+                 }
          } catch (Exception ex) 
            {
              ex.printStackTrace();
@@ -131,7 +137,7 @@ public class ListCompetenceController extends AbstractController implements Seri
         return "";
 
     }
-        public void creerRapportUnique() throws JRException, FileNotFoundException {
+    public void creerRapportUnique() throws JRException, FileNotFoundException {
 
         String rapportLien = "/reporting/source/listUtilisateur.jasper";
         InputStream rapport = getClass().getResourceAsStream(rapportLien);

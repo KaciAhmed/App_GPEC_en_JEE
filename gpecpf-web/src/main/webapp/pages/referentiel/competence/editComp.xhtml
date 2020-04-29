@@ -14,7 +14,7 @@
     <ui:define name="breadCrumb">
         <a:breadcrumb>           
             <a:menuitem value="#{bundleReferentiel.titre_gestion_competence}" />
-            <a:menuitem value="#{bundleReferentiel.lien_liste_competence}" href="listProfil.xhtml" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_competence}" href="listComp.xhtml" />
             <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
         </a:breadcrumb>
     </ui:define>
@@ -119,7 +119,7 @@
                         </div>
                     </a:row>
                     <a:row>
-                        <p:dataTable id="tableDomaineSeect" value="#{editCompetenceController.listDom}" var="domaine" rowKey="#{domaine.code}" selection="#{editCompetenceController.domSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" widgetVar="myWidgetVar2">
+                        <p:dataTable id="tableDomaineSeect" value="#{editCompetenceController.listDom}" var="domaine" rowKey="#{domaine.code}" selection="#{editCompetenceController.domSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false">
                             <p:column selectionMode="single" width="10"/>
                             <p:column headerText="#{bundleReferentiel.lbl_code}" >
                                 <h:outputText value="#{domaine.code}"/>
@@ -136,7 +136,7 @@
                                                     <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tableDomaineSeect" actionListener="#{editCompetenceController.editDomForComp()}" 
                                                                   update=":form:tabView:tableDomaine :FormDialog:tableDomaineSeect"   oncomplete="PF('dialogDomaine').hide();"/>                                          
                                                     <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogDomaine').hide()" />
-                                                    <p:commandButton value="Reset"  icon="fa fa-times" styleClass="RedButton" onclick="PF('myWidgetVar2').unselectAllRows()" />                                                                                               
+                                                                                                                                                 
                                                 </a:column>
                                             </a:row>   
                                         </a:column>
@@ -167,7 +167,7 @@
                         </div>
                     </a:row>
                     <a:row>
-                        <p:dataTable id="tableTypeSeect" value="#{editCompetenceController.listType}" var="type" rowKey="#{type.code}" selection="#{editCompetenceController.typeSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" widgetVar="myWidgetVar">
+                        <p:dataTable id="tableTypeSeect" value="#{editCompetenceController.listType}" var="type" rowKey="#{type.code}" selection="#{editCompetenceController.typeSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false">
                             <p:column selectionMode="single" width="10"/>
                             <p:column headerText="#{bundleReferentiel.lbl_code}" >
                                 <h:outputText value="#{type.code}"/>
@@ -184,7 +184,6 @@
                                                     <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialogType:tableTypeSeect" actionListener="#{editCompetenceController.editTypeForComp()}" 
                                                                   update=":form:tabView:tableTypeComp :FormDialogType:tableTypeSeect"   oncomplete="PF('dialogTypeComp').hide();"/>                                          
                                                     <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogTypeComp').hide()" />
-                                                    <p:commandButton value="Reset"  icon="fa fa-times" styleClass="RedButton" onclick="PF('myWidgetVar').unselectAllRows()" />                                                
                                                 </a:column>
                                             </a:row>   
                                         </a:column>

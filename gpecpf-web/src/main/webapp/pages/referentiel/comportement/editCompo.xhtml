@@ -1,12 +1,127 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateRefer.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_consulter_competence}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>           
+            <a:menuitem value="#{bundleReferentiel.titre_comportement_competence}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_comportement_competence}" href="listcompo.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+      
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row nomargin="true">
+                <a:pagetitle value="#{bundleReferentiel.titre_fiche_comportement_competence}" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
+            </a:row>
+            <p:panel id="panel" styleClass="no-border row">
+                 <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="code" required="true" value="#{editComportementCompetenceController.compo.code}" /> 
+                            <p:message for="code"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
+                        <a:column span="8" >
+                            <p:inputTextarea id="desc" required="true"  cols="60" value="#{editComportementCompetenceController.compo.description}" autoResize="false" />
+                            <p:message for="desc"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row >
+                    <a:column span="12" >
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.titre_comportement_competence}">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_comportement_competence}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">  
+                                        <p:commandButton title="#{bundleReferentiel.titre_MAJ_comportement_competence}"  icon="fa fa-pencil-square-o" value="#{bundleCommun.btn_modifier}" immediate="true" onclick="PF('dialogComportement').show();"/> 
+                                    </f:facet>
+                                    <p:dataTable  id="tableComportement" value="#{editComportementCompetenceController.compo.idcomp}" var="comportement" rowKey="#{comportement.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleCommun.lbl_code}" >
+                                            <h:outputText value="#{comportement.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_liblle}" >
+                                            <h:outputText value="#{comportement.libelle}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>
+                    </a:column>
+                </a:row>               
+            </p:panel>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{editComportementCompetenceController.edit()}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listCompo" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="MyDialog">
+        <h:form id="FormDialog">
+            <p:dialog widgetVar="dialogComportement" header="#{bundleReferentiel.titre_modifier_comportement_competence}" modal="true" width="60%" responsive="true">
+                
+                    <a:row style="background-color: #FFF;padding-top:10px; padding-bottom: 10px;">
+                        <div style="" >
+                              <a:label value="#{bundleReferentiel.lbl_code}" span="2" />
+                            <a:column span="4" >
+                                <p:inputText id="code" value="#{editComportementCompetenceController.codeComp}" label="#{bundleReferentiel.lbl_code}"   >                                    
+                                    <p:ajax event="keyup" update=":FormDialog:tableComportementSeect" listener="#{editComportementCompetenceController.chercherComp()}" />
+                                </p:inputText>    
+                            </a:column>
+                            <a:label value="#{bundleReferentiel.lbl_libelle}" span="2" />
+                            <a:column span="4" >
+                                <p:inputText id="libelle" value="#{editComportementCompetenceController.libComp}" label="#{bundleReferentiel.lbl_libelle}" > 
+                                    <p:ajax event="keyup" update=":FormDialog:tableComportementSeect" listener="#{editComportementCompetenceController.chercherComp()}" />
+                                </p:inputText>
+                            </a:column>
+                        </div>
+                    </a:row>
+                    <a:row>
+                        <p:dataTable id="tableComportementSeect" value="#{editComportementCompetenceController.listComp}" var="comportement" rowKey="#{comportement.code}" selection="#{editComportementCompetenceController.compSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false">
+                            <p:column selectionMode="single" width="10"/>
+                            <p:column headerText="#{bundleReferentiel.lbl_code}" >
+                                <h:outputText value="#{comportement.code}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleReferentiel.lbl_libelle}" >
+                                <h:outputText value="#{comportement.libelle}"/>
+                            </p:column>
+                            <f:facet name="footer" >
+                                <div class="form-actions">
+                                    <a:row nomargin="true">
+                                        <a:column span="9">
+                                            <a:row nomargin="true">
+                                                <a:column  span="9" id="pgbtndlg">
+                                                    <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tableComportementSeect" actionListener="#{editComportementCompetenceController.editCompForComportement()}" 
+                                                                  update=":form:tabView:tableComportement :FormDialog:tableComportementSeect"   oncomplete="PF('dialogComportement').hide();"/>                                          
+                                                    <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogComportement').hide()" />
+                                                                                                                                                 
+                                                </a:column>
+                                            </a:row>   
+                                        </a:column>
+                                    </a:row>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </a:row>     
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
 

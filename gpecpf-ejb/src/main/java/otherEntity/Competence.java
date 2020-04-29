@@ -140,6 +140,28 @@ public class Competence implements Serializable {
         this.notecompetenceemployeCollection = notecompetenceemployeCollection;
     }
     
+    public void addDomComp(Domainecompetence domaine){
+       this.setIddomcom(domaine);
+       domaine.getCompetenceCollection().add(this);
+    }
+    public void editDomComp(Domainecompetence domaine){
+        Domainecompetence oldDomaine;
+        oldDomaine=this.iddomcom;
+        this.setIddomcom(domaine);
+       domaine.getCompetenceCollection().add(this);
+       oldDomaine.getCompetenceCollection().remove(this);     
+    }
+    public void addTypeComp(Typecompetence type){
+       this.setIdtypcom(type);
+       type.getCompetenceCollection().add(this);
+    }
+    public void editTypeComp(Typecompetence type){
+        Typecompetence oldType;
+        oldType=this.idtypcom;
+        this.setIdtypcom(type);
+        type.getCompetenceCollection().add(this);
+        oldType.getCompetenceCollection().remove(this);  
+    }
     @Override
     public int hashCode() {
         int hash = 0;

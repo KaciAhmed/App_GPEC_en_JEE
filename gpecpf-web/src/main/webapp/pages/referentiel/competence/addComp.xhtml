@@ -23,7 +23,7 @@
     <ui:define name="MyContent">
         <h:form id="form">
             <a:row nomargin="true">
-                <a:pagetitle value="Fiche compétence" />
+                <a:pagetitle value="#{bundleReferentiel.titre_fiche_competence}" />
                 <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
             </a:row>
             <p:panel id="panel" styleClass="no-border row">
@@ -94,7 +94,7 @@
             </p:panel>
             <a:row>
                 <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addCompetenceController.create()}" icon="fa fa-check-square-o" ajax="false" />
-                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listProfil" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listComp" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
             </a:row>
         </h:form>
     </ui:define>
