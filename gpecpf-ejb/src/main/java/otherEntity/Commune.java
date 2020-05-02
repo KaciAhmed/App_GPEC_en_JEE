@@ -66,6 +66,13 @@ public class Commune implements Serializable {
         this.id = id;
     }
 
+    public Commune(String code, String nom, Wilaya idwilaya) {
+        this.code = code;
+        this.nom = nom;
+        this.idwilaya = idwilaya;
+    }
+    
+
     public Integer getId() {
         return id;
     }

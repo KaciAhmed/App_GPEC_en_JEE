@@ -59,6 +59,13 @@ public class Wilaya implements Serializable {
         this.id = id;
     }
 
+    public Wilaya(String code, String nom) {
+        this.code = code;
+        this.nom = nom;
+    }
+    
+    
+
     public Integer getId() {
         return id;
     }
