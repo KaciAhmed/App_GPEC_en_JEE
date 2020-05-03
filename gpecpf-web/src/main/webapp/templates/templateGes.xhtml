@@ -1,8 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:a="http://elit.dz/ui"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html" 
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns:a="http://elit.dz/ui"
     xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
@@ -55,9 +58,6 @@
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
             <a:submenu start="true" value="#{bundleGesemp.titre_gestion_employe}" icon="">
-                <a:menuitem value="#{bundleGesemp.titre_nouveau_employe}" icon=""
-                    outcome="/pages/gesemp/employe/addEmp.xhtml"
-                    rendered="#{mySessionController.isUserInRole('GESEMP_001_001')}" />
                 <a:menuitem value="#{bundleGesemp.titre_liste_employe}" icon=""
                     outcome="/pages/gesemp/employe/listEmp.xhtml"
                     rendered="#{mySessionController.isUserInRole('GESEMP_001_006')}" />

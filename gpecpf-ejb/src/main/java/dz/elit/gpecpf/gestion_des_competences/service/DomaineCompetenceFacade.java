@@ -126,7 +126,7 @@ public class DomaineCompetenceFacade extends AbstractFacade<Domainecompetence>{
             super.create(domaineComp);
         }
     }
-     
+
      public List<Domainecompetence> findAllOrderByUnite() {
         Query query = em.createNamedQuery("Domainecompetence.findAll");
         JpaHelper.getDatabaseQuery(query).setRedirector(new CustomQueryRedirectors());

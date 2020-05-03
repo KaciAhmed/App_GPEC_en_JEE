@@ -41,7 +41,8 @@ public class EditCompetenceController extends AbstractController implements Seri
      private Typecompetence typeComp;
      private List<Typecompetence> listType;
      private Typecompetence typeSelected;
-
+     
+     String oldCode;
      
      // info pour chercher un domaine
      private String codeDom;
@@ -62,6 +63,7 @@ public class EditCompetenceController extends AbstractController implements Seri
             comp = compFacade.find(Integer.parseInt(id));
             domSelected=comp.getIddomcom();   
             typeSelected=comp.getIdtypcom();
+            oldCode=comp.getCode();
         }
     }
     
@@ -74,13 +76,25 @@ public class EditCompetenceController extends AbstractController implements Seri
      domaineComp=new Domainecompetence();
      typeComp=new Typecompetence();
     }
+    private boolean isExisteCode(String code) 
+    {
+        Competence Compo2 = compFacade.findByCode(code);
+        if(Compo2 == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
          
     public void edit() {
         try {
-       
-                compFacade.edit(comp);
-                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"compétence modifié avec succès");
- 
+            comp.setCode(comp.getCode().toUpperCase());
+            if (isExisteCode(comp.getCode()) && !comp.getCode().equals(oldCode)) {
+            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
+            }else{
+                     compFacade.edit(comp);
+                     MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"compétence modifié avec succès");
+                }
             } catch (Exception ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu   

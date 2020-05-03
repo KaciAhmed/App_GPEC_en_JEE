@@ -85,9 +85,10 @@ public class ComportementCompetenceFacade  extends AbstractFacade<Comportement>{
             super.create(Comp);
         }
     }
+
     
     public List<Comportement> findAllOrderByUnite() {
-        Query query = em.createNamedQuery("Competence.findAll");
+        Query query = em.createNamedQuery("Comportement.findAll");
         JpaHelper.getDatabaseQuery(query).setRedirector(new CustomQueryRedirectors());
         //query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
         return query.getResultList();

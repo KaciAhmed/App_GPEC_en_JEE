@@ -60,12 +60,26 @@ public class AddDomaineCompetenceController extends AbstractController implement
       lstDomPere=new ArrayList<>();
       lstDomPere=domaineFacade.findAllOrderByAttribut("code");
     }
+    private boolean isExisteCode(String code) 
+    {
+        Domainecompetence domaine2 = domaineFacade.findByCode(code);
+        if(domaine2 == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     
     public void create() {
-        try {      
-              domaineFacade.create(domaine);
-               initAddDomaineCompetence();
-                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Domaine enregistré avec succè");
+        try {  
+            domaine.setCode(domaine.getCode().toUpperCase());
+            if (isExisteCode(domaine.getCode())) {
+            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
+            }else{
+                    domaineFacade.create(domaine);
+                    initAddDomaineCompetence();
+                     MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Domaine enregistré avec succè");
+                 }
             } catch (MyException ex) {
                 MyUtil.addErrorMessage(ex.getMessage());
             } catch (Exception ex) {

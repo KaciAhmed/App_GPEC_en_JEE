@@ -33,6 +33,7 @@ public class EditComportementCompetenceController extends AbstractController imp
     private CompetenceFacade compFacade;
         
     private Comportement compo;
+    private String oldCode;
         
      private Competence competence;
      private List<Competence> listComp;
@@ -53,7 +54,7 @@ public class EditComportementCompetenceController extends AbstractController imp
         if (id != null) {
             compo = ComportementFacade.find(Integer.parseInt(id));
             compSelected=compo.getIdcomp();
-
+            oldCode=compo.getCode();
         }
     } 
     protected void initEltCompo(){
@@ -62,10 +63,26 @@ public class EditComportementCompetenceController extends AbstractController imp
       listComp=new ArrayList<>();     
       listComp=compFacade.findAllOrderByAttribut("code");
     }
+    
+    private boolean isExisteCode(String code) 
+    {
+        Comportement Compo2 = ComportementFacade.findByCode(code);
+        if(Compo2 == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     public void edit() {
         try {
-                ComportementFacade.edit(compo);
+            compo.setCode(compo.getCode().toUpperCase());
+            if (isExisteCode(compo.getCode()) && !compo.getCode().equals(oldCode)) {
+            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
+            }else{
+                  ComportementFacade.edit(compo);
                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"comportement modifié avec succès"); 
+            }
+              
             } catch (Exception ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu   

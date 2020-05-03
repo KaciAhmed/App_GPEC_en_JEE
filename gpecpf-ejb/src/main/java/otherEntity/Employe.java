@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Employe.findAll", query = "SELECT e FROM Employe e")
     , @NamedQuery(name = "Employe.findById", query = "SELECT e FROM Employe e WHERE e.id = :id")
+    , @NamedQuery(name = "Employe.findBycode", query = "SELECT e FROM Employe e WHERE e.code = :code")
     , @NamedQuery(name = "Employe.findByNom", query = "SELECT e FROM Employe e WHERE e.nom = :nom")
     , @NamedQuery(name = "Employe.findByPrenom", query = "SELECT e FROM Employe e WHERE e.prenom = :prenom")
     , @NamedQuery(name = "Employe.findByDtNaissance", query = "SELECT e FROM Employe e WHERE e.dtNaissance = :dtNaissance")
@@ -66,6 +67,9 @@ public class Employe implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 50)
+    @Column(name = "code")
+    private String code;
     @Size(max = 50)
     @Column(name = "nom")
     private String nom;
@@ -148,6 +152,14 @@ public class Employe implements Serializable {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+    
     public String getNom() {
         return nom;
     }

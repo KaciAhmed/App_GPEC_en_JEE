@@ -33,6 +33,8 @@ private DomaineCompetenceFacade domaineCompFacade;
    private Domainecompetence domPereSelected;
    private Domainecompetence oldDomPere;
    
+   String oldCode;
+   
     private String codePere;
     private String libPere;
     
@@ -47,14 +49,28 @@ private DomaineCompetenceFacade domaineCompFacade;
        domPereSelected=domaine.getIddommere();
        oldDomPere=domaine.getIddommere();
        lstDomPere.remove(domaine);
+       oldCode=domaine.getCode();
        }
     }
-
+    private boolean isExisteCode(String code) 
+    {
+        Domainecompetence domaine2 = domaineCompFacade.findByCode(code);
+        if(domaine2 == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
         public void edit() {
         try {
-            domaineCompFacade.edit(domaine);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Privilège modifié avec succès");
-        } catch (Exception ex) {
+            domaine.setCode(domaine.getCode().toUpperCase());
+            if (isExisteCode(domaine.getCode()) && !domaine.getCode().equals(oldCode)) {
+            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
+            }else{
+                     domaineCompFacade.edit(domaine);
+                     MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Domaine modifié avec succès");
+                 }
+            } catch (Exception ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
             

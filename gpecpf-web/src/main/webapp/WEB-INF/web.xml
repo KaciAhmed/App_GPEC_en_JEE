@@ -1041,4 +1041,28 @@
         <description>Lister une formation </description>
         <role-name>REFER_012_006</role-name>
     </security-role>
+    <security-role>
+        <description>Céer un employé</description>
+        <role-name>GESEMP_001_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un employé</description>
+        <role-name>GESEMP_001_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un employé </description>
+        <role-name>GESEMP_001_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un employé</description>
+        <role-name>GESEMP_001_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un employé </description>
+        <role-name>GESEMP_001_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un employé </description>
+        <role-name>GESEMP_001_006</role-name>
+    </security-role>
 </web-app>

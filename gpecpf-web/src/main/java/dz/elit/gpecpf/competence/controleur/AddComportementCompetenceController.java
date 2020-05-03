@@ -69,9 +69,17 @@ public class AddComportementCompetenceController extends AbstractController impl
         
         if(compSelected.getCode()!=null){
            compo.addCompetenceComportement(compSelected);
-           listComp.removeAll((Collection<?>)compSelected);
            compSelected =new Competence();
  
+        }
+    }
+    private boolean isExisteCode(String code) 
+    {
+        Comportement Compo2 = ComportementFacade.findByCode(code);
+        if(Compo2 == null) {
+            return false;
+        } else {
+            return true;
         }
     }
     public void create() {
@@ -80,9 +88,14 @@ public class AddComportementCompetenceController extends AbstractController impl
                 {
                     MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_add_comportement_comp"));
                 }else{  
-                        ComportementFacade.create(compo);
-                        MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//comportement crée avec succès
-                        initAddComp();   
+                        compo.setCode(compo.getCode().toUpperCase());
+                        if (isExisteCode(compo.getCode()) ) {
+                            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
+                         }else{
+                                ComportementFacade.create(compo);
+                                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//comportement crée avec succès
+                                initAddComp();  
+                              }
                 }
         } catch (MyException ex) {
             ex.printStackTrace();

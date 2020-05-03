@@ -96,7 +96,15 @@ public class AddCompetenceController extends AbstractController implements Seria
             comp.setIdtypcom(typeCompSelected);
             typeCompSelected=new Typecompetence();
         }
-
+    }
+    private boolean isExisteCode(String code) 
+    {
+        Competence Compo2 = compFacade.findByCode(code);
+        if(Compo2 == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
     public void create() {
         try {
@@ -108,9 +116,14 @@ public class AddCompetenceController extends AbstractController implements Seria
                         {
                            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_add_competence_type"));
                        }else{
-                                 compFacade.create(comp);
-                                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Compétence crée avec succès
-                                 initAddComp();
+                                 comp.setCode(comp.getCode().toUpperCase());
+                                if (isExisteCode(comp.getCode())) {
+                                     MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
+                                 }else{
+                                        compFacade.create(comp);
+                                        MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Compétence crée avec succès
+                                        initAddComp();
+                                }
                              }    
                 } 
 

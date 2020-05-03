@@ -120,7 +120,8 @@ public class CompetenceFacade extends AbstractFacade<Competence> {
             super.create(Comp);
         }
     }
-     
+
+    
      public List<Competence> findAllOrderByUnite() {
         Query query = em.createNamedQuery("Competence.findAll");
         JpaHelper.getDatabaseQuery(query).setRedirector(new CustomQueryRedirectors());
