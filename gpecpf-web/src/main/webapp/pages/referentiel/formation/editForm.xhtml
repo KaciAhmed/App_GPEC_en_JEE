@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/templateRefer.xhtml"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_modifier_formation}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_formation}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_formation}" href="listForm.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_modifier}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="Fiche Formation" />
+            <p:messages id="msgs" globalOnly="true" showDetail="true" />
+            <p:panel id="panel" styleClass="no-border row">
+                <a:row>
+                    <a:column span="6">
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8">
+                            <p:inputText id="cod" required="true" value="#{editFormationController.formation.code}" />
+                            <p:message for="cod" />
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="6">
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
+                        <a:column span="8">
+                            <p:inputTextarea id="desc" required="true" cols="60"
+                                value="#{editFormationController.formation.description}" />
+                            <p:message for="desc" />
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="6">
+                        <a:label value="#{bundleReferentiel.lbl_type}:" span="4" />
+                        <a:column span="8" >
+                            <p:selectOneMenu id="type" required="true" styleClass="form-control" value="#{editFormationController.formation.type}">
+                                <f:selectItem  itemLabel="Académique" itemValue="Académique" />
+                                <f:selectItem  itemLabel="Professionnel" itemValue="Professionnel" />
+                            </p:selectOneMenu>
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="6">
+                        <a:label value="#{bundleReferentiel.lbl_exigence}:" span="4" />
+                        <a:column span="8" >
+                            <p:selectOneMenu id="exi" required="true" styleClass="form-control" value="#{editFormationController.formation.exigence}">
+                                <f:selectItem  itemLabel="Obligatoire" itemValue="Obligatoire" />
+                                <f:selectItem  itemLabel="Supplémentaire" itemValue="Supplémentaire" />
+                            </p:selectOneMenu>
+                        </a:column>
+                    </a:column>
+                </a:row>
+            </p:panel>
+            <a:row>
+                <p:commandButton action="#{editFormationController.edit()}" value="#{bundleCommun.btn_valider}"
+                    icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listForm" icon="fa fa-reply"
+                    styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>
