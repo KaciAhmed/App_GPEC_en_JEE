@@ -48,8 +48,8 @@
                 <a:row >
                     <a:column span="12" >
                         <p:tabView id="tabView">
-                            <p:tab title="#{bundleReferentiel.titre_comportement_competence}">
-                                <a:panel header=" #{bundleReferentiel.titre_liste_comportement_competence}" iconheader="fa fa-list-ul">
+                            <p:tab title="#{bundleReferentiel.titre_competence}">
+                                <a:panel header=" #{bundleReferentiel.titre_comportement_de_la_compétence}" iconheader="fa fa-list-ul">
                                     <f:facet name="header">                                            
                                     </f:facet>
                                     <p:dataTable  id="tableCompetence" value="#{editComportementCompetenceController.compo.idcomp}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
