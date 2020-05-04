@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,10 +54,12 @@ public class ListEmployeController extends AbstractController implements Seriali
     
      @Override //PostConstruct
     protected void initController() {
-      //  findList();
+        
+        findList();
     }
     public void findList()
     {
+        listEmp=new ArrayList<>();
         listEmp=empFacade.findAllOrderByAttribut("code");
         rechercher();
     }

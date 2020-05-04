@@ -9,6 +9,7 @@ import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,16 +47,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Employe.findByPrenom", query = "SELECT e FROM Employe e WHERE e.prenom = :prenom")
     , @NamedQuery(name = "Employe.findByDtNaissance", query = "SELECT e FROM Employe e WHERE e.dtNaissance = :dtNaissance")
     , @NamedQuery(name = "Employe.findByEmail", query = "SELECT e FROM Employe e WHERE e.email = :email")
-    , @NamedQuery(name = "Employe.findByUsername", query = "SELECT e FROM Employe e WHERE e.username = :username")
-    , @NamedQuery(name = "Employe.findByPassword", query = "SELECT e FROM Employe e WHERE e.password = :password")
     , @NamedQuery(name = "Employe.findByAdresse", query = "SELECT e FROM Employe e WHERE e.adresse = :adresse")
-    , @NamedQuery(name = "Employe.findByCreerle", query = "SELECT e FROM Employe e WHERE e.creerle = :creerle")
-    , @NamedQuery(name = "Employe.findByModiferle", query = "SELECT e FROM Employe e WHERE e.modiferle = :modiferle")
+    , @NamedQuery(name = "Employe.findByDate_recrutement", query = "SELECT e FROM Employe e WHERE e.date_recrutement = :date_recrutement")
+    , @NamedQuery(name = "Employe.findByDate_depart", query = "SELECT e FROM Employe e WHERE e.date_depart = :date_depart")
     , @NamedQuery(name = "Employe.findByGrade", query = "SELECT e FROM Employe e WHERE e.grade = :grade")
-    , @NamedQuery(name = "Employe.findByDtrecrutement", query = "SELECT e FROM Employe e WHERE e.dtrecrutement = :dtrecrutement")
     , @NamedQuery(name = "Employe.findByClassement", query = "SELECT e FROM Employe e WHERE e.classement = :classement")
     , @NamedQuery(name = "Employe.findByCodeservice", query = "SELECT e FROM Employe e WHERE e.codeservice = :codeservice")
-    , @NamedQuery(name = "Employe.findByCodebg", query = "SELECT e FROM Employe e WHERE e.codebg = :codebg")
     , @NamedQuery(name = "Employe.findByTel", query = "SELECT e FROM Employe e WHERE e.tel = :tel")
     , @NamedQuery(name = "Employe.findBySpecialit\u00e9", query = "SELECT e FROM Employe e WHERE e.specialit\u00e9 = :specialit\u00e9")
     , @NamedQuery(name = "Employe.findByAutre", query = "SELECT e FROM Employe e WHERE e.autre = :autre")})
@@ -83,36 +80,24 @@ public class Employe implements Serializable {
     @Size(max = 255)
     @Column(name = "email")
     private String email;
-    @Size(max = 255)
-    @Column(name = "username")
-    private String username;
-    @Size(max = 255)
-    @Column(name = "password")
-    private String password;
     @Size(max = 2147483647)
     @Column(name = "adresse")
     private String adresse;
-    @Column(name = "creerle")
+    @Column(name = "date_recrutement")
     @Temporal(TemporalType.DATE)
-    private Date creerle;
-    @Column(name = "modiferle")
+    private Date date_recrutement;
+    @Column(name = "date_depart")
     @Temporal(TemporalType.DATE)
-    private Date modiferle;
+    private Date date_depart;
     @Size(max = 50)
     @Column(name = "grade")
     private String grade;
-    @Column(name = "dtrecrutement")
-    @Temporal(TemporalType.DATE)
-    private Date dtrecrutement;
     @Size(max = 50)
     @Column(name = "classement")
     private String classement;
     @Size(max = 50)
     @Column(name = "codeservice")
     private String codeservice;
-    @Size(max = 50)
-    @Column(name = "codebg")
-    private String codebg;
     @Size(max = 20)
     @Column(name = "tel")
     private String tel;
@@ -191,23 +176,6 @@ public class Employe implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getAdresse() {
         return adresse;
     }
@@ -216,36 +184,12 @@ public class Employe implements Serializable {
         this.adresse = adresse;
     }
 
-    public Date getCreerle() {
-        return creerle;
-    }
-
-    public void setCreerle(Date creerle) {
-        this.creerle = creerle;
-    }
-
-    public Date getModiferle() {
-        return modiferle;
-    }
-
-    public void setModiferle(Date modiferle) {
-        this.modiferle = modiferle;
-    }
-
     public String getGrade() {
         return grade;
     }
 
     public void setGrade(String grade) {
         this.grade = grade;
-    }
-
-    public Date getDtrecrutement() {
-        return dtrecrutement;
-    }
-
-    public void setDtrecrutement(Date dtrecrutement) {
-        this.dtrecrutement = dtrecrutement;
     }
 
     public String getClassement() {
@@ -262,14 +206,6 @@ public class Employe implements Serializable {
 
     public void setCodeservice(String codeservice) {
         this.codeservice = codeservice;
-    }
-
-    public String getCodebg() {
-        return codebg;
-    }
-
-    public void setCodebg(String codebg) {
-        this.codebg = codebg;
     }
 
     public String getTel() {
@@ -295,6 +231,23 @@ public class Employe implements Serializable {
     public void setAutre(String autre) {
         this.autre = autre;
     }
+
+    public Date getDate_recrutement() {
+        return date_recrutement;
+    }
+
+    public void setDate_recrutement(Date date_recrutement) {
+        this.date_recrutement = date_recrutement;
+    }
+
+    public Date getDate_depart() {
+        return date_depart;
+    }
+
+    public void setDate_depart(Date date_depart) {
+        this.date_depart = date_depart;
+    }
+    
 
     @XmlTransient
     public Collection<Formation> getFormationCollection() {
@@ -340,6 +293,20 @@ public class Employe implements Serializable {
         this.historiqueemployeposteCollection = historiqueemployeposteCollection;
     }
 
+    public void addFormation(Formation frm) {
+        this.getFormationCollection().add(frm);
+        frm.getEmployeCollection().add(this);
+    }
+    public void addListFormation(List<Formation> lstFrm) {
+        for (Formation frm : lstFrm) {
+            addFormation(frm);
+        }
+    }
+     public void removeFormation(Formation frm) {
+         this.getFormationCollection().remove(frm);
+         frm.getEmployeCollection().remove(this);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -38,7 +38,7 @@ public class EmployeFacade extends AbstractFacade<Employe>{
     
     public Employe findByCode(String code) 
     {
-      Query query = em.createNamedQuery("Employe.findByCode");
+      Query query = em.createNamedQuery("Employe.findBycode");
       query.setParameter("code", code);
       List<Employe> list = query.getResultList();
       return list.isEmpty() ? null : list.get(0);
@@ -53,7 +53,7 @@ public class EmployeFacade extends AbstractFacade<Employe>{
             queryStringBuilder.append(" AND  a.prenom like :prenom ");
         }
         if (code != null && !code.equals("")) {
-            queryStringBuilder.append(" AND  a.login like :code ");
+            queryStringBuilder.append(" AND  a.code like :code ");
         }
         queryStringBuilder.append(" ORDER BY a.code ");
 
@@ -66,7 +66,7 @@ public class EmployeFacade extends AbstractFacade<Employe>{
             q.setParameter("prenom","%"+ prenom + "%");
         }
         if (code != null && !code.equals("")) {
-            q.setParameter("login","%"+ code+ "%");
+            q.setParameter("code","%"+ code+ "%");
         }
         //Implémentation de visibilité
         JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());

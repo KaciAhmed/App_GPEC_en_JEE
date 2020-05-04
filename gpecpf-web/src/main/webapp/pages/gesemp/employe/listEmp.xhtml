@@ -13,7 +13,7 @@
 
     <ui:define name="breadCrumb">
         <a:breadcrumb>
-            <a:menuitem value="#{bundleGesemp.titre_gestion_personnel}" />
+            <a:menuitem value="#{bundleGesemp.titre_gestion_employe}" />
             <a:menuitem value="#{bundleGesemp.lien_liste_employe}"  href="listEmp.xhtml" last="true" />
         </a:breadcrumb>
     </ui:define>
@@ -21,8 +21,8 @@
     <ui:define name="MyContent">
         <h:form id="form">
             <a:row >
-                <a:pagetitle value="Utilisateurs" />                
-                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" title="#{bundleAdmin.titre_nouveau_utilisateur}" outcome="addUtilisateur" rendered="#{mySessionController.isUserInRole('ADMIN_002_001')}" />
+                <a:pagetitle value="#{bundleGesemp.lien_liste_employe}" />                
+                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" title="#{bundleAdmin.titre_nouveau_utilisateur}" outcome="addEmp" rendered="#{mySessionController.isUserInRole('GESEMP_001_001')}" />
                 <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
             </a:row>
             <a:panel isPadding="true" >              

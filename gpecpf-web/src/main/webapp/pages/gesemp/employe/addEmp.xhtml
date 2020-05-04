@@ -1,12 +1,228 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateGes.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
 
+    <ui:define name="Title">
+        #{bundleGesemp.titre_nouveau_employe}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb rendered="true">
+            <a:menuitem value="#{bbundleGesemp.titre_nouveau_employe}" />
+            <a:menuitem value="#{bundleGesemp.lien_liste_employe}" outcome="listEmp.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_nouveau}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="#{bundleGesemp.titre_fiche_employe}" />
+            <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            <p:panel id="panel" styleClass="no-border">
+                <p:tabView  id="tabView">
+                    <p:tab  title="#{bundleGesemp.titre_information_generale}">
+                         <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_code_emp}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="codeEmp" value="#{addEmployeController.emp.code}" required="true" label="#{bundleGesemp.lbl_code_emp}" size="40"/>
+                                    <p:message for="codeEmp" />                                        
+                                </a:column>                                
+                            </a:column>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_Code_Service}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="service" value="#{addEmployeController.emp.codeservice}" required="true" label="#{bundleGesemp.lbl_Code_Service}" size="40"/>
+                                    <p:message for="service" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                         <a:row>
+                           <a:column span="6" >                               
+                               <a:label value="#{bundleGesemp.lbl_date_recrutement}" span="4" />
+                                <a:column span="8" >
+                                    <p:calendar  id="dateRec" value="#{addEmployeController.emp.date_recrutement}"  pattern="dd/MM/yyyy" required="true" label="#{bundleGesemp.lbl_date_recrutement}" 
+                                                 locale="fr" navigator="true"> 
+                                    </p:calendar>
+                                    <p:message for="dateRec" />                                        
+                                </a:column>                                
+                            </a:column>
+                            <a:column span="6" >                               
+                               <a:label value="#{bundleGesemp.lbl_date_depart}" span="4" />
+                                <a:column span="8" >
+                                    <p:calendar  id="dateDep" value="#{addEmployeController.emp.date_depart}"  pattern="dd/MM/yyyy" mindate="#{addEmployeController.emp.date_recrutement}" label="#{bundleGesemp.lbl_date_depart}" 
+                                                 locale="fr" navigator="true"> 
+                                    </p:calendar>
+                                    <p:message for="dateDep" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleGesemp.lbl_grade}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="grade" value="#{addEmployeController.emp.grade}" required="true" label="#{bundleGesemp.lbl_grade}" />
+                                    <p:message for="grade" />                                        
+                                </a:column>                                
+                            </a:column>  
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_classement}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="classement" value="#{addEmployeController.emp.classement}" required="true" label="#{bundleGesemp.lbl_classement}" size="40"/>
+                                    <p:message for="classement" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleGesemp.lbl_Specialite}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="specialite" value="#{addEmployeController.emp.specialité}" required="true" label="#{bundleGesemp.lbl_Specialite}" />
+                                    <p:message for="specialite" />                                        
+                                </a:column>                                
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleGesemp.lbl_autre}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="autre" value="#{addEmployeController.emp.autre}"  label="#{bundleGesemp.lbl_autre}" />
+                                    <p:message for="autre" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row> 
+                    </p:tab>
+                    <p:tab title="#{bundleGesemp.lbl_information_personnel}">                        
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleGesemp.lbl_nom}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="nom" value="#{addEmployeController.emp.nom}" required="true" label="#{bundleGesemp.lbl_nom}" />
+                                    <p:message for="nom" />                                        
+                                </a:column>                                
+                            </a:column>  
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_prenom}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="prenom" value="#{addEmployeController.emp.prenom}" required="true" label="#{bundleGesemp.lbl_prenom}" size="40"/>
+                                    <p:message for="prenom" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                           <a:column span="6" >                               
+                               <a:label value="#{bundleGesemp.lbl_date_naissance}" span="4" />
+                                <a:column span="8" >
+                                    <p:calendar  id="dateNaiss" value="#{addEmployeController.emp.dtNaissance}"  pattern="dd/MM/yyyy"  required="true" label="#{bundleGesemp.lbl_date_naissance}" 
+                                                 locale="fr" navigator="true"> 
+                                    </p:calendar>
+                                    <p:message for="dateNaiss" />                                        
+                                </a:column>                                
+                            </a:column>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_adresse}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputTextarea cols="60" id="Adresse" value="#{addEmployeController.emp.adresse}" label="#{bundleGesemp.lbl_adresse}"/>
+                                </a:column>  
+                            </a:column>
+                        </a:row>
+                         <a:row>
+                            <a:column span="6" >   
+                            <a:label value="#{bundleGesemp.lbl_wilaya}" span="4" />
+                              <a:column span="8" >
+                                    <p:selectOneMenu id="wilaya" value="#{addEmployeController.idWil}">
+                                        <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"  />
+                                        <f:selectItems value="#{addEmployeController.listWilayas}" var="wilaya" itemLabel="#{wilaya.nom}" itemValue="#{wilaya.id}"/>
+                                        <p:ajax listener="#{addEmployeController.CommuneParWilaya()}" update="commune2"/>
+                                    </p:selectOneMenu>
+                               </a:column>
+                            </a:column> 
+                            <a:column span="6" >   
+                                <a:label value="#{bundleGesemp.lbl_commune}" span="4" />
+                               <a:column span="8" >
+                                   <p:selectOneMenu id="commune2" value="#{addEmployeController.idComune}">
+                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"  />
+                                    <f:selectItems value="#{addEmployeController.listCommunes}" var="commune" itemLabel="#{commune.nom}" itemValue="#{commune.id}"/>
+                                    <p:ajax listener="#{addEmployeController.obtenirCommune()}"/>
+                                   </p:selectOneMenu>
+                               </a:column>     
+                            </a:column> 
+                        </a:row>
+                    </p:tab>
+
+                    <p:tab title="#{bundleAdmin.lbl_contact}">                        
+                        <a:row>
+                            <a:column span="6" >                                
+                                 <a:label value="#{bundleGesemp.lbl_email}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText  id="email" value="#{addEmployeController.emp.email}" label="#{bundleGesemp.lbl_email}"  validatorMessage="Invalid email format" size="40" required="true"> 
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    </p:inputText>
+                                    <p:message for="email" />
+                                </a:column>                                
+                            </a:column>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_telephone}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="tel" value="#{addEmployeController.emp.tel}" required="true" validatorMessage="Numéro de téléphone invalide" label="#{bundleGesemp.lbl_telephone}">
+                                         <f:validateRegex pattern="^|([0-9]{10}$)" />
+                                    </p:inputText>
+                                    <p:message for="tel" />                                        
+                                </a:column>                                
+                            </a:column> 
+                        </a:row>
+                    </p:tab>
+                    <p:tab id="tableformations" title="#{bundleGesemp.lbl_formation_employe}">
+                        <a:row>
+
+                            <a:panel header="#{bundleGesemp.lien_liste_formation}"  >
+                                <f:facet name="header" >
+                                    <p:commandButton  title="#{bundleGesemp.lien_liste_formation}" value="#{bundleCommun.btn_ajouter}"   icon="fa fa-plus"  immediate="true" oncomplete="PF('dialogFormation').show();"/> 
+                                </f:facet>
+                                <p:dataTable id="tablefomations" value="#{addEmployeController.listFormations}" var="formation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                    <p:column headerText="#{bundleGesemp.lbl_code}">
+                                        <h:outputText value="#{formation.code}"/>
+                                    </p:column>
+                                    <p:column headerText="#{bundleGesemp.lbl_description}">
+                                        <h:outputText value="#{formation.descrption}"/>
+                                    </p:column>
+                                    <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
+                                        <p:commandButton icon="ui-icon-close" actionListener="#{addEmployeController.removeFoirmationForEmploye(formation)}" update=":formDialogs:panelformations :form:tabView:tableformations"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </a:panel>
+                        </a:row>
+                    </p:tab>
+                   
+                </p:tabView>                
+            </p:panel> 
+            <a:row >
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addEmployeController.create()}" icon="fa  fa-check-square-o" update="panel msgs"/>
+                <p:commandButton value="#{bundleCommun.btn_nouveau}" immediate="true" icon="fa fa-plus " styleClass="GreenButton" action="#{addEmployeController.newEmploye()}" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" icon="fa fa-reply" action="listEmp" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form> 
+    </ui:define>
+    <ui:define name="MyDialog">
+        <h:form id="formDialogs">
+            <p:dialog id="dialogFormationId" header="#{bundleGesemp.lien_liste_formation}" widgetVar="dialogFormation" width="320" position="center" modal="true"  responsive="true">
+                <h:panelGroup id="panelformations">
+                    <p:dataTable value="#{addEmployeController.listFormations}" rows="5" var="formation" selection="#{addEmployeController.listFormationsSelected}" rowKey="#{formation.id}" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                        <p:column selectionMode="multiple" width="60"/>
+                        <p:column headerText="#{bundleGesemp.lbl_description}">
+                            <h:outputText value="#{formation.description}"/>
+                        </p:column>
+                        <f:facet name="footer" > 
+                            <p:commandButton title="#{bundleCommun.btn_ajouter}"  styleClass="GrayButton"  value="#{bundleCommun.btn_ajouter}" process=":formDialogs:panelformations" actionListener="#{addEmployeController.addFormationForEmploye()}" 
+                                             update=":formDialogs:panelformations :form:tabView:tableformations"       oncomplete="PF('dialogFormation').hide();"  />
+                        </f:facet>
+                    </p:dataTable>
+                </h:panelGroup>       
+            </p:dialog>
+         </h:form> 
+    </ui:define>
+</ui:composition>

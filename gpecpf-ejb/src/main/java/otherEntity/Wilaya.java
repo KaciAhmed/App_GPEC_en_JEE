@@ -11,6 +11,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class Wilaya implements Serializable {
     @Size(max = 255)
     @Column(name = "nom")
     private String nom;
-    @OneToMany(mappedBy = "idwilaya")
+    @OneToMany(mappedBy = "idwilaya", fetch=FetchType.LAZY)
     private Collection<Commune> communeCollection;
 
     public Wilaya() {
