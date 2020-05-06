@@ -7,9 +7,11 @@ package otherEntity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import dz.elit.gpecpf.poste.entity.Condition;
+import dz.elit.gpecpf.poste.entity.Formation;
 import dz.elit.gpecpf.poste.entity.Mission;
 import dz.elit.gpecpf.poste.entity.Moyen;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -123,8 +125,8 @@ public class Poste implements Serializable {
             schema = StaticUtil.ADMINISTRATION_SCHEMA
     )
     private List<Condition> listCondition;
-    @ManyToMany(mappedBy = "posteCollection")
-    private Collection<Formation> formationCollection;
+    @ManyToMany(mappedBy = "listPost")
+    private List<Formation> listFormation= new ArrayList();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "poste")
     private Collection<Historiqueemployeposte> historiqueemployeposteCollection;
     @JoinColumn(name = "idemploi", referencedColumnName = "id")
@@ -279,17 +281,14 @@ public class Poste implements Serializable {
         this.listMoyen = listMoyen;
     }
 
+    public List<Formation> getListFormation() {
+        return listFormation;
+    }
+
+    public void setListFormation(List<Formation> listFormation) {
+        this.listFormation = listFormation;
+    }
     
-
-    @XmlTransient
-    public Collection<Formation> getFormationCollection() {
-        return formationCollection;
-    }
-
-    public void setFormationCollection(Collection<Formation> formationCollection) {
-        this.formationCollection = formationCollection;
-    }
-
     @XmlTransient
     public Collection<Historiqueemployeposte> getHistoriqueemployeposteCollection() {
         return historiqueemployeposteCollection;

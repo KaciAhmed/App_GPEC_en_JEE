@@ -69,7 +69,7 @@ public class EmployeFacade extends AbstractFacade<Employe>{
             q.setParameter("code","%"+ code+ "%");
         }
         //Implémentation de visibilité
-        JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
+      //  JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
 
         return q.getResultList();
     }

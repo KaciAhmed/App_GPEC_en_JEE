@@ -21,26 +21,27 @@
 
     <ui:define name="MyContent">
         <h:form id="form">
-            <a:pagetitle value="#{bundleGesemp.titre_fiche_employe}" />
-            <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            <a:pagetitle value="#{bundleGesemp.titre_fiche_employe}" />   
+            <p:messages id="msgs" showDetail="true" closable="true"/>
             <p:panel id="panel" styleClass="no-border">
+                <p:focus context="panel"/>                
                 <p:tabView  id="tabView">
-                    <p:tab  title="#{bundleGesemp.titre_information_generale}">
+                    <p:tab title="#{bundleGesemp.titre_information_generale}">    
                          <a:row>
                             <a:column span="6" >                                
-                                <a:label value="#{bundleGesemp.lbl_code_emp}" span="4" />
+                                <a:label value="#{bundleGesemp.lbl_matricule}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="codeEmp" value="#{addEmployeController.emp.code}" required="true" label="#{bundleGesemp.lbl_code_emp}" size="40"/>
+                                    <p:inputText id="codeEmp" value="#{addEmployeController.emp.code}" required="true" label="#{bundleGesemp.lbl_matricule}" size="40"/>
                                     <p:message for="codeEmp" />                                        
                                 </a:column>                                
                             </a:column>
-                            <a:column span="6" >                                
-                                <a:label value="#{bundleGesemp.lbl_Code_Service}" span="4" />
+                            <a:column span="6" >
+                                <a:label value="#{bundleGesemp.lbl_Specialite}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="service" value="#{addEmployeController.emp.codeservice}" required="true" label="#{bundleGesemp.lbl_Code_Service}" size="40"/>
-                                    <p:message for="service" />                                        
+                                    <p:inputText id="specialite" value="#{addEmployeController.emp.specialité}" required="true" label="#{bundleGesemp.lbl_Specialite}" />
+                                    <p:message for="specialite" />                                        
                                 </a:column>                                
-                            </a:column>
+                            </a:column> 
                         </a:row>
                          <a:row>
                            <a:column span="6" >                               
@@ -70,22 +71,6 @@
                                     <p:message for="grade" />                                        
                                 </a:column>                                
                             </a:column>  
-                            <a:column span="6" >                                
-                                <a:label value="#{bundleGesemp.lbl_classement}" span="4" />
-                                <a:column span="8" >
-                                    <p:inputText id="classement" value="#{addEmployeController.emp.classement}" required="true" label="#{bundleGesemp.lbl_classement}" size="40"/>
-                                    <p:message for="classement" />                                        
-                                </a:column>                                
-                            </a:column>
-                        </a:row>
-                        <a:row>
-                            <a:column span="6" >
-                                <a:label value="#{bundleGesemp.lbl_Specialite}" span="4" />
-                                <a:column span="8" >
-                                    <p:inputText id="specialite" value="#{addEmployeController.emp.specialité}" required="true" label="#{bundleGesemp.lbl_Specialite}" />
-                                    <p:message for="specialite" />                                        
-                                </a:column>                                
-                            </a:column>  
                             <a:column span="6" >
                                 <a:label value="#{bundleGesemp.lbl_autre}" span="4" />
                                 <a:column span="8" >
@@ -93,10 +78,13 @@
                                     <p:message for="autre" />                                        
                                 </a:column>                                
                             </a:column>
-                        </a:row> 
-                    </p:tab>
-                    <p:tab title="#{bundleGesemp.lbl_information_personnel}">                        
-                        <a:row>
+                        </a:row>
+                        <a:row style="margin-bottom:2%;margin-top: 2%">
+                            <a:column span="6" >
+                                <h:outputText value="#{bundleGesemp.lbl_information_personnel}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                              </a:column>
+                        </a:row>
+                               <a:row>
                             <a:column span="6" >
                                 <a:label value="#{bundleGesemp.lbl_nom}" span="4" />
                                 <a:column span="8" >
@@ -136,7 +124,7 @@
                                     <p:selectOneMenu id="wilaya" value="#{addEmployeController.idWil}">
                                         <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"  />
                                         <f:selectItems value="#{addEmployeController.listWilayas}" var="wilaya" itemLabel="#{wilaya.nom}" itemValue="#{wilaya.id}"/>
-                                        <p:ajax listener="#{addEmployeController.CommuneParWilaya()}" update="commune2"/>
+                                        <p:ajax listener="#{addEmployeController.CommuneParWilaya()}"  update="commune2"/>
                                     </p:selectOneMenu>
                                </a:column>
                             </a:column> 
@@ -151,10 +139,12 @@
                                </a:column>     
                             </a:column> 
                         </a:row>
-                    </p:tab>
-
-                    <p:tab title="#{bundleAdmin.lbl_contact}">                        
-                        <a:row>
+                        <a:row style="margin:2%;font-style: italic">
+                            <a:column span="6" >
+                                <h:outputText value="#{bundleAdmin.lbl_contact}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium" />
+                              </a:column>
+                        </a:row>
+                         <a:row>
                             <a:column span="6" >                                
                                  <a:label value="#{bundleGesemp.lbl_email}" span="4" />
                                 <a:column span="8" >
@@ -175,22 +165,22 @@
                             </a:column> 
                         </a:row>
                     </p:tab>
-                    <p:tab id="tableformations" title="#{bundleGesemp.lbl_formation_employe}">
+                    <p:tab id="tabformations" title="#{bundleGesemp.lbl_formation_employe}">
                         <a:row>
 
                             <a:panel header="#{bundleGesemp.lien_liste_formation}"  >
                                 <f:facet name="header" >
                                     <p:commandButton  title="#{bundleGesemp.lien_liste_formation}" value="#{bundleCommun.btn_ajouter}"   icon="fa fa-plus"  immediate="true" oncomplete="PF('dialogFormation').show();"/> 
                                 </f:facet>
-                                <p:dataTable id="tablefomations" value="#{addEmployeController.listFormations}" var="formation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-                                    <p:column headerText="#{bundleGesemp.lbl_code}">
+                                <p:dataTable id="tableformations" value="#{addEmployeController.emp.listFormation}" var="formation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" >
+                                    <p:column headerText="#{bundleGesemp.lbl_code}" >
                                         <h:outputText value="#{formation.code}"/>
                                     </p:column>
                                     <p:column headerText="#{bundleGesemp.lbl_description}">
-                                        <h:outputText value="#{formation.descrption}"/>
+                                        <h:outputText value="#{formation.description}"/>
                                     </p:column>
                                     <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
-                                        <p:commandButton icon="ui-icon-close" actionListener="#{addEmployeController.removeFoirmationForEmploye(formation)}" update=":formDialogs:panelformations :form:tabView:tableformations"/>
+                                        <p:commandButton icon="fa fa-times" styleClass="BlackButton" actionListener="#{addEmployeController.removeFormationForEmploye(formation)}" update=":formDialogs:panelformations :form:tabView:tableformations" process="@this"/>
                                     </p:column>
 
                                 </p:dataTable>
@@ -202,14 +192,16 @@
             </p:panel> 
             <a:row >
                 <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addEmployeController.create()}" icon="fa  fa-check-square-o" update="panel msgs"/>
-                <p:commandButton value="#{bundleCommun.btn_nouveau}" immediate="true" icon="fa fa-plus " styleClass="GreenButton" action="#{addEmployeController.newEmploye()}" ajax="false" />
                 <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" icon="fa fa-reply" action="listEmp" styleClass="GrayButton" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_reset}" immediate="true" icon="fa fa-times " styleClass="RedButton" action="#{addEmployeController.newEmploye()}" update="panel :formDialogs:panelformations" process="@this" >
+                <p:resetInput target="panel" />
+                </p:commandButton>
             </a:row>
         </h:form> 
     </ui:define>
     <ui:define name="MyDialog">
         <h:form id="formDialogs">
-            <p:dialog id="dialogFormationId" header="#{bundleGesemp.lien_liste_formation}" widgetVar="dialogFormation" width="320" position="center" modal="true"  responsive="true">
+            <p:dialog id="dialogFormationId" header="#{bundleGesemp.lien_liste_formation}" widgetVar="dialogFormation" width="60%" position="center" modal="true"  responsive="true" >
                 <h:panelGroup id="panelformations">
                     <p:dataTable value="#{addEmployeController.listFormations}" rows="5" var="formation" selection="#{addEmployeController.listFormationsSelected}" rowKey="#{formation.id}" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                         <p:column selectionMode="multiple" width="60"/>

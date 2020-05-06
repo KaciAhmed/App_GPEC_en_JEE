@@ -26,9 +26,9 @@
                 <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
             </a:row>
             <a:panel isPadding="true" >              
-              <a:label value="#{bundleGesemp.lbl_code}" span="1" />
+                <a:label value="#{bundleGesemp.lbl_matricule}" span="1" />
                 <a:column span="2" >
-                    <p:inputText id="code" value="#{listEmployeController.code}" label="#{bundleGesemp.lbl_code}" />                                    
+                    <p:inputText id="code" value="#{listEmployeController.code}" label="#{bundleGesemp.lbl_matricule}" />                                    
                 </a:column>
                 <a:label value="#{bundleGesemp.lbl_nom}" span="1" />
                 <a:column span="2" >
@@ -53,7 +53,7 @@
                         </a:dropButton>
                     </f:facet>
                     <p:dataTable  value="#{listEmployeController.listEmp}" var="employe" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
-                        <p:column headerText="#{bundleGesemp.lbl_code}">
+                        <p:column headerText="#{bundleGesemp.lbl_matricule}">
                             <h:outputText value="#{employe.code}"/>
                         </p:column>
                         <p:column headerText="#{bundleGesemp.lbl_nom}">

@@ -8,12 +8,15 @@ package dz.elit.gpec.gestEmploye.controller;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.formation.service.FormationFacade;
+
 import dz.elit.gpecpf.gestion_employe.service.EmployeFacade;
+import dz.elit.gpecpf.poste.entity.Formation;
+import dz.elit.gpecpf.poste.service.FormationFacade;
 import dz.elit.gpecpf.wilaya.commune.service.CommuneFacade;
 import dz.elit.gpecpf.wilaya.commune.service.WilayaFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,7 +24,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import otherEntity.Commune;
 import otherEntity.Employe;
-import otherEntity.Formation;
 import otherEntity.Wilaya;
 
 /**
@@ -69,9 +71,10 @@ public class AddEmployeController extends AbstractController implements Serializ
     }
      private void initAddEmploye() {
         emp = new Employe();
-      //  listFormationsSelected=new ArrayList<>();
-      //  listFormations = formationFacade.findAllOrderByAttribut("description");
-      //  communeSelected=new Commune();
+        listFormationsSelected=new ArrayList<>();
+        listFormations=new ArrayList<>();
+        listFormations = formationFacade.findAllOrderByAttribut("description"); 
+        communeSelected=new Commune();
         listWilayas = new ArrayList();
         listWilayas=wilayaFacade.findAllOrderByAttribut("code");
         wilayaSelected =new Wilaya(); 
@@ -124,10 +127,13 @@ public class AddEmployeController extends AbstractController implements Serializ
                    if (isExisteCode(emp.getCode())) {
                         MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
                     }else{
-              //         System.out.println("-------------------------------------------"+emp.getIdcommune().getNom());
-                            empFacade.create(emp);
-                            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Compétence crée avec succès
-                            initAddEmploye();
+                            if (emp.getListFormation().isEmpty()) {
+                                 MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_list_formation_vide"));//Erreur inconu   
+                            }else{
+                                 empFacade.create(emp);
+                                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Compétence crée avec succès
+                                 initAddEmploye();
+                             }
                           }
                 }       
         } catch (MyException ex) {
@@ -139,25 +145,27 @@ public class AddEmployeController extends AbstractController implements Serializ
         }
     }
     public void newEmploye() {
+        idWil=0;
+        idComune=0;
         initAddEmploye();
     }
-    /*
+  
     public void addFormationForEmploye() {
         if (!listFormationsSelected.isEmpty()) {
+            
             emp.addListFormation(listFormationsSelected);
             listFormations.removeAll(listFormationsSelected);
             listFormationsSelected= new ArrayList<>();
         }
     }
-    public void removeFoirmationForEmploye(Formation frm) 
+    public void removeFormationForEmploye(Formation frm) 
     {
-
-        if (frm != null) {
+        System.out.println("aaaaa");
             emp.removeFormation(frm);
             listFormations.add(frm);
-        }
+      
     }
-    */
+ 
     // getter && setter
 
     public Employe getEmp() {

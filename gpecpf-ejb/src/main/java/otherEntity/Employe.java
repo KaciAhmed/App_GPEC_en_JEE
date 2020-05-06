@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package otherEntity;
-
+import dz.elit.gpecpf.commun.service.QuerySessionLog;
 import dz.elit.gpecpf.commun.util.StaticUtil;
+import dz.elit.gpecpf.poste.entity.Formation;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +33,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.queries.QueryRedirector;
 
 /**
  *
@@ -107,11 +110,15 @@ public class Employe implements Serializable {
     @Size(max = 50)
     @Column(name = "autre")
     private String autre;
-    @JoinTable(name = "employeformation", joinColumns = {
-        @JoinColumn(name = "idemploye", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "idform", referencedColumnName = "id")})
+    @JoinTable(
+        name = "employeformation", joinColumns = {
+            @JoinColumn(name = "idemploye", referencedColumnName = "id")
+        }, inverseJoinColumns = {
+            @JoinColumn(name = "idform", referencedColumnName = "id")
+            }, schema = StaticUtil.ADMINISTRATION_SCHEMA
+    )
     @ManyToMany
-    private Collection<Formation> formationCollection;
+    private List<Formation> listFormation = new ArrayList();
     @JoinColumn(name = "idcommune", referencedColumnName = "id")
     @ManyToOne
     private Commune idcommune;
@@ -247,17 +254,15 @@ public class Employe implements Serializable {
     public void setDate_depart(Date date_depart) {
         this.date_depart = date_depart;
     }
-    
 
-    @XmlTransient
-    public Collection<Formation> getFormationCollection() {
-        return formationCollection;
+    public List<Formation> getListFormation() {
+        return listFormation;
     }
 
-    public void setFormationCollection(Collection<Formation> formationCollection) {
-        this.formationCollection = formationCollection;
+    public void setListFormation(List<Formation> listFormation) {
+        this.listFormation = listFormation;
     }
-
+ 
     public Commune getIdcommune() {
         return idcommune;
     }
@@ -294,17 +299,18 @@ public class Employe implements Serializable {
     }
 
     public void addFormation(Formation frm) {
-        this.getFormationCollection().add(frm);
-        frm.getEmployeCollection().add(this);
+
+        this.getListFormation().add(frm);
+        frm.getListEmploye().add(this);
     }
     public void addListFormation(List<Formation> lstFrm) {
         for (Formation frm : lstFrm) {
-            addFormation(frm);
+            this.addFormation(frm);
         }
     }
      public void removeFormation(Formation frm) {
-         this.getFormationCollection().remove(frm);
-         frm.getEmployeCollection().remove(this);
+         this.getListFormation().remove(frm);            
+         frm.getListEmploye().remove(this);
     }
     
     @Override

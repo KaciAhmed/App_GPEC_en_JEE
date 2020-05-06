@@ -150,7 +150,7 @@
                                         <h:outputText value="#{profil.libelle}"/>
                                     </p:column>
                                     <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
-                                        <p:commandButton icon="ui-icon-close" actionListener="#{addUtilisateurController.removeProfilsForUtilisateur(profil)}" update=":formDialogs:panelProfils :form:tabView:tableProfils"/>
+                                        <p:commandButton icon="ui-icon-close" actionListener="#{addUtilisateurController.removeProfilsForUtilisateur(profil)}" update=":formDialogs:panelProfils :form:tabView:tableProfils" process="@this"/>
                                     </p:column>
 
                                 </p:dataTable>

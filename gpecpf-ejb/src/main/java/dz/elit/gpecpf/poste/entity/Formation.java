@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otherEntity;
+package dz.elit.gpecpf.poste.entity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,49 +26,54 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import otherEntity.Employe;
+import otherEntity.Poste;
+import org.eclipse.persistence.queries.QueryRedirector;
 
 /**
  *
- * @author Dell
+ * @author N
  */
 @Entity
-@Table(name = "formation", schema = StaticUtil.ADMINISTRATION_SCHEMA)
-@XmlRootElement
+@Table(name = "formation",schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @NamedQueries({
-    @NamedQuery(name = "Formation.findAll", query = "SELECT f FROM Formation f")
+    @NamedQuery(name = "Formation.findByCodeWithoutCurrentId", query = "SELECT t FROM Formation t WHERE t.code =:code AND t.id != :id ORDER BY t.code  ")
+    ,@NamedQuery(name = "Formation.findAll", query = "SELECT f FROM Formation f")
     , @NamedQuery(name = "Formation.findById", query = "SELECT f FROM Formation f WHERE f.id = :id")
     , @NamedQuery(name = "Formation.findByCode", query = "SELECT f FROM Formation f WHERE f.code = :code")
     , @NamedQuery(name = "Formation.findByDescription", query = "SELECT f FROM Formation f WHERE f.description = :description")
-    , @NamedQuery(name = "Formation.findByTypeform", query = "SELECT f FROM Formation f WHERE f.typeform = :typeform")
+    , @NamedQuery(name = "Formation.findByTypeform", query = "SELECT f FROM Formation f WHERE f.type = :type")
     , @NamedQuery(name = "Formation.findByExigence", query = "SELECT f FROM Formation f WHERE f.exigence = :exigence")})
 public class Formation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @Basic(optional = false)    
     @Column(name = "id")
     private Integer id;
-    @Size(max = 50)
+    @Size(min = 1, max = 50)
     @Column(name = "code")
+    @NotNull
     private String code;
     @Size(max = 2147483647)
     @Column(name = "description")
     private String description;
     @Size(max = 255)
     @Column(name = "typeform")
-    private String typeform;
-    @Size(max = 2147483647)
+    private String type;
+    @Size(max = 255)
     @Column(name = "exigence")
     private String exigence;
-    @ManyToMany(mappedBy = "formationCollection")
-    private Collection<Employe> employeCollection;
+     @ManyToMany(mappedBy = "listFormation")
+    private List<Employe> listEmploye = new ArrayList();
     @JoinTable(name = "posteformation", joinColumns = {
         @JoinColumn(name = "idform", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "idposte", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<Poste> posteCollection;
+    private List<Poste> listPost= new ArrayList();
 
+    
     public Formation() {
     }
 
@@ -74,6 +81,16 @@ public class Formation implements Serializable {
         this.id = id;
     }
 
+	public Formation(Integer id, String code, String description, String type, String exigence) {
+		this.id = id;
+		this.code = code;
+		this.description = description;
+		this.type = type;
+		this.exigence = exigence;
+	}
+    
+    
+    
     public Integer getId() {
         return id;
     }
@@ -95,50 +112,45 @@ public class Formation implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+		this.description = description;
     }
 
-    public String getTypeform() {
-        return typeform;
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getExigence() {
+		return exigence;
+	}
+
+	public void setExigence(String exigence) {
+		this.exigence = exigence;
+	}
+
+    public List<Employe> getListEmploye() {
+        return listEmploye;
     }
 
-    public void setTypeform(String typeform) {
-        this.typeform = typeform;
+    public void setListEmploye(List<Employe> listEmploye) {
+        this.listEmploye = listEmploye;
+    }
+    public List<Poste> getListPost() {
+        return listPost;
     }
 
-    public String getExigence() {
-        return exigence;
+    public void setListPost(List<Poste> listPost) {
+        this.listPost = listPost;
     }
-
-    public void setExigence(String exigence) {
-        this.exigence = exigence;
-    }
-
-    @XmlTransient
-    public Collection<Employe> getEmployeCollection() {
-        return employeCollection;
-    }
-
-    public void setEmployeCollection(Collection<Employe> employeCollection) {
-        this.employeCollection = employeCollection;
-    }
-
-    @XmlTransient
-    public Collection<Poste> getPosteCollection() {
-        return posteCollection;
-    }
-
-    public void setPosteCollection(Collection<Poste> posteCollection) {
-        this.posteCollection = posteCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -154,7 +166,7 @@ public class Formation implements Serializable {
 
     @Override
     public String toString() {
-        return "otherEntity.Formation[ id=" + id + " ]";
+        return "dz.elit.gpecpf.poste.entity.Formation[ id=" + id + " ]";
     }
     
 }

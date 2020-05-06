@@ -61,9 +61,10 @@ public class ListEmployeController extends AbstractController implements Seriali
     {
         listEmp=new ArrayList<>();
         listEmp=empFacade.findAllOrderByAttribut("code");
-        rechercher();
+      //  rechercher();
     }
      public void rechercher() {
+         listEmp=new ArrayList<>();
         listEmp = empFacade.findByNomPrenomCode(nom, prenom, code);
         if (listEmp.isEmpty() || listEmp.size() < 1) {
             MyUtil.addInfoMessage(MyUtil.getBundleAdmin("msg_resultat_recherche_null"));
