@@ -1,5 +1,7 @@
 package dz.elit.gpecpf.referentiel.controller;
 
+import dz.elit.gpecpf.administration.entity.Prefixcodification;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
@@ -25,6 +27,10 @@ public class AddMissionController extends AbstractController implements Serializ
     private MissionFacade missionFacade;
     @EJB
     private ActiviteFacade activiteFacade;
+    @EJB
+    private AdminPrefixCodificationFacade prefFacade;
+   
+    private  List<Prefixcodification> listPrefix;
 
     private Mission mission;
     
@@ -59,11 +65,18 @@ public class AddMissionController extends AbstractController implements Serializ
 
     private void initAddMission() {
         mission = new Mission();
+        chercherPrefix();
         listActivites = new ArrayList();
         listActivitesSelected = new ArrayList<>();
-		listActivites = activiteFacade.findAllOrderByAttribut("code");
+	listActivites = activiteFacade.findAllOrderByAttribut("code");
     }
-
+    public void chercherPrefix()
+    {   
+        listPrefix =new ArrayList<>();
+        listPrefix=prefFacade.findAllOrderByAttribut("id");
+        if(!listPrefix.isEmpty())
+        mission.setCode(listPrefix.get(0).getMiss());
+    }
     public void addActivitesForMission() {
         if(!listActivitesSelected.isEmpty()) {
 			mission.addListActivites(listActivitesSelected);

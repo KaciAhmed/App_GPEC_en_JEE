@@ -37,7 +37,7 @@ import org.eclipse.persistence.queries.QueryRedirector;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @Entity
 @Table(name = "employe", schema = StaticUtil.ADMINISTRATION_SCHEMA)
@@ -45,7 +45,7 @@ import org.eclipse.persistence.queries.QueryRedirector;
 @NamedQueries({
     @NamedQuery(name = "Employe.findAll", query = "SELECT e FROM Employe e")
     , @NamedQuery(name = "Employe.findById", query = "SELECT e FROM Employe e WHERE e.id = :id")
-    , @NamedQuery(name = "Employe.findBycode", query = "SELECT e FROM Employe e WHERE e.code = :code")
+    , @NamedQuery(name = "Employe.findByMatricule", query = "SELECT e FROM Employe e WHERE e.matricule = :matricule")
     , @NamedQuery(name = "Employe.findByNom", query = "SELECT e FROM Employe e WHERE e.nom = :nom")
     , @NamedQuery(name = "Employe.findByPrenom", query = "SELECT e FROM Employe e WHERE e.prenom = :prenom")
     , @NamedQuery(name = "Employe.findByDtNaissance", query = "SELECT e FROM Employe e WHERE e.dtNaissance = :dtNaissance")
@@ -53,12 +53,12 @@ import org.eclipse.persistence.queries.QueryRedirector;
     , @NamedQuery(name = "Employe.findByAdresse", query = "SELECT e FROM Employe e WHERE e.adresse = :adresse")
     , @NamedQuery(name = "Employe.findByDate_recrutement", query = "SELECT e FROM Employe e WHERE e.date_recrutement = :date_recrutement")
     , @NamedQuery(name = "Employe.findByDate_depart", query = "SELECT e FROM Employe e WHERE e.date_depart = :date_depart")
-    , @NamedQuery(name = "Employe.findByGrade", query = "SELECT e FROM Employe e WHERE e.grade = :grade")
+    , @NamedQuery(name = "Employe.findBySexe", query = "SELECT e FROM Employe e WHERE e.sexe = :sexe")
     , @NamedQuery(name = "Employe.findByClassement", query = "SELECT e FROM Employe e WHERE e.classement = :classement")
-    , @NamedQuery(name = "Employe.findByCodeservice", query = "SELECT e FROM Employe e WHERE e.codeservice = :codeservice")
+    , @NamedQuery(name = "Employe.findByUniteAffectation", query = "SELECT e FROM Employe e WHERE e.uniteAffectation = :uniteAffectation")
     , @NamedQuery(name = "Employe.findByTel", query = "SELECT e FROM Employe e WHERE e.tel = :tel")
-    , @NamedQuery(name = "Employe.findBySpecialit\u00e9", query = "SELECT e FROM Employe e WHERE e.specialit\u00e9 = :specialit\u00e9")
-    , @NamedQuery(name = "Employe.findByAutre", query = "SELECT e FROM Employe e WHERE e.autre = :autre")})
+    , @NamedQuery(name = "Employe.findByTypeContrat", query = "SELECT e FROM Employe e WHERE e.typeContrat = :typeContrat")
+    , @NamedQuery(name = "Employe.findByAutre", query = "SELECT e FROM Employe e WHERE e.userName = :userName")})
 public class Employe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,8 +68,8 @@ public class Employe implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Size(max = 50)
-    @Column(name = "code")
-    private String code;
+    @Column(name = "matricule")
+    private String matricule;
     @Size(max = 50)
     @Column(name = "nom")
     private String nom;
@@ -93,23 +93,23 @@ public class Employe implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date_depart;
     @Size(max = 50)
-    @Column(name = "grade")
-    private String grade;
+    @Column(name = "sexe")
+    private String sexe;
     @Size(max = 50)
     @Column(name = "classement")
     private String classement;
-    @Size(max = 50)
-    @Column(name = "codeservice")
-    private String codeservice;
+    @Size(max = 255)
+    @Column(name = "uniteaffectation")
+    private String uniteAffectation;
+    @Size(max = 255)
+    @Column(name = "typecontrat")
+    private String typeContrat;
     @Size(max = 20)
     @Column(name = "tel")
     private String tel;
-    @Size(max = 50)
-    @Column(name = "specialit\u00e9")
-    private String specialité;
-    @Size(max = 50)
-    @Column(name = "autre")
-    private String autre;
+    @Size(max = 255)
+    @Column(name = "userName")
+    private String userName;
     @JoinTable(
         name = "employeformation", joinColumns = {
             @JoinColumn(name = "idemploye", referencedColumnName = "id")
@@ -144,14 +144,14 @@ public class Employe implements Serializable {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getMatricule() {
+        return matricule;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
-    
+  
     public String getNom() {
         return nom;
     }
@@ -191,12 +191,12 @@ public class Employe implements Serializable {
         this.adresse = adresse;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getSexe() {
+        return sexe;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
     }
 
     public String getClassement() {
@@ -207,14 +207,22 @@ public class Employe implements Serializable {
         this.classement = classement;
     }
 
-    public String getCodeservice() {
-        return codeservice;
+    public String getUniteAffectation() {
+        return uniteAffectation;
     }
 
-    public void setCodeservice(String codeservice) {
-        this.codeservice = codeservice;
+    public void setUniteAffectation(String uniteAffectation) {
+        this.uniteAffectation = uniteAffectation;
+    }
+  
+    public String getTypeContrat() {
+        return typeContrat;
     }
 
+    public void setTypeContrat(String typecontrat) {
+        this.typeContrat = typecontrat;
+    }
+   
     public String getTel() {
         return tel;
     }
@@ -223,20 +231,12 @@ public class Employe implements Serializable {
         this.tel = tel;
     }
 
-    public String getSpecialité() {
-        return specialité;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setSpecialité(String specialité) {
-        this.specialité = specialité;
-    }
-
-    public String getAutre() {
-        return autre;
-    }
-
-    public void setAutre(String autre) {
-        this.autre = autre;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Date getDate_recrutement() {

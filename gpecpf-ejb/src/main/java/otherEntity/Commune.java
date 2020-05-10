@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Commune.findById", query = "SELECT c FROM Commune c WHERE c.id = :id")
     , @NamedQuery(name = "Commune.findByCode", query = "SELECT c FROM Commune c WHERE c.code = :code")
     , @NamedQuery(name = "Commune.findByNom", query = "SELECT c FROM Commune c WHERE c.nom = :nom")})
-public class Commune implements Serializable {
+public class Commune implements Comparable,Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -141,6 +141,10 @@ public class Commune implements Serializable {
             return false;
         }
         return true;
+    }
+    public int compareTo(Object o){
+        Commune com =(Commune)o;
+        return this.getNom().compareToIgnoreCase(com.getNom());
     }
 
     @Override

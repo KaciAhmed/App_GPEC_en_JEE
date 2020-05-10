@@ -19,7 +19,7 @@ import otherEntity.Employe;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @Stateless
 public class EmployeFacade extends AbstractFacade<Employe>{
@@ -36,15 +36,15 @@ public class EmployeFacade extends AbstractFacade<Employe>{
         super(Employe.class);
     }
     
-    public Employe findByCode(String code) 
+    public Employe findByMatricule(String matricule) 
     {
-      Query query = em.createNamedQuery("Employe.findBycode");
-      query.setParameter("code", code);
+      Query query = em.createNamedQuery("Employe.findByMatricule");
+      query.setParameter("matricule", matricule);
       List<Employe> list = query.getResultList();
       return list.isEmpty() ? null : list.get(0);
     }
     
-    public List<Employe> findByNomPrenomCode(String nom, String prenom, String code) {
+    public List<Employe> findByNomPrenomMatricule(String nom, String prenom, String matricule) {
         StringBuilder queryStringBuilder = new StringBuilder("SELECT a FROM Employe AS a WHERE 1=1 ");
         if (nom != null && !nom.equals("")) {
             queryStringBuilder.append(" AND  a.nom like :nom ");
@@ -52,10 +52,10 @@ public class EmployeFacade extends AbstractFacade<Employe>{
         if (prenom != null && !prenom.equals("")) {
             queryStringBuilder.append(" AND  a.prenom like :prenom ");
         }
-        if (code != null && !code.equals("")) {
-            queryStringBuilder.append(" AND  a.code like :code ");
+        if (matricule != null && !matricule.equals("")) {
+            queryStringBuilder.append(" AND  a.matricule like :matricule ");
         }
-        queryStringBuilder.append(" ORDER BY a.code ");
+        queryStringBuilder.append(" ORDER BY a.matricule ");
 
         Query q = em.createQuery(queryStringBuilder.toString());
 
@@ -65,17 +65,17 @@ public class EmployeFacade extends AbstractFacade<Employe>{
         if (prenom != null && !prenom.equals("")) {
             q.setParameter("prenom","%"+ prenom + "%");
         }
-        if (code != null && !code.equals("")) {
-            q.setParameter("code","%"+ code+ "%");
+        if (matricule != null && !matricule.equals("")) {
+            q.setParameter("matricule","%"+ matricule+ "%");
         }
         //Implémentation de visibilité
       //  JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
 
         return q.getResultList();
     }
-    private boolean isExisteCode(String code) 
+    private boolean isExisteMatricule(String matricule) 
     {
-        Employe emp = findByCode(code);
+        Employe emp = findByMatricule(matricule);
         if(emp == null) {
             return false;
         } else {
@@ -85,8 +85,8 @@ public class EmployeFacade extends AbstractFacade<Employe>{
             @Override
     public void create(Employe emp) throws MyException, Exception 
     {
-        if (isExisteCode(emp.getCode())) {
-            throw new MyException("Le code " + emp.getCode() + " existe déjà ");
+        if (isExisteMatricule(emp.getMatricule())) {
+            throw new MyException("Le matricule " + emp.getMatricule() + " existe déjà ");
         } else {
             super.create(emp);
         }

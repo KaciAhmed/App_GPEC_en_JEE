@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @Entity
 @Table(name = "evaluation", schema = StaticUtil.ADMINISTRATION_SCHEMA)
@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Evaluation.findAll", query = "SELECT e FROM Evaluation e")
     , @NamedQuery(name = "Evaluation.findById", query = "SELECT e FROM Evaluation e WHERE e.id = :id")
+    , @NamedQuery(name = "Evaluation.findByCode", query = "SELECT e FROM Evaluation e WHERE e.code = :code")
     , @NamedQuery(name = "Evaluation.findByDateeva", query = "SELECT e FROM Evaluation e WHERE e.dateeva = :dateeva")
     , @NamedQuery(name = "Evaluation.findByArchive", query = "SELECT e FROM Evaluation e WHERE e.archive = :archive")
     , @NamedQuery(name = "Evaluation.findByEtat", query = "SELECT e FROM Evaluation e WHERE e.etat = :etat")})
@@ -50,6 +51,9 @@ public class Evaluation implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 50)
+    @Column(name = "code")
+    private String code;
     @Column(name = "dateeva")
     @Temporal(TemporalType.DATE)
     private Date dateeva;
@@ -85,6 +89,14 @@ public class Evaluation implements Serializable {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+    
     public Date getDateeva() {
         return dateeva;
     }

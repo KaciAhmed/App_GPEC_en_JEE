@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dz.elit.gpec.gestEmploye.controller;
+package dz.elit.gpecpf.gestEmploye.controller;
 
 import dz.elit.gpecpf.commun.controller.Imprimer;
 import dz.elit.gpecpf.commun.reporting.engine.Reporting;
@@ -47,7 +47,7 @@ public class ListEmployeController extends AbstractController implements Seriali
      //Les variables de recherche
     private String nom;
     private String prenom;
-    private String code;
+    private String matricule;
 
     public ListEmployeController() {
     }
@@ -60,12 +60,12 @@ public class ListEmployeController extends AbstractController implements Seriali
     public void findList()
     {
         listEmp=new ArrayList<>();
-        listEmp=empFacade.findAllOrderByAttribut("code");
+        listEmp=empFacade.findAll();
       //  rechercher();
     }
      public void rechercher() {
          listEmp=new ArrayList<>();
-        listEmp = empFacade.findByNomPrenomCode(nom, prenom, code);
+        listEmp = empFacade.findByNomPrenomMatricule(nom, prenom, matricule);
         if (listEmp.isEmpty() || listEmp.size() < 1) {
             MyUtil.addInfoMessage(MyUtil.getBundleAdmin("msg_resultat_recherche_null"));
         }
@@ -173,13 +173,15 @@ public class ListEmployeController extends AbstractController implements Seriali
         this.prenom = prenom;
     }
 
-    public String getCode() {
-        return code;
+    public String getMatricule() {
+        return matricule;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
+
+   
      
     
 }

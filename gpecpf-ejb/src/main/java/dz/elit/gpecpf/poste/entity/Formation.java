@@ -65,6 +65,9 @@ public class Formation implements Serializable {
     @Size(max = 255)
     @Column(name = "exigence")
     private String exigence;
+    @Size(max = 255)
+    @Column(name = "specialite")
+    private String specialite;
      @ManyToMany(mappedBy = "listFormation")
     private List<Employe> listEmploye = new ArrayList();
     @JoinTable(name = "posteformation", joinColumns = {
@@ -88,9 +91,7 @@ public class Formation implements Serializable {
 		this.type = type;
 		this.exigence = exigence;
 	}
-    
-    
-    
+
     public Integer getId() {
         return id;
     }
@@ -112,12 +113,12 @@ public class Formation implements Serializable {
     }
 
     public void setDescription(String description) {
-		this.description = description;
+        this.description = description;
     }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+	return type;
+    }
 
 	public void setType(String type) {
 		this.type = type;
@@ -130,6 +131,14 @@ public class Formation implements Serializable {
 	public void setExigence(String exigence) {
 		this.exigence = exigence;
 	}
+
+    public String getSpecialite() {
+          return specialite;
+    }
+
+    public void setSpecialite(String specialite) {
+          this.specialite = specialite;
+    }
 
     public List<Employe> getListEmploye() {
         return listEmploye;

@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @Entity
 @Table(name = "notification", schema = StaticUtil.ADMINISTRATION_SCHEMA)
@@ -77,7 +77,7 @@ public class Notification implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    
     public Date getDate() {
         return date;
     }

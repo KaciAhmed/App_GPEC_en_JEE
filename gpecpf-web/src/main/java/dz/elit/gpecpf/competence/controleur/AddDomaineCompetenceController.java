@@ -5,6 +5,8 @@
  */
 package dz.elit.gpecpf.competence.controleur;
 
+import dz.elit.gpecpf.administration.entity.Prefixcodification;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
@@ -26,7 +28,7 @@ import otherEntity.Domainecompetence;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @ManagedBean
 @ViewScoped
@@ -34,6 +36,11 @@ public class AddDomaineCompetenceController extends AbstractController implement
    
    @EJB
    DomaineCompetenceFacade domaineFacade;
+   
+   @EJB
+    private AdminPrefixCodificationFacade prefFacade;
+    
+    private  List<Prefixcodification> listPrefix;
     
     private Domainecompetence domaine;
     
@@ -56,9 +63,17 @@ public class AddDomaineCompetenceController extends AbstractController implement
     }
     private void initAddDomaineCompetence() {
       domaine=new Domainecompetence();
+      chercherPrefix();
       domPereSelected=new Domainecompetence(); 
       lstDomPere=new ArrayList<>();
       lstDomPere=domaineFacade.findAllOrderByAttribut("code");
+    }
+    public void chercherPrefix()
+    {
+        listPrefix =new ArrayList<>();
+        listPrefix=prefFacade.findAllOrderByAttribut("id");
+        if(!listPrefix.isEmpty())
+        domaine.setCode(listPrefix.get(0).getDomcomp());
     }
     private boolean isExisteCode(String code) 
     {

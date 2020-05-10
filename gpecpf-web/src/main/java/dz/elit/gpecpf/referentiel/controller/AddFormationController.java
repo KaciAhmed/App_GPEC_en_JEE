@@ -1,11 +1,15 @@
 package dz.elit.gpecpf.referentiel.controller;
 
+import dz.elit.gpecpf.administration.entity.Prefixcodification;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.poste.entity.Formation;
 import dz.elit.gpecpf.poste.service.FormationFacade;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -19,6 +23,11 @@ import javax.faces.bean.ViewScoped;
 public class AddFormationController extends AbstractController implements Serializable {
     @EJB
     private FormationFacade formationFacade;
+    @EJB
+    private AdminPrefixCodificationFacade prefFacade;
+    
+    private  List<Prefixcodification> listPrefix;
+    
     private Formation formation;
 	
     private String code;
@@ -36,6 +45,14 @@ public class AddFormationController extends AbstractController implements Serial
     protected void initController() {
         initAddFormation();
         formation = new Formation();
+        chercherPrefix();
+    }
+    public void chercherPrefix()
+    {   
+        listPrefix =new ArrayList<>();
+        listPrefix=prefFacade.findAllOrderByAttribut("id");
+        if(!listPrefix.isEmpty())
+        formation.setCode(listPrefix.get(0).getForm());
     }
 
     public void create() {

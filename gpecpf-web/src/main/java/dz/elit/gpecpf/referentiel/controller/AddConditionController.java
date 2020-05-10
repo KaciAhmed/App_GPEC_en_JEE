@@ -1,11 +1,15 @@
 package dz.elit.gpecpf.referentiel.controller;
 
+import dz.elit.gpecpf.administration.entity.Prefixcodification;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.poste.entity.Condition;
 import dz.elit.gpecpf.poste.service.ConditionFacade;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -19,6 +23,10 @@ import javax.faces.bean.ViewScoped;
 public class AddConditionController extends AbstractController implements Serializable {
     @EJB
     private ConditionFacade conditionFacade;
+    @EJB
+    private AdminPrefixCodificationFacade prefFacade;
+    
+    private  List<Prefixcodification> listPrefix;
     private Condition condition;
 	
     private String code;
@@ -34,6 +42,14 @@ public class AddConditionController extends AbstractController implements Serial
     protected void initController() {
         initAddCondition();
         condition = new Condition();
+        chercherPrefix();
+    }
+     public void chercherPrefix()
+    {   
+        listPrefix =new ArrayList<>();
+        listPrefix=prefFacade.findAllOrderByAttribut("id");
+        if(!listPrefix.isEmpty())
+        condition.setCode(listPrefix.get(0).getCond());
     }
 
     public void create() {

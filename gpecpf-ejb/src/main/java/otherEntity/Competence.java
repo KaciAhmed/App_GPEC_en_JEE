@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @Entity
 @Table(name = "competence", schema = StaticUtil.ADMINISTRATION_SCHEMA)

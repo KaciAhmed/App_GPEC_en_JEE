@@ -5,6 +5,8 @@
  */
 package dz.elit.gpecpf.competence.controleur;
 
+import dz.elit.gpecpf.administration.entity.Prefixcodification;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
@@ -22,6 +24,11 @@ import otherEntity.Competence;
 import otherEntity.Domainecompetence;
 import otherEntity.Typecompetence;
 
+/**
+ *
+ * @author Kaci Ahmed
+ */
+
 @ManagedBean
 @ViewScoped
 public class AddCompetenceController extends AbstractController implements Serializable  {
@@ -30,7 +37,11 @@ public class AddCompetenceController extends AbstractController implements Seria
     @EJB
    DomaineCompetenceFacade domaineFacade;
     @EJB
-    private TypeCompetenceFacade typeCompFacade;
+    private TypeCompetenceFacade typeCompFacade; 
+    @EJB
+    private AdminPrefixCodificationFacade prefFacade;
+    
+    private  List<Prefixcodification> listPrefix;
     
      private List<Domainecompetence> listDom;
 
@@ -61,12 +72,21 @@ public class AddCompetenceController extends AbstractController implements Seria
     }
      protected void initAddComp(){
       comp=new Competence();
+      chercherPrefix();
      listDom =new ArrayList<>();
      listDom=domaineFacade.findAllOrderByAttribut("code");
      listType=new ArrayList<>();
      listType=typeCompFacade.findAllOrderByAttribut("code");
      domaineCompSelected=new Domainecompetence();
      typeCompSelected=new Typecompetence();
+    }
+     
+    public void chercherPrefix()
+    {
+        listPrefix =new ArrayList<>();
+        listPrefix=prefFacade.findAllOrderByAttribut("id");
+        if(!listPrefix.isEmpty())
+        comp.setCode(listPrefix.get(0).getComp());
     }
     
      public void chercherDomaine(){

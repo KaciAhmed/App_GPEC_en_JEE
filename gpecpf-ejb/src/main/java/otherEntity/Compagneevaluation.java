@@ -22,12 +22,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @Entity
 @Table(name = "compagneevaluation", schema = StaticUtil.ADMINISTRATION_SCHEMA)
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Compagneevaluation.findAll", query = "SELECT c FROM Compagneevaluation c")
     , @NamedQuery(name = "Compagneevaluation.findById", query = "SELECT c FROM Compagneevaluation c WHERE c.id = :id")
+    , @NamedQuery(name = "Compagneevaluation.findByCode", query = "SELECT c FROM Compagneevaluation c WHERE c.code = :code")
     , @NamedQuery(name = "Compagneevaluation.findByDatedeb", query = "SELECT c FROM Compagneevaluation c WHERE c.datedeb = :datedeb")
     , @NamedQuery(name = "Compagneevaluation.findByDatefin", query = "SELECT c FROM Compagneevaluation c WHERE c.datefin = :datefin")})
 public class Compagneevaluation implements Serializable {
@@ -45,6 +47,9 @@ public class Compagneevaluation implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 50)
+    @Column(name = "code")
+    private String code;
     @Column(name = "datedeb")
     @Temporal(TemporalType.DATE)
     private Date datedeb;
@@ -69,6 +74,14 @@ public class Compagneevaluation implements Serializable {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+    
     public Date getDatedeb() {
         return datedeb;
     }

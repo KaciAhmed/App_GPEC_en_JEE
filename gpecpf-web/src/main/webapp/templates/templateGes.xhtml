@@ -57,7 +57,7 @@
     <ui:include src="header.xhtml"></ui:include>
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
-            <a:submenu start="true" value="#{bundleGesemp.titre_gestion_employe}" icon="">
+            <a:submenu start="true" value="#{bundleGesemp.titre_gestion_employe}" icon="fa fa-tasks">
                 <a:menuitem value="#{bundleGesemp.titre_liste_employe}" icon=""
                     outcome="/pages/gesemp/employe/listEmp.xhtml"
                     rendered="#{mySessionController.isUserInRole('GESEMP_001_006')}" />

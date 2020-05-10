@@ -5,6 +5,8 @@
  */
 package dz.elit.gpecpf.competence.controleur;
 
+import dz.elit.gpecpf.administration.entity.Prefixcodification;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
@@ -22,7 +24,7 @@ import otherEntity.Comportement;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @ManagedBean
 @ViewScoped
@@ -33,12 +35,17 @@ public class AddComportementCompetenceController extends AbstractController impl
     @EJB
     private CompetenceFacade compFacade;
     
+    @EJB
+    private AdminPrefixCodificationFacade prefFacade;
+    
+    private  List<Prefixcodification> listPrefix;
+    
     private List<Competence> listComp;
     private Competence compSelected;
     
     private Comportement compo;
     
-    // info pour chercher domaine  
+    // info pour chercher compétence 
     private String codeComp;
     private String libComp;
 
@@ -54,11 +61,19 @@ public class AddComportementCompetenceController extends AbstractController impl
     
    protected void initAddComp(){
       compo=new Comportement();
+      chercherPrefix();
       compSelected=new Competence();
       listComp =new ArrayList<>();
       listComp=compFacade.findAllOrderByAttribut("code");
    }
-
+   public void chercherPrefix()
+    {   
+        listPrefix =new ArrayList<>();
+        listPrefix=prefFacade.findAllOrderByAttribut("id");
+        if(!listPrefix.isEmpty())
+        compo.setCode(listPrefix.get(0).getComport());
+    }
+   
    public void chercherCompetence(){
        listComp=compFacade.findByCodeLibelle(codeComp, libComp);
    }

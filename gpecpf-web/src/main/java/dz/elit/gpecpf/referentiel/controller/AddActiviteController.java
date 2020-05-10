@@ -1,5 +1,7 @@
 package dz.elit.gpecpf.referentiel.controller;
 
+import dz.elit.gpecpf.administration.entity.Prefixcodification;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
@@ -25,6 +27,10 @@ public class AddActiviteController extends AbstractController implements Seriali
     private ActiviteFacade activiteFacade;
     @EJB
     private TacheFacade tacheFacade;
+    @EJB
+    private AdminPrefixCodificationFacade prefFacade;
+    
+    private  List<Prefixcodification> listPrefix;
 
     private Activite activite;
     
@@ -59,9 +65,17 @@ public class AddActiviteController extends AbstractController implements Seriali
 
     private void initAddActivite() {
         activite = new Activite();
+        chercherPrefix();
         listTaches = new ArrayList();
         listTachesSelected = new ArrayList<>();
 		listTaches = tacheFacade.findAllOrderByAttribut("code");
+    }
+    public void chercherPrefix()
+    {
+        listPrefix =new ArrayList<>();
+        listPrefix=prefFacade.findAllOrderByAttribut("id");
+        if(!listPrefix.isEmpty())
+        activite.setCode(listPrefix.get(0).getAct());
     }
 
     public void addTachesForActivite() {

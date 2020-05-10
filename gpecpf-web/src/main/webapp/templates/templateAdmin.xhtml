@@ -70,6 +70,9 @@
                     <a:menuitem value="#{bundleAdmin.titre_visibilite_groupe}" icon="fa fa-inbox" outcome="/pages/administration/visibilite/listDroitVisibiliteGroupe.xhtml" rendered="true" />
                     <a:menuitem value="#{bundleAdmin.titre_visibilite_utilisateur}" icon="fa fa-inbox" outcome="/pages/administration/visibilite/showDroitVisibiliteUtilisateur.xhtml" rendered="true" />
                 </a:submenu>
+                <a:submenu value="#{bundleAdmin.titre_gestion_pref_codification}" icon="fa fa-tasks">
+                    <a:menuitem value="#{bundleAdmin.titre_accueil_prefix}" icon="fa fa-file" outcome="/pages/administration/prefixCodification/prefixCod.xhtml" rendered="true" />
+                </a:submenu>
             </a:sidebar>
             <a:pagecontent>
 

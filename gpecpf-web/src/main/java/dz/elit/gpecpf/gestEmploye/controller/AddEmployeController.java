@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dz.elit.gpec.gestEmploye.controller;
+package dz.elit.gpecpf.gestEmploye.controller;
 
+import dz.elit.gpecpf.administration.entity.Prefixcodification;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
@@ -28,7 +30,7 @@ import otherEntity.Wilaya;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @ManagedBean
 @ViewScoped
@@ -44,6 +46,10 @@ public class AddEmployeController extends AbstractController implements Serializ
     private WilayaFacade wilayaFacade;
     @EJB
     private CommuneFacade communeFacade;
+    @EJB
+    private AdminPrefixCodificationFacade prefFacade;
+   
+    private  List<Prefixcodification> listPrefix;
     
     private Employe emp;
     
@@ -52,15 +58,12 @@ public class AddEmployeController extends AbstractController implements Serializ
     
     private List<Wilaya> listWilayas;
     private Wilaya wilayaSelected;
+    
     private List<Commune> listCommunes;
     private Commune communeSelected;
     
   private int idWil=0;
   private int idComune=0;
-
-
-  
-    
 
     public AddEmployeController() {
     }
@@ -71,15 +74,24 @@ public class AddEmployeController extends AbstractController implements Serializ
     }
      private void initAddEmploye() {
         emp = new Employe();
+        chercherPrefix();
         listFormationsSelected=new ArrayList<>();
         listFormations=new ArrayList<>();
         listFormations = formationFacade.findAllOrderByAttribut("description"); 
-        communeSelected=new Commune();
+         idWil=0;
         listWilayas = new ArrayList();
         listWilayas=wilayaFacade.findAllOrderByAttribut("code");
         wilayaSelected =new Wilaya(); 
+        idComune=0;
         communeSelected=new Commune();
         listCommunes =new ArrayList<>();
+    }
+    public void chercherPrefix()
+    {   
+        listPrefix =new ArrayList<>();
+        listPrefix=prefFacade.findAllOrderByAttribut("id");
+        if(!listPrefix.isEmpty())
+        emp.setMatricule(listPrefix.get(0).getEmploye());
     }
      public void CommuneParWilaya()
      {
@@ -111,9 +123,9 @@ public class AddEmployeController extends AbstractController implements Serializ
          }
         return true;
     }
-    private boolean isExisteCode(String code) 
+    private boolean isExisteMatricule(String matricule) 
     {
-        Employe emp2 = empFacade.findByCode(code);
+        Employe emp2 = empFacade.findByMatricule(matricule);
         if(emp2 == null) {
             return false;
         } else {
@@ -123,15 +135,15 @@ public class AddEmployeController extends AbstractController implements Serializ
     public void create() {
         try { 
                 if(isVerifier()){
-                   emp.setCode(emp.getCode().toUpperCase());
-                   if (isExisteCode(emp.getCode())) {
-                        MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
+                   emp.setMatricule(emp.getMatricule().toUpperCase());
+                   if (isExisteMatricule(emp.getMatricule())) {
+                        MyUtil.addErrorMessage(MyUtil.getBundleCommun(" msg_erreur_existe_matricule"));//Erreur inconu   
                     }else{
                             if (emp.getListFormation().isEmpty()) {
                                  MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_list_formation_vide"));//Erreur inconu   
                             }else{
                                  empFacade.create(emp);
-                                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Compétence crée avec succès
+                                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
                                  initAddEmploye();
                              }
                           }
@@ -145,8 +157,6 @@ public class AddEmployeController extends AbstractController implements Serializ
         }
     }
     public void newEmploye() {
-        idWil=0;
-        idComune=0;
         initAddEmploye();
     }
   
@@ -160,7 +170,6 @@ public class AddEmployeController extends AbstractController implements Serializ
     }
     public void removeFormationForEmploye(Formation frm) 
     {
-        System.out.println("aaaaa");
             emp.removeFormation(frm);
             listFormations.add(frm);
       
@@ -200,14 +209,6 @@ public class AddEmployeController extends AbstractController implements Serializ
         this.listWilayas = listWilayas;
     }
 
-    public Wilaya getWilayaSelected() {
-        return wilayaSelected;
-    }
-
-    public void setWilayaSelected(Wilaya wilayaSelected) {
-        this.wilayaSelected = wilayaSelected;
-    }
-
     public List<Commune> getListCommunes() {
         return listCommunes;
     }
@@ -216,13 +217,6 @@ public class AddEmployeController extends AbstractController implements Serializ
         this.listCommunes = listCommunes;
     }
 
-    public Commune getCommuneSelected() {
-        return communeSelected;
-    }
-
-    public void setCommuneSelected(Commune communeSelected) {
-        this.communeSelected = communeSelected;
-    }
         public int getIdWil() {
         return idWil;
     }
