@@ -134,8 +134,9 @@ public class EditEmployeController extends AbstractController implements Seriali
           {
               listCommunes.add(com);
           }
+          Collections.sort(listCommunes);
          }   
-        Collections.sort(listCommunes);
+        
      }
      
      public void obtenirCommune()
@@ -185,26 +186,36 @@ public class EditEmployeController extends AbstractController implements Seriali
         }
     }
       private boolean isExisteUser(){
-         listUser = userFacade.findByNomPrenomLoginForEmp(emp.getNom(),emp.getPrenom(),emp.getUserName());
-         if(!listUser.isEmpty())
+            // le cas ou le champ est vide
+         if(emp.getUserName().isEmpty())
          {
              return true;
-         }
-         return false;
+         }else{
+                listUser = userFacade.findByNomPrenomLoginForEmp(emp.getNom(),emp.getPrenom(),emp.getUserName());
+                if(!listUser.isEmpty())
+                {
+                    return true;
+                }
+                return false;
+              }
      }
      private boolean userDejaAffecterAvant(){
-        
- 
-         Employe emp3=null;
-         if(!listUser.isEmpty())
+        // le cas ou le champ est vide
+         if(emp.getUserName().isEmpty())
          {
-            emp3 = empFacade.findByUserName(listUser.get(0).getLogin());
-            if(emp3!=null && !emp3.getMatricule().equals(emp.getMatricule()))
-            {
-                return true;
-            }
-         }     
-        return false;
+             return false;
+         }else{
+                Employe emp3=null;
+                if(!listUser.isEmpty())
+                {
+                   emp3 = empFacade.findByUserName(listUser.get(0).getLogin());
+                   if(emp3!=null && !emp3.getMatricule().equals(emp.getMatricule()))
+                   {
+                       return true;
+                   }
+                }     
+               return false;
+             }
          
      }
 

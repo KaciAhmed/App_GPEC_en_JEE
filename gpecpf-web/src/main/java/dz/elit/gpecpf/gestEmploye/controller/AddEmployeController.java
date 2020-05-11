@@ -21,6 +21,7 @@ import dz.elit.gpecpf.wilaya.commune.service.WilayaFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -111,6 +112,7 @@ public class AddEmployeController extends AbstractController implements Serializ
           {
               listCommunes.add(com);
           }
+          Collections.sort(listCommunes);
          }   
      }
      public void obtenirCommune()
@@ -132,27 +134,37 @@ public class AddEmployeController extends AbstractController implements Serializ
         return true;
     }
      private boolean isExisteUser(){
-         listUser = userFacade.findByNomPrenomLoginForEmp(emp.getNom(),emp.getPrenom(),emp.getUserName());
-         if(!listUser.isEmpty())
+         // le cas ou le champ est vide
+         if(emp.getUserName().isEmpty())
          {
              return true;
-         }
-         return false;
+         }else{
+                listUser = userFacade.findByNomPrenomLoginForEmp(emp.getNom(),emp.getPrenom(),emp.getUserName());
+                if(!listUser.isEmpty())
+                {
+                    return true;
+                }
+                return false;
+              }
      }
-     private boolean userDejaAffecter(){
-        
-      
-         Employe emp3=null;
-         if(!listUser.isEmpty())
+     private boolean userDejaAffecter(){  
+      // le cas ou le champ est vide
+         if(emp.getUserName().isEmpty())
          {
-            emp3 = empFacade.findByUserName(listUser.get(0).getLogin());
-         }
-        
-        if(emp3 == null) {
-            return false;
-        } else {
-            return true;
-        }
+             return false;
+         }else{
+                    Employe emp3=null;
+                    if(!listUser.isEmpty())
+                    {
+                       emp3 = empFacade.findByUserName(listUser.get(0).getLogin());
+                    }
+
+                   if(emp3 == null) {
+                       return false;
+                   } else {
+                       return true;
+                   }
+              }
          
      }
     private boolean isExisteMatricule(String matricule) 
