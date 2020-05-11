@@ -77,7 +77,7 @@
                         </p:column>
                         <p:column headerText="#{bundleCommun.lbl_actions}" width="150">
                             <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showUtilisateur" ajax="false" rendered="#{mySessionController.isUserInRole('ADMIN_002_005')}">  
-                                
+                                <f:param name="id" value="#{utilisateur.id}"></f:param>
                             </p:commandButton>  
                             <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="editUtilisateur" ajax="false" rendered="#{mySessionController.isUserInRole('ADMIN_002_002')}">
                                 <f:param name="id" value="#{utilisateur.id}"></f:param>

@@ -10,6 +10,7 @@ import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.service.AbstractFacade;
 import dz.elit.gpecpf.commun.util.CustomQueryRedirectors;
 import dz.elit.gpecpf.commun.util.StaticUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -129,7 +130,18 @@ le container EJB va instancier et initialiser automatiquement.*/
         super.remove(utilisateur);
 
     }
-
+     public List<AdminUtilisateur>  findByNomPrenomLoginForEmp(String nom, String prenom, String login) {
+         if(nom!=null && prenom!=null && login != null)
+         { /*String req = "SELECT * FROM SCH_ADMIN.ADMIN_UTILISATEUR WHERE NOM = '"+nom+"' AND PRENOM = '"+prenom+"' AND LOGIN='"+login+"'";
+            Query q =em.createNativeQuery(req);*/
+          Query q =em.createQuery("SELECT u FROM AdminUtilisateur u WHERE u.nom= :nom and u.prenom= :prenom and u.login= :login");
+          q.setParameter("nom", nom);
+          q.setParameter("prenom", prenom);
+          q.setParameter("login", login);
+             return q.getResultList();
+         }
+         return new ArrayList<>();
+    }
     public List<AdminUtilisateur> findAllOrderByUnite() {
         Query query = em.createNamedQuery("AdminUtilisateur.findAll");
         JpaHelper.getDatabaseQuery(query).setRedirector(new CustomQueryRedirectors());

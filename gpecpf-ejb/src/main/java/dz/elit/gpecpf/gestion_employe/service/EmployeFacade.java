@@ -43,6 +43,13 @@ public class EmployeFacade extends AbstractFacade<Employe>{
       List<Employe> list = query.getResultList();
       return list.isEmpty() ? null : list.get(0);
     }
+    public Employe findByUserName(String userName) 
+    {
+      Query query = em.createNamedQuery("Employe.findByUserName");
+      query.setParameter("userName", userName);
+      List<Employe> list = query.getResultList();
+      return list.isEmpty() ? null : list.get(0);
+    }
     
     public List<Employe> findByNomPrenomMatricule(String nom, String prenom, String matricule) {
         StringBuilder queryStringBuilder = new StringBuilder("SELECT a FROM Employe AS a WHERE 1=1 ");

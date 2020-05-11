@@ -58,7 +58,7 @@ import org.eclipse.persistence.queries.QueryRedirector;
     , @NamedQuery(name = "Employe.findByUniteAffectation", query = "SELECT e FROM Employe e WHERE e.uniteAffectation = :uniteAffectation")
     , @NamedQuery(name = "Employe.findByTel", query = "SELECT e FROM Employe e WHERE e.tel = :tel")
     , @NamedQuery(name = "Employe.findByTypeContrat", query = "SELECT e FROM Employe e WHERE e.typeContrat = :typeContrat")
-    , @NamedQuery(name = "Employe.findByAutre", query = "SELECT e FROM Employe e WHERE e.userName = :userName")})
+    , @NamedQuery(name = "Employe.findByUserName", query = "SELECT e FROM Employe e WHERE e.userName = :userName")})
 public class Employe implements Serializable {
 
     private static final long serialVersionUID = 1L;

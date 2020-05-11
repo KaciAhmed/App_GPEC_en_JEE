@@ -121,9 +121,9 @@ public class EditUtilisateurController extends AbstractController implements Ser
                         break;
                 }
                 //utilisateur.setPwd(StaticUtil.getDefaultEncryptPassword(utilisateur));
-                if (uniteOrganisationnelleSelected != null && uniteOrganisationnelleSelected.getId() != null) {
+             /*   if (uniteOrganisationnelleSelected != null && uniteOrganisationnelleSelected.getId() != null) {
                     utilisateur.setAdminUniteOrganisationnelle(uniteOrganisationnelleSelected);
-                }
+                }*/
                 utilisateurFacade.edit(utilisateur, listProfilsRemoved);
                 setDisabled(true);
                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur modifié avec succè");

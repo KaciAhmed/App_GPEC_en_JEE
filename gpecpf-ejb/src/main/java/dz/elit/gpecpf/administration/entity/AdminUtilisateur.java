@@ -77,6 +77,9 @@ public class AdminUtilisateur extends Audit implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "pwd", nullable = false)
     private String pwd;
+    @Column(name = "dt_naissance")
+    @Temporal(TemporalType.DATE)
+    private Date dtNaissance; 
     //@Email(regexp = "^|(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$)", message = "Adresse mail incorrecte")
     //@Email(regexp="^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$",message="Adresse mail incorecte")
     @Column(name = "email")
@@ -181,6 +184,14 @@ public class AdminUtilisateur extends Audit implements Serializable {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+
+    public Date getDtNaissance() {
+        return dtNaissance;
+    }
+
+    public void setDtNaissance(Date dtNaissance) {
+        this.dtNaissance = dtNaissance;
     }
 
     public boolean getActive() {

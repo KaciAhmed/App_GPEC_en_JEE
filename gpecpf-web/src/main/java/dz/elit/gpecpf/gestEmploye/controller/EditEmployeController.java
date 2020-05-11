@@ -5,6 +5,8 @@
  */
 package dz.elit.gpecpf.gestEmploye.controller;
 
+import dz.elit.gpecpf.administration.entity.AdminUtilisateur;
+import dz.elit.gpecpf.administration.service.AdminUtilisateurFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
@@ -47,6 +49,10 @@ public class EditEmployeController extends AbstractController implements Seriali
     private WilayaFacade wilayaFacade;
     @EJB
     private CommuneFacade communeFacade;
+    @EJB
+    private AdminUtilisateurFacade userFacade;
+    
+    private List <AdminUtilisateur> listUser;
     
     private Employe emp;
     
@@ -66,6 +72,8 @@ public class EditEmployeController extends AbstractController implements Seriali
     private String dtNaiss;
     private String dtRec;
     private String dtDep;
+    
+    private String oldMatricule;
     
     SimpleDateFormat formater = null;
 
@@ -88,11 +96,15 @@ public class EditEmployeController extends AbstractController implements Seriali
            recupWilaya();
            idComune= emp.getIdcommune().getId();
            CommuneParWilaya();
-        // partie formation
-        
+        // partie formation   
         listFormationsSelected= emp.getListFormation();
         listFormations = formationFacade.findAllOrderByAttribut("description"); 
         listFormations.removeAll(listFormationsSelected);
+        
+        // partie user
+        listUser=new ArrayList<>();
+        
+         oldMatricule =emp.getMatricule();
         }
     }
      private void initEditEmploye() {
@@ -163,7 +175,7 @@ public class EditEmployeController extends AbstractController implements Seriali
          }
         return true;
     }
-       private boolean isExisteMatricule(String matricule) 
+    private boolean isExisteMatricule(String matricule) 
     {
         Employe emp2 = empFacade.findByMatricule(matricule);
         if(emp2 == null) {
@@ -172,20 +184,52 @@ public class EditEmployeController extends AbstractController implements Seriali
             return true;
         }
     }
+      private boolean isExisteUser(){
+         listUser = userFacade.findByNomPrenomLoginForEmp(emp.getNom(),emp.getPrenom(),emp.getUserName());
+         if(!listUser.isEmpty())
+         {
+             return true;
+         }
+         return false;
+     }
+     private boolean userDejaAffecterAvant(){
+        
+ 
+         Employe emp3=null;
+         if(!listUser.isEmpty())
+         {
+            emp3 = empFacade.findByUserName(listUser.get(0).getLogin());
+            if(emp3!=null && !emp3.getMatricule().equals(emp.getMatricule()))
+            {
+                return true;
+            }
+         }     
+        return false;
+         
+     }
+
         public void edit() {
         try { 
                 if(isVerifier()){
                    emp.setMatricule(emp.getMatricule().toUpperCase());
-                   if (isExisteMatricule(emp.getMatricule())) {
+                   if (isExisteMatricule(emp.getMatricule()) && !emp.getMatricule().equals(oldMatricule)) {
                         MyUtil.addErrorMessage(MyUtil.getBundleCommun(" msg_erreur_existe_matricule"));//Erreur inconu   
                     }else{
                             if (emp.getListFormation().isEmpty()) {
                                  MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_list_formation_vide"));//Erreur inconu   
                             }else{
-                                 empFacade.edit(emp);
-                                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
-                                 
-                             }
+                                    if(!isExisteUser())
+                                {
+                                  MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_inexistant"));//Erreur inconu   
+                                }else{  if(userDejaAffecterAvant())
+                                         {
+                                             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_deja_affecte"));//Erreur inconu   
+                                         }else{ 
+                                                empFacade.edit(emp);
+                                                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé édité avec succès
+                                               }
+                                      }
+                                 }
                           }
                 }       
         } catch (MyException ex) {

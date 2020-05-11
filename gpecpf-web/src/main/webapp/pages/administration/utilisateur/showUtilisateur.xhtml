@@ -29,21 +29,28 @@
                             <a:column span="6" >                                
                                 <a:label value="#{bundleAdmin.lbl_nom}" span="4" />
                                 <a:column span="8" >
-                                    <!--p:inputText id="nom" value="#{editUtilisateurController.utilisateur.nom}" required="true" label="#{bundleAdmin.lbl_nom}" disabled="true" /-->
-                                    <a:label id="nom" value="#{editUtilisateurController.utilisateur.nom}" />
+                                    <p:inputText id="nom" value="#{editUtilisateurController.utilisateur.nom}" required="true" label="#{bundleAdmin.lbl_nom}" disabled="true" />
                                     <p:message for="nom" />                                        
-                                </a:column>
+                                </a:column>                                
                             </a:column>  
                             <a:column span="6" >                                
                                 <a:label value="#{bundleAdmin.lbl_prenom}" span="4" />
                                 <a:column span="8" >
-                                    <!--p:inputText id="prenom" value="#{editUtilisateurController.utilisateur.prenom}" required="true" label="#{bundleAdmin.lbl_prenom}" size="40" disabled="true"/-->
-                                    <a:label id="prenom" value="#{editUtilisateurController.utilisateur.prenom}" />
+                                    <p:inputText id="prenom" value="#{editUtilisateurController.utilisateur.prenom}" required="true" label="#{bundleAdmin.lbl_prenom}" size="40" disabled="true"/>
                                     <p:message for="prenom" />                                        
-                                </a:column>
+                                </a:column>                                
                             </a:column>
                         </a:row>
                         <a:row>
+                            <a:column span="6" >                               
+                               <a:label value="#{bundleAdmin.lbl_date_naiss}" span="4" />
+                                <a:column span="8" >
+                                    <p:calendar  id="dateNaiss" value="#{editUtilisateurController.utilisateur.dtNaissance}"  pattern="dd/MM/yyyy"  required="true" label="#{bundleAdmin.lbl_date_naiss}" 
+                                                 locale="fr" navigator="true" disabled="true"> 
+                                    </p:calendar>
+                                    <p:message for="dateNaiss" />                                        
+                                </a:column>                                
+                            </a:column>
                             <a:column span="6" >
                                 <a:label value="#{bundleAdmin.lbl_login}" span="4" />
                                 <a:column span="8" >
@@ -51,18 +58,7 @@
                                     <p:inputText id="login" disabled="true" value="#{editUtilisateurController.utilisateur.login}" required="true" label="#{bundleAdmin.lbl_login}" />
                                     <p:message for="login" />
                                 </a:column>
-                            </a:column>
-                            <a:column span="6" >
-                                <a:label value="#{bundleAdmin.lbl_etat_de_compte}" span="4" />
-                                <a:column span="8" >
-                                    <p:selectOneRadio value="#{editUtilisateurController.etatCompte}" disabled="true">
-                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire_jamais}" itemValue="#{1}"/>
-                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire}" itemValue="#{2}"/>
-                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_inactif}" itemValue="#{3}"/>
-                                        <f:ajax execute="@this" render="datedebutactive datefinactive"/>
-                                    </p:selectOneRadio>
-                                </a:column>
-                            </a:column>
+                            </a:column>  
                         </a:row>
                         <a:row>
                             <a:column span="6" >
@@ -85,50 +81,16 @@
                                 </a:column>
                             </a:column>
                         </a:row>
-                    </p:tab>
-                    <p:tab title="#{bundleAdmin.lbl_contact}">
                         <a:row>
                             <a:column span="6" >
-                                <a:label value="#{bundleAdmin.lbl_telphone_de_buireau}" span="4" />
+                                <a:label value="#{bundleAdmin.lbl_etat_de_compte}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="telephone" value="#{editUtilisateurController.utilisateur.telephoneBureau}" label="#{bundleAdmin.lbl_telphone_de_buireau}" disabled="true"/>
-                                    <p:message for="telephone" />
-                                </a:column>
-                            </a:column>  
-                            <a:column span="6" >
-                                <a:label value="#{bundleAdmin.lbl_telephone_mobile}" span="4" />
-                                <a:column span="8" >
-                                    <p:inputText id="mobile" value="#{editUtilisateurController.utilisateur.telephoneMobile}" label="#{bundleAdmin.lbl_telephone_mobile}" disabled="true"/>
-                                    <p:message for="mobile" />
-                                </a:column>
-                            </a:column>
-                        </a:row>
-                        <a:row>
-                            <a:column span="6" >
-                                <a:label value="#{bundleAdmin.lbl_fax}" span="4" />
-                                <a:column span="8" >
-                                    <p:inputText id="fax" value="#{editUtilisateurController.utilisateur.fax}" label="#{bundleAdmin.lbl_fax}" size="40" disabled="true"/>
-                                    <p:message for="fax" />
-                                </a:column>
-                            </a:column>  
-                            <a:column span="6" >
-                                <a:label value="#{bundleAdmin.lbl_email}" span="4" />
-                                <a:column span="8" >
-                                    <p:inputText  id="email" value="#{editUtilisateurController.utilisateur.email}" label="#{bundleAdmin.lbl_email}" size="40" disabled="true"/> 
-                                </a:column>
-                            </a:column>
-                        </a:row>
-                        <a:row>
-                            <a:column span="6" >
-                                <a:label value="#{bundleAdmin.lbl_adresse1}" span="4" />
-                                <a:column span="8" >
-                                    <p:inputTextarea cols="60" id="Adresse1" value="#{editUtilisateurController.utilisateur.adresse1}" label="#{bundleAdmin.lbl_adresse1}" disabled="true"/>
-                                </a:column>
-                            </a:column>  
-                            <a:column span="6" >
-                                <a:label value="#{bundleAdmin.lbl_adresse2}" span="4" />
-                                <a:column span="8" >
-                                    <p:inputTextarea id="Adresse2" cols="60" value="#{editUtilisateurController.utilisateur.adresse2}" label="#{bundleAdmin.lbl_adresse2}" disabled="true"/>
+                                    <p:selectOneRadio value="#{editUtilisateurController.etatCompte}" disabled="true">
+                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire_jamais}" itemValue="#{1}"/>
+                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire}" itemValue="#{2}"/>
+                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_inactif}" itemValue="#{3}"/>
+                                        <f:ajax execute="@this" render="datedebutactive datefinactive"/>
+                                    </p:selectOneRadio>
                                 </a:column>
                             </a:column>
                         </a:row>
@@ -162,37 +124,6 @@
                                 </p:rowExpansion>
                             </p:dataTable>
                         </a:panel>
-                    </p:tab>
-                    <p:tab id="tabGroupes" title="#{bundleAdmin.titre_liste_droit_visilite}">
-                        <a:panel header="#{bundleAdmin.titre_liste_droit_visilite}">
-                            <p:dataTable id="tableGroupes" value="#{editUtilisateurController.utilisateur.listAdminGroupe}" var="groupe" 
-                                         emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorAlwaysVisible="false" 
-                                         paginatorPosition="bottom" rows="10">
-                                <p:column width="35">
-                                    <p:rowToggler />
-                                </p:column>
-                                <p:column headerText="#{bundleAdmin.lbl_libelle}">
-                                    <h:outputText value="#{groupe.libelle}"/>
-                                </p:column>
-                                <p:column headerText="#{bundleAdmin.lbl_description}">
-                                    <h:outputText value="#{groupe.description}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </a:panel>
-                    </p:tab>
-                    <p:tab title="#{bundleAdmin.lbl_information_organisationel}">
-                        <a:row>
-                            <a:label value="#{bundleAdmin.lbl_unite_organisationnelle}" span="2" />  
-                            <a:column span="4" >
-                                <p:inputText id="codeUnite" value="#{editUtilisateurController.utilisateur.adminUniteOrganisationnelle.code}" label="#{bundleAdmin.lbl_code}" disabled="true" size="20" />
-                            </a:column>
-                            <a:column span="1" >
-                                <p:commandButton value="..." immediate="true" onclick="PF('dialogUniteOrganisationelle').show();" disabled="true"/>
-                            </a:column>
-                            <a:column span="4" >
-                                <p:inputText id="descriptionUnite" value="#{editUtilisateurController.utilisateur.adminUniteOrganisationnelle.denominationFr}" disabled="true" size="40"/>
-                            </a:column>
-                        </a:row>
                     </p:tab>
                 </p:tabView>
             </p:panel>

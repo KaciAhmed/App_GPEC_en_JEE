@@ -83,10 +83,10 @@ public class AddUtilisateurController extends AbstractController implements Seri
                         break;
                 }
                 utilisateur.setPwd(StaticUtil.getDefaultEncryptPassword());
-                utilisateur.setLogin(utilisateur.getNom().toLowerCase() + "." + utilisateur.getPrenom().toLowerCase());
-                if (uniteOrganisationnelleSelected != null && uniteOrganisationnelleSelected.getId() != null) {
+              //  utilisateur.setLogin(utilisateur.getNom().toLowerCase() + "." + utilisateur.getPrenom().toLowerCase());
+              /*  if (uniteOrganisationnelleSelected != null && uniteOrganisationnelleSelected.getId() != null) {
                     utilisateur.setAdminUniteOrganisationnelle(uniteOrganisationnelleSelected);
-                }
+                }*/
                 utilisateurFacade.create(utilisateur);
                 setDisabled(true);
                 initAddUtilisateur();
@@ -126,7 +126,6 @@ public class AddUtilisateurController extends AbstractController implements Seri
     public void removeProfilsForUtilisateur(AdminProfil adminProfil) {
 
         if (adminProfil != null) {
-
             utilisateur.removeProfil(adminProfil);
             listProfils.add(adminProfil);
         }

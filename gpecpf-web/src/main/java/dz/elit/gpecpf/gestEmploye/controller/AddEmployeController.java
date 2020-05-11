@@ -5,8 +5,10 @@
  */
 package dz.elit.gpecpf.gestEmploye.controller;
 
+import dz.elit.gpecpf.administration.entity.AdminUtilisateur;
 import dz.elit.gpecpf.administration.entity.Prefixcodification;
 import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
+import dz.elit.gpecpf.administration.service.AdminUtilisateurFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
@@ -48,6 +50,11 @@ public class AddEmployeController extends AbstractController implements Serializ
     private CommuneFacade communeFacade;
     @EJB
     private AdminPrefixCodificationFacade prefFacade;
+    @EJB
+    private AdminUtilisateurFacade userFacade;
+    
+    private List <AdminUtilisateur> listUser;
+     
    
     private  List<Prefixcodification> listPrefix;
     
@@ -85,6 +92,7 @@ public class AddEmployeController extends AbstractController implements Serializ
         idComune=0;
         communeSelected=new Commune();
         listCommunes =new ArrayList<>();
+        listUser=new ArrayList<>();
     }
     public void chercherPrefix()
     {   
@@ -123,6 +131,30 @@ public class AddEmployeController extends AbstractController implements Serializ
          }
         return true;
     }
+     private boolean isExisteUser(){
+         listUser = userFacade.findByNomPrenomLoginForEmp(emp.getNom(),emp.getPrenom(),emp.getUserName());
+         if(!listUser.isEmpty())
+         {
+             return true;
+         }
+         return false;
+     }
+     private boolean userDejaAffecter(){
+        
+      
+         Employe emp3=null;
+         if(!listUser.isEmpty())
+         {
+            emp3 = empFacade.findByUserName(listUser.get(0).getLogin());
+         }
+        
+        if(emp3 == null) {
+            return false;
+        } else {
+            return true;
+        }
+         
+     }
     private boolean isExisteMatricule(String matricule) 
     {
         Employe emp2 = empFacade.findByMatricule(matricule);
@@ -142,10 +174,19 @@ public class AddEmployeController extends AbstractController implements Serializ
                             if (emp.getListFormation().isEmpty()) {
                                  MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_list_formation_vide"));//Erreur inconu   
                             }else{
-                                 empFacade.create(emp);
-                                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
-                                 initAddEmploye();
-                             }
+                                if(!isExisteUser())
+                                {
+                                  MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_inexistant"));//Erreur inconu   
+                                }else{  if(userDejaAffecter())
+                                         {
+                                             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_deja_affecte"));//Erreur inconu   
+                                         }else{  
+                                                empFacade.create(emp);
+                                                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
+                                                initAddEmploye();
+                                              }
+                                       }
+                                     }
                           }
                 }       
         } catch (MyException ex) {
