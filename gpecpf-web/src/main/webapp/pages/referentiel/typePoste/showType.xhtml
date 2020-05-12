@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateRefer.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:a="http://elit.dz/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_consulter_type_poste}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_type_poste}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_type_poste}" href="listType.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="Fiche Tyep de Poste" />
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>
+            <p:panel id="panel" styleClass="no-border row">
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="cod"  value="#{editTypePosteController.typePoste.code}" /> 
+                        </a:column>
+                    </a:column> 
+                </a:row>
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
+                        <a:column span="8" >
+                            <p:inputTextarea id="desc" cols="60" value="#{editTypePosteController.typePoste.libelle}" autoResize="false" />
+                        </a:column>
+                    </a:column>
+                </a:row>   
+                
+                <a:row style="height: 300px">
+                    <a:column span="12">
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.lbl_postes}">
+                                <a:panel header=" #{bundleReferentiel.lien_liste_poste}" iconheader="fa fa-list-ul">
+                                    <p:dataTable id="tablePostes" value="#{editTypePosteController.listPostes}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{poste.code}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_denomination}" filterBy="#{poste.libelle}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.denomination}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_classement}" filterBy="#{poste.libelle}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.classement}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>  
+                    </a:column>
+                </a:row>
+            </p:panel>
+
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listType" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>
