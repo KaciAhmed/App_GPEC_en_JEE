@@ -1,13 +1,14 @@
 package dz.elit.gpecpf.referentiel.controller;
 
-import dz.elit.gpecpf.poste.service.MoyenFacade;
+import dz.elit.gpecpf.poste.service.EmploiFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.poste.entity.Moyen;
+import dz.elit.gpecpf.poste.entity.Emploi;
 import dz.elit.gpecpf.poste.entity.Poste;
 import dz.elit.gpecpf.poste.service.PosteFacade;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -19,42 +20,43 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class EditMoyenController extends AbstractController implements Serializable {
+public class EditEmploiController extends AbstractController implements Serializable {
 
     @EJB
-    private MoyenFacade moyenFacade;
+    private EmploiFacade emploiFacade;
 	@EJB
 	private PosteFacade posteFacade;
 	
 	private List<Poste> listPostes;
-
-    private Moyen moyen;
+	
+    private Emploi emploi;
 
     private String code;
-    private String description;
+    private String libelle;
+	private String description;
 
     /**
      * Creates a new instance of AddProfilController
      */
-    public EditMoyenController() {
+    public EditEmploiController() {
     }
 
     @Override//@PostConstruct
     protected void initController() {
-        initAddMoyen();
-        moyen = new Moyen();
+        initAddEmploi();
+        emploi = new Emploi();
         String id = MyUtil.getRequestParameter("id");
         if (id != null) {
-            moyen = moyenFacade.find(Integer.parseInt(id));
-			listPostes = posteFacade.postesForMoyen(moyen);
+            emploi = emploiFacade.find(Integer.parseInt(id));
+			listPostes = posteFacade.postesForEmploi(emploi);
         }
     }
-
+	
     public void edit() {
         try {
-            moyenFacade.edit(moyen);
+            emploiFacade.edit(emploi);
             MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-            initAddMoyen();
+            initAddEmploi();
         } catch (MyException ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(ex.getMessage());
@@ -64,40 +66,49 @@ public class EditMoyenController extends AbstractController implements Serializa
         }
     }
 
-    private void initAddMoyen() {
-        moyen = new Moyen();
+    private void initAddEmploi() {
+        emploi = new Emploi();
+		listPostes = new ArrayList<>();
     }
 
-	public void setCode(String code) {
-		this.code = code;
+	public Emploi getEmploi() {
+		return emploi;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setMoyen(Moyen moyen) {
-		this.moyen = moyen;
-	}
-
-	public void setMoyenFacade(MoyenFacade moyenFacade) {
-		this.moyenFacade = moyenFacade;
+	public void setEmploi(Emploi emploi) {
+		this.emploi = emploi;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
 	public String getDescription() {
 		return description;
 	}
 
-	public Moyen getMoyen() {
-		return moyen;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public EmploiFacade getEmploiFacade() {
+		return emploiFacade;
 	}
 
-	public MoyenFacade getMoyenFacade() {
-		return moyenFacade;
+	public void setEmploiFacade(EmploiFacade emploiFacade) {
+		this.emploiFacade = emploiFacade;
 	}
 
 	public PosteFacade getPosteFacade() {
@@ -115,6 +126,7 @@ public class EditMoyenController extends AbstractController implements Serializa
 	public void setListPostes(List<Poste> listPostes) {
 		this.listPostes = listPostes;
 	}
+	
 	
 	
 }
