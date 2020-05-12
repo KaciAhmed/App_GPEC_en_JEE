@@ -65,17 +65,11 @@
                             rendered="#{mySessionController.isUserInRole('DRH_002_006')}" />
             </a:submenu>
             <a:submenu value="#{bundleDrh.titre_gestion_compagne}" icon="">
-                <a:menuitem value="#{bundleDrh.titre_nouveau_compagne}" icon=""
-                            outcome="/pages/drh/compagne/addCom.xhtml"
-                            rendered="#{mySessionController.isUserInRole('DRH_003_001')}" />
                 <a:menuitem value="#{bundleDrh.titre_liste_compagne}" icon=""
                             outcome="/pages/drh/compagne/listCom.xhtml"
                             rendered="#{mySessionController.isUserInRole('DRH_003_006')}" />
             </a:submenu>
             <a:submenu value="#{bundleDrh.titre_gestion_reporting}" icon="">
-                <a:menuitem value="#{bundleDrh.titre_nouveau_reporting}" icon=""
-                    outcome="/pages/drh/reporting/addRep.xhtml"
-                    rendered="#{mySessionController.isUserInRole('DRH_004_001')}" />
                 <a:menuitem value="#{bundleDrh.titre_liste_reporting}" icon=""
                     outcome="/pages/drh/reporting/listRep.xhtml"
                     rendered="#{mySessionController.isUserInRole('DRH_004_006')}" />

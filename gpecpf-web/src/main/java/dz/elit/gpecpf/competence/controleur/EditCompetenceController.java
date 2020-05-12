@@ -21,6 +21,10 @@ import otherEntity.Competence;
 import otherEntity.Domainecompetence;
 import otherEntity.Typecompetence;
 
+/**
+ *
+ * @author Kaci Ahmed
+ */
 @ManagedBean
 @ViewScoped
 public class EditCompetenceController extends AbstractController implements Serializable  {

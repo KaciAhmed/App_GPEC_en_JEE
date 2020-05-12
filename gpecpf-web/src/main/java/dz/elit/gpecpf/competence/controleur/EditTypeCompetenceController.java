@@ -16,7 +16,7 @@ import otherEntity.Typecompetence;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @ManagedBean
 @ViewScoped

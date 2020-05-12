@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otherEntity;
+package dz.elit.gpecpf.compagne_evaluation.entity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import otherEntity.Evaluation;
 
 /**
  *

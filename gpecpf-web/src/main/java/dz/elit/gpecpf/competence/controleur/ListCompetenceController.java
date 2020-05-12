@@ -33,7 +33,7 @@ import otherEntity.Competence;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 
 @ManagedBean

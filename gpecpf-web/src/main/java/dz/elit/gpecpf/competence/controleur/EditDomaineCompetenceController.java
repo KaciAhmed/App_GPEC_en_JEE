@@ -19,7 +19,7 @@ import otherEntity.Domainecompetence;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @ManagedBean
 @ViewScoped
@@ -61,7 +61,7 @@ private DomaineCompetenceFacade domaineCompFacade;
             return true;
         }
     }
-        public void edit() {
+    public void edit() {
         try {
             domaine.setCode(domaine.getCode().toUpperCase());
             if (isExisteCode(domaine.getCode()) && !domaine.getCode().equals(oldCode)) {

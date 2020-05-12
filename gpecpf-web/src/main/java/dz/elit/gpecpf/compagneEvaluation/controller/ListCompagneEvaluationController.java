@@ -3,18 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dz.elit.gpecpf.competence.controleur;
+package dz.elit.gpecpf.compagneEvaluation.controller;
 
 import dz.elit.gpecpf.commun.controller.Imprimer;
 import dz.elit.gpecpf.commun.reporting.engine.Reporting;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.TypeCompetenceFacade;
+import dz.elit.gpecpf.compagne_evaluation.entity.Compagneevaluation;
+import dz.elit.gpecpf.gestion_compagne_evaluation.service.CompagneEvaluationFacade;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +30,6 @@ import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.primefaces.context.RequestContext;
-import otherEntity.Typecompetence;
 
 /**
  *
@@ -34,36 +37,67 @@ import otherEntity.Typecompetence;
  */
 @ManagedBean
 @ViewScoped
-public class ListTypeCompetenceController  extends AbstractController implements Serializable {
+public class ListCompagneEvaluationController extends AbstractController implements Serializable{
     
     @EJB
-    private TypeCompetenceFacade typeCompFacade;
+    private CompagneEvaluationFacade compagneFacade;
     
-     @ManagedProperty(value = "#{imprimer}")
+    @ManagedProperty(value = "#{imprimer}")
     private Imprimer ctrImprimer;
-     
-     private List<Typecompetence> listTypeCompetences;
     
-    private Typecompetence typeComp;
-
-    public ListTypeCompetenceController() {
-    }
+    private List<Compagneevaluation> listCompagne;
     
+    SimpleDateFormat formater = null;
+    SimpleDateFormat formater2 = null;
     
-      @Override//@PostConstruct
-    protected void initController() {
+    //Les variables de recherche
+    private String code;
+    private Date dateDeb;
+    private Date dateFin;
   
-     findList()  ; 
 
-       }
-        
-       public void findList() {
-      
-        listTypeCompetences= typeCompFacade.findAllOrderByAttribut("code");
-        
+    public ListCompagneEvaluationController() {
     }
-   
-        public void download() throws SQLException, IOException 
+    
+     @Override //PostConstruct
+    protected void initController() 
+    {    
+        formater = new SimpleDateFormat("yyyy-MM-dd");
+        formater2 = new SimpleDateFormat("dd-MM-yyyy");
+        findList()  ;  
+       
+    }
+    private void findList() {
+       listCompagne=new ArrayList<>();
+       listCompagne = compagneFacade.findAllOrderByAttribut("code");
+       // rechercher();
+    }
+    public void rechercher() {   
+       listCompagne= compagneFacade.findByCodeDatedebDatefin(code, dateDeb, dateFin);       
+       if (listCompagne.isEmpty() || listCompagne.size() < 1) {
+            MyUtil.addInfoMessage(MyUtil.getBundleAdmin("msg_resultat_recherche_null"));
+        }     
+    }
+    public String formaterDate(Date dt)
+    {
+        return formater2.format(dt);
+    }
+    public void remove(Compagneevaluation compagne) 
+    {
+     try {
+         // à revoir pour le cas de la suppréssion des évaluations
+              compagneFacade.remove(compagne);
+
+              MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
+             findList();
+         } catch (Exception ex) 
+           {
+             ex.printStackTrace();
+             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+           }   
+    }
+        
+    public void download() throws SQLException, IOException 
     {
         String rapportLien = "/dz/elit/harmo/commun/reporting/source/listUtilisateur.jasper";
         InputStream rapport = getClass().getResourceAsStream(rapportLien);
@@ -74,7 +108,7 @@ public class ListTypeCompetenceController  extends AbstractController implements
         String iSoRapport = "iSoRapport";
         InputStream urlLogo = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/images-login/logo.png");
         Map parametres = new HashMap();
-        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listTypeCompetences);
+        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listCompagne);
         parametres.put("rapportNom", rapportNom);
         parametres.put("entreprisFr", entreprisFr);
         parametres.put("entreprisAr", entreprisAr);
@@ -93,17 +127,17 @@ public class ListTypeCompetenceController  extends AbstractController implements
         options.put("contentWidth", 310);
         RequestContext.getCurrentInstance().openDialog("/pages/commun/download.xhtml", options, null);
     }
-        public String telecharger() throws IOException, JRException {
+      public String telecharger() throws IOException, JRException {
 
         Map<String, String> param = new HashMap<>();
         param.put("rapportNom", "Test");
 
         Reporting.printEtat(getClass().getResourceAsStream("/dz/elit/gpecpf/reporting/source/test.jasper"),
-                param, new JRBeanCollectionDataSource(listTypeCompetences));
+                param, new JRBeanCollectionDataSource(listCompagne));
         return "";
 
     }
-           public void creerRapportUnique() throws JRException, FileNotFoundException {
+        public void creerRapportUnique() throws JRException, FileNotFoundException {
 
         String rapportLien = "/reporting/source/listUtilisateur.jasper";
         InputStream rapport = getClass().getResourceAsStream(rapportLien);
@@ -114,7 +148,7 @@ public class ListTypeCompetenceController  extends AbstractController implements
         String SUBREPORT_DIR = getClass().getResource("/dz/elit/harmo/commun/reporting/source/Entete/").getFile();
         InputStream urlLogo = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/images-login/logo.png");
         Map parametres = new HashMap();
-        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listTypeCompetences);
+        JRBeanCollectionDataSource data = new JRBeanCollectionDataSource(listCompagne);
         parametres.put("rapportNom", rapportNom);
         parametres.put("entreprisFr", entreprisFr);
         parametres.put("entreprisAr", entreprisAr);
@@ -125,32 +159,7 @@ public class ListTypeCompetenceController  extends AbstractController implements
         Reporting.downloadReportPdf(rapport, data, parametres);
 
     }
-           
-           // getter && setter 
-
-    public TypeCompetenceFacade getTypeCompFacade() {
-        return typeCompFacade;
-    }
-
-    public void setTypeCompFacade(TypeCompetenceFacade typeCompFacade) {
-        this.typeCompFacade = typeCompFacade;
-    }
-
-    public List<Typecompetence> getListTypeCompetences() {
-        return listTypeCompetences;
-    }
-
-    public void setListTypeCompetences(List<Typecompetence> listTypeCompetences) {
-        this.listTypeCompetences = listTypeCompetences;
-    }
-
-    public Typecompetence getTypeComp() {
-        return typeComp;
-    }
-
-    public void setTypeComp(Typecompetence typeComp) {
-        this.typeComp = typeComp;
-    }
+        // getter && setter 
 
     public Imprimer getCtrImprimer() {
         return ctrImprimer;
@@ -159,6 +168,37 @@ public class ListTypeCompetenceController  extends AbstractController implements
     public void setCtrImprimer(Imprimer ctrImprimer) {
         this.ctrImprimer = ctrImprimer;
     }
-           
-    
+
+    public List<Compagneevaluation> getListCompagne() {
+        return listCompagne;
+    }
+
+    public void setListCompagne(List<Compagneevaluation> listCompagne) {
+        this.listCompagne = listCompagne;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Date getDateDeb() {
+        return dateDeb;
+    }
+
+    public void setDateDeb(Date dateDeb) {
+        this.dateDeb = dateDeb;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
+        
 }

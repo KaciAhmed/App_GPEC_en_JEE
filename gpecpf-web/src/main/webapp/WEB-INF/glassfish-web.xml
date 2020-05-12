@@ -501,6 +501,26 @@
     <role-name>REFER_005_002</role-name>
     <group-name>REFER_005_002</group-name>
   </security-role-mapping>
+   <security-role-mapping>
+    <role-name>DRH_004_001</role-name>
+    <group-name>DRH_004_001</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DRH_004_002</role-name>
+    <group-name>DRH_004_002</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DRH_004_003</role-name>
+    <group-name>DRH_004_003</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DRH_004_004</role-name>
+    <group-name>DRH_004_004</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DRH_004_006</role-name>
+    <group-name>DRH_004_006</group-name>
+  </security-role-mapping>
   <class-loader delegate="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">

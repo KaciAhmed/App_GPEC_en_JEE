@@ -533,6 +533,30 @@
             <role-name>REFER_012_002</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>DRH_001_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>DRH_001_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/drh/employe/listEmp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>DRH_001_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>DRH_004_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>DRH_004_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/drh/reporting/listRep.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>DRH_004_006</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>gpecpfRealm</realm-name>
@@ -1064,5 +1088,77 @@
     <security-role>
         <description>Lister un employé </description>
         <role-name>GESEMP_001_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un employé</description>
+        <role-name>DRH_001_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un employé</description>
+        <role-name>DRH_001_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un employé</description>
+        <role-name>DRH_001_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un poste</description>
+        <role-name>DRH_002_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un poste</description>
+        <role-name>DRH_002_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un poste</description>
+        <role-name>DRH_002_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une compagne</description>
+        <role-name>DRH_003_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une compagne</description>
+        <role-name>DRH_003_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une compagne </description>
+        <role-name>DRH_003_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une compagne </description>
+        <role-name>DRH_003_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une compagne</description>
+        <role-name>DRH_003_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une compagne </description>
+        <role-name>DRH_003_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer un reporting </description>
+        <role-name>DRH_004_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un reporting </description>
+        <role-name>DRH_004_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un reporting </description>
+        <role-name>DRH_004_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un reporting </description>
+        <role-name>DRH_004_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un reporting </description>
+        <role-name>DRH_004_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un reporting </description>
+        <role-name>DRH_004_006</role-name>
     </security-role>
 </web-app>

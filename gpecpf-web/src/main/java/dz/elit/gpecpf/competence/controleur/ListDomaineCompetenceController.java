@@ -33,7 +33,7 @@ import org.primefaces.context.RequestContext;
 import otherEntity.Domainecompetence;
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @ManagedBean
 @ViewScoped

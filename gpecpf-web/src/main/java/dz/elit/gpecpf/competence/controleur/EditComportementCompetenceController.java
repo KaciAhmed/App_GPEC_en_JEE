@@ -20,7 +20,7 @@ import otherEntity.Comportement;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @ManagedBean
 @ViewScoped
