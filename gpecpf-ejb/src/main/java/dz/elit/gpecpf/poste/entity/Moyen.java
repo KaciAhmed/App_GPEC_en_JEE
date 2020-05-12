@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dz.elit.gpecpf.poste.entity;
 
 import java.io.Serializable;
@@ -12,10 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import dz.elit.gpecpf.commun.util.StaticUtil;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
@@ -23,7 +16,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author N
+ * @author Nadir Ben Mohand
  */
 @Entity
 @Table(name = "moyen",schema = StaticUtil.POSTE_SCHEMA)
@@ -45,9 +38,6 @@ public class Moyen implements Serializable {
     @Column(name = "description")
     private String description;
 	
-	@ManyToMany(mappedBy = "listMoyen")
-	private List<Poste> listPoste;
-    
     public Moyen() {
     }
 
