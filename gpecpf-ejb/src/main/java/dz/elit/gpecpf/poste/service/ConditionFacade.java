@@ -37,6 +37,14 @@ public class ConditionFacade extends AbstractFacade<Condition> {
         super.create(condition);
     }
 	
+	@Override
+    public void edit(Condition condition) throws MyException, Exception {
+        if (isCodeConditionExiste(condition)) {
+            throw new MyException("Le code existe déjà");
+        }
+        super.edit(condition);
+    }
+	
 	private boolean isCodeConditionExiste(Condition condition) {
 		Query q = em.createNamedQuery("Condition.findByCodeWithoutCurrentId");
         q.setParameter("code", condition.getCode());
