@@ -77,7 +77,7 @@ public class DomaineCompetenceFacade extends AbstractFacade<Domainecompetence>{
         }
 
         //Implémentation de visibilité
-       JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
+     //  JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
     
         return q.getResultList();
     }

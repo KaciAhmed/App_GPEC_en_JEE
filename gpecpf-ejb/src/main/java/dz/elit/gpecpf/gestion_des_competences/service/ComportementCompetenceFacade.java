@@ -63,7 +63,7 @@ public class ComportementCompetenceFacade  extends AbstractFacade<Comportement>{
         }
 
         //Implémentation de visibilité
-       JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
+     //  JpaHelper.getDatabaseQuery(q).setRedirector(new CustomQueryRedirectors());
     
         return q.getResultList();
     }
