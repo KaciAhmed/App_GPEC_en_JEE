@@ -10,6 +10,7 @@ import dz.elit.gpecpf.administration.entity.AdminPrivilege;
 import dz.elit.gpecpf.administration.entity.AdminProfil;
 import dz.elit.gpecpf.administration.entity.AdminUtilisateur;
 import dz.elit.gpecpf.administration.service.AdminPrivilegeFacade;
+import dz.elit.gpecpf.competence.entity.Typecompetence;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -21,7 +22,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import otherEntity.Commune;
-import otherEntity.Typecompetence;
 import otherEntity.Wilaya;
 
 /**

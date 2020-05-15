@@ -52,7 +52,7 @@
                     <a:column span="12">
                         <p:tabView id="tabView">
                            
-                            <p:tab title="#{bundleReferentiel.lbl_competence}">
+                            <p:tab title="#{bundleReferentiel.lbl_competences}">
                                 <a:panel header=" #{bundleReferentiel.lien_liste_competence}" iconheader="fa fa-list-ul">
                                     <p:dataTable id="tableCompetence" value="#{editTypeCompetenceController.typecomp.competenceCollection}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
                                         <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{competence.code}" filterMatchMode="contains">

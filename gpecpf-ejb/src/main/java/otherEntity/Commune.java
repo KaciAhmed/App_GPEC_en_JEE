@@ -5,6 +5,7 @@
  */
 package otherEntity;
 
+import dz.elit.gpecpf.employe.entity.Employe;
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import java.util.Collection;
@@ -20,14 +21,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @Entity
 @Table(name = "commune", schema = StaticUtil.ADMINISTRATION_SCHEMA)
@@ -51,8 +51,6 @@ public class Commune implements Comparable,Serializable {
     @Size(max = 255)
     @Column(name = "nom")
     private String nom;
-    @OneToMany(mappedBy = "idcommune")
-    private Collection<Uniteorganisationnel> uniteorganisationnelCollection;
     @OneToMany(mappedBy = "idcommune")
     private Collection<Employe> employeCollection;
     @JoinColumn(name = "idwilaya", referencedColumnName = "id")
@@ -97,14 +95,6 @@ public class Commune implements Comparable,Serializable {
         this.nom = nom;
     }
 
-    @XmlTransient
-    public Collection<Uniteorganisationnel> getUniteorganisationnelCollection() {
-        return uniteorganisationnelCollection;
-    }
-
-    public void setUniteorganisationnelCollection(Collection<Uniteorganisationnel> uniteorganisationnelCollection) {
-        this.uniteorganisationnelCollection = uniteorganisationnelCollection;
-    }
 
     @XmlTransient
     public Collection<Employe> getEmployeCollection() {

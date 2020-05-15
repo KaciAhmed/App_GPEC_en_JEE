@@ -6,6 +6,7 @@
 package otherEntity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
+import dz.elit.gpecpf.competence.entity.Competence;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;

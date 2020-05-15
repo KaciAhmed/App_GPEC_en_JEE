@@ -5,7 +5,10 @@ import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.poste.entity.Condition;
+import dz.elit.gpecpf.poste.entity.Poste;
+import dz.elit.gpecpf.poste.service.PosteFacade;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -20,6 +23,10 @@ public class EditConditionController extends AbstractController implements Seria
 
     @EJB
     private ConditionFacade conditionFacade;
+	@EJB
+	private PosteFacade posteFacade;
+	
+	private List<Poste> listPostes;
 
     private Condition condition;
 
@@ -39,6 +46,7 @@ public class EditConditionController extends AbstractController implements Seria
         String id = MyUtil.getRequestParameter("id");
         if (id != null) {
             condition = conditionFacade.find(Integer.parseInt(id));
+			listPostes = posteFacade.postesForCondition(condition);
         }
     }
 
@@ -90,6 +98,22 @@ public class EditConditionController extends AbstractController implements Seria
 
 	public ConditionFacade getConditionFacade() {
 		return conditionFacade;
+	}
+
+	public PosteFacade getPosteFacade() {
+		return posteFacade;
+	}
+
+	public void setPosteFacade(PosteFacade posteFacade) {
+		this.posteFacade = posteFacade;
+	}
+
+	public List<Poste> getListPostes() {
+		return listPostes;
+	}
+
+	public void setListPostes(List<Poste> listPostes) {
+		this.listPostes = listPostes;
 	}
 	
 	

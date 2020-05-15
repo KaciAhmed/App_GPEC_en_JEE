@@ -27,7 +27,7 @@ import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.primefaces.context.RequestContext;
-import otherEntity.Employe;
+import dz.elit.gpecpf.employe.entity.Employe;
 
 /**
  *

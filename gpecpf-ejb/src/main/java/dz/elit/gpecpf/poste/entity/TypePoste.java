@@ -14,16 +14,15 @@ import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 /**
  *
  * @author Nadir Ben Mohand
  */
 @Entity
-@Table(name = "moyen",schema = StaticUtil.ADMINISTRATION_SCHEMA)
+@Table(name = "type_poste",schema = StaticUtil.POSTE_SCHEMA)
 @NamedQueries({
-    @NamedQuery(name = "Moyen.findByCodeWithoutCurrentId", query = "SELECT t FROM Moyen t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
-public class Moyen implements Serializable {
+    @NamedQuery(name = "TypePoste.findByCodeWithoutCurrentId", query = "SELECT t FROM TypePoste t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
+public class TypePoste implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,20 +35,20 @@ public class Moyen implements Serializable {
     @NotNull
     private String code;
     @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-	
-    public Moyen() {
+    @Column(name = "libelle")
+    private String libelle;
+    
+    public TypePoste() {
     }
 
-    public Moyen(Integer id) {
+    public TypePoste(Integer id) {
         this.id = id;
     }
     
-    public Moyen(Integer id, String code, String description) {
+    public TypePoste(Integer id, String code, String libelle) {
         this.id = id;
         this.code = code;
-        this.description = description;
+        this.libelle = libelle;
     }
     
     public Integer getId() {
@@ -68,12 +67,12 @@ public class Moyen implements Serializable {
         this.code = code;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLibelle() {
+        return libelle;
     }
 
-    public void setDescription(String description) {
-		this.description = description;
+    public void setLibelle(String libelle) {
+		this.libelle = libelle;
     }
     
     @Override
@@ -86,10 +85,10 @@ public class Moyen implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Moyen)) {
+        if (!(object instanceof TypePoste)) {
             return false;
         }
-        Moyen other = (Moyen) object;
+        TypePoste other = (TypePoste) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -98,7 +97,7 @@ public class Moyen implements Serializable {
 
     @Override
     public String toString() {
-        return "dz.elit.gpecpf.poste.entity.Moyen[ id=" + id + " ]";
+        return "dz.elit.gpecpf.poste.entity.TypePoste[ id=" + id + " ]";
     }
     
 }

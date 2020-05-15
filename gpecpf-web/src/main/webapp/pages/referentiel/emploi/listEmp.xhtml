@@ -1,82 +1,56 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/templateAdmin.xhtml"
+                template="/templates/templateRefer.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:a="http://elit.dz/ui" >
+                xmlns:a="http://elit.dz/ui">
 
     <ui:define name="Title">
-        #{bundleGesemp.lien_liste_employe}
+        #{bundleReferentiel.titre_liste_emploi}
     </ui:define>
 
     <ui:define name="breadCrumb">
         <a:breadcrumb>
-            <a:menuitem value="#{bundleGesemp.titre_gestion_personnel}" />
-            <a:menuitem value="#{bundleGesemp.lien_liste_employe}"  href="listEmp.xhtml" last="true" />
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_emploi}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_emploi}" href="listEmp.xhtml" last="true" />
         </a:breadcrumb>
     </ui:define>
 
     <ui:define name="MyContent">
-        <h:form id="form">
-            <a:row >
-                <a:pagetitle value="Utilisateurs" />                
-                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" title="#{bundleAdmin.titre_nouveau_utilisateur}" outcome="addUtilisateur" rendered="#{mySessionController.isUserInRole('ADMIN_002_001')}" />
+        <h:form id="form">          
+            <a:row >  
+                <a:pagetitle value="Emplois" />
+                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" outcome="addEmp" title="#{bundleReferentiel.titre_nouveau_emploi}" rendered="#{mySessionController.isUserInRole('REFER_007_001')}" />
                 <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
             </a:row>
-            <a:panel isPadding="true" >              
-              <a:label value="#{bundleGesemp.lbl_code}" span="1" />
-                <a:column span="2" >
-                    <p:inputText id="nom" value="#{listEmployeController.code}" label="#{bundleGesemp.lbl_code}" />                                    
-                </a:column>
-                <a:label value="#{bundleGesemp.lbl_nom}" span="1" />
-                <a:column span="2" >
-                    <p:inputText id="nom" value="#{listEmployeController.nom}" label="#{bundleGesemp.lbl_nom}" />                                    
-                </a:column>
-                <a:label value="#{bundleGesemp.lbl_prenom}" span="1" />
-                <a:column span="2" >
-                    <p:inputText id="description" value="#{listEmployeController.prenom}" label="#{bundleGesemp.lbl_prenom}" />                                    
-                </a:column>
-                <a:column span="2" >
-                    <p:commandButton value="#{bundleCommun.btn_chercher}" styleClass="CyanButton" icon="fa fa-search" action="#{listEmployeController.rechercher()}" ajax="false" />  
-                </a:column>              
-            </a:panel>            
-
             <a:row>
-                <a:panel header=" #{bundleGesemp.lien_liste_employe}"  iconheader="fa fa-list-ul">
-                    <f:facet name="header" >
-                        <a:dropButton value="Outils"  icon="fa-cogs" >
-                            <a:menuitem iconAwesome="fa fa-file-pdf-o" value="PDF" actionListener="" />
-                            <a:menuitem  iconAwesome="fa fa-file-excel-o " value="EXCEL" />
-                            <a:menuitem iconAwesome="fa fa-file-code-o" value="CSV"  />
-                        </a:dropButton>
-                    </f:facet>
-                    <p:dataTable  value="#{listEmployeController.listEmp}" var="employe" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
-                        <p:column headerText="#{bundleGesemp.lbl_code}">
-                            <h:outputText value="#{employe.code}"/>
+                <a:panel header=" #{bundleReferentiel.lien_liste_emploi}" iconheader="fa fa-list-ul">
+                    <p:dataTable binding="#{listEmploiController.dataTable}" value="#{listEmploiController.lazyEmploi}" var="emploi" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" lazy="true" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="true" rows="10">
+                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{emploi.code}" filterMatchMode="contains" width="200" >
+                            <h:outputText value="#{emploi.code}"/>
                         </p:column>
-                        <p:column headerText="#{bundleGesemp.lbl_nom}">
-                            <h:outputText value="#{employe.nom}"/>                           
+                        <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{emploi.libelle}" filterMatchMode="contains">
+                            <h:outputText value="#{emploi.libelle}"/>
                         </p:column>
-                        <p:column headerText="#{bundleGesemp.lbl_prenom}">
-                            <h:outputText value="#{employe.prenom}"/>                           
+                        <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{emploi.description}" filterMatchMode="contains">
+                            <h:outputText value="#{emploi.description}"/>
                         </p:column>
-                        <p:column headerText="#{bundleCommun.lbl_actions}" width="150">
-                            <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showEmp" ajax="false" rendered="#{mySessionController.isUserInRole('GESEMP_001_006')}">  
-                                
+                        <p:column headerText="#{bundleCommun.lbl_actions}" width="120">
+                            <p:commandButton  icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" ajax="false" action="showEmp" rendered="#{mySessionController.isUserInRole('REFER_007_005')}" >  
+                                <f:param name="id" value="#{emploi.id}"/>
+                            </p:commandButton>
+                            <p:commandButton icon="fa fa-pencil-square-o"  title="#{bundleCommun.titre_modification}" ajax="false" action="editEmp" rendered="#{mySessionController.isUserInRole('REFER_007_002')}">
+                                <f:param name="id" value="#{emploi.id}"/>
                             </p:commandButton>  
-                            <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="editEmp" ajax="false" rendered="#{mySessionController.isUserInRole('GESEMP_001_002')}">
-                                <f:param name="id" value="#{utilisateur.id}"></f:param>
+                            <p:commandButton icon="fa fa-times" actionListener="#{listEmploiController.remove(emploi)}" update=":form" title="#{bundleCommun.titre_suppression}" rendered="#{mySessionController.isUserInRole('REFER_007_003')}" >
+                                <p:confirm header="#{bundleCommun.titre_confirmation}" message="#{bundleCommun.msg_confirmez_vs_action}" icon="ui-icon-alert" />
                             </p:commandButton>  
                         </p:column>
-                    </p:dataTable> 
+                    </p:dataTable>
                 </a:panel>
             </a:row>
-            <a:row>
-                <p:commandButton   icon="fa fa-download" onclick="this.form.target = '_blank';" ajax="false" actionListener="#{listEmployeController.telecharger()}" value="#{bundleCommun.lbl_telecharger}"/>
-                <p:commandButton icon="fa fa-file-archive-o" actionListener="#{listEmployeController.download()}" value="#{bundleCommun.lbl_exporter}"/>
-            </a:row>
-        </h:form>        
+        </h:form>
     </ui:define>
 </ui:composition>

@@ -3,19 +3,18 @@ package dz.elit.gpecpf.poste.service;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.service.AbstractFacade;
 import dz.elit.gpecpf.commun.util.StaticUtil;
-import dz.elit.gpecpf.poste.entity.Moyen;
+import dz.elit.gpecpf.poste.entity.Emploi;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 
 /**
  *
  * @author Nadir Ben Mohand
  */
 @Stateless
-public class MoyenFacade extends AbstractFacade<Moyen> {
+public class EmploiFacade extends AbstractFacade<Emploi> {
 
     @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
     private EntityManager em;
@@ -25,31 +24,30 @@ public class MoyenFacade extends AbstractFacade<Moyen> {
         return em;
     }
 
-    public MoyenFacade() {
-        super(Moyen.class);
+    public EmploiFacade() {
+        super(Emploi.class);
     }
 	
 	@Override
-    public void create(Moyen moyen) throws MyException, Exception {
-        if (isCodeMoyenExiste(moyen)) {
+    public void create(Emploi emploi) throws MyException, Exception {
+        if (isCodeEmploiExiste(emploi)) {
             throw new MyException("Le code existe déjà");
         }
-        super.create(moyen);
+        super.create(emploi);
     }
 	
 	@Override
-    public void edit(Moyen moyen) throws MyException, Exception {
-        if (isCodeMoyenExiste(moyen)) {
-            throw new MyException("Le code existe déjà");
-        }
-        super.edit(moyen);
-    }
+	public void edit(Emploi emploi) throws MyException, Exception {
+		if (isCodeEmploiExiste(emploi)) {
+			throw new MyException("Le code existe déjà");
+		}
+		super.edit(emploi);
+	}
 	
-	private boolean isCodeMoyenExiste(Moyen moyen) {
-		Query q = em.createNamedQuery("Moyen.findByCodeWithoutCurrentId");
-        q.setParameter("code", moyen.getCode());
-        q.setParameter("id", moyen.getId());
+	private boolean isCodeEmploiExiste(Emploi emploi) {
+		Query q = em.createNamedQuery("Emploi.findByCodeWithoutCurrentId");
+        q.setParameter("code", emploi.getCode());
+        q.setParameter("id", emploi.getId());
         return !q.getResultList().isEmpty();
     }
-	
 }

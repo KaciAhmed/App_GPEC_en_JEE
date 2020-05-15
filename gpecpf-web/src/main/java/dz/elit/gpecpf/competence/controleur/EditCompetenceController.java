@@ -7,19 +7,20 @@ package dz.elit.gpecpf.competence.controleur;
 
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.CompetenceFacade;
-import dz.elit.gpecpf.gestion_des_competences.service.DomaineCompetenceFacade;
-import dz.elit.gpecpf.gestion_des_competences.service.TypeCompetenceFacade;
+import dz.elit.gpecpf.competence.entity.Competence;
+import dz.elit.gpecpf.competence.entity.Domainecompetence;
+import dz.elit.gpecpf.competence.entity.Typecompetence;
+import dz.elit.gpecpf.competence.service.CompetenceFacade;
+import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
+import dz.elit.gpecpf.competence.service.TypeCompetenceFacade;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import otherEntity.Competence;
-import otherEntity.Domainecompetence;
-import otherEntity.Typecompetence;
+
 
 /**
  *
@@ -110,16 +111,13 @@ public class EditCompetenceController extends AbstractController implements Seri
       public void chercherTypeComp(){
         listType=typeCompFacade.findByCodeLibelle(codeType,libType);
     }
-    public void editDomForComp(){
-       // comp.setIddomcom(domSelected);
-        comp.editDomComp(domaineComp);
-      //  domSelected=new Domainecompetence();
+    public void editDomForComp()
+    {
+        comp.editDomComp(domSelected);
     }    
-    public void editTypeForComp(){
-      //  comp.setIdtypcom(typeSelected);
+    public void editTypeForComp()
+    {
       comp.addTypeComp(typeSelected);
-       // typeSelected=new Typecompetence();
-
     }  
          
          // getter && setter 

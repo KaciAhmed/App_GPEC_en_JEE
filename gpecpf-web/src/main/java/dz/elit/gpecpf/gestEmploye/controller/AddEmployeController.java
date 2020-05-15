@@ -20,15 +20,18 @@ import dz.elit.gpecpf.wilaya.commune.service.CommuneFacade;
 import dz.elit.gpecpf.wilaya.commune.service.WilayaFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import otherEntity.Commune;
-import otherEntity.Employe;
+import dz.elit.gpecpf.employe.entity.Employe;
+import dz.elit.gpecpf.poste.entity.Poste;
+import dz.elit.gpecpf.poste.service.PosteFacade;
+import java.util.Calendar;
+import java.util.Date;
+import otherEntity.Historiqueemployeposte;
 import otherEntity.Wilaya;
 
 /**
@@ -53,6 +56,8 @@ public class AddEmployeController extends AbstractController implements Serializ
     private AdminPrefixCodificationFacade prefFacade;
     @EJB
     private AdminUtilisateurFacade userFacade;
+    @EJB
+    private PosteFacade posteFacade;
     
     private List <AdminUtilisateur> listUser;
      
@@ -70,8 +75,18 @@ public class AddEmployeController extends AbstractController implements Serializ
     private List<Commune> listCommunes;
     private Commune communeSelected;
     
-  private int idWil=0;
-  private int idComune=0;
+    private int idWil=0;
+    private int idComune=0;
+    
+    private Historiqueemployeposte hystEmpPoste;
+    private List <Poste> listPostes;
+    private Poste posteSelected;
+    private Poste posteEmp;
+
+
+    private  int ageMinimale;
+    
+
 
     public AddEmployeController() {
     }
@@ -83,17 +98,28 @@ public class AddEmployeController extends AbstractController implements Serializ
      private void initAddEmploye() {
         emp = new Employe();
         chercherPrefix();
+        //partie formation
         listFormationsSelected=new ArrayList<>();
         listFormations=new ArrayList<>();
         listFormations = formationFacade.findAllOrderByAttribut("description"); 
+        // partie wilaya
          idWil=0;
         listWilayas = new ArrayList();
-        listWilayas=wilayaFacade.findAllOrderByAttribut("code");
+        listWilayas=wilayaFacade.findAllOrderByAttribut("nom");
         wilayaSelected =new Wilaya(); 
+        // partie commune
         idComune=0;
         communeSelected=new Commune();
         listCommunes =new ArrayList<>();
+        //partie user
         listUser=new ArrayList<>();
+        
+        // partie poste
+        listPostes =new ArrayList<>();
+        listPostes=posteFacade.findAllOrderByAttribut("code");
+        posteSelected=new Poste();
+        
+        ageMinimale=18;   
     }
     public void chercherPrefix()
     {   
@@ -122,7 +148,13 @@ public class AddEmployeController extends AbstractController implements Serializ
          emp.setIdcommune(communeSelected);
          }       
      }
-     private boolean isVerifier() {
+     private boolean isDateVerifier() {
+         
+          if(emp.getDate_recrutement().after(new Date()))
+         {
+               MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_erreur_date_recrutement"));
+                return false;
+          }
          if(emp.getDate_depart()!=null)
          {
              if(emp.getDate_recrutement().after(emp.getDate_depart()))
@@ -133,6 +165,7 @@ public class AddEmployeController extends AbstractController implements Serializ
          }
         return true;
     }
+     
      private boolean isExisteUser(){
          // le cas ou le champ est vide
          if(emp.getUserName().isEmpty())
@@ -147,6 +180,7 @@ public class AddEmployeController extends AbstractController implements Serializ
                 return false;
               }
      }
+     
      private boolean userDejaAffecter(){  
       // le cas ou le champ est vide
          if(emp.getUserName().isEmpty())
@@ -172,33 +206,68 @@ public class AddEmployeController extends AbstractController implements Serializ
         Employe emp2 = empFacade.findByMatricule(matricule);
         if(emp2 == null) {
             return false;
-        } else {
+        }else {
             return true;
         }
     }
+    private Boolean vrfDateNaissance()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(emp.getDtNaissance());
+        int annee=calendar.get(Calendar.YEAR);
+
+        Date dtAct =new Date();
+        calendar = Calendar.getInstance();
+        calendar.setTime(dtAct);
+        int anneAct= calendar.get(Calendar.YEAR);
+        
+        if(annee+ ageMinimale < anneAct)
+            return true;
+        else
+            return false; 
+    }
+   
+    private void creerHistoriqueEmployePoste(){
+        hystEmpPoste =new Historiqueemployeposte(emp.getId(),posteSelected.getId()); 
+        hystEmpPoste.setEmploye(emp);
+        hystEmpPoste.setPoste(posteSelected); 
+        hystEmpPoste.setDatedeb(new Date());
+        emp.getListHistoriqueEmployePoste().add(hystEmpPoste);
+        posteSelected.getListHistoriqueEmployePoste().add(hystEmpPoste); 
+    }
     public void create() {
         try { 
-                if(isVerifier()){
+                if(isDateVerifier()){
                    emp.setMatricule(emp.getMatricule().toUpperCase());
                    if (isExisteMatricule(emp.getMatricule())) {
-                        MyUtil.addErrorMessage(MyUtil.getBundleCommun(" msg_erreur_existe_matricule"));//Erreur inconu   
+                        MyUtil.addErrorMessage(MyUtil.getBundleCommun(" msg_erreur_existe_matricule")); 
                     }else{
                             if (emp.getListFormation().isEmpty()) {
-                                 MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_list_formation_vide"));//Erreur inconu   
+                                 MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_list_formation_vide"));   
                             }else{
-                                if(!isExisteUser())
-                                {
-                                  MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_inexistant"));//Erreur inconu   
-                                }else{  if(userDejaAffecter())
-                                         {
-                                             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_deja_affecte"));//Erreur inconu   
-                                         }else{  
-                                                empFacade.create(emp);
-                                                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
-                                                initAddEmploye();
-                                              }
-                                       }
-                                     }
+                                    if(!isExisteUser()){
+                                      MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_inexistant")); 
+                                    }else{  if(userDejaAffecter()){
+                                                 MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_deja_affecte"));   
+                                             }else{  
+                                                    if(! vrfDateNaissance()){
+                                                        MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_employe_mineur"));  
+                                                    }else{
+                                                        if(posteSelected== null || posteSelected.getCode()==null)
+                                                        {
+                                                            MyUtil.addErrorMessage(MyUtil.getBundleCommun("  msg_erreur_periode_poste ")); 
+                                                        }else{
+                                                                    empFacade.create(emp);
+                                                                    creerHistoriqueEmployePoste();
+                                                                    empFacade.edit(emp);
+                                                                    MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
+                                                                    initAddEmploye();  
+                                                                    posteEmp=null; 
+                                                              }
+                                                         }
+                                                  }
+                                         }
+                                  }
                           }
                 }       
         } catch (MyException ex) {
@@ -209,24 +278,35 @@ public class AddEmployeController extends AbstractController implements Serializ
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
         }
     }
+    
     public void newEmploye() {
         initAddEmploye();
     }
   
     public void addFormationForEmploye() {
-        if (!listFormationsSelected.isEmpty()) {
-            
+        if (!listFormationsSelected.isEmpty()) {          
             emp.addListFormation(listFormationsSelected);
             listFormations.removeAll(listFormationsSelected);
             listFormationsSelected= new ArrayList<>();
         }
     }
+    
     public void removeFormationForEmploye(Formation frm) 
     {
             emp.removeFormation(frm);
             listFormations.add(frm);
-      
     }
+    public void addPosteForEmploye()
+    { 
+       if(posteSelected==null || posteSelected.getCode()==null)
+       {
+             MyUtil.addWarnMessage(MyUtil.getBundleCommun("  msg_erreur_periode_poste ")); 
+           
+       }else{
+           posteEmp=posteSelected;
+       }
+    }
+  
  
     // getter && setter
 
@@ -285,5 +365,37 @@ public class AddEmployeController extends AbstractController implements Serializ
     public void setIdComune(int idComune) {
         this.idComune = idComune;
     }
-    
+
+    public Historiqueemployeposte getHystEmpPoste() {
+        return hystEmpPoste;
+    }
+
+    public void setHystEmpPoste(Historiqueemployeposte hystEmpPoste) {
+        this.hystEmpPoste = hystEmpPoste;
+    }
+
+    public List<Poste> getListPostes() {
+        return listPostes;
+    }
+
+    public void setListPostes(List<Poste> listPostes) {
+        this.listPostes = listPostes;
+    }
+
+    public Poste getPosteSelected() {
+        return posteSelected;
+    }
+
+    public void setPosteSelected(Poste posteSelected) {
+        this.posteSelected = posteSelected;
+    }
+
+    public Poste getPosteEmp() {
+        return posteEmp;
+    }
+
+    public void setPosteEmp(Poste posteEmp) {
+        this.posteEmp = posteEmp;
+    }
+  
 }

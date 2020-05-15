@@ -16,7 +16,6 @@ import dz.elit.gpecpf.poste.service.FormationFacade;
 import dz.elit.gpecpf.wilaya.commune.service.CommuneFacade;
 import dz.elit.gpecpf.wilaya.commune.service.WilayaFacade;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +26,12 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import otherEntity.Commune;
-import otherEntity.Employe;
+import dz.elit.gpecpf.employe.entity.Employe;
+import dz.elit.gpecpf.gestion_employe.service.HistoriqueEmployePosteFacade;
+import dz.elit.gpecpf.poste.entity.Poste;
+import dz.elit.gpecpf.poste.service.PosteFacade;
+import java.util.Calendar;
+import otherEntity.Historiqueemployeposte;
 import otherEntity.Wilaya;
 
 /**
@@ -39,18 +43,21 @@ import otherEntity.Wilaya;
 @ViewScoped
 public class EditEmployeController extends AbstractController implements Serializable {
     
-     //utilisateur =employe  profile =formation unité organisationnel = wilaya et commune
+
     @EJB
     private EmployeFacade empFacade;
-      @EJB
+    @EJB
     private FormationFacade formationFacade;
-    
+
     @EJB
     private WilayaFacade wilayaFacade;
     @EJB
     private CommuneFacade communeFacade;
     @EJB
     private AdminUtilisateurFacade userFacade;
+    @EJB
+    private PosteFacade posteFacade;
+
     
     private List <AdminUtilisateur> listUser;
     
@@ -76,6 +83,16 @@ public class EditEmployeController extends AbstractController implements Seriali
     private String oldMatricule;
     
     SimpleDateFormat formater = null;
+    
+    private Historiqueemployeposte histEmpPoste;
+    private List <Poste> listPostes;
+    private List <Poste> listPosteEmp;
+    private Poste posteSelected;
+    private Poste posteEmp;
+    private Poste oldPoste;
+
+    private  int ageMinimale;
+    
 
     public EditEmployeController() {
     }
@@ -84,7 +101,8 @@ public class EditEmployeController extends AbstractController implements Seriali
         initEditEmploye();    
         String id = MyUtil.getRequestParameter("id");
         // partie date
-        if (id != null) {
+        if (id != null) 
+        {
             emp =empFacade.find(Integer.parseInt(id));
             formater = new SimpleDateFormat("dd-MM-yyyy");
             dtNaiss=formater.format(emp.getDtNaissance());
@@ -97,27 +115,103 @@ public class EditEmployeController extends AbstractController implements Seriali
            idComune= emp.getIdcommune().getId();
            CommuneParWilaya();
         // partie formation   
-        listFormationsSelected= emp.getListFormation();
-        listFormations = formationFacade.findAllOrderByAttribut("description"); 
-        listFormations.removeAll(listFormationsSelected);
-        
-        // partie user
-        listUser=new ArrayList<>();
-        
-         oldMatricule =emp.getMatricule();
+           listFormationsSelected= emp.getListFormation();
+           listFormations = formationFacade.findAllOrderByAttribut("description"); 
+           listFormations.removeAll(listFormationsSelected);
+
+            oldMatricule =emp.getMatricule();
+
+         // partie poste
+            recupPosteEmploye();
         }
     }
+    
+    
      private void initEditEmploye() {
         emp = new Employe();  
+        //prtie wilaya commune
         listWilayas = new ArrayList();
         listWilayas=wilayaFacade.findAllOrderByAttribut("nom");
         wilayaSelected =new Wilaya();   
-         idComune=0;
-         listCommunes =new ArrayList<>();
+        idComune=0;
+        listCommunes =new ArrayList<>();
         communeSelected=new Commune();      
         listFormations=new ArrayList<>();
         listFormationsSelected=new ArrayList<>();
+        // partie user
+            listUser=new ArrayList<>();
+        // partie poste
+        listPostes =new ArrayList<>();
+        listPostes=posteFacade.findAllOrderByAttribut("code");
+        listPosteEmp=new ArrayList<>();
+        
+         ageMinimale=18;
+      
     }
+     // partie poste
+     public String recupDateFormat(Date dt){
+         if(dt!=null)
+         {
+            formater = new SimpleDateFormat("dd/MM/yyyy");
+            return formater.format(dt);
+         }
+         return "pas en core arriver";
+     }
+     private void recupPosteEmploye(){
+         
+         for(Historiqueemployeposte hist:emp.getListHistoriqueEmployePoste())
+         {
+             if(hist.getDatefin()==null)
+             {
+                 posteEmp=new Poste();
+                 posteEmp=hist.getPoste();
+                 posteSelected=new Poste();
+                 posteSelected=hist.getPoste();
+             }
+             listPosteEmp.add(hist.getPoste());
+         }
+     }
+     
+     public void addPosteForEmp(){
+         if(posteSelected != null && posteSelected.getCode()!=null)
+         {
+             oldPoste=new Poste();
+             oldPoste=posteEmp;
+             posteEmp=posteSelected;
+         }
+     }
+     public void creerHistoriqueEmployePoste(){
+           
+        Historiqueemployeposte hp2=recupHistFromPoste(oldPoste);
+        hp2.setDatefin(new Date());
+            
+        Historiqueemployeposte hp= new Historiqueemployeposte(emp.getId(), posteSelected.getId());
+        hp.setEmploye(emp);
+        hp.setPoste(posteSelected);
+        hp.setDatedeb(new Date());
+        emp.getListHistoriqueEmployePoste().add(hp);
+        posteSelected.getListHistoriqueEmployePoste().add(hp);
+           
+     }
+             
+    public Historiqueemployeposte recupHistFromPoste(Poste post1){
+         
+         for(Historiqueemployeposte hist:emp.getListHistoriqueEmployePoste()){
+             if(hist.getPoste().equals(post1))
+                 return hist;
+         }
+         return null;
+     }
+/*
+     public void removePosteForEmploye(Poste poste1)
+     {
+         listPostes.add(poste1);
+         Historiqueemployeposte hist=recupHistFromPoste(poste1);
+         histFacade.supprimerHistorique(emp.getId(), poste1.getId()); 
+     }
+*/
+     
+     // pertie wilaya commune
      public void recupWilaya(){
          wil =new Wilaya();
          wil = emp.getIdcommune().getIdwilaya();
@@ -165,7 +259,12 @@ public class EditEmployeController extends AbstractController implements Seriali
       
     }
      // edit -----------------------
-      private boolean isVerifier() {
+      private boolean isDateVerifier() {
+           if(emp.getDate_recrutement().after(new Date()))
+            {
+               MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_erreur_date_recrutement"));
+                return false;
+             }
          if(emp.getDate_depart()!=null)
          {
              if(emp.getDate_recrutement().after(emp.getDate_depart()))
@@ -218,10 +317,38 @@ public class EditEmployeController extends AbstractController implements Seriali
              }
          
      }
+     
+     private Boolean vrfDateNaissance()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(emp.getDtNaissance());
+        int annee=calendar.get(Calendar.YEAR);
 
+        Date dtAct =new Date();
+        calendar = Calendar.getInstance();
+        calendar.setTime(dtAct);
+        int anneAct= calendar.get(Calendar.YEAR);
+        
+        if(annee+ ageMinimale < anneAct)
+            return true;
+        else
+            return false; 
+    }
+ /*   private boolean periodPostVRF() {
+         if(histEmpPoste.getDatefin()!=null)
+         {
+             if(histEmpPoste.getDatedeb().after(histEmpPoste.getDatefin()))
+             {
+               MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_erreur_periode_poste"));
+                return false;
+             }
+         }
+        return true;
+    }
+*/
         public void edit() {
         try { 
-                if(isVerifier()){
+                if(isDateVerifier()){
                    emp.setMatricule(emp.getMatricule().toUpperCase());
                    if (isExisteMatricule(emp.getMatricule()) && !emp.getMatricule().equals(oldMatricule)) {
                         MyUtil.addErrorMessage(MyUtil.getBundleCommun(" msg_erreur_existe_matricule"));//Erreur inconu   
@@ -235,9 +362,17 @@ public class EditEmployeController extends AbstractController implements Seriali
                                 }else{  if(userDejaAffecterAvant())
                                          {
                                              MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_utilisateur_deja_affecte"));//Erreur inconu   
-                                         }else{ 
-                                                empFacade.edit(emp);
-                                                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé édité avec succès
+                                         }else{
+                                                if(! vrfDateNaissance()){
+                                                        MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_employe_mineur"));  
+                                                    }else{
+                                                            if(oldPoste!=null && !oldPoste.equals(posteEmp)){
+                                                                creerHistoriqueEmployePoste();
+                                                            }
+                                                            empFacade.edit(emp);
+                                                            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé édité avec succès
+                                                                               
+                                                         }
                                                }
                                       }
                                  }
@@ -251,6 +386,7 @@ public class EditEmployeController extends AbstractController implements Seriali
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
         }
     }
+
      
      
      // getter && setter 
@@ -335,6 +471,41 @@ public class EditEmployeController extends AbstractController implements Seriali
     public void setWil(Wilaya wil) {
         this.wil = wil;
     }
+
+    public List<Poste> getListPostes() {
+        return listPostes;
+    }
+
+    public void setListPostes(List<Poste> listPostes) {
+        this.listPostes = listPostes;
+    }
+
+    public List<Poste> getListPosteEmp() {
+        return listPosteEmp;
+    }
+
+    public void setListPosteEmp(List<Poste> listPosteEmp) {
+        this.listPosteEmp = listPosteEmp;
+    }
+
+    public Poste getPosteSelected() {
+        return posteSelected;
+    }
+
+    public void setPosteSelected(Poste posteSelected) {
+        this.posteSelected = posteSelected;
+    }
+  
+    public Poste getPosteEmp() {
+        return posteEmp;
+    }
+
+    public void setPosteEmp(Poste posteEmp) {
+        this.posteEmp = posteEmp;
+    }
+
+    
      
+    
     
 }

@@ -22,7 +22,6 @@ public class HistoriqueemployepostePK implements Serializable {
     @Column(name = "idemploye")
     private int idemploye;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idposte")
     private int idposte;
 

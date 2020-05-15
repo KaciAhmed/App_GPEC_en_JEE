@@ -179,7 +179,44 @@
                             </a:panel>
                         </a:row>
                     </p:tab>
-                   
+                    <p:tab title="#{bundleGesemp.lbl_poste_employe}">
+                        <a:panel header=" #{bundleGesemp.lien_poste_employe}" iconheader="fa fa-list-ul">
+                           <f:facet name="header">                                            
+                           </f:facet>
+                            <p:dataTable  id="tablePoste" value="#{editEmployeController.posteEmp}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                <p:column headerText="#{bundleCommun.lbl_code}" style="width: 10%" >
+                                    <h:outputText value="#{poste.code}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_denomination}" style="width: 30%">
+                                    <h:outputText value="#{poste.denomination}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_definition_somaire}" style="width: 60%">
+                                    <h:outputText value="#{poste.defSommaire}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </a:panel>
+                     </p:tab>
+                    <p:tab title="#{bundleGesemp.lien_historique_poste_employe}">
+                        <a:panel header=" #{bundleGesemp.lien_historique_poste_employe}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">                                            
+                                    </f:facet>
+                            <p:dataTable id="tableHistorique" value="#{editEmployeController.emp.listHistoriqueEmployePoste}" var="hist" rowKey="#{hist.datedeb}" rows="8" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                <p:column headerText="#{bundleGesemp.lbl_date_debut}" filterBy="#{editEmployeController.recupDateFormat(hist.datedeb)}" filterMatchMode="contains">
+                                    <h:outputText value="#{editEmployeController.recupDateFormat(hist.datedeb)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_date_fin}" filterBy="#{editEmployeController.recupDateFormat(hist.datefin)}" filterMatchMode="contains">
+                                    <h:outputText value="#{editEmployeController.recupDateFormat(hist.datefin)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_code}" filterBy="#{hist.poste.code}" filterMatchMode="contains">
+                                    <h:outputText value="#{hist.poste.code}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_denomination}" filterBy="#{hist.poste.denomination}" filterMatchMode="contains">
+                                    <h:outputText value="#{hist.poste.denomination}"/>
+                                </p:column>
+                                        
+                                    </p:dataTable>
+                                </a:panel>
+                     </p:tab>
                 </p:tabView>                
             </p:panel> 
             <a:row >

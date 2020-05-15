@@ -5,7 +5,9 @@
  */
 package otherEntity;
 
+import dz.elit.gpecpf.employe.entity.Employe;
 import dz.elit.gpecpf.commun.util.StaticUtil;
+import dz.elit.gpecpf.poste.entity.Poste;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;

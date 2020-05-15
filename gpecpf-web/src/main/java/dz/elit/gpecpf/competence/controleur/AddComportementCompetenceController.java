@@ -10,17 +10,16 @@ import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.CompetenceFacade;
-import dz.elit.gpecpf.gestion_des_competences.service.ComportementCompetenceFacade;
+import dz.elit.gpecpf.competence.entity.Competence;
+import dz.elit.gpecpf.competence.entity.Comportement;
+import dz.elit.gpecpf.competence.service.CompetenceFacade;
+import dz.elit.gpecpf.competence.service.ComportementCompetenceFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import otherEntity.Competence;
-import otherEntity.Comportement;
 
 /**
  *
@@ -84,9 +83,8 @@ public class AddComportementCompetenceController extends AbstractController impl
         
         if(compSelected.getCode()!=null){
            compo.addCompetenceComportement(compSelected);
-           compSelected =new Competence();
- 
         }
+      //  System.out.println("--------------------------------"+compSelected.getCode());
     }
     private boolean isExisteCode(String code) 
     {

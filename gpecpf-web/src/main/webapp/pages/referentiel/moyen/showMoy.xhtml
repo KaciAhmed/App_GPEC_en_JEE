@@ -39,7 +39,28 @@
                             <p:inputTextarea id="desc" cols="60" value="#{editMoyenController.moyen.description}" autoResize="false" disabled="true" />
                         </a:column>
                     </a:column>
-                </a:row>                
+                </a:row>
+                <a:row style="height: 300px">
+                    <a:column span="12">
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.lbl_postes}">
+                                <a:panel header=" #{bundleReferentiel.lien_liste_poste}" iconheader="fa fa-list-ul">
+                                    <p:dataTable id="tablePostes" value="#{editMoyenController.listPostes}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{poste.code}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_denomination}" filterBy="#{poste.libelle}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.denomination}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_classement}" filterBy="#{poste.libelle}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.classement}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>  
+                    </a:column>
+                </a:row>
             </p:panel>
 
             <a:row>

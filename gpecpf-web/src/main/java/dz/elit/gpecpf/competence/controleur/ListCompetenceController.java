@@ -9,7 +9,8 @@ import dz.elit.gpecpf.commun.controller.Imprimer;
 import dz.elit.gpecpf.commun.reporting.engine.Reporting;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.CompetenceFacade;
+import dz.elit.gpecpf.competence.entity.Competence;
+import dz.elit.gpecpf.competence.service.CompetenceFacade;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,8 @@ import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.primefaces.context.RequestContext;
-import otherEntity.Competence;
+
+
 
 
 

@@ -7,7 +7,9 @@ package dz.elit.gpecpf.competence.controleur;
 
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.DomaineCompetenceFacade;
+import dz.elit.gpecpf.competence.entity.Domainecompetence;
+import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +17,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import otherEntity.Domainecompetence;
+
 
 /**
  *
@@ -45,12 +47,17 @@ private DomaineCompetenceFacade domaineCompFacade;
         
        String id = MyUtil.getRequestParameter("id");
        if (id != null) {
-       domaine= domaineCompFacade.find(Integer.parseInt(id));
+           domaine= domaineCompFacade.find(Integer.parseInt(id));
+           initEdition();
+       }
+    }
+    private void initEdition()
+    {
        domPereSelected=domaine.getIddommere();
        oldDomPere=domaine.getIddommere();
        lstDomPere.remove(domaine);
        oldCode=domaine.getCode();
-       }
+        
     }
     private boolean isExisteCode(String code) 
     {
@@ -69,7 +76,8 @@ private DomaineCompetenceFacade domaineCompFacade;
             }else{
                      domaineCompFacade.edit(domaine);
                      MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Domaine modifié avec succès");
-                 }
+                     initEdition();
+            }
             } catch (Exception ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
@@ -84,22 +92,24 @@ private DomaineCompetenceFacade domaineCompFacade;
           {
               oldDomPere.getDomainecompetenceCollection().remove(domaine);
               domaine.setIddommere(null);
+              oldDomPere=domPereSelected;
           }else{
                 if(oldDomPere==null && domPereSelected!=null ){
                      domaine.addDomPere(domPereSelected);
-                     lstDomPere.removeAll((Collection<?>) domPereSelected);
-                     domPereSelected=new Domainecompetence();
+                     oldDomPere=domPereSelected;
                 }else{
 
                     if(!domPereSelected.getCode().equals(oldDomPere.getCode()) ){
 
                         domaine.editDomPere(domPereSelected,oldDomPere);
-                        lstDomPere.removeAll((Collection<?>) domPereSelected);
-                        domPereSelected=new Domainecompetence();
-                        oldDomPere=new Domainecompetence();
+                        oldDomPere=domPereSelected;
                     }
                 }
                }
+        //  System.out.println("-------------------------"+domPereSelected.getCode());
+    }
+    public void viderDompere(){
+        domPereSelected=null;
     }
         
         // Getter && setter

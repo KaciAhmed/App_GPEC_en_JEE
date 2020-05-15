@@ -5,6 +5,7 @@
  */
 package otherEntity;
 
+import dz.elit.gpecpf.employe.entity.Employe;
 import dz.elit.gpecpf.compagne_evaluation.entity.Compagneevaluation;
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;

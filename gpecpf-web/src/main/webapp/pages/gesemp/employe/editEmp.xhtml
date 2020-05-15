@@ -205,6 +205,21 @@
                             </a:panel>
                         </a:row>
                     </p:tab>
+                    <p:tab title="#{bundleGesemp.lbl_poste_employe}">
+                        <a:panel header=" #{bundleGesemp.lien_poste_employe}" iconheader="fa fa-list-ul">
+                           <f:facet name="header">                                            
+                                <p:commandButton title="#{bundleGesemp.titre_modifier_poste_employe}" icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogPoste').show();"/> 
+                           </f:facet>
+                            <p:dataTable  id="tablePoste" value="#{editEmployeController.posteEmp}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                <p:column headerText="#{bundleCommun.lbl_code}" >
+                                    <h:outputText value="#{poste.code}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_denomination}">
+                                    <h:outputText value="#{poste.denomination}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </a:panel>
+                     </p:tab>
                 </p:tabView>                
             </p:panel> 
             <a:row >
@@ -229,6 +244,36 @@
                         </f:facet>
                     </p:dataTable>
                 </h:panelGroup>       
+            </p:dialog>
+             <p:dialog id="dialogPostId" widgetVar="dialogPoste" header="#{bundleGesemp.titre_ajouter_poste_employe}" modal="true"  width="60%" responsive="true" position="center">
+                   <h:panelGroup id="panelPoste">   
+                    <a:row>
+                        <p:dataTable id="tablePosteDialog" value="#{addEmployeController.listPostes}" var="poste" rowKey="#{poste.id}" selection="#{editEmployeController.posteSelected}" reflow="true" rows="10"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false"  widgetVar="myWidgetVar">
+                            <p:column selectionMode="single" width="10"/>
+                            <p:column headerText="#{bundleCommun.lbl_code}" filterBy="#{poste.code}" filterMatchMode="contains" >
+                                <h:outputText value="#{poste.code}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleGesemp.lbl_denomination}" filterBy="#{poste.denomination}" filterMatchMode="contains">
+                                <h:outputText value="#{poste.denomination}"/>
+                            </p:column>
+                            <f:facet name="footer" >
+                                <div class="form-actions">
+                                    <a:row nomargin="true">
+                                        <a:column span="9">
+                                            <a:row nomargin="true">
+                                                <a:column  span="9" id="pgbtndlg">
+                                                    <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":formDialogs:tablePosteDialog" actionListener="#{editEmployeController.addPosteForEmp()}" 
+                                                              update=":formDialogs:tablePosteDialog :form:tabView:tablePoste"        oncomplete="PF('dialogPoste').hide();"/> 
+                                                    <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogPoste').hide()" />
+                                                </a:column>
+                                            </a:row>   
+                                        </a:column>
+                                    </a:row>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </a:row>
+                </h:panelGroup> 
             </p:dialog>
          </h:form> 
     </ui:define>

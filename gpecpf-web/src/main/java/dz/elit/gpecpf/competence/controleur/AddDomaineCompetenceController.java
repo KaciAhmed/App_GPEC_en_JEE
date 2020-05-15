@@ -10,21 +10,15 @@ import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.DomaineCompetenceFacade;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import dz.elit.gpecpf.competence.entity.Domainecompetence;
+import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import otherEntity.Domainecompetence;
 
 /**
  *
@@ -112,8 +106,6 @@ public class AddDomaineCompetenceController extends AbstractController implement
         if(domPereSelected.getCode()!=null){
         
             domaine.addDomPere(domPereSelected);
-            lstDomPere.removeAll((Collection<?>) domPereSelected);
-            domPereSelected=new Domainecompetence(); 
         }
     }
             

@@ -15,7 +15,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.eclipse.persistence.jpa.JpaHelper;
-import otherEntity.Employe;
+import dz.elit.gpecpf.employe.entity.Employe;
+import otherEntity.Historiqueemployeposte;
 
 /**
  *
@@ -80,6 +81,8 @@ public class EmployeFacade extends AbstractFacade<Employe>{
 
         return q.getResultList();
     }
+    
+    
     private boolean isExisteMatricule(String matricule) 
     {
         Employe emp = findByMatricule(matricule);
@@ -105,6 +108,21 @@ public class EmployeFacade extends AbstractFacade<Employe>{
         //query.setHint("javax.persistence.cache.storeMode", CacheStoreMode.REFRESH);
         return query.getResultList();
     }
-    
+    public int calculerTotalEmp()
+    {
+        List<Employe> lstEmp=findAll();
+        if(lstEmp.isEmpty())
+        {
+            return 0;
+        }else{
+                 String req= "Select max(id) from sch_admin.employe";
+                Query q= em.createNativeQuery(req);
+                 int nbr = (Integer)q.getSingleResult();
+                  return nbr;
+        }
+
+       
+    }
+   
     
 }

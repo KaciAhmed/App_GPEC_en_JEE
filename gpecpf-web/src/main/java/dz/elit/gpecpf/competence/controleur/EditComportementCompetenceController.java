@@ -7,16 +7,18 @@ package dz.elit.gpecpf.competence.controleur;
 
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.CompetenceFacade;
-import dz.elit.gpecpf.gestion_des_competences.service.ComportementCompetenceFacade;
+import dz.elit.gpecpf.competence.entity.Competence;
+import dz.elit.gpecpf.competence.entity.Comportement;
+import dz.elit.gpecpf.competence.service.CompetenceFacade;
+import dz.elit.gpecpf.competence.service.ComportementCompetenceFacade;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import otherEntity.Competence;
-import otherEntity.Comportement;
+
 
 /**
  *
@@ -95,7 +97,6 @@ public class EditComportementCompetenceController extends AbstractController imp
     public void editCompForComportement(){
         compo.editTypeComp(compSelected);
        // compo.setIdcomp(compSelected);
-        compSelected=new Competence();
     }
       // getter && setter 
 

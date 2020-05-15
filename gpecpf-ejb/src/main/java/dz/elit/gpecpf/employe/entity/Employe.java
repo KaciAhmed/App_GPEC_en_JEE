@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package otherEntity;
+package dz.elit.gpecpf.employe.entity;
 import dz.elit.gpecpf.commun.service.QuerySessionLog;
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import dz.elit.gpecpf.poste.entity.Formation;
+import dz.elit.gpecpf.poste.entity.Poste;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +35,10 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.persistence.queries.QueryRedirector;
+import otherEntity.Commune;
+import otherEntity.Evaluation;
+import otherEntity.Historiqueemployeposte;
+import otherEntity.Notification;
 
 /**
  *
@@ -123,11 +128,11 @@ public class Employe implements Serializable {
     @ManyToOne
     private Commune idcommune;
     @OneToMany(mappedBy = "idemploye")
-    private Collection<Evaluation> evaluationCollection;
+    private List <Evaluation> listEvaluation=new ArrayList<>();
     @OneToMany(mappedBy = "idemp")
-    private Collection<Notification> notificationCollection;
+    private List <Notification> listNotification=new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employe")
-    private Collection<Historiqueemployeposte> historiqueemployeposteCollection;
+    private List<Historiqueemployeposte> listHistoriqueEmployePoste=new ArrayList<>();;
 
     public Employe() {
     }
@@ -271,33 +276,30 @@ public class Employe implements Serializable {
         this.idcommune = idcommune;
     }
 
-    @XmlTransient
-    public Collection<Evaluation> getEvaluationCollection() {
-        return evaluationCollection;
+    public List<Evaluation> getListEvaluation() {
+        return listEvaluation;
     }
 
-    public void setEvaluationCollection(Collection<Evaluation> evaluationCollection) {
-        this.evaluationCollection = evaluationCollection;
+    public void setListEvaluation(List<Evaluation> listEvaluation) {
+        this.listEvaluation = listEvaluation;
     }
 
-    @XmlTransient
-    public Collection<Notification> getNotificationCollection() {
-        return notificationCollection;
+    public List<Notification> getListNotification() {
+        return listNotification;
     }
 
-    public void setNotificationCollection(Collection<Notification> notificationCollection) {
-        this.notificationCollection = notificationCollection;
+    public void setListNotification(List<Notification> listNotification) {
+        this.listNotification = listNotification;
     }
 
-    @XmlTransient
-    public Collection<Historiqueemployeposte> getHistoriqueemployeposteCollection() {
-        return historiqueemployeposteCollection;
+    public List<Historiqueemployeposte> getListHistoriqueEmployePoste() {
+        return listHistoriqueEmployePoste;
     }
 
-    public void setHistoriqueemployeposteCollection(Collection<Historiqueemployeposte> historiqueemployeposteCollection) {
-        this.historiqueemployeposteCollection = historiqueemployeposteCollection;
+    public void setListHistoriqueEmployePoste(List<Historiqueemployeposte> listHistoriqueEmployePoste) {
+        this.listHistoriqueEmployePoste = listHistoriqueEmployePoste;
     }
-
+    
     public void addFormation(Formation frm) {
 
         this.getListFormation().add(frm);
@@ -312,7 +314,7 @@ public class Employe implements Serializable {
          this.getListFormation().remove(frm);            
          frm.getListEmploye().remove(this);
     }
-    
+   
     @Override
     public int hashCode() {
         int hash = 0;

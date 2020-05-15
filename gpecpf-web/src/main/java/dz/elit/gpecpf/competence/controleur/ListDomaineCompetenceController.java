@@ -6,13 +6,13 @@
 package dz.elit.gpecpf.competence.controleur;
 
 
-import dz.elit.gpecpf.gestion_des_competences.service.DomaineCompetenceFacade;
 
 import dz.elit.gpecpf.commun.controller.Imprimer;
 import dz.elit.gpecpf.commun.reporting.engine.Reporting;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.commun.util.StaticUtil;
+import dz.elit.gpecpf.competence.entity.Domainecompetence;
+import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +30,7 @@ import javax.faces.context.FacesContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.primefaces.context.RequestContext;
-import otherEntity.Domainecompetence;
+
 /**
  *
  * @author Kaci Ahmed
@@ -84,9 +84,19 @@ public class ListDomaineCompetenceController extends AbstractController implemen
     public void remove(Domainecompetence domComp) 
     {
      try {
-            domaineCompFacade.remove(domComp);
-              MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
-             findList();
+            if(!domComp.getDomainecompetenceCollection().isEmpty())
+            {
+                MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_sous_domaine"));//Erreur sous domaine
+            }else{
+                if(!domComp.getCompetenceCollection().isEmpty())
+                {
+                    MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_domaine_liée_à_compétence"));
+                }else{
+                        domaineCompFacade.remove(domComp);
+                         MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
+                        findList();
+                }
+            }
          } catch (Exception ex) 
            {
              ex.printStackTrace();

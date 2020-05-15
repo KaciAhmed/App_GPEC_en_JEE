@@ -10,19 +10,19 @@ import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.gestion_des_competences.service.CompetenceFacade;
-import dz.elit.gpecpf.gestion_des_competences.service.DomaineCompetenceFacade;
-import dz.elit.gpecpf.gestion_des_competences.service.TypeCompetenceFacade;
+import dz.elit.gpecpf.competence.entity.Competence;
+import dz.elit.gpecpf.competence.entity.Domainecompetence;
+import dz.elit.gpecpf.competence.entity.Typecompetence;
+import dz.elit.gpecpf.competence.service.CompetenceFacade;
+import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
+import dz.elit.gpecpf.competence.service.TypeCompetenceFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import otherEntity.Competence;
-import otherEntity.Domainecompetence;
-import otherEntity.Typecompetence;
+
 
 /**
  *
@@ -105,16 +105,13 @@ public class AddCompetenceController extends AbstractController implements Seria
     public void addDomaineForComp(){
         
         if(domaineCompSelected.getCode()!=null){
-            //comp.setIddomcom(domaineCompSelected);
-            comp.addDomComp(domaineCompSelected);
-            domaineCompSelected=new Domainecompetence();       
+            comp.addDomComp(domaineCompSelected);  
         }
 
     }
      public void addTypeForComp(){
         if(typeCompSelected.getCode()!=null){
             comp.setIdtypcom(typeCompSelected);
-            typeCompSelected=new Typecompetence();
         }
     }
     private boolean isExisteCode(String code) 

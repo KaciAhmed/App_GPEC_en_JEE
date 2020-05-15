@@ -15,7 +15,9 @@ import java.security.NoSuchAlgorithmException;
 public abstract class StaticUtil {
     /* shéma utilisé dans  la bdd*/
     public static final String ADMINISTRATION_SCHEMA = "sch_admin";
-    
+    public static final String COMPETENCE_SCHEMA = "sch_competence";
+    public static final String POSTE_SCHEMA = "sch_poste";
+    public static final String EVALUATION_SCHEMA = "sch_evaluation";
     /* nom de l'unité de persistance de type "nom de la bdd-ejbPU" PU pour 
     persistance unit*/
      public static final String UNIT_NAME = "gpecpf-ejbPU";
