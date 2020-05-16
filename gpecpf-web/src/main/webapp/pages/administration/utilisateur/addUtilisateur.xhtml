@@ -22,7 +22,7 @@
     <ui:define name="MyContent">
         <h:form id="form">
             <a:pagetitle value="Fiche Utilisateur" />
-            <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            <p:messages id="msgs" showDetail="true" globalOnly="false" showSummary="false" closable="true"/>
             <p:panel id="panel" styleClass="no-border">
                 <p:tabView  id="tabView">
                     <p:tab title="#{bundleAdmin.lbl_information_generale}">                        
@@ -43,15 +43,6 @@
                             </a:column>
                         </a:row>
                         <a:row>
-                            <a:column span="6" >                               
-                               <a:label value="#{bundleAdmin.lbl_date_naiss}" span="4" />
-                                <a:column span="8" >
-                                    <p:calendar  id="dateNaiss" value="#{addUtilisateurController.utilisateur.dtNaissance}"  pattern="dd/MM/yyyy"  required="true" label="#{bundleAdmin.lbl_date_naiss}" 
-                                                 locale="fr" navigator="true"> 
-                                    </p:calendar>
-                                    <p:message for="dateNaiss" />                                        
-                                </a:column>                                
-                            </a:column>
                             <a:column span="6" >
                                 <a:label value="#{bundleAdmin.lbl_login}" span="4" />
                                 <a:column span="8" >
@@ -60,6 +51,17 @@
                                     <p:message for="login" />                                        
                                 </a:column>                               
                             </a:column>   
+                            <a:column span="6">                                
+                                <a:label value="#{bundleAdmin.lbl_etat_de_compte}" span="4" />
+                                <a:column span="8" >
+                                    <p:selectOneRadio value="#{addUtilisateurController.etatCompte}" disabled="#{addUtilisateurController.disabled}">
+                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire_jamais}" itemValue="#{1}"/>
+                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire}" itemValue="#{2}"/>
+                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_inactif}" itemValue="#{3}"/>
+                                        <f:ajax execute="@this" render="datedebutactive datefinactive"/>
+                                    </p:selectOneRadio>
+                                </a:column>                               
+                            </a:column> 
                         </a:row>
                         <a:row>
                             <a:column span="6" >                               
@@ -81,19 +83,6 @@
                                     <p:message for="datefinactive" />                                        
                                 </a:column>                            
                             </a:column>
-                        </a:row>
-                        <a:row style="margin-top: 1%;">
-                            <a:column span="6">                                
-                                <a:label value="#{bundleAdmin.lbl_etat_de_compte}" span="4" />
-                                <a:column span="8" >
-                                    <p:selectOneRadio value="#{addUtilisateurController.etatCompte}" disabled="#{addUtilisateurController.disabled}">
-                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire_jamais}" itemValue="#{1}"/>
-                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_actif_expire}" itemValue="#{2}"/>
-                                        <f:selectItem itemLabel="#{bundleAdmin.lbl_inactif}" itemValue="#{3}"/>
-                                        <f:ajax execute="@this" render="datedebutactive datefinactive"/>
-                                    </p:selectOneRadio>
-                                </a:column>                               
-                            </a:column> 
                         </a:row>
                     </p:tab>
                     <p:tab id="tabProfils" title="#{bundleAdmin.lbl_permissions_utilisateurs}">

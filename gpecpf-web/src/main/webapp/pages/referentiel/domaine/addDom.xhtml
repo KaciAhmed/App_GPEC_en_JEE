@@ -26,45 +26,58 @@
                 <a:pagetitle value="Nouveau Domaine de compétence" />
                 <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
             </a:row>
-            <p:panel id="panel"  styleClass="no-border row" style="width: 60%; margin-left: 20%;margin-top: 2%" >
+            <p:panel id="panel"  styleClass="no-border row" >
                 <a:row>
                     <a:pagetitle value="Information du  domaine de compétence" />
                 </a:row>
-                <a:row>
-                    <a:column span="12" style="margin-left: 62%" >  
-                        <p:commandButton title="#{bundleReferentiel.titre_ajouter_domaine_pere}" styleClass="CyanButton" icon="fa fa-plus" value="#{bundleReferentiel.titre_ajouter_domaine_pere}" immediate="true" onclick="PF('dialogDomainePere').show();"/>   
-                    </a:column>
-                </a:row>
                <a:row>
-                    <a:column span="12" >
-                        <a:label value="#{bundleCommun.lbl_code}" span="2" />
-                        <a:column span="10" >
+                    <a:column span="7" >
+                        <a:label value="#{bundleCommun.lbl_code}" span="4" />
+                        <a:column span="8" >
                             <p:inputText id="code" required="true" value="#{addDomaineCompetenceController.domaine.code}" /> 
                             <p:message for="code"/>                                    
                         </a:column>
                     </a:column>
                 </a:row>
                 <a:row>
-                    <a:column span="12" >
-                        <a:label value="#{bundleCommun.lbl_liblle}" span="2" />
-                        <a:column span="10" >
+                    <a:column span="7" >
+                        <a:label value="#{bundleCommun.lbl_liblle}" span="4" />
+                        <a:column span="8" >
                             <p:inputText id="lib" required="true" value="#{addDomaineCompetenceController.domaine.libelle}" /> 
                             <p:message for="lib"/>                                    
                         </a:column>
                     </a:column>
                 </a:row>
-
                 <a:row>
-                    <a:column span="12" >
-                        <a:label value="#{bundleAdmin.lbl_description}" span="2" />
-                        <a:column span="10" >
-                            <p:inputTextarea id="desc" required="true" rows="12" cols="60" value="#{addDomaineCompetenceController.domaine.description}" autoResize="false" />
+                    <a:column span="7" >
+                        <a:label value="#{bundleAdmin.lbl_description}" span="4" />
+                        <a:column span="8" >
+                            <p:inputTextarea id="desc" required="true" cols="60" value="#{addDomaineCompetenceController.domaine.description}" autoResize="false" />
                             <p:message for="desc"/>                                    
                         </a:column>
                     </a:column>
                 </a:row>
-              
-                             
+                <a:row >
+                    <a:column span="12" >
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.titre_domaine_pere}">
+                                <a:panel header=" #{bundleReferentiel.titre_domaine_pere}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">  
+                                        <p:commandButton title="#{bundleReferentiel.titre_ajouter_domaine_pere}"  icon="fa fa-pencil-square-o" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogDomainePere').show();"/> 
+                                    </f:facet>
+                                    <p:dataTable  id="tableDomaine" value="#{addDomaineCompetenceController.domPereAff}" var="domaine" rowKey="#{domaine.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleCommun.lbl_code}" >
+                                            <h:outputText value="#{domaine.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_liblle}" >
+                                            <h:outputText value="#{domaine.libelle}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>
+                    </a:column>
+                </a:row>              
             </p:panel>
             <a:row style="margin-left: 45%;margin-top: 2%;">
                 <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addDomaineCompetenceController.create()}" icon="fa fa-check-square-o" ajax="false" />
@@ -107,8 +120,9 @@
                                             <a:row nomargin="true">
                                                 <a:column  span="9" id="pgbtndlg">
                                                     <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tableDomainePere" actionListener="#{addDomaineCompetenceController.addDomPereForDom()}" 
-                                                                     oncomplete="PF('dialogDomainePere').hide();"/>                                          
+                                                               update=":FormDialog:tableDomainePere :form:tabView:tableDomaine"       oncomplete="PF('dialogDomainePere').hide();"/>                                          
                                                     <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogDomainePere').hide()" />
+                                                    <p:commandButton value="Reset"  icon="fa fa-times" styleClass="RedButton" actionListener="#{addDomaineCompetenceController.viderDompere()}" update=":FormDialog:tableDomainePere :form:tabView:tableDomaine"/>
                                                 </a:column>
                                             </a:row>   
                                         </a:column>

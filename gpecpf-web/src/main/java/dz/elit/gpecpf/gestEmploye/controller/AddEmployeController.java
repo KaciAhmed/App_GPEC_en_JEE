@@ -152,14 +152,14 @@ public class AddEmployeController extends AbstractController implements Serializ
          
           if(emp.getDate_recrutement().after(new Date()))
          {
-               MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_erreur_date_recrutement"));
+               MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_date_recrutement"));
                 return false;
           }
          if(emp.getDate_depart()!=null)
          {
              if(emp.getDate_recrutement().after(emp.getDate_depart()))
              {
-               MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_date_recrutement_superieur_date_depart"));
+               MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_date_recrutement_superieur_date_depart"));
                 return false;
              }
          }
@@ -263,6 +263,7 @@ public class AddEmployeController extends AbstractController implements Serializ
                                                                     MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
                                                                     initAddEmploye();  
                                                                     posteEmp=null; 
+                                                                   
                                                               }
                                                          }
                                                   }

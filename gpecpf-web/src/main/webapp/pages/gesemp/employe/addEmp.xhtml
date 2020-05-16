@@ -22,7 +22,7 @@
     <ui:define name="MyContent">
         <h:form id="form">
             <a:pagetitle value="#{bundleGesemp.titre_nouveau_employe}" />   
-            <p:messages id="msgs" showDetail="true" closable="true"/>
+            <p:messages id="msgs" showDetail="true" globalOnly="false" showSummary="false" closable="true"/>
             <p:panel id="panel" styleClass="no-border">
                 <p:focus context="panel"/>                
                 <p:tabView  id="tabView">
@@ -38,8 +38,8 @@
                             <a:column span="6" >   
                                 <a:label value="#{bundleGesemp.lbl_typeContrat}" span="4" />
                                <a:column span="8" >
-                                   <p:selectOneMenu id="contrat" value="#{addEmployeController.emp.typeContrat}">
-                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                   <p:selectOneMenu id="contrat" required="true" requiredMessage="Contrat : erreur de validation. Vous devez indiquer une valeur" value="#{addEmployeController.emp.typeContrat}">
+                                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItem itemLabel="CDI – Contrat à durée indéterminée" itemValue="CDI – Contrat à durée indéterminée"/>
                                     <f:selectItem itemLabel="CDD – Contrat à durée déterminée" itemValue="CDD – Contrat à durée déterminée"/>
                                     <f:selectItem itemLabel="CTT – Contrat de travail temporaire ou Intérim" itemValue="CTT – Contrat de travail temporaire ou Intérim"/>
@@ -48,6 +48,7 @@
                                     <f:selectItem itemLabel="CAE – Contrat d’accompagnement dans l’emploi" itemValue="CAE – Contrat d’accompagnement dans l’emploi"/>
                                     <f:selectItem itemLabel="CIE – Contrat initiative emploi" itemValue="CIE – Contrat initiative emploi"/>
                                    </p:selectOneMenu>
+                                   <p:message for="contrat" />
                                </a:column>     
                             </a:column> 
                         </a:row>
@@ -113,11 +114,12 @@
                             <a:column span="6" >   
                                 <a:label value="#{bundleGesemp.lbl_sexe}" span="4" />
                                <a:column span="8" >
-                                   <p:selectOneMenu id="sexe" value="#{addEmployeController.emp.sexe}">
-                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                                   <p:selectOneMenu id="sexe" required="true" value="#{addEmployeController.emp.sexe}" requiredMessage="Sexe : erreur de validation. Vous devez indiquer une valeur">
+                                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
                                     <f:selectItem itemLabel="Homme" itemValue="Homme"/>
                                     <f:selectItem itemLabel="Femme" itemValue="Femme"/>
                                    </p:selectOneMenu>
+                                   <p:message for="sexe" />
                                </a:column>     
                             </a:column> 
                            <a:column span="6" >                               
@@ -134,7 +136,7 @@
                             <a:column span="6" >                                
                                 <a:label value="#{bundleGesemp.lbl_adresse}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputTextarea cols="120" id="Adresse" value="#{addEmployeController.emp.adresse}" label="#{bundleGesemp.lbl_adresse}"/>
+                                    <p:inputTextarea cols="120" id="Adresse" value="#{addEmployeController.emp.adresse}" label="#{bundleGesemp.lbl_adresse}" required="true"/>
                                 </a:column>  
                             </a:column>
                         </a:row>
@@ -142,21 +144,23 @@
                             <a:column span="6" >   
                             <a:label value="#{bundleGesemp.lbl_wilaya}" span="4" />
                               <a:column span="8" >
-                                    <p:selectOneMenu id="wilaya" value="#{addEmployeController.idWil}">
-                                        <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"  />
+                                    <p:selectOneMenu id="wilaya" required="true" value="#{addEmployeController.idWil}" requiredMessage="Wilaya: erreur de validation. Vous devez indiquer une valeur">
+                                        <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"  />
                                         <f:selectItems value="#{addEmployeController.listWilayas}" var="wilaya" itemLabel="#{wilaya.nom}" itemValue="#{wilaya.id}"/>
                                         <p:ajax listener="#{addEmployeController.CommuneParWilaya()}"  update="commune2"/>
                                     </p:selectOneMenu>
+                                  <p:message for="wilaya" />
                                </a:column>
                             </a:column> 
                             <a:column span="6" >   
                                 <a:label value="#{bundleGesemp.lbl_commune}" span="4" />
                                <a:column span="8" >
-                                   <p:selectOneMenu id="commune2" value="#{addEmployeController.idComune}">
-                                    <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"  />
+                                   <p:selectOneMenu id="commune2" required="true" value="#{addEmployeController.idComune}" requiredMessage="Commune: erreur de validation. Vous devez indiquer une valeur">
+                                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"  />
                                     <f:selectItems value="#{addEmployeController.listCommunes}" var="commune" itemLabel="#{commune.nom}" itemValue="#{commune.id}"/>
                                     <p:ajax listener="#{addEmployeController.obtenirCommune()}"/>
                                    </p:selectOneMenu>
+                                   <p:message for="commune2" />
                                </a:column>     
                             </a:column> 
                         </a:row>

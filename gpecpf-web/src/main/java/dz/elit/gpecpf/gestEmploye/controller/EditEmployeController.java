@@ -262,14 +262,14 @@ public class EditEmployeController extends AbstractController implements Seriali
       private boolean isDateVerifier() {
            if(emp.getDate_recrutement().after(new Date()))
             {
-               MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_erreur_date_recrutement"));
+               MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_date_recrutement"));
                 return false;
              }
          if(emp.getDate_depart()!=null)
          {
              if(emp.getDate_recrutement().after(emp.getDate_depart()))
              {
-               MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_date_recrutement_superieur_date_depart"));
+               MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_date_recrutement_superieur_date_depart"));
                 return false;
              }
          }
@@ -370,6 +370,7 @@ public class EditEmployeController extends AbstractController implements Seriali
                                                                 creerHistoriqueEmployePoste();
                                                             }
                                                             empFacade.edit(emp);
+                                                            oldMatricule=emp.getMatricule();
                                                             MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé édité avec succès
                                                                                
                                                          }

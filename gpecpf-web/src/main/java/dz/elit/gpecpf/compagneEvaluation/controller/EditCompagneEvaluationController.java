@@ -68,6 +68,7 @@ public class EditCompagneEvaluationController extends AbstractController impleme
                     if(isVerifier())
                     {
                         compagneFacade.edit(compagne);
+                        oldCode=compagne.getCode();
                         MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Compagne modifié avec succès");
                     }
                  }

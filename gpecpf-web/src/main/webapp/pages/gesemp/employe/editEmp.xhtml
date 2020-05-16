@@ -22,7 +22,7 @@
     <ui:define name="MyContent">
         <h:form id="form">
             <a:pagetitle value="#{bundleGesemp.titre_modifier_employe}" />   
-            <p:messages id="msgs" showDetail="true" closable="true" />
+            <p:messages id="msgs" showDetail="true" globalOnly="false" showSummary="false" closable="true"/>
             <p:panel id="panel" styleClass="no-border">
                 <p:focus context="panel"/>                
                 <p:tabView  id="tabView">
@@ -134,7 +134,7 @@
                             <a:column span="6" >                                
                                 <a:label value="#{bundleGesemp.lbl_adresse}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputTextarea cols="120" id="Adresse" value="#{editEmployeController.emp.adresse}" label="#{bundleGesemp.lbl_adresse}"/>
+                                    <p:inputTextarea cols="120" id="Adresse" value="#{editEmployeController.emp.adresse}" label="#{bundleGesemp.lbl_adresse}" required="true"/>
                                 </a:column>  
                             </a:column>
                         </a:row>

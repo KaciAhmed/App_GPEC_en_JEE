@@ -99,7 +99,8 @@ public class EditCompetenceController extends AbstractController implements Seri
             }else{
                      compFacade.edit(comp);
                      MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"compétence modifié avec succès");
-                }
+                     oldCode=comp.getCode();
+            }
             } catch (Exception ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu   

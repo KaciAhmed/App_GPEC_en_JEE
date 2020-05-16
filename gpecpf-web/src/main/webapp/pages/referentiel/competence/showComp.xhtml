@@ -93,10 +93,10 @@
                                         
                                     </f:facet>
                                     <p:dataTable id="tableTypeComp" value="#{editCompetenceController.comp.comportementCollection}" var="comportement" rowKey="#{comportement.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-                                       <p:column headerText="#{bundleCommun.lbl_code}" >
+                                       <p:column headerText="#{bundleCommun.lbl_code}"  filterBy="#{comportement.code}" filterMatchMode="contains">
                                             <h:outputText value="#{comportement.code}"/>
                                         </p:column>
-                                        <p:column headerText="#{bundleCommun.lbl_description}" >
+                                        <p:column headerText="#{bundleCommun.lbl_description}" filterBy="#{comportement.description}" filterMatchMode="contains" >
                                             <h:outputText value="#{comportement.description}"/>
                                         </p:column>
                                     </p:dataTable>

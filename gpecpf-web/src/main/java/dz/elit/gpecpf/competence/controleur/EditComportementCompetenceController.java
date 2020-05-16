@@ -52,7 +52,7 @@ public class EditComportementCompetenceController extends AbstractController imp
     {    
        initEltCompo();        
 
-            String id = MyUtil.getRequestParameter("id");
+      String id = MyUtil.getRequestParameter("id");
         if (id != null) {
             compo = ComportementFacade.find(Integer.parseInt(id));
             compSelected=compo.getIdcomp();
@@ -81,8 +81,9 @@ public class EditComportementCompetenceController extends AbstractController imp
             if (isExisteCode(compo.getCode()) && !compo.getCode().equals(oldCode)) {
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
             }else{
-                  ComportementFacade.edit(compo);
-                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"comportement modifié avec succès"); 
+                    ComportementFacade.edit(compo);
+                    MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"comportement modifié avec succès"); 
+                    oldCode=compo.getCode();
             }
               
             } catch (Exception ex) {

@@ -40,6 +40,7 @@ public class AddDomaineCompetenceController extends AbstractController implement
     
     private List<Domainecompetence> lstDomPere;
     private Domainecompetence domPereSelected;
+    private Domainecompetence domPereAff;
     
     private String codePere;
     private String libPere;
@@ -103,10 +104,23 @@ public class AddDomaineCompetenceController extends AbstractController implement
     }
     
     public void addDomPereForDom(){
-        if(domPereSelected.getCode()!=null){
+        if(domPereSelected != null && domPereSelected.getCode()!=null){
         
             domaine.addDomPere(domPereSelected);
+            domPereAff=new Domainecompetence();
+            domPereAff=domPereSelected;
+        }else{
+            if(domPereSelected== null && domaine.getIddommere()!=null)
+            {
+                Domainecompetence dp=domaine.getIddommere();
+                dp.getDomainecompetenceCollection().remove(domaine);
+                domaine.setIddommere(domPereSelected);
+            }
         }
+    }
+    public void viderDompere(){
+        domPereSelected=null;
+        domPereAff=null;
     }
             
        // getter est setter
@@ -157,6 +171,14 @@ public class AddDomaineCompetenceController extends AbstractController implement
 
     public void setLibPere(String libPere) {
         this.libPere = libPere;
+    }
+
+    public Domainecompetence getDomPereAff() {
+        return domPereAff;
+    }
+
+    public void setDomPereAff(Domainecompetence domPereAff) {
+        this.domPereAff = domPereAff;
     }
     
 
