@@ -200,9 +200,9 @@
                         <a:panel header=" #{bundleGesemp.lien_historique_poste_employe}" iconheader="fa fa-list-ul">
                                     <f:facet name="header">                                            
                                     </f:facet>
-                            <p:dataTable id="tableHistorique" value="#{editEmployeController.emp.listHistoriqueEmployePoste}" var="hist" rowKey="#{hist.datedeb}" rows="8" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
-                                <p:column headerText="#{bundleGesemp.lbl_date_debut}" filterBy="#{editEmployeController.recupDateFormat(hist.datedeb)}" filterMatchMode="contains">
-                                    <h:outputText value="#{editEmployeController.recupDateFormat(hist.datedeb)}"/>
+                            <p:dataTable id="tableHistorique" value="#{editEmployeController.listHistEmpOrdone}" var="hist" rowKey="#{hist.historiqueemployepostePK.datedeb}" rows="8" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                <p:column headerText="#{bundleGesemp.lbl_date_debut}" filterBy="#{editEmployeController.recupDateFormat(hist.historiqueemployepostePK.datedeb)}" filterMatchMode="contains">
+                                    <h:outputText value="#{editEmployeController.recupDateFormat(hist.historiqueemployepostePK.datedeb)}"/>
                                 </p:column>
                                 <p:column headerText="#{bundleGesemp.lbl_date_fin}" filterBy="#{editEmployeController.recupDateFormat(hist.datefin)}" filterMatchMode="contains">
                                     <h:outputText value="#{editEmployeController.recupDateFormat(hist.datefin)}"/>

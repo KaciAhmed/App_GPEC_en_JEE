@@ -5,8 +5,8 @@
  */
 package otherEntity;
 
-import dz.elit.gpecpf.employe.entity.Employe;
 import dz.elit.gpecpf.commun.util.StaticUtil;
+import dz.elit.gpecpf.employe.entity.Employe;
 import dz.elit.gpecpf.poste.entity.Poste;
 import java.io.Serializable;
 import java.util.Date;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Dell
+ * @author Kaci Ahmed
  */
 @Entity
 @Table(name = "historiqueemployeposte", schema = StaticUtil.ADMINISTRATION_SCHEMA)
@@ -33,16 +33,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Historiqueemployeposte.findAll", query = "SELECT h FROM Historiqueemployeposte h")
     , @NamedQuery(name = "Historiqueemployeposte.findByIdemploye", query = "SELECT h FROM Historiqueemployeposte h WHERE h.historiqueemployepostePK.idemploye = :idemploye")
     , @NamedQuery(name = "Historiqueemployeposte.findByIdposte", query = "SELECT h FROM Historiqueemployeposte h WHERE h.historiqueemployepostePK.idposte = :idposte")
-    , @NamedQuery(name = "Historiqueemployeposte.findByDatedeb", query = "SELECT h FROM Historiqueemployeposte h WHERE h.datedeb = :datedeb")
+    , @NamedQuery(name = "Historiqueemployeposte.findByDatedeb", query = "SELECT h FROM Historiqueemployeposte h WHERE h.historiqueemployepostePK.datedeb = :datedeb")
     , @NamedQuery(name = "Historiqueemployeposte.findByDatefin", query = "SELECT h FROM Historiqueemployeposte h WHERE h.datefin = :datefin")})
-public class Historiqueemployeposte implements Serializable {
+public class Historiqueemployeposte implements Comparable, Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected HistoriqueemployepostePK historiqueemployepostePK;
-    @Column(name = "datedeb")
-    @Temporal(TemporalType.DATE)
-    private Date datedeb;
     @Column(name = "datefin")
     @Temporal(TemporalType.DATE)
     private Date datefin;
@@ -60,8 +57,8 @@ public class Historiqueemployeposte implements Serializable {
         this.historiqueemployepostePK = historiqueemployepostePK;
     }
 
-    public Historiqueemployeposte(int idemploye, int idposte) {
-        this.historiqueemployepostePK = new HistoriqueemployepostePK(idemploye, idposte);
+    public Historiqueemployeposte(int idemploye, int idposte, Date datedeb) {
+        this.historiqueemployepostePK = new HistoriqueemployepostePK(idemploye, idposte, datedeb);
     }
 
     public HistoriqueemployepostePK getHistoriqueemployepostePK() {
@@ -70,14 +67,6 @@ public class Historiqueemployeposte implements Serializable {
 
     public void setHistoriqueemployepostePK(HistoriqueemployepostePK historiqueemployepostePK) {
         this.historiqueemployepostePK = historiqueemployepostePK;
-    }
-
-    public Date getDatedeb() {
-        return datedeb;
-    }
-
-    public void setDatedeb(Date datedeb) {
-        this.datedeb = datedeb;
     }
 
     public Date getDatefin() {
@@ -103,6 +92,7 @@ public class Historiqueemployeposte implements Serializable {
     public void setPoste(Poste poste) {
         this.poste = poste;
     }
+    
 
     @Override
     public int hashCode() {
@@ -127,6 +117,12 @@ public class Historiqueemployeposte implements Serializable {
     @Override
     public String toString() {
         return "otherEntity.Historiqueemployeposte[ historiqueemployepostePK=" + historiqueemployepostePK + " ]";
+    }
+    
+     public int compareTo(Object o){
+        Historiqueemployeposte hist =(Historiqueemployeposte)o;
+        return this.getHistoriqueemployepostePK().getDatedeb().compareTo(hist.getHistoriqueemployepostePK().getDatedeb());
+
     }
     
 }

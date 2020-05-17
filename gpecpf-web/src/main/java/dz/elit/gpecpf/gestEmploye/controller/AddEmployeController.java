@@ -154,7 +154,13 @@ public class AddEmployeController extends AbstractController implements Serializ
          {
                MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_date_recrutement"));
                 return false;
-          }
+         }
+         if(emp.getDate_depart()!=null && emp.getDate_depart().before(new Date()))
+         {
+               
+               MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_date_depart"));
+                return false;
+         }
          if(emp.getDate_depart()!=null)
          {
              if(emp.getDate_recrutement().after(emp.getDate_depart()))
@@ -228,10 +234,13 @@ public class AddEmployeController extends AbstractController implements Serializ
     }
    
     private void creerHistoriqueEmployePoste(){
-        hystEmpPoste =new Historiqueemployeposte(emp.getId(),posteSelected.getId()); 
+        hystEmpPoste =new Historiqueemployeposte(emp.getId(),posteSelected.getId(),emp.getDate_recrutement()); 
         hystEmpPoste.setEmploye(emp);
         hystEmpPoste.setPoste(posteSelected); 
-        hystEmpPoste.setDatedeb(new Date());
+     //   hystEmpPoste.setDatedeb(emp.getDate_recrutement());
+        if(emp.getDate_depart()!=null){
+            hystEmpPoste.setDatefin(emp.getDate_depart());
+        }
         emp.getListHistoriqueEmployePoste().add(hystEmpPoste);
         posteSelected.getListHistoriqueEmployePoste().add(hystEmpPoste); 
     }

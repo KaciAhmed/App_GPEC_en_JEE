@@ -31,6 +31,7 @@ import dz.elit.gpecpf.gestion_employe.service.HistoriqueEmployePosteFacade;
 import dz.elit.gpecpf.poste.entity.Poste;
 import dz.elit.gpecpf.poste.service.PosteFacade;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import otherEntity.Historiqueemployeposte;
 import otherEntity.Wilaya;
 
@@ -43,12 +44,10 @@ import otherEntity.Wilaya;
 @ViewScoped
 public class EditEmployeController extends AbstractController implements Serializable {
     
-
     @EJB
     private EmployeFacade empFacade;
     @EJB
     private FormationFacade formationFacade;
-
     @EJB
     private WilayaFacade wilayaFacade;
     @EJB
@@ -58,7 +57,6 @@ public class EditEmployeController extends AbstractController implements Seriali
     @EJB
     private PosteFacade posteFacade;
 
-    
     private List <AdminUtilisateur> listUser;
     
     private Employe emp;
@@ -70,21 +68,21 @@ public class EditEmployeController extends AbstractController implements Seriali
     private Wilaya wilayaSelected;
     private Wilaya wil;   
     
-    
     private List<Commune> listCommunes;
     private Commune communeSelected;
     private int idComune;
-    
-    
+       
     private String dtNaiss;
     private String dtRec;
     private String dtDep;
+    private Date oldDateDep=null;
     
     private String oldMatricule;
     
     SimpleDateFormat formater = null;
     
     private Historiqueemployeposte histEmpPoste;
+    private List <Historiqueemployeposte> listHistEmpOrdone;
     private List <Poste> listPostes;
     private List <Poste> listPosteEmp;
     private Poste posteSelected;
@@ -93,9 +91,10 @@ public class EditEmployeController extends AbstractController implements Seriali
 
     private  int ageMinimale;
     
-
+ // initialisation--------------------------------------------------------------------------------------------   
     public EditEmployeController() {
     }
+    
       @Override//@PostConstruct
     protected void initController() {
         initEditEmploye();    
@@ -120,13 +119,16 @@ public class EditEmployeController extends AbstractController implements Seriali
            listFormations.removeAll(listFormationsSelected);
 
             oldMatricule =emp.getMatricule();
+            if(emp.getDate_depart()!=null)
+            oldDateDep=emp.getDate_depart();
 
          // partie poste
             recupPosteEmploye();
+            listHistEmpOrdone=new ArrayList<>();
+            ordonerListHistEmp();
         }
     }
-    
-    
+       
      private void initEditEmploye() {
         emp = new Employe();  
         //prtie wilaya commune
@@ -145,10 +147,10 @@ public class EditEmployeController extends AbstractController implements Seriali
         listPostes=posteFacade.findAllOrderByAttribut("code");
         listPosteEmp=new ArrayList<>();
         
-         ageMinimale=18;
-      
+         ageMinimale=18;      
     }
-     // partie poste
+     
+// partie poste----------------------------------------------------------------------------------------------
      public String recupDateFormat(Date dt){
          if(dt!=null)
          {
@@ -161,7 +163,7 @@ public class EditEmployeController extends AbstractController implements Seriali
          
          for(Historiqueemployeposte hist:emp.getListHistoriqueEmployePoste())
          {
-             if(hist.getDatefin()==null)
+             if(hist.getDatefin()==null ||(emp.getDate_depart()!=null && emp.getDate_depart().equals(hist.getDatefin())))
              {
                  posteEmp=new Poste();
                  posteEmp=hist.getPoste();
@@ -170,6 +172,24 @@ public class EditEmployeController extends AbstractController implements Seriali
              }
              listPosteEmp.add(hist.getPoste());
          }
+         
+     }
+     public void ordonerListHistEmp(){
+         Historiqueemployeposte hist2=new Historiqueemployeposte();
+         
+         for (Historiqueemployeposte hist : emp.getListHistoriqueEmployePoste()) {
+             if(hist.getDatefin()!= null && (hist.getHistoriqueemployepostePK().getDatedeb().equals(hist.getDatefin()) || hist.getHistoriqueemployepostePK().getDatedeb().after(hist.getDatefin()))){
+                // rien faire
+             }else{
+                    if(hist.getDatefin()== null || hist.getDatefin().equals(emp.getDate_depart()))
+                    {
+                        hist2 =hist;
+                    }else{
+                        listHistEmpOrdone.add(hist);
+                    }
+                  }
+         }
+         listHistEmpOrdone.add(hist2);
      }
      
      public void addPosteForEmp(){
@@ -184,34 +204,56 @@ public class EditEmployeController extends AbstractController implements Seriali
            
         Historiqueemployeposte hp2=recupHistFromPoste(oldPoste);
         hp2.setDatefin(new Date());
-            
-        Historiqueemployeposte hp= new Historiqueemployeposte(emp.getId(), posteSelected.getId());
-        hp.setEmploye(emp);
-        hp.setPoste(posteSelected);
-        hp.setDatedeb(new Date());
-        emp.getListHistoriqueEmployePoste().add(hp);
-        posteSelected.getListHistoriqueEmployePoste().add(hp);
-           
+        
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.add(Calendar.DAY_OF_MONTH,1); 
+        Date demain = cal.getTime();
+        Historiqueemployeposte hp=recupHistFromPoste(posteSelected);
+        if((hp!=null && recupDateFormat(hp.getDatefin()).equals(recupDateFormat(new Date()))))
+        {              
+                hp.setDatefin(emp.getDate_depart());        
+        }else{ 
+                hp= new Historiqueemployeposte(emp.getId(), posteSelected.getId(),new Date());
+                hp.setEmploye(emp);
+                hp.setPoste(posteSelected);
+                hp.getHistoriqueemployepostePK().setDatedeb(demain);
+                if(emp.getDate_depart()!=null)
+                 {
+                     hp.setDatefin(emp.getDate_depart());
+                 }
+                 emp.getListHistoriqueEmployePoste().add(hp);
+                 posteSelected.getListHistoriqueEmployePoste().add(hp);
+             }     
      }
              
     public Historiqueemployeposte recupHistFromPoste(Poste post1){
-         
-         for(Historiqueemployeposte hist:emp.getListHistoriqueEmployePoste()){
-             if(hist.getPoste().equals(post1))
-                 return hist;
+        
+        List<Historiqueemployeposte> listHist=new ArrayList<>(emp.getListHistoriqueEmployePoste());
+         Collections.sort(listHist);
+         int dernier=listHist.size();
+         dernier--;
+         for(int i=dernier;i>=0 ;i--)
+         {
+            if(listHist.get(i).getPoste().equals(post1))
+                return listHist.get(i);
+            
          }
+
          return null;
      }
-/*
-     public void removePosteForEmploye(Poste poste1)
-     {
-         listPostes.add(poste1);
-         Historiqueemployeposte hist=recupHistFromPoste(poste1);
-         histFacade.supprimerHistorique(emp.getId(), poste1.getId()); 
-     }
-*/
-     
-     // pertie wilaya commune
+    public void modifierHistorique()
+    {
+        Historiqueemployeposte hp2=recupHistFromPoste(posteEmp);
+        if(emp.getDate_depart()!=null)
+        {
+            hp2.setDatefin(emp.getDate_depart());
+        }
+        else
+            hp2.setDatefin(null);
+ 
+    }
+  
+ // partie wilaya commune------------------------------------------------------------------------------------
      public void recupWilaya(){
          wil =new Wilaya();
          wil = emp.getIdcommune().getIdwilaya();
@@ -242,7 +284,7 @@ public class EditEmployeController extends AbstractController implements Seriali
          } 
          
      }
-     // partie formation
+// partie formation---------------------------------------------------------------------------------------------
   
     public void addFormationForEmploye() {
         if (!listFormationsSelected.isEmpty()) {
@@ -258,13 +300,19 @@ public class EditEmployeController extends AbstractController implements Seriali
             listFormations.add(frm);
       
     }
-     // edit -----------------------
+// edit  et ses control--------------------------------------------------------------------------------------------------
       private boolean isDateVerifier() {
            if(emp.getDate_recrutement().after(new Date()))
             {
                MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_date_recrutement"));
                 return false;
-             }
+            }
+           if(emp.getDate_depart()!=null && emp.getDate_depart().before(new Date()))
+            {
+               
+               MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_date_depart"));
+                return false;
+            }
          if(emp.getDate_depart()!=null)
          {
              if(emp.getDate_recrutement().after(emp.getDate_depart()))
@@ -334,18 +382,6 @@ public class EditEmployeController extends AbstractController implements Seriali
         else
             return false; 
     }
- /*   private boolean periodPostVRF() {
-         if(histEmpPoste.getDatefin()!=null)
-         {
-             if(histEmpPoste.getDatedeb().after(histEmpPoste.getDatefin()))
-             {
-               MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_erreur_periode_poste"));
-                return false;
-             }
-         }
-        return true;
-    }
-*/
         public void edit() {
         try { 
                 if(isDateVerifier()){
@@ -366,8 +402,12 @@ public class EditEmployeController extends AbstractController implements Seriali
                                                 if(! vrfDateNaissance()){
                                                         MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_employe_mineur"));  
                                                     }else{
-                                                            if(oldPoste!=null && !oldPoste.equals(posteEmp)){
+                                                            if((oldPoste!=null && !oldPoste.equals(posteEmp))){
                                                                 creerHistoriqueEmployePoste();
+                                                            }else{
+                                                                if((oldDateDep==null && emp.getDate_depart()!=null)||(oldDateDep!=null && emp.getDate_depart()!=null && !oldDateDep.equals(emp.getDate_depart())||(oldDateDep!=null && emp.getDate_depart()==null))){
+                                                                    modifierHistorique();
+                                                                }
                                                             }
                                                             empFacade.edit(emp);
                                                             oldMatricule=emp.getMatricule();
@@ -390,7 +430,7 @@ public class EditEmployeController extends AbstractController implements Seriali
 
      
      
-     // getter && setter 
+     // getter && setter ------------------------------------------------------------------------------------
 
     public Employe getEmp() {
         return emp;
@@ -503,6 +543,14 @@ public class EditEmployeController extends AbstractController implements Seriali
 
     public void setPosteEmp(Poste posteEmp) {
         this.posteEmp = posteEmp;
+    }
+
+    public List<Historiqueemployeposte> getListHistEmpOrdone() {
+        return listHistEmpOrdone;
+    }
+
+    public void setListHistEmpOrdone(List<Historiqueemployeposte> listHistEmpOrdone) {
+        this.listHistEmpOrdone = listHistEmpOrdone;
     }
 
     
