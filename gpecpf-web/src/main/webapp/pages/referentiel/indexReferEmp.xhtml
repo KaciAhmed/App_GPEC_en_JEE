@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/templateReferEmp.xhtml"
+    xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_accueil_module_referentiel}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+
+        <a:breadcrumb rendered="true">
+
+            <a:menuitem icon="fa fa-home" value=" #{bundleReferentiel.titre_accueil_module_referentiel}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <a:tiles >
+                <a:tilesitem href="/pages/referentiel/condition/listCond.xhtml" value="Gestion des conditions " icon="fa fa-fw fa-th-large"  bg-color="green" description=" gestion des conditions et contrainte d'éxercice d'un poste "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_010_006')}" />  
+                <a:tilesitem href="/pages/referentiel/formation/listForm.xhtml" value="Gestion des formations " icon="fa fa-fw fa-mortar-board"  bg-color="green" description=" gestion des formations requise d'un poste "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_012_006')}" />   
+                <a:tilesitem href="/pages/referentiel/moyen/listMoy.xhtml" value="Gestion des moyens " icon="fa fa-fw fa-maxcdn"  bg-color="green" description="Gestion des moyens mis à dispositions des postes "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_011_006')}" />  
+                <a:tilesitem href="/pages/referentiel/tache/listTac.xhtml" value="Gestion des taches " icon="fa fa-fw fa-tasks"  bg-color="green" description=" gestion des taches "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_004_006')}" />  
+                 <a:tilesitem href="/pages/referentiel/activite/listAct.xhtml" value="Gestion des activités " icon="fa fa-fw fa-adn"  bg-color="green" description=" gestion des activité "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_005_006')}" />  
+                <a:tilesitem href="/pages/referentiel/mission/listMiss.xhtml" value="Gestion des missions " icon="fa fa-fw fa-suitcase"  bg-color="green" description=" gestion des missions "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_006_006')}" />  
+                <a:tilesitem href="/pages/referentiel/emploi/listEmp.xhtml" value="Gestion des emplois " icon="fa fa-fw fa-folder"  bg-color="green" description=" gestion des emplois "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_008_006')}" />  
+                <a:tilesitem href="/pages/referentiel/poste/listPos.xhtml" value="Gestion des postes " icon="fa fa-fw fa-file-powerpoint-o"  bg-color="green" description=" gestion des postes "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_009_006')}" />  
+        </a:tiles>
+    </ui:define>
+</ui:composition>

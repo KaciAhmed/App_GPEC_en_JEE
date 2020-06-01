@@ -17,6 +17,10 @@
     </ui:define>
 
     <ui:define name="MyContent">
-
+        <a:column span="10" offset="1"  >
+            <a:tiles >
+                <a:tilesitem href="/pages/gesemp/employe/listEmp.xhtml" value="Gestion des employés " icon="fa fa-fw fa-male" id="tilesitem" bg-color="green" description=" gestion des employé "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('GESEMP_001_006')}" />  
+            </a:tiles>
+        </a:column> 
     </ui:define>
 </ui:composition>

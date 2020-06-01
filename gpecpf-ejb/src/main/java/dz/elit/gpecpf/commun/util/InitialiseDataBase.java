@@ -130,27 +130,31 @@ public class InitialiseDataBase {
         adminProfil.getListAdminUtilisateurs().add(utilisateur);
         em.persist(adminProfil);
         // Initialisation des modules du referentiel
-        adminModule = new AdminModule("REFER", "Gestionnaire du Referentiel",
-                "/pages/referentiel/indexReferentiel.xhtml", 2);
+        adminModule = new AdminModule("REFER_EMP", "Gestion du Referentiel Emploi",
+                "/pages/referentiel/indexReferEmp.xhtml", 2);
         em.persist(adminModule);
         em.flush();
+        AdminModule adminModule2 = new AdminModule("REFER_COMP", "Gestion du Referentiel Compétence", "/pages/referentiel/indexReferComp.xhtml",
+                3);
+        em.persist(adminModule2);
+        em.flush();
         // Type de Compétence
-        em.persist(new AdminPrivilege("REFER_001_005", "Consulter un type de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_001_006", "Lister un type de compétence ", adminModule));
+        em.persist(new AdminPrivilege("REFER_001_005", "Consulter un type de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_001_006", "Lister un type de compétence ", adminModule2));
         // Domaine de compétence
-        em.persist(new AdminPrivilege("REFER_002_001", "Créer un domaine de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_002_002", "Modifier un domaine de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_002_003", "Supprimer un domaine de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_002_004", "Rechercher un domaine de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_002_005", "Consulter un domaine de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_002_006", "Lister un domaine de compétence ", adminModule));
+        em.persist(new AdminPrivilege("REFER_002_001", "Créer un domaine de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_002_002", "Modifier un domaine de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_002_003", "Supprimer un domaine de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_002_004", "Rechercher un domaine de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_002_005", "Consulter un domaine de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_002_006", "Lister un domaine de compétence ", adminModule2));
         // Competénce
-        em.persist(new AdminPrivilege("REFER_003_001", "Créer une compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_003_002", "Modifier une compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_003_003", "Supprimer une compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_003_004", "Rechercher une compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_003_005", "Consulter une compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_003_006", "Lister une compétence ", adminModule));
+        em.persist(new AdminPrivilege("REFER_003_001", "Créer une compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_003_002", "Modifier une compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_003_003", "Supprimer une compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_003_004", "Rechercher une compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_003_005", "Consulter une compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_003_006", "Lister une compétence ", adminModule2));
         // Tache
         em.persist(new AdminPrivilege("REFER_004_001", "Créer une tâche ", adminModule));
         em.persist(new AdminPrivilege("REFER_004_002", "Modifier une tâche ", adminModule));
@@ -187,12 +191,12 @@ public class InitialiseDataBase {
         em.persist(new AdminPrivilege("REFER_008_005", "Consulter un poste ", adminModule));
         em.persist(new AdminPrivilege("REFER_008_006", "Lister un poste ", adminModule));
 		// Comportement
-        em.persist(new AdminPrivilege("REFER_009_001", "Créer un comportement de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_009_002", "Modifier un comportement de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_009_003", "Supprimer un comportement de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_009_004", "Rechercher un comportement de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_009_005", "Consulter un comportement de compétence ", adminModule));
-        em.persist(new AdminPrivilege("REFER_009_006", "Lister un comportement de compétence ", adminModule));
+        em.persist(new AdminPrivilege("REFER_009_001", "Créer un comportement de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_009_002", "Modifier un comportement de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_009_003", "Supprimer un comportement de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_009_004", "Rechercher un comportement de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_009_005", "Consulter un comportement de compétence ", adminModule2));
+        em.persist(new AdminPrivilege("REFER_009_006", "Lister un comportement de compétence ", adminModule2));
 		// Condition
         em.persist(new AdminPrivilege("REFER_010_001", "Créer une condition ", adminModule));
         em.persist(new AdminPrivilege("REFER_010_002", "Modifier une condition ", adminModule));
@@ -218,10 +222,11 @@ public class InitialiseDataBase {
         // Fin Module du referentiel
         adminProfil = new AdminProfil("Referentiel", "Referentiel",
                 adminPrivilegeFacade.getListPrivilegeByModule(adminModule.getId()));
+        adminProfil.addListPrivileges(adminPrivilegeFacade.getListPrivilegeByModule(adminModule2.getId()));
         em.persist(adminProfil);
         em.flush();
         // Gestionnaire des employés
-        adminModule = new AdminModule("GESEMP", "Gestionnaire Employés", "/pages/gesemp/indexGesemp.xhtml", 3);
+        adminModule = new AdminModule("GESEMP", "Gestionnaire Employés", "/pages/gesemp/indexGesemp.xhtml", 4);
         em.persist(adminModule);
         em.flush();
         em.persist(new AdminPrivilege("GESEMP_001_001", "Céer un employé ", adminModule));
@@ -237,7 +242,7 @@ public class InitialiseDataBase {
         em.persist(adminProfil);
         em.flush();
         // DRH
-        adminModule = new AdminModule("DRH", "Direction Ressources Humaines", "/pages/drh/indexDrh.xhtml", 4);
+        adminModule = new AdminModule("DRH", "Direction Ressources Humaines", "/pages/drh/indexDrh.xhtml", 5);
         em.persist(adminModule);
         em.flush();
         // Employé
@@ -262,13 +267,17 @@ public class InitialiseDataBase {
         em.persist(new AdminPrivilege("DRH_004_004", "Rechercher un reporting ", adminModule));
         em.persist(new AdminPrivilege("DRH_004_005", "Consulter un reporting ", adminModule));
         em.persist(new AdminPrivilege("DRH_004_006", "Lister un reporting ", adminModule));
+          // Emploi
+        em.persist(new AdminPrivilege("DRH_005_004", "Rechercher un emploi ", adminModule));
+        em.persist(new AdminPrivilege("DRH_005_005", "Consulter un emploi ", adminModule));
+        em.persist(new AdminPrivilege("DRH_005_006", "Lister un emploi ", adminModule));
         em.flush();
         // Fin du module DRH
         adminProfil = new AdminProfil("DRH", "DRH", adminPrivilegeFacade.getListPrivilegeByModule(adminModule.getId()));
         em.persist(adminProfil);
         em.flush();
         // Employé
-        adminModule = new AdminModule("EMP", "Employé", "/pages/emp/indexEmp.xhtml", 5);
+        adminModule = new AdminModule("EMP", "Employé", "/pages/emp/indexEmp.xhtml", 6);
         em.persist(adminModule);
         em.flush();
         // Poste

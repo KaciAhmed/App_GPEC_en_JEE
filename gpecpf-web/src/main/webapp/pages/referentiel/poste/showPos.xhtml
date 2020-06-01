@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/templateRefer.xhtml"
+                template="/templates/templateReferEmp.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui" 
                 xmlns:a="http://elit.dz/ui"
@@ -21,10 +21,15 @@
 
     <ui:define name="MyContent">
         <h:form id="form">
-            <a:pagetitle value="Fiche Poste" />
+            <a:pagetitle value="Fiche de Poste" />
             <a href="../tache/showTac.xhtml"></a>
             <p:messages id="msgs" globalOnly="true" showDetail="true"/>
             <p:panel id="panel" styleClass="no-border row">
+                <a:row style="margin-bottom:2%;margin-top: 2%">
+                       <a:column span="6" >
+                           <h:outputText value="#{bundleReferentiel.lbl_information_general}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                       </a:column>
+                </a:row>
                 <a:row>
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
@@ -33,8 +38,8 @@
                         </a:column>
                     </a:column>
                     <a:column span="6" >
-                        <a:label value="#{bundleReferentiel.lbl_code_ant}" span="4" />
-                        <a:column span="8" >
+                        <a:label value="#{bundleReferentiel.lbl_code_ant}" span="5" />
+                        <a:column span="7" >
                             <p:inputText id="codAnt"  value="#{editPosteController.poste.codeAnt}" disabled="true"/> 
                         </a:column>
                     </a:column>
@@ -47,8 +52,8 @@
                         </a:column>
                     </a:column>
                     <a:column span="6" >
-                        <a:label value="#{bundleReferentiel.lbl_denomination_ant}" span="4" />
-                        <a:column span="8" >
+                        <a:label value="#{bundleReferentiel.lbl_denomination_ant}" span="5" />
+                        <a:column span="7" >
                             <p:inputText id="denAnt"  value="#{editPosteController.poste.denomAnt}" disabled="true"/> 
                         </a:column>
                     </a:column>
@@ -61,8 +66,8 @@
                         </a:column>
                     </a:column> 
                     <a:column span="6" >
-                        <a:label value="#{bundleReferentiel.lbl_classement_ant}" span="4" />
-                        <a:column span="8" >
+                        <a:label value="#{bundleReferentiel.lbl_classement_ant}" span="5" />
+                        <a:column span="7" >
                             <p:inputText id="classementAnt"  value="#{editPosteController.poste.classAnt}" disabled="true"/> 
                         </a:column>
                     </a:column> 
@@ -75,102 +80,118 @@
                         </a:column>
                     </a:column> 
                     <a:column span="6" >
-                        <a:label value="#{bundleReferentiel.lbl_date_maj}" span="4" />
-                        <a:column span="8" >
+                        <a:label value="#{bundleReferentiel.lbl_date_maj}" span="5" />
+                        <a:column span="7" >
                             <p:inputText id="dateMaj"  value="#{editPosteController.poste.dateMaj}" disabled="true"/> 
                         </a:column>
                     </a:column> 
                 </a:row>
                 <a:row>
-                    <a:column span="3" >
+                    <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_annee_exp}" span="4" />
-                        <a:column span="8" >
+                        <a:column span="8"  >
                             <p:inputText id="annExp"  value="#{editPosteController.poste.anneeExperience}" disabled="true"/> 
                         </a:column>
                     </a:column> 
-                    <a:column span="9" >
+                    <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_def_som}" span="2" />
                         <a:column span="10" >
                             <p:inputTextarea id="defSom" cols="60" value="#{editPosteController.poste.defSommaire}" autoResize="false" disabled="true"/>
                         </a:column>
                     </a:column>
                 </a:row>
-                <p:tabView  id="tabView">
-                    <p:tab title="#{bundleAdmin.lbl_information_organisationel}" >
-                        <a:row>
-                            <a:label value="#{bundleAdmin.lbl_unite_organisationnelle}" span="3"/>  
-                            <a:column span="9">
-                                <a:row nomargin="true">
-                                    <a:column span="5">
-                                        <p:inputText id="codeUnite" value="#{editPosteController.poste.adminUniteOrganisationnelle.code}" label="Code" disabled="true"/>
-                                    </a:column>
-                                    <a:column span="5">
-                                        <p:inputText id="descriptionUnite" value="#{editPosteController.poste.adminUniteOrganisationnelle.denominationFr}" disabled="true"/>
-                                    </a:column>
-                                </a:row>
-                            </a:column>
-                        </a:row>
-                    </p:tab>
-
-                    <p:tab title="#{bundleReferentiel.lbl_information_type_poste}" >
-                        <a:row>
-                            <a:label value="#{bundleReferentiel.lbl_type_poste}" span="3"/>  
-                            <a:column span="9">
-                                <a:row nomargin="true">
-                                    <a:column span="5">
-                                        <p:inputText id="codeTypePoste" value="#{editPosteController.poste.typePoste.code}" label="Code" disabled="true"/>
-                                    </a:column>
-                                    <a:column span="5">
-                                        <p:inputText id="libelleTypePoste" value="#{editPosteController.poste.typePoste.libelle}" disabled="true"/>
-                                    </a:column>
-                                </a:row>
-                            </a:column>
-                        </a:row>
-                    </p:tab>
-
-                    <p:tab title="#{bundleReferentiel.lbl_information_emploi}" >
-                        <a:row>
-                            <a:label value="#{bundleReferentiel.lbl_emploi}" span="3"/>  
-                            <a:column span="9">
-                                <a:row nomargin="true">
-                                    <a:column span="5">
-                                        <p:inputText id="codeEmploi" value="#{editPosteController.poste.emploi.code}" label="Code" disabled="true"/>
-                                    </a:column>
-                                    <a:column span="5">
-                                        <p:inputText id="libelleEmploi" value="#{editPosteController.poste.emploi.libelle}" disabled="true"/>
-                                    </a:column>
-                                </a:row>
-                            </a:column>
-                        </a:row>
-                    </p:tab>
-                    
-                    <p:tab title="#{bundleReferentiel.lbl_information_poste_superieur}" >
-                        <a:row>
-                            <a:label value="#{bundleReferentiel.lbl_poste_superieur}" span="3"/>  
-                            <a:column span="9">
-                                <a:row nomargin="true">
-                                    <a:column span="5">
-                                        <p:inputText id="codePoste" value="#{editPosteController.poste.posteSuperieur.code}" label="Code" disabled="true"/>
-                                    </a:column>
-                                    <a:column span="5">
-                                        <p:inputText id="denominationPoste" value="#{editPosteController.poste.posteSuperieur.denomination}" disabled="true"/>
-                                    </a:column>
-                                </a:row>
-                            </a:column>
-                        </a:row>
-                    </p:tab>
-                </p:tabView>  
-                <p:tabView  id="tabViewList">
+                 <a:row style="margin-bottom:2%;margin-top: 2%">
+                       <a:column span="6" >
+                           <h:outputText value="#{bundleReferentiel.lbl_information_organisationel}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                       </a:column>
+                </a:row>
+                 <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="3" />
+                        <a:column span="7" style="padding-left: 1%;" >
+                             <p:inputText id="codeUnite" value="#{editPosteController.poste.adminUniteOrganisationnelle.code}" label="Code" disabled="true"/>
+                        </a:column>
+                    </a:column> 
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="2" />
+                        <a:column span="10" >
+                             <p:inputText id="descriptionUnite" value="#{editPosteController.poste.adminUniteOrganisationnelle.denominationFr}" disabled="true"/>
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row style="margin-bottom:2%;margin-top: 2%">
+                       <a:column span="6" >
+                           <h:outputText value="#{bundleReferentiel.lbl_information_type_poste}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                       </a:column>
+                </a:row>
+                 <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="3" />
+                        <a:column span="7" style="padding-left: 1%;" >
+                             <p:inputText id="codeTypePoste" value="#{editPosteController.poste.typePoste.code}" label="Code" disabled="true"/>
+                        </a:column>
+                    </a:column> 
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="2" />
+                        <a:column span="10" >
+                             <p:inputText id="libelleTypePoste" value="#{editPosteController.poste.typePoste.libelle}" disabled="true"/>
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row style="margin-bottom:2%;margin-top: 2%">
+                       <a:column span="6" >
+                           <h:outputText value="#{bundleReferentiel.lbl_information_emploi}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                       </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="3" />
+                        <a:column span="7" style="padding-left: 1%;" >
+                               <p:inputText id="codeEmploi" value="#{editPosteController.poste.emploi.code}" label="Code" disabled="true"/>
+                        </a:column>
+                    </a:column> 
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="2" />
+                        <a:column span="10" >
+                               <p:inputText id="libelleEmploi" value="#{editPosteController.poste.emploi.libelle}" disabled="true"/>
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row style="margin-bottom:2%;margin-top: 2%">
+                       <a:column span="6" >
+                           <h:outputText value="#{bundleReferentiel.lbl_information_poste_superieur}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                       </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="3" />
+                        <a:column span="7" style="padding-left: 1%;" >
+                              <p:inputText id="codePoste" value="#{editPosteController.poste.posteSuperieur.code}" label="Code" disabled="true"/>
+                        </a:column>
+                    </a:column> 
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_denomination}" span="3" />
+                        <a:column span="9" >
+                               <p:inputText id="denominationPoste" value="#{editPosteController.poste.posteSuperieur.denomination}" disabled="true"/>
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row style="margin-bottom:2%;margin-top: 2%">
+                       <a:column span="6" >
+                           <h:outputText value="#{bundleReferentiel.lbl_autre}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                       </a:column>
+                </a:row>
+                <p:tabView  id="tabViewList" style="margin-top: 3%">
                     <p:tab title="#{bundleReferentiel.lbl_missions}">
                         <a:panel header=" #{bundleReferentiel.titre_liste_mission}" iconheader="fa fa-list-ul">
                             <p:dataTable  id="tableMissions" value="#{editPosteController.poste.listMissions}" var="mission" rowKey="#{mission.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
-                                <p:column headerText="#{bundleReferentiel.lbl_code}">
+                                <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{mission.code}" filterMatchMode="contains" >
                                     <h:outputText value="#{mission.code}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_libelle}">
+                                <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{mission.libelle}" filterMatchMode="contains" >
                                     <h:outputText value="#{mission.libelle}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_description}">
+                                <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{mission.description}" filterMatchMode="contains" >
                                     <h:outputText value="#{mission.description}"/>
                                 </p:column>
                             </p:dataTable>
@@ -180,10 +201,10 @@
                     <p:tab title="#{bundleReferentiel.lbl_conditions}">
                         <a:panel header=" #{bundleReferentiel.titre_liste_condition}" iconheader="fa fa-list-ul">
                             <p:dataTable  id="tableConditions" value="#{editPosteController.poste.listConditions}" var="condition" rowKey="#{condition.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
-                                <p:column headerText="#{bundleReferentiel.lbl_code}">
+                                <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{condition.code}" filterMatchMode="contains" >
                                     <h:outputText value="#{condition.code}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_description}">
+                                <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{condition.description}" filterMatchMode="contains" >
                                     <h:outputText value="#{condition.description}"/>
                                 </p:column>
                             </p:dataTable>
@@ -193,10 +214,10 @@
                     <p:tab title="#{bundleReferentiel.lbl_moyens}">
                         <a:panel header=" #{bundleReferentiel.titre_liste_moyen}" iconheader="fa fa-list-ul">
                             <p:dataTable  id="tableMoyens" value="#{editPosteController.poste.listMoyens}" var="moyen" rowKey="#{moyen.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
-                                <p:column headerText="#{bundleReferentiel.lbl_code}">
+                                <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{moyen.code}" filterMatchMode="contains" >
                                     <h:outputText value="#{moyen.code}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_description}">
+                                <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{moyen.description}" filterMatchMode="contains" >
                                     <h:outputText value="#{moyen.description}"/>
                                 </p:column>
                             </p:dataTable>
@@ -206,16 +227,16 @@
                     <p:tab title="#{bundleReferentiel.lbl_formations}">
                         <a:panel header=" #{bundleReferentiel.titre_liste_formation}" iconheader="fa fa-list-ul">
                             <p:dataTable  id="tableFormations" value="#{editPosteController.poste.listFormations}" var="formation" rowKey="#{formation.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
-                                <p:column headerText="#{bundleReferentiel.lbl_code}">
+                                <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{formation.code}" filterMatchMode="contains" >
                                     <h:outputText value="#{formation.code}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_description}">
+                                <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{formation.description}" filterMatchMode="contains" >
                                     <h:outputText value="#{formation.description}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_type}">
+                                <p:column headerText="#{bundleReferentiel.lbl_type}" filterBy="#{formation.type}" filterMatchMode="contains" >
                                     <h:outputText value="#{formation.type}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_exigence}">
+                                <p:column headerText="#{bundleReferentiel.lbl_exigence}" filterBy="#{formation.exigence}" filterMatchMode="contains" >
                                     <h:outputText value="#{formation.exigence}"/>
                                 </p:column>
                             </p:dataTable>
@@ -225,16 +246,16 @@
                     <p:tab title="#{bundleReferentiel.lbl_competences}">
                         <a:panel header=" #{bundleReferentiel.titre_liste_competence}" iconheader="fa fa-list-ul">
                             <p:dataTable  id="tableCompetences" value="#{editPosteController.poste.listCompetences}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
-                                <p:column headerText="#{bundleReferentiel.lbl_code}">
+                                <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{competence.code}" filterMatchMode="contains" >
                                     <h:outputText value="#{competence.code}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_libelle}">
+                                <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{competence.libelle}" filterMatchMode="contains" >
                                     <h:outputText value="#{competence.libelle}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_type}">
+                                <p:column headerText="#{bundleReferentiel.lbl_type}"  filterBy="#{competence.idtypcom.code}" filterMatchMode="contains" >
                                     <h:outputText value="#{competence.idtypcom.code}"/>
                                 </p:column>
-                                <p:column headerText="#{bundleReferentiel.lbl_domaine}">
+                                <p:column headerText="#{bundleReferentiel.lbl_domaine}" filterBy="#{competence.iddomcom.code}" filterMatchMode="contains" >
                                     <h:outputText value="#{competence.iddomcom.code}"/>
                                 </p:column>
                             </p:dataTable>

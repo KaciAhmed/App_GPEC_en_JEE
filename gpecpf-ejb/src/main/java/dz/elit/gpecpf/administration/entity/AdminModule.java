@@ -43,8 +43,8 @@ public class AdminModule implements Serializable {
     @Column(name = "code",nullable=false,unique=true,length = 20)
     @NotNull
     private String code;
-    @Size(min = 1, max = 30)
-    @Column(name = "libelle",nullable=false,unique=true,length = 30)
+    @Size(min = 1, max = 255)
+    @Column(name = "libelle",nullable=false,unique=true,length = 255)
     @NotNull
     private String libelle;
     @Size(max = 255)

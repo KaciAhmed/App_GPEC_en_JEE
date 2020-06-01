@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                template="/templates/templateReferComp.xhtml"
+    xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_accueil_module_referentiel}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb rendered="true">
+            <a:menuitem icon="fa fa-home" value=" #{bundleReferentiel.titre_accueil_module_referentiel}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+    <ui:define name="MyContent">
+        <a:tiles >
+                <a:tilesitem href="/pages/referentiel/type/listType.xhtmll" value="Gestion des types de compétence" icon="fa fa-fw fa-text-width"  bg-color="green" description=" gestion des types de compétences "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_001_006')}" />  
+                <a:tilesitem href="/pages/referentiel/domaine/listDom.xhtml" value="Gestion des domaines de compétence " icon="fa fa-fw fa-list-alt"  bg-color="green" description=" gestion des domaines de compétence "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_002_006')}" />   
+                <a:tilesitem href="/pages/referentiel/competence/listComp.xhtml" value="Gestion des compétences " icon="fa fa-fw fa-cubes"  bg-color="green" description=" gestion des compétence "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_004_006')}" />  
+                 <a:tilesitem href="/pages/referentiel/comportement/listCompo.xhtml" value="Gestion des comportements de compétence " icon="fa fa-fw fa-dedent"  bg-color="green" description=" gestion des activité "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_009_006')}" />  
+        </a:tiles>
+
+    </ui:define>
+</ui:composition>

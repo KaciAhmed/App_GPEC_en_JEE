@@ -17,6 +17,17 @@
     </ui:define>   
 
     <ui:define name="MyContent">
-       
+        <a:column span="10" offset="1"  >
+            <a:tiles >
+                <a:tilesitem href="/pages/administration/utilisateur/listUtilisateur.xhtml" value="Gestion des utilisateurs " icon="fa fa-users" bg-color="green" description=" gestion de l'administration du sytème et des comptes d'utilisateurs "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('ADMIN_002_006')}" />
+                <a:tilesitem href="/pages/administration/profil/listProfil.xhtml" value="Gestion des profils " icon="fa fa-hospital-o"  bg-color="green" description=" gestion des profils des utilisateurs"   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('ADMIN_003_006')}" />
+                <a:tilesitem href="/pages/administration/privilege/listPrivilege.xhtml" value="Gestion des privilège" icon="fa fa-sitemap"  bg-color="green" description=" gestion des privilèges des utilisateurs "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('ADMIN_004_006')}" />
+                <a:tilesitem href="/pages/administration/module/listModule.xhtml" value="Configuration" icon="fa fa-cogs" bg-color="green" description=" configuration des modules" slide="down" tile-wide="false"/>
+                <a:tilesitem href="/pages/administration/historique/listConnexionEnCours.xhtml" value="Conexion en cours" icon="fa fa-inbox"  bg-color="green" description=" Conexion en cours "   slide="down" tile-wide="false"/>
+                <a:tilesitem href="/pages/administration/historique/listConnecxionHistorique.xhtml" value="historique des connexions" icon="fa fa-history"  bg-color="green" description="historique des connexions"   slide="down" tile-wide="false"/>
+                <a:tilesitem href="/pages/administration/prefixCodification/prefixCod.xhtml" value="Préfixe de codification" icon="fa fa-tasks"  bg-color="green" description="Préfixe de codification"   slide="down" tile-wide="false"/>
+
+            </a:tiles>
+        </a:column> 
     </ui:define>
 </ui:composition>

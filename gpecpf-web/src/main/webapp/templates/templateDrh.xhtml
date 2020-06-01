@@ -54,23 +54,28 @@
     <ui:include src="header.xhtml"></ui:include>
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
-            <a:submenu start="true" value="#{bundleDrh.titre_gestion_employe}" icon="">
-                <a:menuitem value="#{bundleDrh.titre_liste_employe}" icon="" 
+            <a:submenu start="true" value="#{bundleDrh.titre_consultation_employe}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleDrh.titre_liste_employe}" icon="fa fa-file" 
                             outcome="/pages/drh/employe/listEmp.xhtml"
                             rendered="#{mySessionController.isUserInRole('DRH_001_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleDrh.titre_gestion_poste}" icon="">
-                <a:menuitem value="#{bundleDrh.titre_liste_poste}" icon=""
+            <a:submenu value="#{bundleDrh.titre_consultation_poste}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleDrh.titre_liste_poste}" icon="fa fa-file"
                             outcome="/pages/drh/poste/listPos.xhtml"
                             rendered="#{mySessionController.isUserInRole('DRH_002_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleDrh.titre_gestion_compagne}" icon="">
-                <a:menuitem value="#{bundleDrh.titre_liste_compagne}" icon=""
+            <a:submenu value="#{bundleDrh.titre_consultation_emploi}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleDrh.titre_liste_emploi}" icon="fa fa-file"
+                            outcome="/pages/drh/emploi/listEmp.xhtml"
+                            rendered="#{mySessionController.isUserInRole('DRH_005_006')}" />
+            </a:submenu>
+            <a:submenu value="#{bundleDrh.titre_gestion_compagne}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleDrh.titre_liste_compagne}" icon="fa fa-file"
                             outcome="/pages/drh/compagne/listCom.xhtml"
                             rendered="#{mySessionController.isUserInRole('DRH_003_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleDrh.titre_gestion_reporting}" icon="">
-                <a:menuitem value="#{bundleDrh.titre_liste_reporting}" icon=""
+            <a:submenu value="#{bundleDrh.titre_reporting}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleDrh.titre_liste_reporting}" icon="fa fa-file"
                     outcome="/pages/drh/reporting/listRep.xhtml"
                     rendered="#{mySessionController.isUserInRole('DRH_004_006')}" />
             </a:submenu>
@@ -80,7 +85,8 @@
             <div class="page-bar">
                 <ui:insert name="breadCrumb" />
                 <div class="info">
-                    Zone variables métier
+                    <p:button outcome="/pages/drh/indexDrh.xhtml" value="Acceuil direction RH" icon="fa fa-home" style="margin-right:0px;background-color: #26a69a">
+                        </p:button>
                 </div>
             </div>
 

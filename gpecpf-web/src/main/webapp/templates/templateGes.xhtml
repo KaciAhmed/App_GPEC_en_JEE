@@ -58,7 +58,7 @@
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
             <a:submenu start="true" value="#{bundleGesemp.titre_gestion_employe}" icon="fa fa-tasks">
-                <a:menuitem value="#{bundleGesemp.titre_liste_employe}" icon=""
+                <a:menuitem value="#{bundleGesemp.titre_liste_employe}" icon="fa fa-file"
                     outcome="/pages/gesemp/employe/listEmp.xhtml"
                     rendered="#{mySessionController.isUserInRole('GESEMP_001_006')}" />
             </a:submenu>
@@ -68,7 +68,8 @@
             <div class="page-bar">
                 <ui:insert name="breadCrumb" />
                 <div class="info">
-                    Zone variables métier
+                   <p:button outcome="/pages/gesemp/indexGesemp.xhtml" value="Acceuil gesion employé" icon="fa fa-home" style="margin-right:0px;background-color: #26a69a">
+                   </p:button>
                 </div>
             </div>
 

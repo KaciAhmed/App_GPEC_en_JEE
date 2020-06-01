@@ -13,20 +13,31 @@
         <title>
             <ui:insert name="Title">
             </ui:insert> 
-        </title>       
+        </title>      
+        <style>
+            
+            body{
+                background-image:url(#{request.contextPath}/resources/images/accueil.jpg); 
+               min-height: 100vh;
+               background-repeat:no-repeat;
+               background-position:center;
+                background-attachment:fixed;
+            }
+            #emploi{
+                margin-left: -5%;
+            }
+       </style>
     </h:head>
 
     <h:body>
         <ui:include src="header.xhtml"/>
-        <a:pagecontainer>            
-                <a:container fluid="true" style="margin-top: 20px;">
+      
                     <ui:insert name="MyContent"/>
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                         <p:commandButton value="#{bundleCommun.btn_oui}" type="button" styleClass="ui-confirmdialog-yes" />
                         <p:commandButton value="#{bundleCommun.btn_non}" type="button" styleClass="ui-confirmdialog-no"  />
                     </p:confirmDialog>
-                </a:container>
-        </a:pagecontainer>          
+                      
         <ui:insert name="MyDialog"/>      
         
     </h:body>

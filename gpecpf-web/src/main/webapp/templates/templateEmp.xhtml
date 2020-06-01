@@ -54,21 +54,18 @@
     <ui:include src="header.xhtml"></ui:include>
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
-            <a:submenu start="true" value="#{bundleEmp.titre_gestion_poste}" icon="">
-                <a:menuitem value="#{bundleEmp.titre_consulter_poste}" icon=""
+            <a:submenu start="true" value="#{bundleEmp.titre_gestion_poste}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleEmp.titre_consulter_poste}" icon="fa fa-file"
                             outcome="/pages/emp/poste/showPos.xhtml"
                     rendered="#{mySessionController.isUserInRole('EMP_001_005')}" />
             </a:submenu>
-            <a:submenu value="#{bundleEmp.titre_gestion_employe}" icon="">
-                <a:menuitem value="#{bundleEmp.titre_consulter_employe}" icon=""
+            <a:submenu value="#{bundleEmp.titre_gestion_employe}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleEmp.titre_consulter_employe}" icon="fa fa-file"
                     outcome="/pages/emp/employe/showEmp.xhtml"
                     rendered="#{mySessionController.isUserInRole('EMP_002_005')}" />
             </a:submenu>
-            <a:submenu value="#{bundleEmp.titre_gestion_evaluation}" icon="">
-                <a:menuitem value="#{bundleEmp.titre_nouveau_evaluation}" icon=""
-                    outcome="/pages/emp/evaluation/addEval.xhtml"
-                    rendered="#{mySessionController.isUserInRole('EMP_003_001')}" />
-                <a:menuitem value="#{bundleEmp.titre_liste_evaluation}" icon=""
+            <a:submenu value="#{bundleEmp.titre_gestion_evaluation}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleEmp.titre_liste_evaluation}" icon="fa fa-file"
                     outcome="/pages/emp/evaluation/listEval.xhtml"
                     rendered="#{mySessionController.isUserInRole('EMP_003_006')}" />
             </a:submenu>
@@ -78,7 +75,8 @@
             <div class="page-bar">
                 <ui:insert name="breadCrumb" />
                 <div class="info">
-                    Zone variables métier
+                   <p:button outcome="/pages/emp/indexEmp.xhtml" value="Acceuil Employé" icon="fa fa-home" style="margin-right:0px;background-color: #26a69a">
+                   </p:button>
                 </div>
             </div>
 

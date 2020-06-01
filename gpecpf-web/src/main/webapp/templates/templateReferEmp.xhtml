@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://elit.dz/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Server" content="none" />
+    <title>
+        <ui:insert name="Title" />
+    </title>
+    <style>
+        .ouvert {
+            background-color: greenyellow;
+            font-weight: bold;
+        }
+
+        .fermer {
+            background-color: #FF9048;
+            font-weight: bold;
+        }
+
+        .ui-selectonemenu-filter-container {
+            width: 100% !important;
+        }
+
+        .hide-column-names table thead tr {
+            display: none;
+        }
+
+        .hide-content-names table tbody tr {
+            display: none;
+        }
+
+        .EstimationTotale {
+            background-color: #47FF5D;
+        }
+
+        .hide-content-names table {
+            width: auto;
+        }
+
+        .hide-content-names th,.hide-content-names td {
+            max-width: 20px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <ui:include src="header.xhtml"></ui:include>
+    <a:pagecontainer>
+        <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
+           <a:submenu value="#{bundleReferentiel.titre_gestion_conditions_exigences}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_formation}" icon="fa fa-file"
+                    outcome="/pages/referentiel/formation/listForm.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_012_006')}" />
+                <a:menuitem value="#{bundleReferentiel.titre_liste_condition }" icon="fa fa-file"
+                    outcome="/pages/referentiel/condition/listCond.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_010_006')}" />
+                <a:menuitem value="#{bundleReferentiel.titre_liste_moyen}" icon="fa fa-file"
+                    outcome="/pages/referentiel/moyen/listMoy.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_011_006')}" />
+            </a:submenu>
+            <a:submenu value="#{bundleReferentiel.titre_gestion_tache }" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_tache}" icon="fa fa-file"
+                    outcome="/pages/referentiel/tache/listTac.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_004_006')}" />
+            </a:submenu>
+            <a:submenu value="#{bundleReferentiel.titre_gestion_activite}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_activite}" icon="fa fa-file"
+                    outcome="/pages/referentiel/activite/listAct.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_005_006')}" />
+            </a:submenu>
+            <a:submenu value="#{bundleReferentiel.titre_gestion_mission}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_mission}" icon="fa fa-file"
+                    outcome="/pages/referentiel/mission/listMiss.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_006_006')}" />  
+            </a:submenu>
+            <a:submenu value="#{bundleReferentiel.titre_gestion_emploi}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_emploi}" icon="fa fa-file"
+                    outcome="/pages/referentiel/emploi/listEmp.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_007_006')}" />
+            </a:submenu>
+            <a:submenu value="#{bundleReferentiel.titre_gestion_poste}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_poste}" icon="fa fa-file"
+                    outcome="/pages/referentiel/poste/listPos.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_008_006')}" />
+            </a:submenu>
+        </a:sidebar>
+        <a:pagecontent>
+
+            <div class="page-bar">
+                <ui:insert name="breadCrumb" />
+                <div class="info">
+                   <p:button outcome="/pages/referentiel/indexReferEmp.xhtml" value="Acceuil référenttiel Emploi" icon="fa fa-home" style="margin-right:0px;background-color: #26a69a">
+                   </p:button>
+                </div>
+            </div>
+
+            <a:container fluid="true" style="margin-top: 10px;">
+                <ui:insert name="MyContent" />
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="#{bundleCommun.btn_oui}" type="button" styleClass="ui-confirmdialog-yes" />
+                    <p:commandButton value="#{bundleCommun.btn_non}" type="button" styleClass="ui-confirmdialog-no" />
+                </p:confirmDialog>
+            </a:container>
+
+        </a:pagecontent>
+    </a:pagecontainer>
+
+    <a:footer label="#{mySessionController.libelleAnnee} © ELIT" />
+
+    <ui:insert name="MyDialog" />
+    <h:form id="formDialog">
+        <p:dialog id="themDlg" header="#{bundleCommun.lbl_modification_theme}" widgetVar="themeDialog" height="90"
+            width="300">
+            <p:panel>
+                <p:outputLabel value="#{bundleCommun.msg_choisir_theme}" />
+                <p:selectOneMenu value="#{mySessionController.theme}" onchange="$('#formDialog').submit()">
+                    <f:selectItems value="#{myApplicationController.themes}" />
+                </p:selectOneMenu>
+                <p:commandButton id="btn" actionListener="#{mySessionController.updateUtilisateur()}" ajax="false"
+                    style="display: none" />
+            </p:panel>
+        </p:dialog>
+    </h:form>
+
+</h:body>
+
+</html>

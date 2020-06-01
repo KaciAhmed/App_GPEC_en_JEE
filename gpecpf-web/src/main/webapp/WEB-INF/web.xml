@@ -557,6 +557,18 @@
             <role-name>DRH_004_006</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>DRH_005_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>DRH_005_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/drh/emploi/listEmp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>DRH_005_006</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>gpecpfRealm</realm-name>
@@ -1160,5 +1172,49 @@
     <security-role>
         <description>Lister un reporting </description>
         <role-name>DRH_004_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un poste </description>
+        <role-name>EMP_001_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un employé </description>
+        <role-name>EMP_002_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une évaluation </description>
+        <role-name>EMP_003_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une évaluation </description>
+        <role-name>EMP_003_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une évaluation </description>
+        <role-name>EMP_003_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une évaluation </description>
+        <role-name>EMP_003_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une évaluation </description>
+        <role-name>EMP_003_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une évaluation </description>
+        <role-name>EMP_003_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un emploi </description>
+        <role-name>DRH_005_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un emploi </description>
+        <role-name>DRH_005_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un emploi </description>
+        <role-name>DRH_005_006</role-name>
     </security-role>
 </web-app>

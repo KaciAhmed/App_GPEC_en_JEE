@@ -501,7 +501,7 @@
     <role-name>REFER_005_002</role-name>
     <group-name>REFER_005_002</group-name>
   </security-role-mapping>
-   <security-role-mapping>
+  <security-role-mapping>
     <role-name>DRH_004_001</role-name>
     <group-name>DRH_004_001</group-name>
   </security-role-mapping>
@@ -520,6 +520,50 @@
   <security-role-mapping>
     <role-name>DRH_004_006</role-name>
     <group-name>DRH_004_006</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>EMP_001_005</role-name>
+    <group-name>EMP_001_005</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>EMP_002_005</role-name>
+    <group-name>EMP_002_005</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>EMP_003_001</role-name>
+    <group-name>EMP_003_001</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>EMP_003_002</role-name>
+    <group-name>EMP_003_002</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>EMP_003_003</role-name>
+    <group-name>EMP_003_003</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>EMP_003_004</role-name>
+    <group-name>EMP_003_004</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>EMP_003_005</role-name>
+    <group-name>EMP_003_005</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>EMP_003_006</role-name>
+    <group-name>EMP_003_006</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DRH_005_004</role-name>
+    <group-name>DRH_005_004</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DRH_005_005</role-name>
+    <group-name>DRH_005_005</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DRH_005_006</role-name>
+    <group-name>DRH_005_006</group-name>
   </security-role-mapping>
   <class-loader delegate="true"/>
   <jsp-config>

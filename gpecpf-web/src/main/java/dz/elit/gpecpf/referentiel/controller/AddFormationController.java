@@ -60,6 +60,7 @@ public class AddFormationController extends AbstractController implements Serial
             formationFacade.create(formation);
             MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
             initAddFormation();
+            chercherPrefix();
         } catch (MyException ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(ex.getMessage());
