@@ -1,11 +1,16 @@
 package dz.elit.gpecpf.referentiel.controller;
 
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.poste.entity.Condition;
+import dz.elit.gpecpf.poste.entity.Poste;
 import dz.elit.gpecpf.poste.service.ConditionFacade;
+import dz.elit.gpecpf.poste.service.PosteFacade;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -17,42 +22,82 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class AddConditionController extends AbstractController implements Serializable {
-    @EJB
-    private ConditionFacade conditionFacade;
-    private Condition condition;
-	
-    private String code;
-    private String description;
 
-    /**
-     * Creates a new instance of AddProfilController
-     */
-    public AddConditionController() {
-    }
+	@EJB
+	private ConditionFacade conditionFacade;
+	@EJB
+	private PosteFacade posteFacade;
+	@EJB
+	private AdminPrefixCodificationFacade prefixFacade;
+	private Condition condition;
 
-    @Override//@PostConstruct
-    protected void initController() {
-        initAddCondition();
-        condition = new Condition();
-    }
+	private List<Poste> listPostes;
+	private List<Poste> listPostesCondition;
+	private List<Poste> listPostesSelected;
 
-    public void create() {
-        try {
-            conditionFacade.create(condition);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-            initAddCondition();
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+	private String code;
+	private String description;
 
-    private void initAddCondition() {
-        condition = new Condition();
-    }
+	private String codePrefix;
+
+	public AddConditionController() {
+	}
+
+	@Override//@PostConstruct
+	protected void initController() {
+		initAddCondition();
+	}
+
+	public void create() {
+		try {
+			checkCode();
+			conditionFacade.create(condition);
+			posteFacade.editCondition(condition, listPostesCondition, new ArrayList());
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+			initAddCondition();
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
+
+	private void initAddCondition() {
+		condition = new Condition();
+		try {
+			codePrefix = prefixFacade.chercherPrefix().getCond();
+		} catch (Exception e) {
+			codePrefix = "";
+		}
+		condition.setCode(codePrefix);
+		listPostes = new ArrayList();
+		listPostes = posteFacade.findAllOrderByAttribut("code");
+		listPostesSelected = new ArrayList<>();
+		listPostesCondition = new ArrayList();
+	}
+
+	public void addPostesForCondition() {
+		if (!listPostesSelected.isEmpty()) {
+			listPostesCondition.addAll(listPostesSelected);
+			listPostes.removeAll(listPostesSelected);
+			listPostesSelected = new ArrayList<>();
+		}
+	}
+
+	public void removePosteForCondition(Poste poste) {
+		listPostesCondition.remove(poste);
+		listPostes.add(poste);
+	}
+
+	public void checkCode() throws MyException {
+		if (!codePrefix.equals("")) {
+			if (!condition.getCode().startsWith(codePrefix) || condition.getCode().equals(codePrefix)) {
+				throw new MyException("Le code doit commencer avec le prefix: " + codePrefix + " et suivi d'une chaine.");
+			}
+		}
+	}
 
 	public String getCode() {
 		return code;
@@ -84,6 +129,54 @@ public class AddConditionController extends AbstractController implements Serial
 
 	public void setConditionFacade(ConditionFacade conditionFacade) {
 		this.conditionFacade = conditionFacade;
+	}
+
+	public AdminPrefixCodificationFacade getPrefixFacade() {
+		return prefixFacade;
+	}
+
+	public void setPrefixFacade(AdminPrefixCodificationFacade prefixFacade) {
+		this.prefixFacade = prefixFacade;
+	}
+
+	public String getCodePrefix() {
+		return codePrefix;
+	}
+
+	public void setCodePrefix(String codePrefix) {
+		this.codePrefix = codePrefix;
+	}
+
+	public PosteFacade getPosteFacade() {
+		return posteFacade;
+	}
+
+	public void setPosteFacade(PosteFacade posteFacade) {
+		this.posteFacade = posteFacade;
+	}
+
+	public List<Poste> getListPostes() {
+		return listPostes;
+	}
+
+	public void setListPostes(List<Poste> listPostes) {
+		this.listPostes = listPostes;
+	}
+
+	public List<Poste> getListPostesCondition() {
+		return listPostesCondition;
+	}
+
+	public void setListPostesCondition(List<Poste> listPostesCondition) {
+		this.listPostesCondition = listPostesCondition;
+	}
+
+	public List<Poste> getListPostesSelected() {
+		return listPostesSelected;
+	}
+
+	public void setListPostesSelected(List<Poste> listPostesSelected) {
+		this.listPostesSelected = listPostesSelected;
 	}
 
 }

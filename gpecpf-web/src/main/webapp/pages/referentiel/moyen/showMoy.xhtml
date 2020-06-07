@@ -45,7 +45,7 @@
                         <p:tabView id="tabView">
                             <p:tab title="#{bundleReferentiel.lbl_postes}">
                                 <a:panel header=" #{bundleReferentiel.lien_liste_poste}" iconheader="fa fa-list-ul">
-                                    <p:dataTable id="tablePostes" value="#{editMoyenController.listPostes}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                    <p:dataTable id="tablePostes" value="#{editMoyenController.listPostesMoyen}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
                                         <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{poste.code}" filterMatchMode="contains">
                                             <h:outputText value="#{poste.code}"/>
                                         </p:column>

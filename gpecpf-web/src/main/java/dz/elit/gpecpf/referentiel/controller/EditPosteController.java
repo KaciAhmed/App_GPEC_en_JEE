@@ -1,6 +1,7 @@
 package dz.elit.gpecpf.referentiel.controller;
 
 import dz.elit.gpecpf.administration.entity.AdminUniteOrganisationnelle;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.administration.service.AdminUniteOrganisationnelleFacade;
 import dz.elit.gpecpf.poste.service.PosteFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
@@ -22,6 +23,7 @@ import dz.elit.gpecpf.poste.service.MissionFacade;
 import dz.elit.gpecpf.poste.service.MoyenFacade;
 import dz.elit.gpecpf.poste.service.TypePosteFacade;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -38,10 +40,10 @@ import javax.faces.model.SelectItem;
 @ViewScoped
 public class EditPosteController extends AbstractController implements Serializable {
 
-    @EJB
-    private PosteFacade posteFacade;
 	@EJB
-    private AdminUniteOrganisationnelleFacade uniteOrganisationnelleFacade;
+	private PosteFacade posteFacade;
+	@EJB
+	private AdminUniteOrganisationnelleFacade uniteOrganisationnelleFacade;
 	@EJB
 	private TypePosteFacade typePosteFacade;
 	@EJB
@@ -56,55 +58,63 @@ public class EditPosteController extends AbstractController implements Serializa
 	private FormationFacade formationFacade;
 	@EJB
 	private CompetenceFacade competenceFacade;
-	
-    private Poste poste;
-	
+	@EJB
+	private AdminPrefixCodificationFacade prefixFacade;
+
+	private Poste poste;
+
 	private List<AdminUniteOrganisationnelle> listUniteOrganisationnelle;
-    private AdminUniteOrganisationnelle uniteOrganisationnelleSelected;
-	
+	private AdminUniteOrganisationnelle uniteOrganisationnelleSelected;
+
 	private List<TypePoste> listTypePoste;
 	private TypePoste typePosteSelected;
-	
+
 	private List<Emploi> listEmploi;
 	private Emploi emploiSelected;
-	
+
 	private List<Poste> listPoste;
 	private Poste posteSelected;
-	
+
 	private List<Mission> listMissions;
 	private List<Mission> listMissionsSelected;
-	
+
 	private List<Condition> listConditions;
 	private List<Condition> listConditionsSelected;
-	
+
 	private List<Moyen> listMoyens;
 	private List<Moyen> listMoyensSelected;
-	
+
 	private List<Formation> listFormations;
 	private List<Formation> listFormationsSelected;
-	
+
 	private List<Competence> listCompetences;
 	private List<Competence> listCompetencesSelected;
-	
+
 	private SelectItem[] typeOptions = new SelectItem[3];
 	private SelectItem[] exigenceOptions = new SelectItem[3];
 
-    private String code;
-    private String libelle;
+	private String code;
+	private String libelle;
 	private String description;
-	
+
 	private String code_ant;
 	private String denom_ant;
 	private String class_ant;
 
-    /**
-     * Creates a new instance of AddProfilController
-     */
-    public EditPosteController() {
-    }
+	private String codePrefix;
 
-    @Override//@PostConstruct
-    protected void initController() {
+	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+	public EditPosteController() {
+	}
+
+	@Override//@PostConstruct
+	protected void initController() {
+		try {
+			codePrefix = prefixFacade.chercherPrefix().getPoste();
+		} catch (Exception e) {
+			codePrefix = "";
+		}
 		typeOptions[0] = new SelectItem("", "");
 		typeOptions[1] = new SelectItem("Académique", "Académique");
 		typeOptions[2] = new SelectItem("Professionnel", "Professionnel");
@@ -112,10 +122,11 @@ public class EditPosteController extends AbstractController implements Serializa
 		exigenceOptions[1] = new SelectItem("Obligatoire", "Obligatoire");
 		exigenceOptions[2] = new SelectItem("Supplémentaire", "Supplémentaire");
 		initAddPoste();
-    }
-	
-    public void edit() {
-        try {
+	}
+
+	public void edit() {
+		try {
+			checkCode();
 			if (uniteOrganisationnelleSelected != null && uniteOrganisationnelleSelected.getId() != null) {
 				poste.setAdminUniteOrganisationnelle(uniteOrganisationnelleSelected);
 			}
@@ -125,37 +136,45 @@ public class EditPosteController extends AbstractController implements Serializa
 			if (emploiSelected != null && emploiSelected.getId() != null) {
 				poste.setEmploi(emploiSelected);
 			}
-			if (posteSelected != null  && posteSelected.getId() != null) {
+			if (posteSelected != null && posteSelected.getId() != null) {
 				poste.setPosteSuperieur(posteSelected);
 			}
-			if (! code_ant.equals(poste.getCode())) {
+			if (!code_ant.equals(poste.getCode())) {
 				poste.setCodeAnt(code_ant);
 			}
-			if (! denom_ant.equals(poste.getDenomination())) {
+			if (!denom_ant.equals(poste.getDenomination())) {
 				poste.setDenomAnt(denom_ant);
 			}
-			if (! class_ant.equals(poste.getClassement())) {
+			if (!class_ant.equals(poste.getClassement())) {
 				poste.setClassAnt(class_ant);
 			}
 			poste.setDateMaj(new Date());
-            posteFacade.edit(poste);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-            initAddPoste();
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+			posteFacade.edit(poste);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+			initAddPoste();
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
 
-    private void initAddPoste() {
+	public void checkCode() throws MyException {
+		if (!codePrefix.equals("")) {
+			if (!poste.getCode().startsWith(codePrefix) || poste.getCode().equals(codePrefix)) {
+				throw new MyException("Le code doit commencer avec le prefix: " + codePrefix + " et suivi d'une chaine.");
+			}
+		}
+	}
+
+	private void initAddPoste() {
 		poste = new Poste();
-        String id = MyUtil.getRequestParameter("id");
-        if (id != null) {
-            poste = posteFacade.find(Integer.parseInt(id));
-        }
+		String id = MyUtil.getRequestParameter("id");
+		if (id != null) {
+			poste = posteFacade.find(Integer.parseInt(id));
+		}
 		code_ant = poste.getCode();
 		denom_ant = poste.getDenomination();
 		class_ant = poste.getClassement();
@@ -165,97 +184,104 @@ public class EditPosteController extends AbstractController implements Serializa
 		listTypePoste = typePosteFacade.findAllOrderByAttribut("id");
 		typePosteSelected = new TypePoste();
 		typePosteSelected = poste.getTypePoste();
-        listEmploi = emploiFacade.findAllOrderByAttribut("id");
+		listEmploi = emploiFacade.findAllOrderByAttribut("id");
 		emploiSelected = new Emploi();
 		emploiSelected = poste.getEmploi();
 		listPoste = posteFacade.findAllOrderByAttribut("code");
 		posteSelected = new Poste();
 		posteSelected = poste.getPosteSuperieur();
 		listMissions = new ArrayList();
-        listMissionsSelected = new ArrayList<>();
+		listMissionsSelected = new ArrayList<>();
 		listMissions = missionFacade.findAllOrderByAttribut("code");
 		listMissions.removeAll(poste.getListMissions());
 		listConditions = new ArrayList();
-        listConditionsSelected = new ArrayList<>();
+		listConditionsSelected = new ArrayList<>();
 		listConditions = conditionFacade.findAllOrderByAttribut("code");
 		listConditions.removeAll(poste.getListConditions());
 		listMoyens = new ArrayList();
-        listMoyensSelected = new ArrayList<>();
+		listMoyensSelected = new ArrayList<>();
 		listMoyens = moyenFacade.findAllOrderByAttribut("code");
 		listMoyens.removeAll(poste.getListMoyens());
 		listFormations = new ArrayList();
-        listFormationsSelected = new ArrayList<>();
+		listFormationsSelected = new ArrayList<>();
 		listFormations = formationFacade.findAllOrderByAttribut("code");
 		listFormations.removeAll(poste.getListFormations());
 		listCompetences = new ArrayList();
-        listCompetencesSelected = new ArrayList<>();
+		listCompetencesSelected = new ArrayList<>();
 		listCompetences = competenceFacade.findAllOrderByAttribut("code");
 		listCompetences.removeAll(poste.getListCompetences());
-    }
-	
+	}
+
 	public void addMissionsForPoste() {
-		if(!listMissionsSelected.isEmpty()) {
+		if (!listMissionsSelected.isEmpty()) {
 			poste.addListMissions(listMissionsSelected);
 			listMissions.removeAll(listMissionsSelected);
 			listMissionsSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeMissionForPoste(Mission mission) {
 		poste.removeMission(mission);
 		listMissions.add(mission);
 	}
-	
+
 	public void addConditionsForPoste() {
-		if(!listConditionsSelected.isEmpty()) {
+		if (!listConditionsSelected.isEmpty()) {
 			poste.addListConditions(listConditionsSelected);
 			listConditions.removeAll(listConditionsSelected);
 			listConditionsSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeConditionForPoste(Condition condition) {
 		poste.removeCondition(condition);
 		listConditions.add(condition);
 	}
-	
+
 	public void addMoyensForPoste() {
-		if(!listMoyensSelected.isEmpty()) {
+		if (!listMoyensSelected.isEmpty()) {
 			poste.addListMoyens(listMoyensSelected);
 			listMoyens.removeAll(listMoyensSelected);
 			listMoyensSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeMoyenForPoste(Moyen moyen) {
 		poste.removeMoyen(moyen);
 		listMoyens.add(moyen);
 	}
-	
+
 	public void addFormationsForPoste() {
-		if(!listFormationsSelected.isEmpty()) {
+		if (!listFormationsSelected.isEmpty()) {
 			poste.addListFormations(listFormationsSelected);
 			listFormations.removeAll(listFormationsSelected);
 			listFormationsSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeFormationForPoste(Formation formation) {
 		poste.removeFormation(formation);
 		listFormations.add(formation);
 	}
-	
+
 	public void addCompetencesForPoste() {
-		if(!listCompetencesSelected.isEmpty()) {
+		if (!listCompetencesSelected.isEmpty()) {
 			poste.addListCompetences(listCompetencesSelected);
 			listCompetences.removeAll(listCompetencesSelected);
 			listCompetencesSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeCompetenceForPoste(Competence competence) {
 		poste.removeCompetence(competence);
 		listCompetences.add(competence);
+	}
+
+	public String formatDate(Date x) {
+		if (x != null) {
+			return formatter.format(x);
+		}
+		return "";
 	}
 
 	public Poste getPoste() {
@@ -289,7 +315,7 @@ public class EditPosteController extends AbstractController implements Serializa
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public PosteFacade getPosteFacade() {
 		return posteFacade;
 	}
@@ -545,7 +571,29 @@ public class EditPosteController extends AbstractController implements Serializa
 	public void setClass_ant(String class_ant) {
 		this.class_ant = class_ant;
 	}
-	
-	
-	
+
+	public AdminPrefixCodificationFacade getPrefixFacade() {
+		return prefixFacade;
+	}
+
+	public void setPrefixFacade(AdminPrefixCodificationFacade prefixFacade) {
+		this.prefixFacade = prefixFacade;
+	}
+
+	public String getCodePrefix() {
+		return codePrefix;
+	}
+
+	public void setCodePrefix(String codePrefix) {
+		this.codePrefix = codePrefix;
+	}
+
+	public SimpleDateFormat getFormatter() {
+		return formatter;
+	}
+
+	public void setFormatter(SimpleDateFormat formatter) {
+		this.formatter = formatter;
+	}
+
 }

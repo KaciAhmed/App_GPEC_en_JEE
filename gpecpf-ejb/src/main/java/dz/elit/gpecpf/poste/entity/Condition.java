@@ -19,85 +19,85 @@ import javax.validation.constraints.Size;
  * @author Nadir Ben Mohand
  */
 @Entity
-@Table(name = "condition",schema = StaticUtil.POSTE_SCHEMA)
+@Table(name = "condition", schema = StaticUtil.POSTE_SCHEMA)
 @NamedQueries({
-    @NamedQuery(name = "Condition.findByCodeWithoutCurrentId", query = "SELECT t FROM Condition t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
+	@NamedQuery(name = "Condition.findByCodeWithoutCurrentId", query = "SELECT t FROM Condition t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
 public class Condition implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)    
-    @Column(name = "id")
-    private Integer id;
-    @Size(min = 1, max = 20)
-    @Column(name = "code",nullable=false,unique=true,length = 20)
-    @NotNull
-    private String code;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    
-    public Condition() {
-    }
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id")
+	private Integer id;
+	@Size(min = 1, max = 20)
+	@Column(name = "code", nullable = false, unique = true, length = 20)
+	@NotNull
+	private String code;
+	@Size(max = 255)
+	@Column(name = "description")
+	private String description;
 
-    public Condition(Integer id) {
-        this.id = id;
-    }
-    
-    public Condition(Integer id, String code, String description) {
-        this.id = id;
-        this.code = code;
-        this.description = description;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
+	public Condition() {
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Condition(Integer id) {
+		this.id = id;
+	}
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
+	public Condition(Integer id, String code, String description) {
+		this.id = id;
+		this.code = code;
 		this.description = description;
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Condition)) {
-            return false;
-        }
-        Condition other = (Condition) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    @Override
-    public String toString() {
-        return "dz.elit.gpecpf.poste.entity.Condition[ id=" + id + " ]";
-    }
-    
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Condition)) {
+			return false;
+		}
+		Condition other = (Condition) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "dz.elit.gpecpf.poste.entity.Condition[ id=" + id + " ]";
+	}
+
 }

@@ -71,13 +71,13 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_date_creation}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="dteCreate"  value="#{editPosteController.poste.dateCreation}" disabled="true"/> 
+                            <p:inputText id="dteCreate"  value="#{editPosteController.formatDate(editPosteController.poste.dateCreation)}" disabled="true"/> 
                         </a:column>
                     </a:column> 
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_date_maj}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="dateMaj"  value="#{editPosteController.poste.dateMaj}" disabled="true"/> 
+                            <p:inputText id="dateMaj"  value="#{editPosteController.formatDate(editPosteController.poste.dateMaj)}" disabled="true"/> 
                         </a:column>
                     </a:column> 
                 </a:row>

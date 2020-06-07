@@ -1,5 +1,6 @@
 package dz.elit.gpecpf.referentiel.controller;
 
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.poste.service.MoyenFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
@@ -8,6 +9,7 @@ import dz.elit.gpecpf.poste.entity.Moyen;
 import dz.elit.gpecpf.poste.entity.Poste;
 import dz.elit.gpecpf.poste.service.PosteFacade;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -21,52 +23,96 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class EditMoyenController extends AbstractController implements Serializable {
 
-    @EJB
-    private MoyenFacade moyenFacade;
+	@EJB
+	private MoyenFacade moyenFacade;
 	@EJB
 	private PosteFacade posteFacade;
-	
+	@EJB
+	private AdminPrefixCodificationFacade prefixFacade;
+
 	private List<Poste> listPostes;
+	private List<Poste> listPostesMoyen;
+	private List<Poste> listPostesSelected;
+	private List<Poste> listPostesAdd;
+	private List<Poste> listPostesDel;
 
-    private Moyen moyen;
+	private Moyen moyen;
 
-    private String code;
-    private String description;
+	private String code;
+	private String description;
 
-    /**
-     * Creates a new instance of AddProfilController
-     */
-    public EditMoyenController() {
-    }
+	private String codePrefix;
 
-    @Override//@PostConstruct
-    protected void initController() {
-        initAddMoyen();
-        moyen = new Moyen();
-        String id = MyUtil.getRequestParameter("id");
-        if (id != null) {
-            moyen = moyenFacade.find(Integer.parseInt(id));
-			listPostes = posteFacade.postesForMoyen(moyen);
-        }
-    }
+	public EditMoyenController() {
+	}
 
-    public void edit() {
-        try {
-            moyenFacade.edit(moyen);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-            initAddMoyen();
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+	@Override//@PostConstruct
+	protected void initController() {
+		try {
+			codePrefix = prefixFacade.chercherPrefix().getMoy();
+		} catch (Exception e) {
+			codePrefix = "";
+		}
+		initAddMoyen();
+		String id = MyUtil.getRequestParameter("id");
+		if (id != null) {
+			moyen = moyenFacade.find(Integer.parseInt(id));
+			listPostesMoyen = posteFacade.postesForMoyen(moyen);
+		}
+		listPostes.removeAll(listPostesMoyen);
+	}
 
-    private void initAddMoyen() {
-        moyen = new Moyen();
-    }
+	public void checkCode() throws MyException {
+		if (!codePrefix.equals("")) {
+			if (!moyen.getCode().startsWith(codePrefix) || moyen.getCode().equals(codePrefix)) {
+				throw new MyException("Le code doit commencer avec le prefix: " + codePrefix + " et suivi d'une chaine.");
+			}
+		}
+	}
+
+	public void edit() {
+		try {
+			checkCode();
+			moyenFacade.edit(moyen);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+			listPostesAdd.removeAll(posteFacade.postesForMoyen(moyen));
+			posteFacade.editMoyen(moyen, listPostesAdd, listPostesDel);
+			initAddMoyen();
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
+
+	public void addPostesForMoyen() {
+		if (!listPostesSelected.isEmpty()) {
+			listPostesMoyen.addAll(listPostesSelected);
+			listPostes.removeAll(listPostesSelected);
+			listPostesAdd.addAll(listPostesSelected);
+			listPostesDel.removeAll(listPostesSelected);
+			listPostesSelected = new ArrayList<>();
+		}
+	}
+
+	public void removePosteForMoyen(Poste poste) {
+		listPostesMoyen.remove(poste);
+		listPostes.add(poste);
+		listPostesAdd.remove(poste);
+		listPostesDel.add(poste);
+	}
+
+	private void initAddMoyen() {
+		moyen = new Moyen();
+		listPostes = new ArrayList();
+		listPostes = posteFacade.findAllOrderByAttribut("code");
+		listPostesSelected = new ArrayList<>();
+		listPostesMoyen = new ArrayList();
+		listPostesAdd = new ArrayList();
+		listPostesDel = new ArrayList();
+	}
 
 	public void setCode(String code) {
 		this.code = code;
@@ -115,6 +161,53 @@ public class EditMoyenController extends AbstractController implements Serializa
 	public void setListPostes(List<Poste> listPostes) {
 		this.listPostes = listPostes;
 	}
-	
-	
+
+	public AdminPrefixCodificationFacade getPrefixFacade() {
+		return prefixFacade;
+	}
+
+	public void setPrefixFacade(AdminPrefixCodificationFacade prefixFacade) {
+		this.prefixFacade = prefixFacade;
+	}
+
+	public String getCodePrefix() {
+		return codePrefix;
+	}
+
+	public void setCodePrefix(String codePrefix) {
+		this.codePrefix = codePrefix;
+	}
+
+	public List<Poste> getListPostesMoyen() {
+		return listPostesMoyen;
+	}
+
+	public void setListPostesMoyen(List<Poste> listPostesMoyen) {
+		this.listPostesMoyen = listPostesMoyen;
+	}
+
+	public List<Poste> getListPostesSelected() {
+		return listPostesSelected;
+	}
+
+	public void setListPostesSelected(List<Poste> listPostesSelected) {
+		this.listPostesSelected = listPostesSelected;
+	}
+
+	public List<Poste> getListPostesAdd() {
+		return listPostesAdd;
+	}
+
+	public void setListPostesAdd(List<Poste> listPostesAdd) {
+		this.listPostesAdd = listPostesAdd;
+	}
+
+	public List<Poste> getListPostesDel() {
+		return listPostesDel;
+	}
+
+	public void setListPostesDel(List<Poste> listPostesDel) {
+		this.listPostesDel = listPostesDel;
+	}
+
 }

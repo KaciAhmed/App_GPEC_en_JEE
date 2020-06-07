@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-
 /**
  *
  * @author Nadir Ben Mohand
@@ -17,39 +16,39 @@ import javax.persistence.Query;
 @Stateless
 public class ConditionFacade extends AbstractFacade<Condition> {
 
-    @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
-    private EntityManager em;
+	@PersistenceContext(unitName = StaticUtil.UNIT_NAME)
+	private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
 
-    public ConditionFacade() {
-        super(Condition.class);
-    }
-	
+	public ConditionFacade() {
+		super(Condition.class);
+	}
+
 	@Override
-    public void create(Condition condition) throws MyException, Exception {
-        if (isCodeConditionExiste(condition)) {
-            throw new MyException("Le code existe déjà");
-        }
-        super.create(condition);
-    }
-	
+	public void create(Condition condition) throws MyException, Exception {
+		if (isCodeConditionExiste(condition)) {
+			throw new MyException("Le code existe déjà");
+		}
+		super.create(condition);
+	}
+
 	@Override
-    public void edit(Condition condition) throws MyException, Exception {
-        if (isCodeConditionExiste(condition)) {
-            throw new MyException("Le code existe déjà");
-        }
-        super.edit(condition);
-    }
-	
+	public void edit(Condition condition) throws MyException, Exception {
+		if (isCodeConditionExiste(condition)) {
+			throw new MyException("Le code existe déjà");
+		}
+		super.edit(condition);
+	}
+
 	private boolean isCodeConditionExiste(Condition condition) {
 		Query q = em.createNamedQuery("Condition.findByCodeWithoutCurrentId");
-        q.setParameter("code", condition.getCode());
-        q.setParameter("id", condition.getId());
-        return !q.getResultList().isEmpty();
-    }
-	
+		q.setParameter("code", condition.getCode());
+		q.setParameter("id", condition.getId());
+		return !q.getResultList().isEmpty();
+	}
+
 }

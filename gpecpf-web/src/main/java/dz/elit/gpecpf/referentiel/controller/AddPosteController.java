@@ -1,6 +1,7 @@
 package dz.elit.gpecpf.referentiel.controller;
 
 import dz.elit.gpecpf.administration.entity.AdminUniteOrganisationnelle;
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.administration.service.AdminUniteOrganisationnelleFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
@@ -38,10 +39,11 @@ import javax.faces.model.SelectItem;
 @ManagedBean
 @ViewScoped
 public class AddPosteController extends AbstractController implements Serializable {
-    @EJB
+
+	@EJB
 	private PosteFacade posteFacade;
 	@EJB
-    private AdminUniteOrganisationnelleFacade uniteOrganisationnelleFacade;
+	private AdminUniteOrganisationnelleFacade uniteOrganisationnelleFacade;
 	@EJB
 	private TypePosteFacade typePosteFacade;
 	@EJB
@@ -56,59 +58,64 @@ public class AddPosteController extends AbstractController implements Serializab
 	private FormationFacade formationFacade;
 	@EJB
 	private CompetenceFacade competenceFacade;
+	@EJB
+	private AdminPrefixCodificationFacade prefixFacade;
 
 	private Poste poste;
-	
+
 	private List<AdminUniteOrganisationnelle> listUniteOrganisationnelle;
-    private AdminUniteOrganisationnelle uniteOrganisationnelleSelected;
-	
+	private AdminUniteOrganisationnelle uniteOrganisationnelleSelected;
+
 	private List<TypePoste> listTypePoste;
 	private TypePoste typePosteSelected;
-	
+
 	private List<Emploi> listEmploi;
 	private Emploi emploiSelected;
-	
+
 	private List<Poste> listPoste;
 	private Poste posteSelected;
-	
+
 	private List<Mission> listMissions;
 	private List<Mission> listMissionsSelected;
-	
+
 	private List<Condition> listConditions;
 	private List<Condition> listConditionsSelected;
-	
+
 	private List<Moyen> listMoyens;
 	private List<Moyen> listMoyensSelected;
-	
+
 	private List<Formation> listFormations;
 	private List<Formation> listFormationsSelected;
-	
+
 	private List<Competence> listCompetences;
 	private List<Competence> listCompetencesSelected;
-	
+
 	private SelectItem[] typeOptions = new SelectItem[3];
 	private SelectItem[] exigenceOptions = new SelectItem[3];
-	
-    private String code;
-    private String libelle;
-    private String description;
 
-    public AddPosteController() {
-    }
+	private String code;
+	private String libelle;
+	private String description;
 
-    @Override//@PostConstruct
-    protected void initController() {
+	private String codePrefix;
+
+	public AddPosteController() {
+	}
+
+	@Override//@PostConstruct
+	protected void initController() {
 		typeOptions[0] = new SelectItem("", "");
 		typeOptions[1] = new SelectItem("Académique", "Académique");
 		typeOptions[2] = new SelectItem("Professionnel", "Professionnel");
 		exigenceOptions[0] = new SelectItem("", "");
 		exigenceOptions[1] = new SelectItem("Obligatoire", "Obligatoire");
 		exigenceOptions[2] = new SelectItem("Supplémentaire", "Supplémentaire");
-        initAddPoste();
-    }
+		initAddPoste();
+	}
 
-    public void create() {
-        try {
+	public void create() {
+		try {
+			checkCode();
 			if (uniteOrganisationnelleSelected != null && uniteOrganisationnelleSelected.getId() != null) {
 				poste.setAdminUniteOrganisationnelle(uniteOrganisationnelleSelected);
 			}
@@ -118,109 +125,123 @@ public class AddPosteController extends AbstractController implements Serializab
 			if (emploiSelected != null && emploiSelected.getId() != null) {
 				poste.setEmploi(emploiSelected);
 			}
-			if (posteSelected != null  && posteSelected.getId() != null) {
+			if (posteSelected != null && posteSelected.getId() != null) {
 				poste.setPosteSuperieur(posteSelected);
 			}
 			poste.setDateCreation(new Date());
-            posteFacade.create(poste);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-            initAddPoste();
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+			posteFacade.create(poste);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+			initAddPoste();
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
 
-    private void initAddPoste() {
+	public void checkCode() throws MyException {
+		if (!codePrefix.equals("")) {
+			if (!poste.getCode().startsWith(codePrefix) || poste.getCode().equals(codePrefix)) {
+				throw new MyException("Le code doit commencer avec le prefix: " + codePrefix + " et suivi d'une chaine.");
+			}
+		}
+	}
+
+	private void initAddPoste() {
 		poste = new Poste();
+		try {
+			codePrefix = prefixFacade.chercherPrefix().getPoste();
+		} catch (Exception e) {
+			codePrefix = "";
+		}
+		poste.setCode(codePrefix);
 		listUniteOrganisationnelle = uniteOrganisationnelleFacade.findAllOrderByAttribut("id");
 		uniteOrganisationnelleSelected = new AdminUniteOrganisationnelle();
 		listTypePoste = typePosteFacade.findAllOrderByAttribut("id");
 		typePosteSelected = new TypePoste();
-        listEmploi = emploiFacade.findAllOrderByAttribut("id");
+		listEmploi = emploiFacade.findAllOrderByAttribut("id");
 		emploiSelected = new Emploi();
 		listPoste = posteFacade.findAllOrderByAttribut("code");
 		posteSelected = new Poste();
 		listMissions = new ArrayList();
-        listMissionsSelected = new ArrayList<>();
+		listMissionsSelected = new ArrayList<>();
 		listMissions = missionFacade.findAllOrderByAttribut("code");
 		listConditions = new ArrayList();
-        listConditionsSelected = new ArrayList<>();
+		listConditionsSelected = new ArrayList<>();
 		listConditions = conditionFacade.findAllOrderByAttribut("code");
 		listMoyens = new ArrayList();
-        listMoyensSelected = new ArrayList<>();
+		listMoyensSelected = new ArrayList<>();
 		listMoyens = moyenFacade.findAllOrderByAttribut("code");
 		listFormations = new ArrayList();
-        listFormationsSelected = new ArrayList<>();
+		listFormationsSelected = new ArrayList<>();
 		listFormations = formationFacade.findAllOrderByAttribut("code");
 		listCompetences = new ArrayList();
-        listCompetencesSelected = new ArrayList<>();
+		listCompetencesSelected = new ArrayList<>();
 		listCompetences = competenceFacade.findAllOrderByAttribut("code");
-    }
-	
+	}
+
 	public void addMissionsForPoste() {
-		if(!listMissionsSelected.isEmpty()) {
+		if (!listMissionsSelected.isEmpty()) {
 			poste.addListMissions(listMissionsSelected);
 			listMissions.removeAll(listMissionsSelected);
 			listMissionsSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeMissionForPoste(Mission mission) {
 		poste.removeMission(mission);
 		listMissions.add(mission);
 	}
-	
+
 	public void addConditionsForPoste() {
-		if(!listConditionsSelected.isEmpty()) {
+		if (!listConditionsSelected.isEmpty()) {
 			poste.addListConditions(listConditionsSelected);
 			listConditions.removeAll(listConditionsSelected);
 			listConditionsSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeConditionForPoste(Condition condition) {
 		poste.removeCondition(condition);
 		listConditions.add(condition);
 	}
-	
+
 	public void addMoyensForPoste() {
-		if(!listMoyensSelected.isEmpty()) {
+		if (!listMoyensSelected.isEmpty()) {
 			poste.addListMoyens(listMoyensSelected);
 			listMoyens.removeAll(listMoyensSelected);
 			listMoyensSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeMoyenForPoste(Moyen moyen) {
 		poste.removeMoyen(moyen);
 		listMoyens.add(moyen);
 	}
-	
+
 	public void addFormationsForPoste() {
-		if(!listFormationsSelected.isEmpty()) {
+		if (!listFormationsSelected.isEmpty()) {
 			poste.addListFormations(listFormationsSelected);
 			listFormations.removeAll(listFormationsSelected);
 			listFormationsSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeFormationForPoste(Formation formation) {
 		poste.removeFormation(formation);
 		listFormations.add(formation);
 	}
-	
+
 	public void addCompetencesForPoste() {
-		if(!listCompetencesSelected.isEmpty()) {
+		if (!listCompetencesSelected.isEmpty()) {
 			poste.addListCompetences(listCompetencesSelected);
 			listCompetences.removeAll(listCompetencesSelected);
 			listCompetencesSelected = new ArrayList<>();
 		}
 	}
-	
+
 	public void removeCompetenceForPoste(Competence competence) {
 		poste.removeCompetence(competence);
 		listCompetences.add(competence);
@@ -233,7 +254,7 @@ public class AddPosteController extends AbstractController implements Serializab
 	public String getLibelle() {
 		return libelle;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -257,7 +278,7 @@ public class AddPosteController extends AbstractController implements Serializab
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public void setPoste(Poste poste) {
 		this.poste = poste;
 	}
@@ -353,8 +374,6 @@ public class AddPosteController extends AbstractController implements Serializab
 	public void setPosteSelected(Poste posteSelected) {
 		this.posteSelected = posteSelected;
 	}
-	
-	
 
 	public MissionFacade getMissionFacade() {
 		return missionFacade;
@@ -491,5 +510,21 @@ public class AddPosteController extends AbstractController implements Serializab
 	public void setListCompetencesSelected(List<Competence> listCompetencesSelected) {
 		this.listCompetencesSelected = listCompetencesSelected;
 	}
-	
+
+	public AdminPrefixCodificationFacade getPrefixFacade() {
+		return prefixFacade;
+	}
+
+	public void setPrefixFacade(AdminPrefixCodificationFacade prefixFacade) {
+		this.prefixFacade = prefixFacade;
+	}
+
+	public String getCodePrefix() {
+		return codePrefix;
+	}
+
+	public void setCodePrefix(String codePrefix) {
+		this.codePrefix = codePrefix;
+	}
+
 }
