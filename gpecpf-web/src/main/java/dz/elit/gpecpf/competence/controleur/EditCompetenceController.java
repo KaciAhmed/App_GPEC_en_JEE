@@ -8,14 +8,17 @@ package dz.elit.gpecpf.competence.controleur;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.competence.entity.Competence;
+import dz.elit.gpecpf.competence.entity.Comportement;
 import dz.elit.gpecpf.competence.entity.Domainecompetence;
 import dz.elit.gpecpf.competence.entity.Typecompetence;
 import dz.elit.gpecpf.competence.service.CompetenceFacade;
+import dz.elit.gpecpf.competence.service.ComportementCompetenceFacade;
 import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
 import dz.elit.gpecpf.competence.service.TypeCompetenceFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -32,9 +35,12 @@ public class EditCompetenceController extends AbstractController implements Seri
     @EJB
     private CompetenceFacade compFacade;
     @EJB
-   DomaineCompetenceFacade domaineFacade;
+    DomaineCompetenceFacade domaineFacade;
     @EJB
     private TypeCompetenceFacade typeCompFacade;
+    @EJB
+    private ComportementCompetenceFacade comportementFacade;
+    
 
      private Competence comp;
      
@@ -47,6 +53,10 @@ public class EditCompetenceController extends AbstractController implements Seri
      private List<Typecompetence> listType;
      private Typecompetence typeSelected;
      
+     private List <Comportement> listeComportement;
+     private List <Comportement> listComportementSelected;
+     
+     
      String oldCode;
      
      // info pour chercher un domaine
@@ -56,6 +66,11 @@ public class EditCompetenceController extends AbstractController implements Seri
        // info pour chercher un type
      private String codeType;
      private String libType;
+     
+      // info por chercher un comportement
+      private String codeComportement;
+      private String descriptionComportement;
+    
     public EditCompetenceController() {
     }
     
@@ -69,6 +84,7 @@ public class EditCompetenceController extends AbstractController implements Seri
             domSelected=comp.getIddomcom();   
             typeSelected=comp.getIdtypcom();
             oldCode=comp.getCode();
+            listeComportement.removeAll(comp.getListComportement());
         }
     }
     
@@ -80,6 +96,9 @@ public class EditCompetenceController extends AbstractController implements Seri
       listType=typeCompFacade.findAllOrderByAttribut("code");
      domaineComp=new Domainecompetence();
      typeComp=new Typecompetence();
+     listeComportement =new ArrayList<>();
+     listeComportement=comportementFacade.findAllOrderByAttribut("code");
+     listComportementSelected=new ArrayList<>();
     }
     private boolean isExisteCode(String code) 
     {
@@ -118,8 +137,26 @@ public class EditCompetenceController extends AbstractController implements Seri
     }    
     public void editTypeForComp()
     {
-      comp.addTypeComp(typeSelected);
+      comp.editTypeComp(typeSelected);
     }  
+    
+    public void addComportementForCompetence() {
+	if (!listComportementSelected.isEmpty()) {
+            comp.addListComportement(listComportementSelected);
+            listeComportement.removeAll(listComportementSelected);
+            listComportementSelected= new ArrayList<>();
+            Collections.sort(comp.getListComportement());
+        }
+    }
+
+    public void removeComportementForCompetence(Comportement comportement) {
+      comp.removeComportement(comportement);
+      listeComportement.add(comportement);
+      Collections.sort(listeComportement);
+    }
+    public void chercherComportement(){
+        listeComportement = comportementFacade.findByCodeDescription(codeComportement, descriptionComportement);
+    }
          
          // getter && setter 
 
@@ -194,6 +231,38 @@ public class EditCompetenceController extends AbstractController implements Seri
 
     public void setLibType(String libType) {
         this.libType = libType;
+    }
+
+    public List<Comportement> getListeComportement() {
+        return listeComportement;
+    }
+
+    public void setListeComportement(List<Comportement> listeComportement) {
+        this.listeComportement = listeComportement;
+    }
+
+    public List<Comportement> getListComportementSelected() {
+        return listComportementSelected;
+    }
+
+    public void setListComportementSelected(List<Comportement> listComportementSelected) {
+        this.listComportementSelected = listComportementSelected;
+    }
+
+    public String getCodeComportement() {
+        return codeComportement;
+    }
+
+    public void setCodeComportement(String codeComportement) {
+        this.codeComportement = codeComportement;
+    }
+
+    public String getDescriptionComportement() {
+        return descriptionComportement;
+    }
+
+    public void setDescriptionComportement(String descriptionComportement) {
+        this.descriptionComportement = descriptionComportement;
     }
     
 }

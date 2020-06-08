@@ -52,7 +52,7 @@
                                 <a:panel header=" #{bundleReferentiel.titre_comportement_de_la_compétence}" iconheader="fa fa-list-ul">
                                     <f:facet name="header">                                            
                                     </f:facet>
-                                    <p:dataTable  id="tableCompetence" value="#{editComportementCompetenceController.compo.idcomp}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                    <p:dataTable  id="tableCompetence" value="#{editComportementCompetenceController.listCompetencesComportement}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
                                         <p:column headerText="#{bundleCommun.lbl_code}" >
                                             <h:outputText value="#{competence.code}"/>
                                         </p:column>

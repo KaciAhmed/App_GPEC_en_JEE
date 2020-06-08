@@ -11,13 +11,16 @@ import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.competence.entity.Competence;
+import dz.elit.gpecpf.competence.entity.Comportement;
 import dz.elit.gpecpf.competence.entity.Domainecompetence;
 import dz.elit.gpecpf.competence.entity.Typecompetence;
 import dz.elit.gpecpf.competence.service.CompetenceFacade;
+import dz.elit.gpecpf.competence.service.ComportementCompetenceFacade;
 import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
 import dz.elit.gpecpf.competence.service.TypeCompetenceFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -40,17 +43,22 @@ public class AddCompetenceController extends AbstractController implements Seria
     private TypeCompetenceFacade typeCompFacade; 
     @EJB
     private AdminPrefixCodificationFacade prefFacade;
+    @EJB
+    private ComportementCompetenceFacade comportementFacade;
     
     private  List<Prefixcodification> listPrefix;
     
-     private List<Domainecompetence> listDom;
+    private List<Domainecompetence> listDom;
 
     private Domainecompetence domaineCompSelected;
     
     private List<Typecompetence> listType;
-     private Typecompetence typeCompSelected;
+    private Typecompetence typeCompSelected;
     
     private Competence comp;
+    
+    private List<Comportement> listComportement;
+    private List<Comportement> listComportementSelected;
     
   // info pour chercher domaine  
     private String codeDom;
@@ -59,6 +67,10 @@ public class AddCompetenceController extends AbstractController implements Seria
      // info pour chercher type  
     private String codeType;
     private String libType;
+    
+    // info pour chercher un comportement
+    private String codeComportement;
+    private String descriptionComportement;
 
     public AddCompetenceController() {
     }
@@ -71,15 +83,18 @@ public class AddCompetenceController extends AbstractController implements Seria
 
     }
      protected void initAddComp(){
-      comp=new Competence();
-      chercherPrefix();
-     listDom =new ArrayList<>();
-     listDom=domaineFacade.findAllOrderByAttribut("code");
-     listType=new ArrayList<>();
-     listType=typeCompFacade.findAllOrderByAttribut("code");
-     domaineCompSelected=new Domainecompetence();
-     typeCompSelected=new Typecompetence();
-    }
+        comp=new Competence();
+        chercherPrefix();
+       listDom =new ArrayList<>();
+       listDom=domaineFacade.findAllOrderByAttribut("code");
+       listType=new ArrayList<>();
+       listType=typeCompFacade.findAllOrderByAttribut("code");
+       domaineCompSelected=new Domainecompetence();
+       typeCompSelected=new Typecompetence();
+       listComportement =new ArrayList<>();
+       listComportement=comportementFacade.findAllOrderByAttribut("code");
+       listComportementSelected=new ArrayList<>();
+     }
      
     public void chercherPrefix()
     {
@@ -103,7 +118,6 @@ public class AddCompetenceController extends AbstractController implements Seria
           listType=typeCompFacade.findAll();
     }
     public void addDomaineForComp(){
-        
         if(domaineCompSelected.getCode()!=null){
             comp.addDomComp(domaineCompSelected);  
         }
@@ -113,6 +127,22 @@ public class AddCompetenceController extends AbstractController implements Seria
         if(typeCompSelected.getCode()!=null){
             comp.setIdtypcom(typeCompSelected);
         }
+    }
+    public void addComportementForCompetence() {
+		if (!listComportementSelected.isEmpty()) {
+                    comp.addListComportement(listComportementSelected);
+                    listComportement.removeAll(listComportementSelected);
+                    listComportementSelected = new ArrayList<>();
+		}
+	}
+
+    public void removeComportementForcompetence(Comportement comportement) {
+        comp.removeComportement(comportement);
+        listComportement.add(comportement);
+        Collections.sort(listComportement);
+    }
+    public void chercherComportement(){
+        listComportement = comportementFacade.findByCodeDescription(codeComportement, descriptionComportement);
     }
     private boolean isExisteCode(String code) 
     {
@@ -227,7 +257,37 @@ public class AddCompetenceController extends AbstractController implements Seria
     public void setTypeCompSelected(Typecompetence typeCompSelected) {
         this.typeCompSelected = typeCompSelected;
     }
-    
-    
+
+    public List<Comportement> getListComportement() {
+        return listComportement;
+    }
+
+    public void setListComportement(List<Comportement> listComportement) {
+        this.listComportement = listComportement;
+    }
+
+    public List<Comportement> getListComportementSelected() {
+        return listComportementSelected;
+    }
+
+    public void setListComportementSelected(List<Comportement> listComportementSelected) {
+        this.listComportementSelected = listComportementSelected;
+    } 
+
+    public String getCodeComportement() {
+        return codeComportement;
+    }
+
+    public void setCodeComportement(String codeComportement) {
+        this.codeComportement = codeComportement;
+    }
+
+    public String getDescriptionComportement() {
+        return descriptionComportement;
+    }
+
+    public void setDescriptionComportement(String descriptionComportement) {
+        this.descriptionComportement = descriptionComportement;
+    }
     
 }

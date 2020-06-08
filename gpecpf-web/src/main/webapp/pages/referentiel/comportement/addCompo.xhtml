@@ -53,13 +53,16 @@
                                     <f:facet name="header">                                            
                                         <p:commandButton title="#{bundleReferentiel.titre_ajouter_competence}"  icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogCompetence').show();"/> 
                                     </f:facet>
-                                    <p:dataTable  id="tableCompetence" value="#{addComportementCompetenceController.compo.idcomp}" var="Competence" rowKey="#{Competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                    <p:dataTable  id="tableCompetence" value="#{addComportementCompetenceController.listCmtCmp}" var="Competence" rowKey="#{Competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
                                         <p:column headerText="#{bundleCommun.lbl_code}" >
                                             <h:outputText value="#{Competence.code}"/>
                                         </p:column>
                                         <p:column headerText="#{bundleCommun.lbl_liblle}" >
                                             <h:outputText value="#{Competence.libelle}"/>
                                         </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
+                                            <p:commandButton icon="fa fa-times" styleClass="BlackButton" actionListener="#{addComportementCompetenceController.removeCompetenceForComportement(Competence)}" update=":FormDialog:tableCompetenceSeect :form:tabView:tableCompetence" process="@this"/>
+                                    </p:column>
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>
@@ -95,8 +98,8 @@
                         </div>
                     </a:row>
                     <a:row>
-                        <p:dataTable id="tableCompetenceSeect" value="#{addComportementCompetenceController.listComp}" var="Competence" rowKey="#{Competence.code}" selection="#{addComportementCompetenceController.compSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" widgetVar="myWidgetVar2">
-                            <p:column selectionMode="single" width="10"/>
+                        <p:dataTable id="tableCompetenceSeect" value="#{addComportementCompetenceController.listComp}" var="Competence" rowKey="#{Competence.code}" selection="#{addComportementCompetenceController.listcompSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" widgetVar="myWidgetVar2">
+                            <p:column selectionMode="multiple" width="10"/>
                             <p:column headerText="#{bundleReferentiel.lbl_code}" >
                                 <h:outputText value="#{Competence.code}"/>
                             </p:column>

@@ -77,7 +77,7 @@
                                     <f:facet name="header">      
                                         
                                     </f:facet>
-                                    <p:dataTable id="tableComportement" value="#{editCompetenceController.comp.idtypcom}" var="type" rowKey="#{type.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                    <p:dataTable id="tableTypeComp" value="#{editCompetenceController.comp.idtypcom}" var="type" rowKey="#{type.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                                        <p:column headerText="#{bundleCommun.lbl_code}" >
                                             <h:outputText value="#{type.code}"/>
                                         </p:column>
@@ -92,7 +92,7 @@
                                     <f:facet name="header">      
                                         
                                     </f:facet>
-                                    <p:dataTable id="tableTypeComp" value="#{editCompetenceController.comp.comportementCollection}" var="comportement" rowKey="#{comportement.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                    <p:dataTable id="tableComportement" value="#{editCompetenceController.comp.listComportement}" var="comportement" rowKey="#{comportement.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                                        <p:column headerText="#{bundleCommun.lbl_code}"  filterBy="#{comportement.code}" filterMatchMode="contains">
                                             <h:outputText value="#{comportement.code}"/>
                                         </p:column>

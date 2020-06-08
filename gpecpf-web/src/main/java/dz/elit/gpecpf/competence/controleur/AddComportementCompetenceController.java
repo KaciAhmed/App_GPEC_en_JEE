@@ -16,6 +16,8 @@ import dz.elit.gpecpf.competence.service.CompetenceFacade;
 import dz.elit.gpecpf.competence.service.ComportementCompetenceFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -40,7 +42,8 @@ public class AddComportementCompetenceController extends AbstractController impl
     private  List<Prefixcodification> listPrefix;
     
     private List<Competence> listComp;
-    private Competence compSelected;
+    private List <Competence> listCmtCmp;
+    private List<Competence> listcompSelected;
     
     private Comportement compo;
     
@@ -61,7 +64,8 @@ public class AddComportementCompetenceController extends AbstractController impl
    protected void initAddComp(){
       compo=new Comportement();
       chercherPrefix();
-      compSelected=new Competence();
+      listcompSelected=new ArrayList<>();
+      listCmtCmp =new ArrayList<>();
       listComp =new ArrayList<>();
       listComp=compFacade.findAllOrderByAttribut("code");
    }
@@ -76,16 +80,38 @@ public class AddComportementCompetenceController extends AbstractController impl
    public void chercherCompetence(){
        listComp=compFacade.findByCodeLibelle(codeComp, libComp);
    }
-
    
-   
-   public void addCompetenceForComportement(){
-        
-        if(compSelected.getCode()!=null){
-           compo.addCompetenceComportement(compSelected);
+    public void addCompetenceForComportement() {
+        if (!listcompSelected.isEmpty()) {
+            listCmtCmp.addAll(listcompSelected);
+            listComp.removeAll(listcompSelected);
+            listcompSelected =new ArrayList<>();
         }
-      //  System.out.println("--------------------------------"+compSelected.getCode());
     }
+
+	
+   public void removeCompetenceForComportement(Competence cmt) 
+    {
+        listCmtCmp.remove(cmt);
+        listComp.add(cmt);
+         Collections.sort(listComp);
+        
+    }
+   
+  /* public void addCompetenceForComportement(){
+        
+        if(!listcompSelected.isEmpty()){
+           compo.addListCompetenceForComportement(listcompSelected);
+           listComp.removeAll(listcompSelected);
+           listcompSelected=new ArrayList<>();
+        }
+    }
+   public void removeCompetenceForComportement(Competence cmt) 
+    {
+        compo.removeCompetence(cmt);
+        listComp.add(cmt);
+        Collections.sort(listComp);
+    }*/
     private boolean isExisteCode(String code) 
     {
         Comportement Compo2 = ComportementFacade.findByCode(code);
@@ -97,19 +123,20 @@ public class AddComportementCompetenceController extends AbstractController impl
     }
     public void create() {
         try {
-                if(compo.getIdcomp()==null)
+            /*    if(compo.getIdcomp()==null)
                 {
                     MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_add_comportement_comp"));
-                }else{  
+                }else{  */
                         compo.setCode(compo.getCode().toUpperCase());
                         if (isExisteCode(compo.getCode()) ) {
                             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
                          }else{
                                 ComportementFacade.create(compo);
+                                compFacade.editComportemnt(compo, listCmtCmp, new ArrayList());
                                 MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//comportement crée avec succès
                                 initAddComp();  
                               }
-                }
+              //  }
         } catch (MyException ex) {
             ex.printStackTrace();
             MyUtil.addErrorMessage(ex.getMessage());
@@ -128,12 +155,12 @@ public class AddComportementCompetenceController extends AbstractController impl
         this.listComp = listComp;
     }
 
-    public Competence getCompSelected() {
-        return compSelected;
+    public List<Competence> getListcompSelected() {
+        return listcompSelected;
     }
 
-    public void setCompSelected(Competence compSelected) {
-        this.compSelected = compSelected;
+    public void setListcompSelected(List<Competence> listcompSelected) {
+        this.listcompSelected = listcompSelected;
     }
 
     public Comportement getCompo() {
@@ -158,6 +185,14 @@ public class AddComportementCompetenceController extends AbstractController impl
 
     public void setLibComp(String libComp) {
         this.libComp = libComp;
+    }
+
+    public List<Competence> getListCmtCmp() {
+        return listCmtCmp;
+    }
+
+    public void setListCmtCmp(List<Competence> listCmtCmp) {
+        this.listCmtCmp = listCmtCmp;
     }
        
 }

@@ -84,7 +84,7 @@ public class ListCompetenceController extends AbstractController implements Seri
     public void remove(Competence comp) 
     {
      try {
-            if(!comp.getComportementCollection().isEmpty() ||comp.getComportementCollection().size()>0 )
+            if(!comp.getListComportement().isEmpty() ||comp.getListComportement().size()>0 )
             {
                 MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_suppression_competence"));
             }else{
