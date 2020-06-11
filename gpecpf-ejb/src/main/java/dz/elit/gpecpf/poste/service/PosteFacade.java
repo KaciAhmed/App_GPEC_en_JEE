@@ -3,6 +3,7 @@ package dz.elit.gpecpf.poste.service;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.service.AbstractFacade;
 import dz.elit.gpecpf.commun.util.StaticUtil;
+import dz.elit.gpecpf.competence.entity.Competence;
 import dz.elit.gpecpf.poste.entity.Condition;
 import dz.elit.gpecpf.poste.entity.Emploi;
 import dz.elit.gpecpf.poste.entity.Formation;
@@ -90,6 +91,21 @@ public class PosteFacade extends AbstractFacade<Poste> {
 	public List<Poste> postesForFormation(Formation formation) {
 		Query q = em.createNamedQuery("Poste.findByFormation");
         q.setParameter("formation", formation);
+        return q.getResultList();
+	}
+        public void editCompetence(Competence competence, List<Poste> postesAdd, List<Poste> postesRemove) throws Exception {
+		for (Poste poste : postesAdd) {
+			poste.addCompetence(competence);
+			edit(poste);
+		}
+		for (Poste poste : postesRemove) {
+			poste.removeCompetence(competence);
+			edit(poste);
+		}
+	}
+        public List<Poste> postesForCompetence(Competence competence) {
+		Query q = em.createNamedQuery("Poste.findByCompetence");
+        q.setParameter("competence", competence);
         return q.getResultList();
 	}
    public List<Poste> findByCodeDenomination(String code, String Denomination)

@@ -42,9 +42,10 @@ import otherEntity.Historiqueemployeposte;
 	@NamedQuery(name = "Poste.findByResponsable", query = "SELECT p FROM Poste p WHERE p.posteSuperieur =:posteSuperieur "),
 	@NamedQuery(name = "Poste.findByCondition", query = "SELECT p FROM Poste p WHERE :condition MEMBER OF p.listConditions "),
 	@NamedQuery(name = "Poste.findByMoyen", query = "SELECT p FROM Poste p WHERE :moyen MEMBER OF p.listMoyens "),
-	@NamedQuery(name = "Poste.findByFormation", query = "SELECT p FROM Poste p WHERE :formation MEMBER OF p.listFormations ")     
+	@NamedQuery(name = "Poste.findByFormation", query = "SELECT p FROM Poste p WHERE :formation MEMBER OF p.listFormations "),    
+        @NamedQuery(name = "Poste.findByCompetence", query = "SELECT p FROM Poste p WHERE :competence MEMBER OF p.listCompetences ")
 })
-public class Poste implements Serializable {
+public class Poste implements Comparable,Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -457,5 +458,8 @@ public class Poste implements Serializable {
     public String toString() {
         return "dz.elit.gpecpf.poste.entity.Poste[ id=" + id + " ]";
     }
-    
+    public int compareTo(Object o){
+        Poste poste =(Poste)o;
+        return this.code.compareToIgnoreCase(poste.getCode());
+    }
 }

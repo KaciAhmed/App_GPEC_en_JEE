@@ -102,6 +102,22 @@
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>
+                            <p:tab id="tabPostes" title="#{bundleReferentiel.lbl_postes}">
+                                <a:row>
+                                    <a:panel header=" #{bundleReferentiel.lbl_postes}" iconheader="fa fa-list-ul">
+                                           <f:facet name="header">  
+                                           </f:facet>
+                                        <p:dataTable  id="tablePoste" value="#{editCompetenceController.listPostesCompetence}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                                   <p:column headerText="#{bundleCommun.lbl_code}" >
+                                                       <h:outputText value="#{poste.code}"/>
+                                                   </p:column>
+                                                   <p:column headerText="#{bundleGesemp.lbl_denomination}">
+                                                       <h:outputText value="#{poste.denomination}"/>
+                                                   </p:column>
+                                            </p:dataTable>
+                                         </a:panel>
+                                     </a:row>
+                                 </p:tab>
                         </p:tabView>
                     </a:column>
                 </a:row>     

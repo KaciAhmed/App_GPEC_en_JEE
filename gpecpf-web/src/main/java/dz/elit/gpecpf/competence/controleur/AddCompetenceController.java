@@ -18,6 +18,8 @@ import dz.elit.gpecpf.competence.service.CompetenceFacade;
 import dz.elit.gpecpf.competence.service.ComportementCompetenceFacade;
 import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
 import dz.elit.gpecpf.competence.service.TypeCompetenceFacade;
+import dz.elit.gpecpf.poste.entity.Poste;
+import dz.elit.gpecpf.poste.service.PosteFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,6 +47,8 @@ public class AddCompetenceController extends AbstractController implements Seria
     private AdminPrefixCodificationFacade prefFacade;
     @EJB
     private ComportementCompetenceFacade comportementFacade;
+    @EJB
+    private PosteFacade posteFacade;
     
     private  List<Prefixcodification> listPrefix;
     
@@ -59,6 +63,10 @@ public class AddCompetenceController extends AbstractController implements Seria
     
     private List<Comportement> listComportement;
     private List<Comportement> listComportementSelected;
+    
+    private List<Poste> listPostes;
+    private List<Poste> listPostesCompetence;
+    private List<Poste> listPostesSelected;
     
   // info pour chercher domaine  
     private String codeDom;
@@ -94,6 +102,11 @@ public class AddCompetenceController extends AbstractController implements Seria
        listComportement =new ArrayList<>();
        listComportement=comportementFacade.findAllOrderByAttribut("code");
        listComportementSelected=new ArrayList<>();
+       
+       listPostes = new ArrayList();
+       listPostes = posteFacade.findAllOrderByAttribut("code");
+       listPostesSelected = new ArrayList<>();
+       listPostesCompetence = new ArrayList();
      }
      
     public void chercherPrefix()
@@ -153,6 +166,24 @@ public class AddCompetenceController extends AbstractController implements Seria
             return true;
         }
     }
+    public void addPostesForCompetence() {
+        if (!listPostesSelected.isEmpty()) {
+            listPostesCompetence.addAll(listPostesSelected);
+            Collections.sort(listPostesCompetence);
+            listPostes.removeAll(listPostesSelected);
+            listPostesSelected = new ArrayList<>();
+	}
+    }
+
+    public void removePosteForCompetence(Poste poste) {
+	listPostesCompetence.remove(poste);
+	listPostes.add(poste);
+        System.out.println("-----------------------------------------------------------------");
+        Collections.sort(listPostes);
+    }
+    
+    
+    
     public void create() {
         try {
                if(comp.getIddomcom()==null)
@@ -168,6 +199,7 @@ public class AddCompetenceController extends AbstractController implements Seria
                                      MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
                                  }else{
                                         compFacade.create(comp);
+                                        posteFacade.editCompetence(comp, listPostesCompetence, new ArrayList());
                                         MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Compétence crée avec succès
                                         initAddComp();
                                 }
@@ -288,6 +320,30 @@ public class AddCompetenceController extends AbstractController implements Seria
 
     public void setDescriptionComportement(String descriptionComportement) {
         this.descriptionComportement = descriptionComportement;
+    }
+
+    public List<Poste> getListPostes() {
+        return listPostes;
+    }
+
+    public void setListPostes(List<Poste> listPostes) {
+        this.listPostes = listPostes;
+    }
+
+    public List<Poste> getListPostesCompetence() {
+        return listPostesCompetence;
+    }
+
+    public void setListPostesCompetence(List<Poste> listPostesCompetence) {
+        this.listPostesCompetence = listPostesCompetence;
+    }
+
+    public List<Poste> getListPostesSelected() {
+        return listPostesSelected;
+    }
+
+    public void setListPostesSelected(List<Poste> listPostesSelected) {
+        this.listPostesSelected = listPostesSelected;
     }
     
 }

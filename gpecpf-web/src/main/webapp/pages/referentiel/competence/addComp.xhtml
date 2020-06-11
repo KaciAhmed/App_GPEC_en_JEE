@@ -88,7 +88,7 @@
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>
-                            <p:tab title="Comportement">
+                            <p:tab title="Comportements">
                                 <a:panel header=" #{bundleReferentiel.titre_liste_comportement_competence}" iconheader="fa fa-list-ul">
                                     <f:facet name="header">                                            
                                         <p:commandButton title="#{bundleReferentiel.titre_ajouter_comportement_competence}"  icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogComportement').show();"/> 
@@ -106,6 +106,26 @@
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>
+                            <p:tab id="tabPostes" title="#{bundleReferentiel.lbl_postes_Compétence}">
+                                <a:row>
+                                    <a:panel header=" #{bundleReferentiel.lbl_postes_Compétence}" iconheader="fa fa-list-ul">
+                                           <f:facet name="header">  
+                                               <p:commandButton title="#{bundleReferentiel.titre_ajouter_poste_compétence}"  icon="fa fa-pencil-square-o" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogPoste').show();"/> 
+                                           </f:facet>
+                                            <p:dataTable  id="tablePoste" value="#{addCompetenceController.listPostesCompetence}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                                   <p:column headerText="#{bundleCommun.lbl_code}" >
+                                                       <h:outputText value="#{poste.code}"/>
+                                                   </p:column>
+                                                   <p:column headerText="#{bundleGesemp.lbl_denomination}">
+                                                       <h:outputText value="#{poste.denomination}"/>
+                                                   </p:column>
+                                                <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
+                                                        <p:commandButton icon="fa fa-times" styleClass="BlackButton" actionListener="#{addCompetenceController.removePosteForCompetence(poste)}" update="formDialogPoste:tablePosteDialog :form:tabView:tablePoste" process="@this"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                         </a:panel>
+                                     </a:row>
+                                 </p:tab>
                         </p:tabView>
                     </a:column>
                 </a:row>               
@@ -259,7 +279,36 @@
                     </a:row>     
             </p:dialog>
         </h:form> 
-  
+        <h:form id="formDialogPoste">
+            <p:dialog id="dialogPostId" widgetVar="dialogPoste" header="#{bundleGesemp.titre_ajouter_poste_employe}" modal="true"  width="60%" responsive="true" position="center">
+                <a:row>
+                        <p:dataTable id="tablePosteDialog" value="#{addCompetenceController.listPostes}" var="poste" rowKey="#{poste.id}" selection="#{addCompetenceController.listPostesSelected}" reflow="true" rows="10"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false">
+                            <p:column selectionMode="multiple" width="10"/>
+                            <p:column headerText="#{bundleCommun.lbl_code}" filterBy="#{poste.code}" filterMatchMode="contains" >
+                                <h:outputText value="#{poste.code}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleGesemp.lbl_denomination}" filterBy="#{poste.denomination}" filterMatchMode="contains">
+                                <h:outputText value="#{poste.denomination}"/>
+                            </p:column>
+                            <f:facet name="footer" >
+                                <div class="form-actions">
+                                    <a:row nomargin="true">
+                                        <a:column span="9">
+                                            <a:row nomargin="true">
+                                                <a:column  span="9" id="pgbtndlg">
+                                                    <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":formDialogPoste:tablePosteDialog" actionListener="#{addCompetenceController.addPostesForCompetence()}" 
+                                                              update=":formDialogPoste:tablePosteDialog :form:tabView:tablePoste"        oncomplete="PF('dialogPoste').hide();"/> 
+                                                    <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogPoste').hide()" />
+                                                </a:column>
+                                            </a:row>   
+                                        </a:column>
+                                    </a:row>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                 </a:row>
+            </p:dialog>
+         </h:form> 
     </ui:define>
 </ui:composition>
 

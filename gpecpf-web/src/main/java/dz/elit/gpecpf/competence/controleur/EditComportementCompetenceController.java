@@ -61,7 +61,9 @@ public class EditComportementCompetenceController extends AbstractController imp
         if (id != null) {
             compo = ComportementFacade.find(Integer.parseInt(id));
             listCompetencesComportement =compFacade.competenceForComportement(compo);
+            Collections.sort(listCompetencesComportement);
             listComp.removeAll(listCompetencesComportement);
+            Collections.sort(listComp);
             oldCode=compo.getCode();
         }
     } 
@@ -111,6 +113,7 @@ public class EditComportementCompetenceController extends AbstractController imp
             listCompetencesComportement.addAll(listcompSelected);
             Collections.sort(listCompetencesComportement);
             listComp.removeAll(listcompSelected);
+            Collections.sort(listComp);
             listCompetenceAdd.addAll(listcompSelected);
             listCompetencesDel.removeAll(listcompSelected);
             listcompSelected = new ArrayList<>();

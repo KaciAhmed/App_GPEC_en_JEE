@@ -15,6 +15,8 @@ import dz.elit.gpecpf.competence.service.CompetenceFacade;
 import dz.elit.gpecpf.competence.service.ComportementCompetenceFacade;
 import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
 import dz.elit.gpecpf.competence.service.TypeCompetenceFacade;
+import dz.elit.gpecpf.poste.entity.Poste;
+import dz.elit.gpecpf.poste.service.PosteFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ public class EditCompetenceController extends AbstractController implements Seri
     private TypeCompetenceFacade typeCompFacade;
     @EJB
     private ComportementCompetenceFacade comportementFacade;
+    @EJB
+    private PosteFacade posteFacade;
     
 
      private Competence comp;
@@ -55,6 +59,12 @@ public class EditCompetenceController extends AbstractController implements Seri
      
      private List <Comportement> listeComportement;
      private List <Comportement> listComportementSelected;
+     
+     private List<Poste> listPostes;
+     private List<Poste> listPostesCompetence;
+     private List<Poste> listPostesSelected;
+     private List<Poste> listPostesAdd;
+     private List<Poste> listPostesDel;
      
      
      String oldCode;
@@ -85,6 +95,10 @@ public class EditCompetenceController extends AbstractController implements Seri
             typeSelected=comp.getIdtypcom();
             oldCode=comp.getCode();
             listeComportement.removeAll(comp.getListComportement());
+            Collections.sort(comp.getListComportement());
+            listPostesCompetence =posteFacade.postesForCompetence(comp);
+            Collections.sort(listPostesCompetence);
+            listPostes.removeAll(listPostesCompetence);
         }
     }
     
@@ -99,6 +113,13 @@ public class EditCompetenceController extends AbstractController implements Seri
      listeComportement =new ArrayList<>();
      listeComportement=comportementFacade.findAllOrderByAttribut("code");
      listComportementSelected=new ArrayList<>();
+     
+     listPostes = new ArrayList();
+     listPostes = posteFacade.findAllOrderByAttribut("code");
+     listPostesSelected = new ArrayList<>();
+     listPostesCompetence = new ArrayList();
+     listPostesAdd = new ArrayList();
+     listPostesDel = new ArrayList();
     }
     private boolean isExisteCode(String code) 
     {
@@ -118,6 +139,8 @@ public class EditCompetenceController extends AbstractController implements Seri
             }else{
                      compFacade.edit(comp);
                      MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"compétence modifié avec succès");
+                     listPostesAdd.removeAll(posteFacade.postesForCompetence(comp));
+                     posteFacade.editCompetence(comp, listPostesAdd, listPostesDel);
                      oldCode=comp.getCode();
             }
             } catch (Exception ex) {
@@ -156,6 +179,27 @@ public class EditCompetenceController extends AbstractController implements Seri
     }
     public void chercherComportement(){
         listeComportement = comportementFacade.findByCodeDescription(codeComportement, descriptionComportement);
+    }
+    
+    public void addPostesForCompetence() {
+	if (!listPostesSelected.isEmpty()) {
+            listPostesCompetence.addAll(listPostesSelected);
+            Collections.sort(listPostesCompetence);
+            listPostes.removeAll(listPostesSelected);
+            Collections.sort(listPostes);
+            listPostesAdd.addAll(listPostesSelected);
+            listPostesDel.removeAll(listPostesSelected);
+            listPostesSelected = new ArrayList<>();
+	}
+    }
+
+    public void removePosteForCompetence(Poste poste) {
+	listPostesCompetence.remove(poste);
+        Collections.sort(listPostesCompetence);
+	listPostes.add(poste);
+        Collections.sort(listPostes);
+	listPostesAdd.remove(poste);
+	listPostesDel.add(poste);
     }
          
          // getter && setter 
@@ -264,5 +308,30 @@ public class EditCompetenceController extends AbstractController implements Seri
     public void setDescriptionComportement(String descriptionComportement) {
         this.descriptionComportement = descriptionComportement;
     }
+
+    public List<Poste> getListPostes() {
+        return listPostes;
+    }
+
+    public void setListPostes(List<Poste> listPostes) {
+        this.listPostes = listPostes;
+    }
+
+    public List<Poste> getListPostesCompetence() {
+        return listPostesCompetence;
+    }
+
+    public void setListPostesCompetence(List<Poste> listPostesCompetence) {
+        this.listPostesCompetence = listPostesCompetence;
+    }
+
+    public List<Poste> getListPostesSelected() {
+        return listPostesSelected;
+    }
+
+    public void setListPostesSelected(List<Poste> listPostesSelected) {
+        this.listPostesSelected = listPostesSelected;
+    }
+    
     
 }
