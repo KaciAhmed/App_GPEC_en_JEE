@@ -61,9 +61,15 @@ public class EditComportementCompetenceController extends AbstractController imp
         if (id != null) {
             compo = ComportementFacade.find(Integer.parseInt(id));
             listCompetencesComportement =compFacade.competenceForComportement(compo);
-            Collections.sort(listCompetencesComportement);
+            if(listCompetencesComportement!=null && !listCompetencesComportement.isEmpty())
+            {
+                Collections.sort(listCompetencesComportement);
+            }
             listComp.removeAll(listCompetencesComportement);
-            Collections.sort(listComp);
+            if(listComp!=null && !listComp.isEmpty())
+            {
+                Collections.sort(listComp);
+            }
             oldCode=compo.getCode();
         }
     } 
@@ -111,9 +117,15 @@ public class EditComportementCompetenceController extends AbstractController imp
     public void addCompetenceForComprtement() {
 	if (!listcompSelected.isEmpty()) {
             listCompetencesComportement.addAll(listcompSelected);
-            Collections.sort(listCompetencesComportement);
+            if(listCompetencesComportement!=null && !listCompetencesComportement.isEmpty())
+            {
+                Collections.sort(listCompetencesComportement);
+            }
             listComp.removeAll(listcompSelected);
-            Collections.sort(listComp);
+            if(listComp!=null && !listComp.isEmpty())
+            {
+                Collections.sort(listComp);
+            }
             listCompetenceAdd.addAll(listcompSelected);
             listCompetencesDel.removeAll(listcompSelected);
             listcompSelected = new ArrayList<>();
@@ -121,12 +133,20 @@ public class EditComportementCompetenceController extends AbstractController imp
     }
 
 	public void removeCompetenceForComportement(Competence competence) {
+          
 		listCompetencesComportement.remove(competence);
-                Collections.sort(listCompetencesComportement);
+                if(listCompetencesComportement!=null && !listCompetencesComportement.isEmpty())
+                {
+                    Collections.sort(listCompetencesComportement);
+                }
 		listComp.add(competence);
-                Collections.sort(listComp);
+                if(listComp!=null && !listComp.isEmpty())
+                {
+                    Collections.sort(listComp);
+                }
 		listCompetenceAdd.remove(competence);
 		listCompetencesDel.add(competence);
+               
 	}
       // getter && setter 
 

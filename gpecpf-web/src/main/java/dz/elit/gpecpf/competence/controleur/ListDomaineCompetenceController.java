@@ -92,6 +92,11 @@ public class ListDomaineCompetenceController extends AbstractController implemen
                 {
                     MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_domaine_liée_à_compétence"));
                 }else{
+                        if(domComp.getIddommere()!=null && domComp.getIddommere().getCode()!=null){
+                           Domainecompetence domainePere=domComp.getIddommere();
+                           domainePere.getDomainecompetenceCollection().remove(domComp);
+                           domaineCompFacade.edit(domainePere);
+                        }
                         domaineCompFacade.remove(domComp);
                          MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
                         findList();

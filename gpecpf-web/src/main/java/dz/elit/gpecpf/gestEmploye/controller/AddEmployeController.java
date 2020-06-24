@@ -85,6 +85,7 @@ public class AddEmployeController extends AbstractController implements Serializ
 
 
     private  int ageMinimale;
+    private int ageMax;
     
 
 
@@ -95,7 +96,7 @@ public class AddEmployeController extends AbstractController implements Serializ
     protected void initController() {
         initAddEmploye();
     }
-     private void initAddEmploye() {
+    private void initAddEmploye() {
         emp = new Employe();
         chercherPrefix();
         //partie formation
@@ -119,7 +120,8 @@ public class AddEmployeController extends AbstractController implements Serializ
         listPostes=posteFacade.findAllOrderByAttribut("code");
         posteSelected=new Poste();
         
-        ageMinimale=18;   
+        ageMinimale=18;  
+        ageMax=70;
     }
     public void chercherPrefix()
     {   
@@ -220,18 +222,75 @@ public class AddEmployeController extends AbstractController implements Serializ
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(emp.getDtNaissance());
-        int annee=calendar.get(Calendar.YEAR);
+        int annee_naiss=calendar.get(Calendar.YEAR);
+        int mois_naiss=calendar.get(Calendar.MONTH);
+        int jour_naiss=calendar.get(Calendar.DATE);
 
-        Date dtAct =new Date();
-        calendar = Calendar.getInstance();
-        calendar.setTime(dtAct);
-        int anneAct= calendar.get(Calendar.YEAR);
         
-        if(annee+ ageMinimale < anneAct)
+        calendar = Calendar.getInstance();
+        calendar.setTime(emp.getDate_recrutement());
+        int anneRec= calendar.get(Calendar.YEAR);
+        int moisRec= calendar.get(Calendar.MONTH);
+        int jourRec = calendar.get(Calendar.DATE);
+        
+        if(annee_naiss+ ageMinimale < anneRec)
             return true;
-        else
+        else{
+             if(annee_naiss+ ageMinimale == anneRec){
+                if(mois_naiss < moisRec){
+                    return true;
+                }else{
+                    if(mois_naiss==moisRec){
+                        if(jour_naiss <= jourRec){
+                            return true;
+                        }
+                    }
+                }
+            }   
+        }
             return false; 
     }
+    private Boolean vrfAgeMax()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(emp.getDtNaissance());
+        int annee_naiss=calendar.get(Calendar.YEAR);
+        int mois_naiss=calendar.get(Calendar.MONTH);
+        int jour_naiss=calendar.get(Calendar.DATE);
+
+        
+        calendar = Calendar.getInstance();
+        calendar.setTime(emp.getDate_recrutement());
+        int anneRec= calendar.get(Calendar.YEAR);
+        int moisRec= calendar.get(Calendar.MONTH);
+        int jourRec = calendar.get(Calendar.DATE);
+        
+        if(annee_naiss+ ageMax > anneRec)
+            return true;
+        else{
+            if(annee_naiss+ ageMax == anneRec){
+                if(mois_naiss>moisRec){
+                    return true;
+                }else{
+                    if(mois_naiss==moisRec){
+                        if(jour_naiss>jourRec){
+                            return true;
+                        }
+                    }
+                }
+            }  
+        }
+            return false; 
+    }
+    private Boolean vrfDtNaiss_DtRec()
+    {
+        if(emp.getDate_recrutement().before(emp.getDtNaissance()))
+        {
+            return false;
+        }
+        return true;
+    }
+    
    
     private void creerHistoriqueEmployePoste(){
         hystEmpPoste =new Historiqueemployeposte(emp.getId(),posteSelected.getId(),emp.getDate_recrutement()); 
@@ -262,19 +321,35 @@ public class AddEmployeController extends AbstractController implements Serializ
                                                     if(! vrfDateNaissance()){
                                                         MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_employe_mineur"));  
                                                     }else{
-                                                        if(posteSelected== null || posteSelected.getCode()==null)
+                                                        if(!vrfAgeMax())
                                                         {
-                                                            MyUtil.addErrorMessage(MyUtil.getBundleCommun("  msg_erreur_periode_poste ")); 
+                                                          MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_employe_vieux"));                                                            
                                                         }else{
-                                                                    empFacade.create(emp);
-                                                                    creerHistoriqueEmployePoste();
-                                                                    empFacade.edit(emp);
-                                                                    MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
-                                                                    initAddEmploye();  
-                                                                    posteEmp=null; 
-                                                                   
-                                                              }
-                                                         }
+                                                                if(!vrfAgeMax())
+                                                                {
+                                                                  MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_employe_vieux"));                                                            
+                                                                }else{
+                                                                    if(!vrfDtNaiss_DtRec())
+                                                                    {
+                                                                      MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_dt_naissance_sup_dt_recrutement"));                                                            
+                                                                    }else{
+                                                                        if(posteSelected== null || posteSelected.getCode()==null)
+                                                                        {
+                                                                            MyUtil.addErrorMessage(MyUtil.getBundleCommun("  msg_erreur_periode_poste ")); 
+                                                                        }else{
+                                                                                    empFacade.create(emp);
+                                                                                    creerHistoriqueEmployePoste();
+                                                                                    empFacade.edit(emp);
+                                                                                    MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé crée avec succès
+                                                                                    initAddEmploye();
+                                                                                    posteEmp=null; 
+                                                                                    
+
+                                                                              }
+                                                                         }
+                                                                      }
+                                                                }
+                                                            }
                                                   }
                                          }
                                   }

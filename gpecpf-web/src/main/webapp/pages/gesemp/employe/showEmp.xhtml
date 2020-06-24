@@ -31,14 +31,14 @@
                             <a:column span="6" >                                
                                 <a:label value="#{bundleGesemp.lbl_matricule}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="matriculeEmp" value="#{editEmployeController.emp.matricule}" required="true" label="#{bundleGesemp.lbl_matricule}" size="40" disabled="true"/>
+                                    <p:inputText id="matriculeEmp" value="#{editEmployeController.emp.matricule}" required="true" label="#{bundleGesemp.lbl_matricule}" size="40" disabled="false"/>
                                     <p:message for="matriculeEmp" />                                        
                                 </a:column>                                
                             </a:column>
                             <a:column span="6" >   
                                 <a:label value="#{bundleGesemp.lbl_typeContrat}" span="4" />
                                <a:column span="8" >
-                                   <p:inputText id="typeContrat" value="#{editEmployeController.emp.typeContrat}" required="true" label="#{bundleGesemp.lbl_typeContrat}" size="40" disabled="true"/>
+                                   <p:inputText id="typeContrat" value="#{editEmployeController.emp.typeContrat}" required="true" label="#{bundleGesemp.lbl_typeContrat}" size="40" disabled="false"/>
                                    <p:message for="typeContrat" />
                                </a:column>     
                             </a:column> 
@@ -47,14 +47,14 @@
                            <a:column span="6" >                               
                                <a:label value="#{bundleGesemp.lbl_date_recrutement}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="dateRec" value="#{editEmployeController.dtRec}"   label="#{bundleGesemp.lbl_date_recrutement}" disabled="true"/>
+                                    <p:inputText id="dateRec" value="#{editEmployeController.dtRec}"   label="#{bundleGesemp.lbl_date_recrutement}" disabled="false"/>
                                     <p:message for="dateRec" />                                        
                                 </a:column>                                
                             </a:column>
                             <a:column span="6" >                               
                                <a:label value="#{bundleGesemp.lbl_date_depart}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText  id="dateDep" value="#{editEmployeController.dtDep}"  label="#{bundleGesemp.lbl_date_depart}" disabled="true"/>  
+                                    <p:inputText  id="dateDep" value="#{editEmployeController.dtDep}"  label="#{bundleGesemp.lbl_date_depart}" disabled="false"/>  
                                     <p:message for="dateDep" />                                        
                                 </a:column>                                
                             </a:column>
@@ -63,7 +63,7 @@
                             <a:column span="6" >
                                 <a:label value="#{bundleGesemp.lbl_classement}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="classement" value="#{editEmployeController.emp.classement}" label="#{bundleGesemp.lbl_classement}" disabled="true" />
+                                    <p:inputText id="classement" value="#{editEmployeController.emp.classement}" label="#{bundleGesemp.lbl_classement}" disabled="false" />
                                     <p:message for="classement" />                                        
                                 </a:column>                                
                             </a:column>  
@@ -71,7 +71,7 @@
                                 <a:label value="#{bundleGesemp.lbl_userName}" span="4" />
                                 <a:column span="8" >
                                     <h:outputText id="out" />
-                                    <p:inputText id="userName" value="#{editEmployeController.emp.userName}" required="true" label="#{bundleGesemp.lbl_userName}" disabled="true" />
+                                    <p:inputText id="userName" value="#{editEmployeController.emp.userName}" required="true" label="#{bundleGesemp.lbl_userName}" disabled="false" />
                                     <p:message for="userName" />                                        
                                 </a:column>                               
                             </a:column>
@@ -85,14 +85,14 @@
                             <a:column span="6" >
                                 <a:label value="#{bundleGesemp.lbl_nom}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="nom" value="#{editEmployeController.emp.nom}"  label="#{bundleGesemp.lbl_nom}" disabled="true"/>
+                                    <p:inputText id="nom" value="#{editEmployeController.emp.nom}"  label="#{bundleGesemp.lbl_nom}" disabled="false"/>
                                     <p:message for="nom" />                                        
                                 </a:column>                                
                             </a:column>  
                             <a:column span="6" >                                
                                 <a:label value="#{bundleGesemp.lbl_prenom}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="prenom" value="#{editEmployeController.emp.prenom}"  label="#{bundleGesemp.lbl_prenom}" size="40" disabled="true"/>
+                                    <p:inputText id="prenom" value="#{editEmployeController.emp.prenom}"  label="#{bundleGesemp.lbl_prenom}" size="40" disabled="false"/>
                                     <p:message for="prenom" />                                        
                                 </a:column>                                
                             </a:column>
@@ -101,14 +101,14 @@
                             <a:column span="6" >   
                                 <a:label value="#{bundleGesemp.lbl_sexe}" span="4" />
                                <a:column span="8" >
-                                   <p:inputText id="sexe" value="#{editEmployeController.emp.sexe}"  label="#{bundleGesemp.lbl_sexe}"  disabled="true"/>
+                                   <p:inputText id="sexe" value="#{editEmployeController.emp.sexe}"  label="#{bundleGesemp.lbl_sexe}"  disabled="false"/>
                                     <p:message for="sexe" /> 
                                </a:column>     
                             </a:column> 
                            <a:column span="6" >                               
                                <a:label value="#{bundleGesemp.lbl_date_naissance}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="dateNaiss" value="#{editEmployeController.dtNaiss}"  label="#{bundleGesemp.lbl_dateNaiss}"  disabled="true"/>
+                                    <p:inputText id="dateNaiss" value="#{editEmployeController.dtNaiss}"  label="#{bundleGesemp.lbl_dateNaiss}"  disabled="false"/>
                                     <p:message for="dateNaiss" />                                        
                                 </a:column>                                
                             </a:column>
@@ -117,7 +117,7 @@
                             <a:column span="6" >                                
                                 <a:label value="#{bundleGesemp.lbl_adresse}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputTextarea cols="120" id="Adresse" value="#{editEmployeController.emp.adresse}" label="#{bundleGesemp.lbl_adresse}" disabled="true"/>
+                                    <p:inputTextarea cols="120" id="Adresse" value="#{editEmployeController.emp.adresse}" label="#{bundleGesemp.lbl_adresse}" disabled="false"/>
                                 </a:column>  
                             </a:column>
                         </a:row>
@@ -125,14 +125,14 @@
                             <a:column span="6" >   
                             <a:label value="#{bundleGesemp.lbl_wilaya}" span="4" />
                               <a:column span="8" >
-                                  <p:inputText id="wilaya" value="#{editEmployeController.wil.nom}"  label="#{bundleGesemp.lbl_wilaya}"  disabled="true"/>
+                                  <p:inputText id="wilaya" value="#{editEmployeController.wil.nom}"  label="#{bundleGesemp.lbl_wilaya}"  disabled="false"/>
                                    
                                </a:column>
                             </a:column> 
                             <a:column span="6" >   
                                 <a:label value="#{bundleGesemp.lbl_commune}" span="4" />
                                <a:column span="8" >
-                                   <p:inputText id="commune" value="#{editEmployeController.emp.idcommune.nom}"  label="#{bundleGesemp.lbl_commune}"  disabled="true"/>     
+                                   <p:inputText id="commune" value="#{editEmployeController.emp.idcommune.nom}"  label="#{bundleGesemp.lbl_commune}"  disabled="false"/>     
                                </a:column>     
                             </a:column> 
                         </a:row>
@@ -145,13 +145,13 @@
                             <a:column span="6" >                                
                                  <a:label value="#{bundleGesemp.lbl_email}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText  id="email" value="#{editEmployeController.emp.email}" label="#{bundleGesemp.lbl_email}"   disabled="true"/>    
+                                    <p:inputText  id="email" value="#{editEmployeController.emp.email}" label="#{bundleGesemp.lbl_email}"   disabled="false"/>    
                                 </a:column>                                
                             </a:column>
                             <a:column span="6" >                                
                                 <a:label value="#{bundleGesemp.lbl_telephone}" span="4" />
                                 <a:column span="8" >
-                                    <p:inputText id="tel" value="#{editEmployeController.emp.tel}" disabled="true" label="#{bundleGesemp.lbl_telephone}"/>                                       
+                                    <p:inputText id="tel" value="#{editEmployeController.emp.tel}" disabled="false" label="#{bundleGesemp.lbl_telephone}"/>                                       
                                 </a:column>                                
                             </a:column> 
                         </a:row>

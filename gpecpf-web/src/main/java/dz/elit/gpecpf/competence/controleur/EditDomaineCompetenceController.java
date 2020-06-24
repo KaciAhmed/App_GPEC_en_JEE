@@ -34,6 +34,9 @@ private DomaineCompetenceFacade domaineCompFacade;
    private List<Domainecompetence> lstDomPere;
    private Domainecompetence domPereSelected;
    private Domainecompetence oldDomPere;
+   private List<Domainecompetence> listeSousDomaine;
+   private Domainecompetence oldDomPereForEdit;
+   private Domainecompetence newDomPereForEdit;
    
    String oldCode;
    
@@ -49,6 +52,13 @@ private DomaineCompetenceFacade domaineCompFacade;
        if (id != null) {
            domaine= domaineCompFacade.find(Integer.parseInt(id));
            initEdition();
+           if(domaine.getDomainecompetenceCollection()!=null && !domaine.getDomainecompetenceCollection().isEmpty())
+           {
+               for(Domainecompetence d :domaine.getDomainecompetenceCollection() )
+               {
+                   listeSousDomaine.add(d);
+               }
+           }
        }
     }
     private void initEdition()
@@ -57,6 +67,9 @@ private DomaineCompetenceFacade domaineCompFacade;
        oldDomPere=domaine.getIddommere();
        lstDomPere.remove(domaine);
        oldCode=domaine.getCode();
+       listeSousDomaine =new ArrayList<>();
+       oldDomPereForEdit=null;
+       newDomPereForEdit=null;
         
     }
     private boolean isExisteCode(String code) 
@@ -76,6 +89,13 @@ private DomaineCompetenceFacade domaineCompFacade;
             }else{
                      domaineCompFacade.edit(domaine);
                      MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Domaine modifié avec succès");
+                     if(oldDomPereForEdit!=null){
+                         domaineCompFacade.edit(oldDomPereForEdit);
+                     }
+                     if(newDomPereForEdit!=null){
+                         domaineCompFacade.edit(newDomPereForEdit);
+                     }
+                     
                      initEdition();
             }
             } catch (Exception ex) {
@@ -92,21 +112,24 @@ private DomaineCompetenceFacade domaineCompFacade;
           {
               oldDomPere.getDomainecompetenceCollection().remove(domaine);
               domaine.setIddommere(null);
+              oldDomPereForEdit=oldDomPere;
               oldDomPere=domPereSelected;
           }else{
                 if(oldDomPere==null && domPereSelected!=null ){
                      domaine.addDomPere(domPereSelected);
+                     newDomPereForEdit=domPereSelected;
                      oldDomPere=domPereSelected;
                 }else{
 
-                    if(!domPereSelected.getCode().equals(oldDomPere.getCode()) ){
+                    if(!domPereSelected.getCode().equals(oldDomPere.getCode())){
 
                         domaine.editDomPere(domPereSelected,oldDomPere);
+                        oldDomPereForEdit=oldDomPere;
+                        newDomPereForEdit=domPereSelected;
                         oldDomPere=domPereSelected;
                     }
                 }
                }
-        //  System.out.println("-------------------------"+domPereSelected.getCode());
     }
     public void viderDompere(){
         domPereSelected=null;
@@ -152,6 +175,14 @@ private DomaineCompetenceFacade domaineCompFacade;
 
     public void setDomPereSelected(Domainecompetence domPereSelected) {
         this.domPereSelected = domPereSelected;
+    }
+
+    public List<Domainecompetence> getListeSousDomaine() {
+        return listeSousDomaine;
+    }
+
+    public void setListeSousDomaine(List<Domainecompetence> listeSousDomaine) {
+        this.listeSousDomaine = listeSousDomaine;
     }
     
      

@@ -66,6 +66,11 @@ public class EditCompetenceController extends AbstractController implements Seri
      private List<Poste> listPostesAdd;
      private List<Poste> listPostesDel;
      
+     private Domainecompetence oldDomaine;
+     private Boolean bdom=false;
+     
+     private Typecompetence oldType;
+     private Boolean btype=false;
      
      String oldCode;
      
@@ -95,10 +100,17 @@ public class EditCompetenceController extends AbstractController implements Seri
             typeSelected=comp.getIdtypcom();
             oldCode=comp.getCode();
             listeComportement.removeAll(comp.getListComportement());
-            Collections.sort(comp.getListComportement());
+            if(listeComportement !=null && !listeComportement.isEmpty())
+            {
+                Collections.sort(comp.getListComportement());
+            }
+            
             listPostesCompetence =posteFacade.postesForCompetence(comp);
-            Collections.sort(listPostesCompetence);
-            listPostes.removeAll(listPostesCompetence);
+            if(listPostesCompetence!=null && !listPostesCompetence.isEmpty())
+            {
+                Collections.sort(listPostesCompetence);
+                listPostes.removeAll(listPostesCompetence);
+            }
         }
     }
     
@@ -120,6 +132,12 @@ public class EditCompetenceController extends AbstractController implements Seri
      listPostesCompetence = new ArrayList();
      listPostesAdd = new ArrayList();
      listPostesDel = new ArrayList();
+     
+     oldDomaine=new Domainecompetence();
+     oldType=new Typecompetence();
+     bdom=false;
+     btype=false;
+     
     }
     private boolean isExisteCode(String code) 
     {
@@ -142,6 +160,16 @@ public class EditCompetenceController extends AbstractController implements Seri
                      listPostesAdd.removeAll(posteFacade.postesForCompetence(comp));
                      posteFacade.editCompetence(comp, listPostesAdd, listPostesDel);
                      oldCode=comp.getCode();
+                     if(bdom==true)
+                     {
+                         domaineFacade.edit(domSelected);
+                         domaineFacade.edit(oldDomaine);   
+                     }
+                     if(btype==true)
+                     {
+                         typeCompFacade.edit(oldType);
+                         typeCompFacade.edit(typeSelected);
+                     }
             }
             } catch (Exception ex) {
             ex.printStackTrace();
@@ -156,11 +184,15 @@ public class EditCompetenceController extends AbstractController implements Seri
     }
     public void editDomForComp()
     {
+        oldDomaine=comp.getIddomcom();
         comp.editDomComp(domSelected);
+        bdom=true;
     }    
     public void editTypeForComp()
     {
+      oldType=comp.getIdtypcom();
       comp.editTypeComp(typeSelected);
+      btype=true;
     }  
     
     public void addComportementForCompetence() {
@@ -168,14 +200,20 @@ public class EditCompetenceController extends AbstractController implements Seri
             comp.addListComportement(listComportementSelected);
             listeComportement.removeAll(listComportementSelected);
             listComportementSelected= new ArrayList<>();
-            Collections.sort(comp.getListComportement());
+            if(comp.getListComportement()!=null && !comp.getListComportement().isEmpty() )
+            {
+                Collections.sort(comp.getListComportement());
+            }
         }
     }
 
     public void removeComportementForCompetence(Comportement comportement) {
       comp.removeComportement(comportement);
       listeComportement.add(comportement);
-      Collections.sort(listeComportement);
+      if(listeComportement!=null && !listeComportement.isEmpty())
+      {
+          Collections.sort(listeComportement);
+      }
     }
     public void chercherComportement(){
         listeComportement = comportementFacade.findByCodeDescription(codeComportement, descriptionComportement);
@@ -184,9 +222,15 @@ public class EditCompetenceController extends AbstractController implements Seri
     public void addPostesForCompetence() {
 	if (!listPostesSelected.isEmpty()) {
             listPostesCompetence.addAll(listPostesSelected);
-            Collections.sort(listPostesCompetence);
+            if(listPostesCompetence!=null && !listPostesCompetence.isEmpty())
+            {
+                Collections.sort(listPostesCompetence);
+            }
             listPostes.removeAll(listPostesSelected);
-            Collections.sort(listPostes);
+            if(listPostes!=null && !listPostes.isEmpty())
+            {
+                Collections.sort(listPostes);
+            }
             listPostesAdd.addAll(listPostesSelected);
             listPostesDel.removeAll(listPostesSelected);
             listPostesSelected = new ArrayList<>();
@@ -195,9 +239,15 @@ public class EditCompetenceController extends AbstractController implements Seri
 
     public void removePosteForCompetence(Poste poste) {
 	listPostesCompetence.remove(poste);
-        Collections.sort(listPostesCompetence);
+        if(listPostesCompetence!=null && !listPostesCompetence.isEmpty())
+        {
+            Collections.sort(listPostesCompetence);
+        }
 	listPostes.add(poste);
-        Collections.sort(listPostes);
+        if(listPostes!=null && !listPostes.isEmpty())
+        {
+            Collections.sort(listPostes);
+        }
 	listPostesAdd.remove(poste);
 	listPostesDel.add(poste);
     }

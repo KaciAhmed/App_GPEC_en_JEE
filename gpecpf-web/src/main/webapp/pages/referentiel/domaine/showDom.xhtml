@@ -28,7 +28,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="code"  value="#{editDomaineCompetenceController.domaine.code}" disabled="true"/> 
+                            <p:inputText id="code"  value="#{editDomaineCompetenceController.domaine.code}" disabled="false"/> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -36,7 +36,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="lib"  value="#{editDomaineCompetenceController.domaine.libelle}"  disabled="true" /> 
+                            <p:inputText id="lib"  value="#{editDomaineCompetenceController.domaine.libelle}"  disabled="false" /> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -44,7 +44,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
                         <a:column span="8" >
-                            <p:inputTextarea id="desc" cols="60" value="#{editDomaineCompetenceController.domaine.description}" autoResize="false"  disabled="true"/>
+                            <p:inputTextarea id="desc" cols="60" value="#{editDomaineCompetenceController.domaine.description}" autoResize="false"  disabled="false"/>
                         </a:column>
                     </a:column>
                 </a:row>
@@ -75,6 +75,20 @@
                                         </p:column>
                                         <p:column headerText="#{bundleCommun.lbl_liblle}" filterBy="#{competence.libelle}" filterMatchMode="contains" >
                                             <h:outputText value="#{competence.libelle}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                            <p:tab title="#{bundleReferentiel.titre_liste_sous_domaine}">
+                                <a:panel header=" #{bundleReferentiel.titre_sous_domaine}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">                                            
+                                    </f:facet>
+                                    <p:dataTable  id="tableSousDomaine" value="#{editDomaineCompetenceController.listeSousDomaine}" var="sousDomaine" rowKey="#{sousDomaine.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleCommun.lbl_code}" filterBy="#{sousDomaine.code}" filterMatchMode="contains" >
+                                            <h:outputText value="#{sousDomaine.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_liblle}" filterBy="#{sousDomaine.libelle}" filterMatchMode="contains" >
+                                            <h:outputText value="#{sousDomaine.libelle}"/>
                                         </p:column>
                                     </p:dataTable>
                                 </a:panel>

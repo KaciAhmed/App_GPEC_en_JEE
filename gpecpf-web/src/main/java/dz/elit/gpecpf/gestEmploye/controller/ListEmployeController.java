@@ -73,7 +73,7 @@ public class ListEmployeController extends AbstractController implements Seriali
      
      
      //--------------------------------------------------------------------------------------
-         public void download() throws SQLException, IOException {
+    public void download() throws SQLException, IOException {
         String rapportLien = "/dz/elit/harmo/commun/reporting/source/listUtilisateur.jasper";
         InputStream rapport = getClass().getResourceAsStream(rapportLien);
         String SUBREPORT_DIR = getClass().getResource("/dz/elit/harmo/commun/reporting/source/Entete/").getFile();

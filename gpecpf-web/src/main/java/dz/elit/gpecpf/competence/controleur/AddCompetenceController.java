@@ -178,7 +178,6 @@ public class AddCompetenceController extends AbstractController implements Seria
     public void removePosteForCompetence(Poste poste) {
 	listPostesCompetence.remove(poste);
 	listPostes.add(poste);
-        System.out.println("-----------------------------------------------------------------");
         Collections.sort(listPostes);
     }
     
@@ -199,9 +198,11 @@ public class AddCompetenceController extends AbstractController implements Seria
                                      MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
                                  }else{
                                         compFacade.create(comp);
+                                        domaineFacade.edit(comp.getIddomcom());
+                                        typeCompFacade.edit(comp.getIdtypcom());
                                         posteFacade.editCompetence(comp, listPostesCompetence, new ArrayList());
                                         MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Compétence crée avec succès
-                                        initAddComp();
+                                        initAddComp(); 
                                 }
                              }    
                 } 

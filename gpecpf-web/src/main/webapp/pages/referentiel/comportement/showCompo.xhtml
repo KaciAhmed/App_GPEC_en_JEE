@@ -30,7 +30,7 @@
                     <a:column span="7" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="code" required="true" value="#{editComportementCompetenceController.compo.code}" disabled="true" /> 
+                            <p:inputText id="code" required="true" value="#{editComportementCompetenceController.compo.code}" disabled="false" /> 
                             <p:message for="code"/>                                    
                         </a:column>
                     </a:column>
@@ -39,7 +39,7 @@
                     <a:column span="7" >
                         <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
                         <a:column span="8" >
-                            <p:inputTextarea id="desc" required="true"  cols="60" value="#{editComportementCompetenceController.compo.description}" autoResize="false"  disabled="true"/>
+                            <p:inputTextarea id="desc" required="true"  cols="60" value="#{editComportementCompetenceController.compo.description}" autoResize="false"  disabled="false"/>
                             <p:message for="desc"/>                                    
                         </a:column>
                     </a:column>

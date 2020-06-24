@@ -60,6 +60,7 @@ public class AddDomaineCompetenceController extends AbstractController implement
       domaine=new Domainecompetence();
       chercherPrefix();
       domPereSelected=new Domainecompetence(); 
+      domPereAff=null;
       lstDomPere=new ArrayList<>();
       lstDomPere=domaineFacade.findAllOrderByAttribut("code");
     }
@@ -87,6 +88,10 @@ public class AddDomaineCompetenceController extends AbstractController implement
             MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_existe_code"));//Erreur inconu   
             }else{
                     domaineFacade.create(domaine);
+                    if(domPereSelected != null && domPereSelected.getCode()!=null)
+                    {
+                        domaineFacade.edit(domPereSelected);
+                    }
                     initAddDomaineCompetence();
                      MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Domaine enregistré avec succè");
                  }
@@ -104,8 +109,8 @@ public class AddDomaineCompetenceController extends AbstractController implement
     }
     
     public void addDomPereForDom(){
-        if(domPereSelected != null && domPereSelected.getCode()!=null){
-        
+        if(domPereSelected != null && domPereSelected.getCode()!=null)
+        {
             domaine.addDomPere(domPereSelected);
             domPereAff=new Domainecompetence();
             domPereAff=domPereSelected;
@@ -115,6 +120,7 @@ public class AddDomaineCompetenceController extends AbstractController implement
                 Domainecompetence dp=domaine.getIddommere();
                 dp.getDomainecompetenceCollection().remove(domaine);
                 domaine.setIddommere(domPereSelected);
+                
             }
         }
     }

@@ -27,11 +27,6 @@
             <a:row>
                 <a:panel header=" #{bundleReferentiel.lien_liste_type_competence}"  iconheader="fa fa-list-ul">
                     <f:facet name="header" >
-                        <a:dropButton value="Outils"  icon="fa-cogs" >
-                            <a:menuitem iconAwesome="fa fa-file-pdf-o" value="PDF"  />
-                            <a:menuitem  iconAwesome="fa fa-file-excel-o " value="EXCEL" />
-                            <a:menuitem iconAwesome="fa fa-file-code-o" value="CSV"  />
-                        </a:dropButton>
                     </f:facet>
                     <p:dataTable value="#{listTypeCompetenceController.listTypeCompetences}" var="typeComp" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
                         <p:column headerText="#{bundleReferentiel.lbl_code}">
@@ -50,9 +45,6 @@
                         </p:column>
                     </p:dataTable> 
                 </a:panel>
-            </a:row>
-            <a:row>
-                <p:commandButton icon="fa fa-file-archive-o" actionListener="#{listDomaineCompetenceController.download}" value="#{bundleCommun.lbl_exporter}"/>
             </a:row>
         </h:form>        
     </ui:define>

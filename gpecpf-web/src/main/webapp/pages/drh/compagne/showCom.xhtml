@@ -34,7 +34,7 @@
                     <a:column span="12" >
                         <a:label value="#{bundleCommun.lbl_code}" span="2" />
                         <a:column span="8" >
-                            <p:inputText id="code" required="true" disabled="true" value="#{editCompagneEvaluationController.compagne.code}" /> 
+                            <p:inputText id="code" required="true" disabled="false" value="#{editCompagneEvaluationController.compagne.code}" /> 
                             <p:message for="code"/>                                    
                         </a:column>
                     </a:column>
@@ -43,7 +43,7 @@
                     <a:column span="12" >                               
                         <a:label value="#{bundleDrh.lbl_date_debut}" span="2" />
                         <a:column span="8" >
-                            <p:calendar  id="dateDeb" value="#{editCompagneEvaluationController.compagne.datedeb}" disabled="true" pattern="dd/MM/yyyy" required="true" label="#{bundleDrh.lbl_date_debut}" 
+                            <p:calendar  id="dateDeb" value="#{editCompagneEvaluationController.compagne.datedeb}" disabled="false" pattern="dd/MM/yyyy" required="true" label="#{bundleDrh.lbl_date_debut}" 
                                          locale="fr" navigator="true"> 
                             </p:calendar>
                             <p:message for="dateDeb" />                                        
@@ -54,7 +54,7 @@
                     <a:column span="12" >                               
                         <a:label value="#{bundleDrh.lbl_date_fin}" span="2" />
                         <a:column span="8" >
-                            <p:calendar  id="dateFin" value="#{editCompagneEvaluationController.compagne.datefin}" disabled="true" pattern="dd/MM/yyyy" required="true" label="#{bundleDrh.lbl_date_fin}" 
+                            <p:calendar  id="dateFin" value="#{editCompagneEvaluationController.compagne.datefin}" disabled="false" pattern="dd/MM/yyyy" required="true" label="#{bundleDrh.lbl_date_fin}" 
                                          locale="fr" navigator="true"> 
                             </p:calendar>
                             <p:message for="dateFin" />                                        

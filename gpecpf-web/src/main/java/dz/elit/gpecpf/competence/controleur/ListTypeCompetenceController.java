@@ -104,7 +104,7 @@ public class ListTypeCompetenceController  extends AbstractController implements
         return "";
 
     }
-           public void creerRapportUnique() throws JRException, FileNotFoundException {
+    public void creerRapportUnique() throws JRException, FileNotFoundException {
 
         String rapportLien = "/reporting/source/listUtilisateur.jasper";
         InputStream rapport = getClass().getResourceAsStream(rapportLien);

@@ -28,7 +28,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="code"  value="#{editTypeCompetenceController.typecomp.code}" disabled="true"/> 
+                            <p:inputText id="code"  value="#{editTypeCompetenceController.typecomp.code}" disabled="false"/> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -36,7 +36,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="lib"  value="#{editTypeCompetenceController.typecomp.libelle}"  disabled="true" /> 
+                            <p:inputText id="lib"  value="#{editTypeCompetenceController.typecomp.libelle}"  disabled="false" /> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -44,7 +44,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
                         <a:column span="8" >
-                            <p:inputTextarea id="desc" cols="60" value="#{editTypeCompetenceController.typecomp.description}" autoResize="false"  disabled="true"/>
+                            <p:inputTextarea id="desc" cols="60" value="#{editTypeCompetenceController.typecomp.description}" autoResize="false"  disabled="false"/>
                         </a:column>
                     </a:column>
                 </a:row>

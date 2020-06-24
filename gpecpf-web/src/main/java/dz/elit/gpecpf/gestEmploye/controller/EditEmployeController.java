@@ -90,7 +90,7 @@ public class EditEmployeController extends AbstractController implements Seriali
     private Poste oldPoste;
 
     private  int ageMinimale;
-    
+    private int ageMax;
  // initialisation--------------------------------------------------------------------------------------------   
     public EditEmployeController() {
     }
@@ -147,7 +147,8 @@ public class EditEmployeController extends AbstractController implements Seriali
         listPostes=posteFacade.findAllOrderByAttribut("code");
         listPosteEmp=new ArrayList<>();
         
-         ageMinimale=18;      
+         ageMinimale=18;  
+         ageMax=70;
     }
      
 // partie poste----------------------------------------------------------------------------------------------
@@ -366,21 +367,76 @@ public class EditEmployeController extends AbstractController implements Seriali
          
      }
      
-     private Boolean vrfDateNaissance()
+    private Boolean vrfDateNaissance()
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(emp.getDtNaissance());
-        int annee=calendar.get(Calendar.YEAR);
+        int annee_naiss=calendar.get(Calendar.YEAR);
+        int mois_naiss=calendar.get(Calendar.MONTH);
+        int jour_naiss=calendar.get(Calendar.DATE);
 
         Date dtAct =new Date();
         calendar = Calendar.getInstance();
         calendar.setTime(dtAct);
         int anneAct= calendar.get(Calendar.YEAR);
+        int moisAct= calendar.get(Calendar.MONTH);
+        int jourAct = calendar.get(Calendar.DATE);
         
-        if(annee+ ageMinimale < anneAct)
+        if(annee_naiss+ ageMinimale <anneAct)
             return true;
-        else
+        else{
+             if(annee_naiss+ ageMinimale == anneAct){
+                if(mois_naiss < moisAct){
+                    return true;
+                }else{
+                    if(mois_naiss==moisAct){
+                        if(jour_naiss <= jourAct){
+                            return true;
+                        }
+                    }
+                }
+            }   
+        }
             return false; 
+    }
+    private Boolean vrfAgeMax()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(emp.getDtNaissance());
+        int annee_naiss=calendar.get(Calendar.YEAR);
+        int mois_naiss=calendar.get(Calendar.MONTH);
+        int jour_naiss=calendar.get(Calendar.DATE);
+
+        Date dtAct =new Date();
+        calendar = Calendar.getInstance();
+        calendar.setTime(dtAct);
+        int anneAct= calendar.get(Calendar.YEAR);
+        int moisAct= calendar.get(Calendar.MONTH);
+        int jourAct = calendar.get(Calendar.DATE);
+        if(annee_naiss+ ageMax > anneAct)
+            return true;
+        else{
+            if(annee_naiss+ ageMax == anneAct){
+                if(mois_naiss>moisAct){
+                    return true;
+                }else{
+                    if(mois_naiss==moisAct){
+                        if(jour_naiss>jourAct){
+                            return true;
+                        }
+                    }
+                }
+            }  
+        }
+            return false; 
+    }
+    private Boolean vrfDtNaiss_DtRec()
+    {
+        if(emp.getDate_recrutement().before(emp.getDtNaissance()))
+        {
+            return false;
+        }
+        return true;
     }
         public void edit() {
         try { 
@@ -401,18 +457,25 @@ public class EditEmployeController extends AbstractController implements Seriali
                                          }else{
                                                 if(! vrfDateNaissance()){
                                                         MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_employe_mineur"));  
-                                                    }else{
-                                                            if((oldPoste!=null && !oldPoste.equals(posteEmp))){
-                                                                creerHistoriqueEmployePoste();
-                                                            }else{
-                                                                if((oldDateDep==null && emp.getDate_depart()!=null)||(oldDateDep!=null && emp.getDate_depart()!=null && !oldDateDep.equals(emp.getDate_depart())||(oldDateDep!=null && emp.getDate_depart()==null))){
-                                                                    modifierHistorique();
-                                                                }
-                                                            }
-                                                            empFacade.edit(emp);
-                                                            oldMatricule=emp.getMatricule();
-                                                            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé édité avec succès
-                                                                               
+                                                    }else{ if(!vrfAgeMax())
+                                                            {
+                                                              MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_employe_vieux"));                                                            
+                                                            }else{if(!vrfDtNaiss_DtRec())
+                                                                    {
+                                                                      MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_dt_naissance_sup_dt_recrutement"));                                                            
+                                                                    }else{
+                                                                            if((oldPoste!=null && !oldPoste.equals(posteEmp))){
+                                                                                creerHistoriqueEmployePoste();
+                                                                            }else{
+                                                                                if((oldDateDep==null && emp.getDate_depart()!=null)||(oldDateDep!=null && emp.getDate_depart()!=null && !oldDateDep.equals(emp.getDate_depart())||(oldDateDep!=null && emp.getDate_depart()==null))){
+                                                                                    modifierHistorique();
+                                                                                }
+                                                                            }
+                                                                            empFacade.edit(emp);
+                                                                            oldMatricule=emp.getMatricule();
+                                                                            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Employé édité avec succès
+                                                                        }
+                                                                 }                  
                                                          }
                                                }
                                       }
@@ -552,9 +615,4 @@ public class EditEmployeController extends AbstractController implements Seriali
     public void setListHistEmpOrdone(List<Historiqueemployeposte> listHistEmpOrdone) {
         this.listHistEmpOrdone = listHistEmpOrdone;
     }
-
-    
-     
-    
-    
 }

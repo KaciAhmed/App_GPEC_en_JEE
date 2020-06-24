@@ -9,7 +9,9 @@ import dz.elit.gpecpf.commun.controller.Imprimer;
 import dz.elit.gpecpf.commun.reporting.engine.Reporting;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
+import dz.elit.gpecpf.competence.entity.Competence;
 import dz.elit.gpecpf.competence.entity.Comportement;
+import dz.elit.gpecpf.competence.service.CompetenceFacade;
 import dz.elit.gpecpf.competence.service.ComportementCompetenceFacade;
 
 import java.io.FileNotFoundException;
@@ -36,7 +38,9 @@ import org.primefaces.context.RequestContext;
 public class ListComportementCompetenceController  extends AbstractController implements Serializable {
     
     @EJB
-      private ComportementCompetenceFacade ComportementFacade;
+    private ComportementCompetenceFacade ComportementFacade;
+    @EJB
+    private CompetenceFacade competenceFacade;
     
     @ManagedProperty(value = "#{imprimer}")
     private Imprimer ctrImprimer;
@@ -75,6 +79,12 @@ public class ListComportementCompetenceController  extends AbstractController im
     public void remove(Comportement comp) 
     {
      try {
+            List <Competence> listcmt=competenceFacade.competenceForComportement(comp);
+   
+            for(Competence cmt: listcmt){
+                cmt.getListComportement().remove(comp);
+                competenceFacade.edit(cmt);
+            }
             ComportementFacade.remove(comp);
             MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
             findList();

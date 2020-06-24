@@ -10,7 +10,13 @@ import dz.elit.gpecpf.commun.reporting.engine.Reporting;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.competence.entity.Competence;
+import dz.elit.gpecpf.competence.entity.Domainecompetence;
+import dz.elit.gpecpf.competence.entity.Typecompetence;
 import dz.elit.gpecpf.competence.service.CompetenceFacade;
+import dz.elit.gpecpf.competence.service.DomaineCompetenceFacade;
+import dz.elit.gpecpf.competence.service.TypeCompetenceFacade;
+import dz.elit.gpecpf.poste.entity.Poste;
+import dz.elit.gpecpf.poste.service.PosteFacade;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +50,12 @@ public class ListCompetenceController extends AbstractController implements Seri
     
       @EJB
       private CompetenceFacade compFacade;
+      @EJB
+      private DomaineCompetenceFacade domCompFacade;
+      @EJB
+      private TypeCompetenceFacade typeCompFacade;
+      @EJB
+      private PosteFacade posteFacade;
       
       @ManagedProperty(value = "#{imprimer}")
     private Imprimer ctrImprimer;
@@ -88,6 +100,23 @@ public class ListCompetenceController extends AbstractController implements Seri
             {
                 MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_suppression_competence"));
             }else{
+                    Domainecompetence domComp;
+                    domComp=comp.getIddomcom();
+                    domComp.getCompetenceCollection().remove(comp);
+                    domCompFacade.edit(domComp);
+                    
+                    Typecompetence typeComp;
+                    typeComp=comp.getIdtypcom();
+                    typeComp.getCompetenceCollection().remove(comp);
+                    typeCompFacade.edit(typeComp);
+                    
+                    List<Poste> listPoste=posteFacade.postesForCompetence(comp);
+                    for(Poste p :listPoste){
+                        p.getListCompetences().remove(comp);
+                        posteFacade.edit(p);
+   
+                    }
+                    
                     compFacade.remove(comp);
                       MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Utilisateur supprimé");
                      findList();
