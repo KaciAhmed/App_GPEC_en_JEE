@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateEmp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:a="http://elit.dz/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="Title">
+        #{bundleEmp.titre_consulter_employe}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleEmp.titre_consultation_personnelle}" />
+            <a:menuitem value="#{bundleEmp.lien_consulter_employe}" href="showEmp.xhtml" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <a:pagetitle value="Mes Infos" />   
+        <p:messages id="msgs" showDetail="true" closable="true"/>
+        <p:panel id="panel" styleClass="no-border">
+            <p:focus context="panel"/>                
+            <p:tabView  id="tabView">
+                <p:tab title="#{bundleEmp.titre_information_generale}">    
+                    <a:row>
+                        <a:column span="6" >                                
+                            <a:label value="#{bundleEmp.lbl_matricule}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="matriculeEmp" value="#{listEmployeInfosController.employeCourant.matricule}" required="true" label="#{bundleEmp.lbl_matricule}" size="40" disabled="true"/>
+                                <p:message for="matriculeEmp" />                                        
+                            </a:column>                                
+                        </a:column>
+                        <a:column span="6" >   
+                            <a:label value="#{bundleEmp.lbl_typeContrat}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="typeContrat" value="#{listEmployeInfosController.employeCourant.typeContrat}" required="true" label="#{bundleEmp.lbl_typeContrat}" size="40" disabled="true"/>
+                                <p:message for="typeContrat" />
+                            </a:column>     
+                        </a:column> 
+                    </a:row>
+                    <a:row>
+                        <a:column span="6" >                               
+                            <a:label value="#{bundleEmp.lbl_date_recrutement}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="dateRec" value="#{listEmployeInfosController.formatDate(listEmployeInfosController.employeCourant.date_recrutement)}"   label="#{bundleEmp.lbl_date_recrutement}" disabled="true"/>
+                                <p:message for="dateRec" />                                        
+                            </a:column>                                
+                        </a:column>
+                    </a:row>
+                    <a:row>
+                        <a:column span="6" >
+                            <a:label value="#{bundleEmp.lbl_classement}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="classement" value="#{listEmployeInfosController.employeCourant.classement}" label="#{bundleEmp.lbl_classement}" disabled="true" />
+                                <p:message for="classement" />                                        
+                            </a:column>                                
+                        </a:column>  
+                        <a:column span="6" >
+                            <a:label value="#{bundleEmp.lbl_userName}" span="4" />
+                            <a:column span="8" >
+                                <h:outputText id="out" />
+                                <p:inputText id="userName" value="#{listEmployeInfosController.employeCourant.userName}" required="true" label="#{bundleEmp.lbl_userName}" disabled="true" />
+                                <p:message for="userName" />                                        
+                            </a:column>                               
+                        </a:column>
+                    </a:row>
+                    <a:row style="margin-bottom:2%;margin-top: 2%">
+                        <a:column span="6" >
+                            <h:outputText value="#{bundleEmp.lbl_information_personnel}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                        </a:column>
+                    </a:row>
+                    <a:row>
+                        <a:column span="6" >
+                            <a:label value="#{bundleEmp.lbl_nom}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="nom" value="#{listEmployeInfosController.employeCourant.nom}"  label="#{bundleEmp.lbl_nom}" disabled="true"/>
+                                <p:message for="nom" />                                        
+                            </a:column>                                
+                        </a:column>  
+                        <a:column span="6" >                                
+                            <a:label value="#{bundleEmp.lbl_prenom}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="prenom" value="#{listEmployeInfosController.employeCourant.prenom}"  label="#{bundleEmp.lbl_prenom}" size="40" disabled="true"/>
+                                <p:message for="prenom" />                                        
+                            </a:column>                                
+                        </a:column>
+                    </a:row>
+                    <a:row>
+                        <a:column span="6" >   
+                            <a:label value="#{bundleEmp.lbl_sexe}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="sexe" value="#{listEmployeInfosController.employeCourant.sexe}"  label="#{bundleEmp.lbl_sexe}"  disabled="true"/>
+                                <p:message for="sexe" /> 
+                            </a:column>     
+                        </a:column> 
+                        <a:column span="6" >                               
+                            <a:label value="#{bundleEmp.lbl_date_naissance}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="dateNaiss" value="#{listEmployeInfosController.formatDate(listEmployeInfosController.employeCourant.dtNaissance)}"  label="#{bundleEmp.lbl_dateNaiss}"  disabled="true"/>
+                                <p:message for="dateNaiss" />                                        
+                            </a:column>                                
+                        </a:column>
+                    </a:row>
+                    <a:row>
+                        <a:column span="6" >                                
+                            <a:label value="#{bundleEmp.lbl_adresse}" span="4" />
+                            <a:column span="8" >
+                                <p:inputTextarea cols="120" id="Adresse" value="#{listEmployeInfosController.employeCourant.adresse}" label="#{bundleEmp.lbl_adresse}" disabled="true"/>
+                            </a:column>  
+                        </a:column>
+                    </a:row>
+                    <a:row>
+                        <a:column span="6" >   
+                            <a:label value="#{bundleEmp.lbl_wilaya}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="wilaya" value="#{listEmployeInfosController.employeCourant.idcommune.idwilaya.nom}"  label="#{bundleEmp.lbl_wilaya}"  disabled="true"/>
+
+                            </a:column>
+                        </a:column> 
+                        <a:column span="6" >   
+                            <a:label value="#{bundleEmp.lbl_commune}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="commune" value="#{listEmployeInfosController.employeCourant.idcommune.nom}"  label="#{bundleEmp.lbl_commune}"  disabled="true"/>     
+                            </a:column>     
+                        </a:column> 
+                    </a:row>
+                    <a:row style="margin:2%;font-style: italic">
+                        <a:column span="6" >
+                            <h:outputText value="#{bundleAdmin.lbl_contact}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium" />
+                        </a:column>
+                    </a:row>
+                    <a:row>
+                        <a:column span="6" >                                
+                            <a:label value="#{bundleEmp.lbl_email}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText  id="email" value="#{listEmployeInfosController.employeCourant.email}" label="#{bundleEmp.lbl_email}"   disabled="true"/>    
+                            </a:column>                                
+                        </a:column>
+                        <a:column span="6" >                                
+                            <a:label value="#{bundleEmp.lbl_tel}" span="4" />
+                            <a:column span="8" >
+                                <p:inputText id="tel" value="#{listEmployeInfosController.employeCourant.tel}" disabled="true" label="#{bundleEmp.lbl_telephone}"/>                                       
+                            </a:column>                                
+                        </a:column> 
+                    </a:row>
+                </p:tab>
+                <p:tab id="tabformations" title="#{bundleEmp.lbl_formation_employe}">
+                    <a:row>
+
+                        <a:panel header="#{bundleEmp.lien_liste_formation}"  >
+                            <f:facet name="header" >
+                            </f:facet>
+                            <p:dataTable id="tableformations" value="#{listEmployeInfosController.employeCourant.listFormation}" var="formation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" >
+                                <p:column headerText="#{bundleEmp.lbl_description}">
+                                    <h:outputText value="#{formation.description}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_exigence}">
+                                    <h:outputText value="#{formation.exigence}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_type}">
+                                    <h:outputText value="#{formation.type}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </a:panel>
+                    </a:row>
+                </p:tab>
+                <p:tab title="#{bundleEmp.lien_historique_poste_employe}">
+                    <a:panel header=" #{bundleEmp.lien_historique_poste_employe}" iconheader="fa fa-list-ul">
+                        <f:facet name="header">                                            
+                        </f:facet>
+                        <p:dataTable id="tableHistorique" value="#{listEmployeInfosController.ordonerListHistEmp()}" var="hist" rowKey="#{hist.historiqueemployepostePK.datedeb}" rows="8" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{bundleEmp.lbl_date_debut}" filterBy="#{listEmployeInfosController.formatDate(hist.historiqueemployepostePK.datedeb)}" filterMatchMode="contains">
+                                <h:outputText value="#{listEmployeInfosController.formatDate(hist.historiqueemployepostePK.datedeb)}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_date_fin}" filterBy="#{listEmployeInfosController.formatDate(hist.datefin)}" filterMatchMode="contains">
+                                <h:outputText value="#{listEmployeInfosController.formatDate(hist.datefin)}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_code}" filterBy="#{hist.poste.code}" filterMatchMode="contains">
+                                <h:outputText value="#{hist.poste.code}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_denomination}" filterBy="#{hist.poste.denomination}" filterMatchMode="contains">
+                                <h:outputText value="#{hist.poste.denomination}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </a:panel>
+                </p:tab>
+            </p:tabView>                
+        </p:panel>  
+    </ui:define>
+</ui:composition>

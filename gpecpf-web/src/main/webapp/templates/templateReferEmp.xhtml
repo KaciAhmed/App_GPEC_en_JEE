@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:a="http://elit.dz/ui"
-    xmlns:f="http://java.sun.com/jsf/core">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://elit.dz/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -43,8 +45,7 @@
             width: auto;
         }
 
-        .hide-content-names th,
-        .hide-content-names td {
+        .hide-content-names th,.hide-content-names td {
             max-width: 20px;
         }
     </style>
@@ -54,61 +55,38 @@
     <ui:include src="header.xhtml"></ui:include>
     <a:pagecontainer>
         <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
-            <a:submenu start="true" value="#{bundleReferentiel.titre_gestion_type}" icon="">
-                <a:menuitem value="#{bundleReferentiel.titre_liste_type}" icon="fa fa-file"
-                    outcome="/pages/referentiel/type/listType.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_001_006')}" />
-            </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_domaine}" icon="">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_domaine}" icon="fa fa-plus"
-                    outcome="/pages/referentiel/domaine/addDom.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_002_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_domaine}" icon="fa fa-file"
-                    outcome="/pages/referentiel/domaine/listDom.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_002_006')}" />
-            </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_competence}" icon="">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_competence}" icon="fa fa-plus"
-                    outcome="/pages/referentiel/competence/addComp.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_003_001')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_competence}" icon="fa fa-file"
-                    outcome="/pages/referentiel/competence/listComp.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_003_006')}" />
-            </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_conditions_exigences}" icon="">
+           <a:submenu value="#{bundleReferentiel.titre_gestion_conditions_exigences}" icon="fa fa-tasks">
                 <a:menuitem value="#{bundleReferentiel.titre_liste_formation}" icon="fa fa-file"
                     outcome="/pages/referentiel/formation/listForm.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_012_006')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_activite}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_liste_condition }" icon="fa fa-file"
                     outcome="/pages/referentiel/condition/listCond.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_010_006')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_tache}" icon="fa fa-file"
+                <a:menuitem value="#{bundleReferentiel.titre_liste_moyen}" icon="fa fa-file"
                     outcome="/pages/referentiel/moyen/listMoy.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_011_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_mission}" icon="">
-                <a:menuitem value="#{bundleReferentiel.titre_liste_mission}" icon="fa fa-file"
-                    outcome="/pages/referentiel/mission/listMiss.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_006_006')}" />
-                <a:menuitem value="#{bundleReferentiel.titre_liste_activite}" icon="fa fa-file"
-                    outcome="/pages/referentiel/activite/listAct.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_005_006')}" />
+            <a:submenu value="#{bundleReferentiel.titre_gestion_tache }" icon="fa fa-tasks">
                 <a:menuitem value="#{bundleReferentiel.titre_liste_tache}" icon="fa fa-file"
                     outcome="/pages/referentiel/tache/listTac.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_004_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_emploi}" icon="">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_emploi}" icon="fa fa-plus"
-                    outcome="/pages/referentiel/emploi/addEmp.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_007_001')}" />
+            <a:submenu value="#{bundleReferentiel.titre_gestion_activite}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_activite}" icon="fa fa-file"
+                    outcome="/pages/referentiel/activite/listAct.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_005_006')}" />
+            </a:submenu>
+            <a:submenu value="#{bundleReferentiel.titre_gestion_mission}" icon="fa fa-tasks">
+                <a:menuitem value="#{bundleReferentiel.titre_liste_mission}" icon="fa fa-file"
+                    outcome="/pages/referentiel/mission/listMiss.xhtml"
+                    rendered="#{mySessionController.isUserInRole('REFER_006_006')}" />  
+            </a:submenu>
+            <a:submenu value="#{bundleReferentiel.titre_gestion_emploi}" icon="fa fa-tasks">
                 <a:menuitem value="#{bundleReferentiel.titre_liste_emploi}" icon="fa fa-file"
                     outcome="/pages/referentiel/emploi/listEmp.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_007_006')}" />
             </a:submenu>
-            <a:submenu value="#{bundleReferentiel.titre_gestion_poste}" icon="">
-                <a:menuitem value="#{bundleReferentiel.titre_nouveau_poste}" icon="fa fa-plus"
-                    outcome="/pages/referentiel/poste/addPos.xhtml"
-                    rendered="#{mySessionController.isUserInRole('REFER_008_001')}" />
+            <a:submenu value="#{bundleReferentiel.titre_gestion_poste}" icon="fa fa-tasks">
                 <a:menuitem value="#{bundleReferentiel.titre_liste_poste}" icon="fa fa-file"
                     outcome="/pages/referentiel/poste/listPos.xhtml"
                     rendered="#{mySessionController.isUserInRole('REFER_008_006')}" />
@@ -119,7 +97,8 @@
             <div class="page-bar">
                 <ui:insert name="breadCrumb" />
                 <div class="info">
-                    Zone variables métier
+                   <p:button outcome="/pages/referentiel/indexReferEmp.xhtml" value="Acceuil référenttiel Emploi" icon="fa fa-home" style="margin-right:0px;background-color: #26a69a">
+                   </p:button>
                 </div>
             </div>
 

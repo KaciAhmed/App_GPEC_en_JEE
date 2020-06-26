@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateDrh.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleDrh.titre_nouveau_compagne}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>           
+            <a:menuitem value="#{bundleDrh.titre_gestion_compagne }" />
+            <a:menuitem value="#{bundleDrh.titre_liste_compagne}" outcome="listCom" />
+            <a:menuitem value="#{bundleDrh.titre_ajouter_Compagne}" />
+
+        </a:breadcrumb>
+    </ui:define>
+    <ui:param name="aa" value="aaaaaaaaaaaaa" />
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row nomargin="true">
+                <a:pagetitle value="#{bundleDrh.titre_nouvelle_compagne }" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
+            </a:row>
+            <p:panel id="panel"  styleClass="no-border row" style="margin-top: 2%;" >
+                <a:row>
+                    <a:pagetitle value="#{bundleDrh.titre_information_compagne }" />
+                </a:row>
+                <a:row>
+                    <a:column span="12" >
+                        <a:label value="#{bundleCommun.lbl_code}" span="2" />
+                        <a:column span="8" >
+                            <p:inputText id="code" required="true" value="#{addCompagneEvaluationController.compagne.code}" /> 
+                            <p:message for="code"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="12" >                               
+                        <a:label value="#{bundleDrh.lbl_date_debut}" span="2" />
+                        <a:column span="8" >
+                            <p:calendar  id="dateDeb" value="#{addCompagneEvaluationController.compagne.datedeb}" pattern="dd/MM/yyyy" required="true" label="#{bundleDrh.lbl_date_debut}" 
+                                         locale="fr" navigator="true"> 
+                            </p:calendar>
+                            <p:message for="dateDeb" />                                        
+                        </a:column>                                
+                    </a:column>
+                </a:row>
+                <a:row style="margin-bottom:5%; ">
+                    <a:column span="12" >                               
+                        <a:label value="#{bundleDrh.lbl_date_fin}" span="2" />
+                        <a:column span="8" >
+                            <p:calendar  id="dateFin" value="#{addCompagneEvaluationController.compagne.datefin}" pattern="dd/MM/yyyy" required="true" label="#{bundleDrh.lbl_date_fin}" 
+                                         locale="fr" navigator="true"> 
+                            </p:calendar>
+                            <p:message for="dateFin" />                                        
+                        </a:column>                                
+                    </a:column>
+                </a:row>                  
+            </p:panel>
+            <a:row style="margin-left: 45%;margin-top: 2%;">
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addCompagneEvaluationController.create()}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listCom" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

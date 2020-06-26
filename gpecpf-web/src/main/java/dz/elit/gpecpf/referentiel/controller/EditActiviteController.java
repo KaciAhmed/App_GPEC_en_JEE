@@ -1,11 +1,14 @@
 package dz.elit.gpecpf.referentiel.controller;
 
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.poste.service.ActiviteFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.poste.entity.Activite;
+import dz.elit.gpecpf.poste.entity.Mission;
 import dz.elit.gpecpf.poste.entity.Tache;
+import dz.elit.gpecpf.poste.service.MissionFacade;
 import dz.elit.gpecpf.poste.service.TacheFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,70 +25,119 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class EditActiviteController extends AbstractController implements Serializable {
 
-    @EJB
-    private ActiviteFacade activiteFacade;
 	@EJB
-    private TacheFacade tacheFacade;
+	private ActiviteFacade activiteFacade;
+	@EJB
+	private TacheFacade tacheFacade;
+	@EJB
+	private MissionFacade missionFacade;
+	@EJB
+	private AdminPrefixCodificationFacade prefixFacade;
 
-    private Activite activite;
-	
+	private Activite activite;
+
 	private List<Tache> listTaches;
-    private List<Tache> listTachesSelected;
+	private List<Tache> listTachesSelected;
 
-    private String code;
-    private String libelle;
+	private List<Mission> listMissions;
+	private List<Mission> listMissionsActivite;
+	private List<Mission> listMissionsSelected;
+	private List<Mission> listMissionsRemoved;
+	private List<Mission> listMissionsAdded;
+
+	private String code;
+	private String libelle;
 	private String description;
 
-    /**
-     * Creates a new instance of AddProfilController
-     */
-    public EditActiviteController() {
-    }
+	private String codePrefix;
 
-    @Override//@PostConstruct
-    protected void initController() {
-        initAddActivite();
-        activite = new Activite();
+	public EditActiviteController() {
+	}
+
+	@Override//@PostConstruct
+	protected void initController() {
+		try {
+			codePrefix = prefixFacade.chercherPrefix().getAct();
+		} catch (Exception e) {
+			codePrefix = "";
+		}
+		initAddActivite();
 		listTaches = tacheFacade.findAllOrderByAttribut("code");
-        String id = MyUtil.getRequestParameter("id");
-        if (id != null) {
-            activite = activiteFacade.find(Integer.parseInt(id));
+		listMissions = missionFacade.findAllOrderByAttribut("code");
+		String id = MyUtil.getRequestParameter("id");
+		if (id != null) {
+			activite = activiteFacade.find(Integer.parseInt(id));
 			listTaches.removeAll(activite.getListTaches());
-        }
-    }
+			listMissionsActivite = missionFacade.missionsForActivite(activite);
+			listMissions.removeAll(listMissionsActivite);
+		}
+	}
 
 	public void addTachesForActivite() {
-        if(!listTachesSelected.isEmpty()) {
+		if (!listTachesSelected.isEmpty()) {
 			activite.addListTaches(listTachesSelected);
 			listTaches.removeAll(listTachesSelected);
-            listTachesSelected = new ArrayList<>();
-        }
-    }
-	
+			listTachesSelected = new ArrayList<>();
+		}
+	}
+
 	public void removeTacheForActivite(Tache tache) {
 		activite.removeTache(tache);
 		listTaches.add(tache);
 	}
-	
-    public void edit() {
-        try {
-            activiteFacade.edit(activite);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-            initAddActivite();
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
 
-    private void initAddActivite() {
-        activite = new Activite();
-        listTaches = new ArrayList();
-        listTachesSelected = new ArrayList<>();
-    }
+	public void addMissionsForActivite() {
+		if (!listMissionsSelected.isEmpty()) {
+			listMissionsActivite.addAll(listMissionsSelected);
+			listMissions.removeAll(listTachesSelected);
+			listMissionsAdded.addAll(listMissionsSelected);
+			listMissionsRemoved.removeAll(listMissionsSelected);
+			listMissionsSelected = new ArrayList<>();
+		}
+	}
+
+	public void removeMissionForActivite(Mission mission) {
+		listMissionsActivite.remove(mission);
+		listMissions.add(mission);
+		listMissionsRemoved.add(mission);
+		listMissionsAdded.remove(mission);
+	}
+
+	public void checkCode() throws MyException {
+		if (!codePrefix.equals("")) {
+			if (!activite.getCode().startsWith(codePrefix) || activite.getCode().equals(codePrefix)) {
+				throw new MyException("Le code doit commencer avec le prefix: " + codePrefix + " et suivi d'une chaine.");
+			}
+		}
+	}
+
+	public void edit() {
+		try {
+			checkCode();
+			activiteFacade.edit(activite);
+			listMissionsAdded.removeAll(missionFacade.missionsForActivite(activite));
+			missionFacade.editActivite(activite, listMissionsAdded, listMissionsRemoved);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+			initAddActivite();
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
+
+	private void initAddActivite() {
+		activite = new Activite();
+		listTaches = new ArrayList();
+		listTachesSelected = new ArrayList<>();
+		listMissions = new ArrayList();
+		listMissionsSelected = new ArrayList<>();
+		listMissionsRemoved = new ArrayList();
+		listMissionsAdded = new ArrayList();
+		listMissionsActivite = new ArrayList();
+	}
 
 	public Activite getActivite() {
 		return activite;
@@ -134,7 +186,7 @@ public class EditActiviteController extends AbstractController implements Serial
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public ActiviteFacade getActiviteFacade() {
 		return activiteFacade;
 	}
@@ -150,5 +202,69 @@ public class EditActiviteController extends AbstractController implements Serial
 	public void setTacheFacade(TacheFacade tacheFacade) {
 		this.tacheFacade = tacheFacade;
 	}
-	
+
+	public MissionFacade getMissionFacade() {
+		return missionFacade;
+	}
+
+	public void setMissionFacade(MissionFacade missionFacade) {
+		this.missionFacade = missionFacade;
+	}
+
+	public List<Mission> getListMissions() {
+		return listMissions;
+	}
+
+	public void setListMissions(List<Mission> listMissions) {
+		this.listMissions = listMissions;
+	}
+
+	public List<Mission> getListMissionsSelected() {
+		return listMissionsSelected;
+	}
+
+	public void setListMissionsSelected(List<Mission> listMissionsSelected) {
+		this.listMissionsSelected = listMissionsSelected;
+	}
+
+	public List<Mission> getListMissionsRemoved() {
+		return listMissionsRemoved;
+	}
+
+	public void setListMissionsRemoved(List<Mission> listMissionsRemoved) {
+		this.listMissionsRemoved = listMissionsRemoved;
+	}
+
+	public List<Mission> getListMissionsAdded() {
+		return listMissionsAdded;
+	}
+
+	public void setListMissionsAdded(List<Mission> listMissionsAdded) {
+		this.listMissionsAdded = listMissionsAdded;
+	}
+
+	public AdminPrefixCodificationFacade getPrefixFacade() {
+		return prefixFacade;
+	}
+
+	public void setPrefixFacade(AdminPrefixCodificationFacade prefixFacade) {
+		this.prefixFacade = prefixFacade;
+	}
+
+	public String getCodePrefix() {
+		return codePrefix;
+	}
+
+	public void setCodePrefix(String codePrefix) {
+		this.codePrefix = codePrefix;
+	}
+
+	public List<Mission> getListMissionsActivite() {
+		return listMissionsActivite;
+	}
+
+	public void setListMissionsActivite(List<Mission> listMissionsActivite) {
+		this.listMissionsActivite = listMissionsActivite;
+	}
+
 }

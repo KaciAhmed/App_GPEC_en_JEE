@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/templateRefer.xhtml"
+                template="/templates/templateReferEmp.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -53,14 +53,35 @@
                                         <p:commandButton title="#{bundleReferentiel.titre_ajouter_tache}"  icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogTaches').show();"/> 
                                     </f:facet>
                                     <p:dataTable  id="tableTaches" value="#{addActiviteController.activite.listTaches}" var="tache" rowKey="#{tache.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
-                                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{tache.code}" filterMatchMode="contains">
+                                        <p:column headerText="#{bundleReferentiel.lbl_code}">
                                             <h:outputText value="#{tache.code}"/>
                                         </p:column>
-                                        <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{tache.description}" filterMatchMode="contains">
+                                        <p:column headerText="#{bundleReferentiel.lbl_description}">
                                             <h:outputText value="#{tache.description}"/>
                                         </p:column>
                                         <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
                                             <p:commandButton icon="fa fa-times" actionListener="#{addActiviteController.removeTacheForActivite(tache)}" update=":form:tabView:tableTaches :FormDialog:tableTachesSeect" process="@this"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                            <p:tab title="#{bundleReferentiel.lbl_missions}">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_mission}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">                                            
+                                        <p:commandButton title="#{bundleReferentiel.titre_ajouter_mission}"  icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogMissions').show();"/> 
+                                    </f:facet>
+                                    <p:dataTable  id="tableMissions" value="#{addActiviteController.listMissionsActivite}" var="mission" rowKey="#{mission.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{mission.code}" filterMatchMode="contains">
+                                            <h:outputText value="#{mission.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_libelle}">
+                                            <h:outputText value="#{mission.libelle}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_description}">
+                                            <h:outputText value="#{mission.description}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
+                                            <p:commandButton icon="fa fa-times" actionListener="#{addActiviteController.removeMissionForActivite(tache)}" update=":form:tabView:tableMissions :FormDialog:tableMissionsSeect" process="@this"/>
                                         </p:column>
                                     </p:dataTable>
                                 </a:panel>
@@ -78,7 +99,7 @@
 
     <ui:define name="MyDialog">
         <h:form id="FormDialog">
-            <p:dialog widgetVar="dialogTaches" header="#{bundleReferentiel.titre_ajouter_tache}" modal="true"   responsive="true">
+            <p:dialog widgetVar="dialogTaches" header="#{bundleReferentiel.titre_ajouter_tache}" modal="true"   responsive="true" width="65%">
                 <p:dataTable id="tableTachesSeect" value="#{addActiviteController.listTaches}" rowKey="#{tache.id}" selection="#{addActiviteController.listTachesSelected}" reflow="true" rows="8" var="tache" emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" >
                     <p:column selectionMode="multiple" width="10"/>
                     <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{tache.code}" filterMatchMode="contains">
@@ -95,6 +116,35 @@
                                         <a:column  span="9" id="pgbtndlg">
                                             <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tableTachesSeect" actionListener="#{addActiviteController.addTachesForActivite()}" update=":form:tabView:tableTaches :FormDialog:tableTachesSeect" oncomplete="PF('dialogTaches').hide();" />                                          
                                             <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogTaches').hide()" />
+                                        </a:column>
+                                    </a:row>   
+                                </a:column>
+                            </a:row>
+                        </div>
+                    </f:facet>
+                </p:dataTable>
+            </p:dialog>
+            
+            <p:dialog widgetVar="dialogMissions" header="#{bundleReferentiel.titre_ajouter_mission}" modal="true"   responsive="true">
+                <p:dataTable id="tableMissionsSeect" value="#{addActiviteController.listMissions}" rowKey="#{mission.id}" selection="#{addActiviteController.listMissionsSelected}" reflow="true" rows="8" var="mission" emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" >
+                    <p:column selectionMode="multiple" width="10"/>
+                    <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{mission.code}" filterMatchMode="contains">
+                        <h:outputText value="#{mission.code}"/>
+                    </p:column>
+                    <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{mission.libelle}" filterMatchMode="contains">
+                        <h:outputText value="#{mission.libelle}"/>
+                    </p:column>
+                    <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{mission.description}" filterMatchMode="contains">
+                        <h:outputText value="#{mission.description}"/>
+                    </p:column>
+                    <f:facet name="footer" >
+                        <div class="form-actions">
+                            <a:row nomargin="true">
+                                <a:column span="6">
+                                    <a:row nomargin="true">
+                                        <a:column  span="9" id="pgbtndlg">
+                                            <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tableMissionsSeect" actionListener="#{addActiviteController.addMissionsForActivite()}" update=":form:tabView:tableMissions :FormDialog:tableMissionsSeect" oncomplete="PF('dialogMissions').hide();" />                                          
+                                            <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogMissions').hide()" />
                                         </a:column>
                                     </a:row>   
                                 </a:column>

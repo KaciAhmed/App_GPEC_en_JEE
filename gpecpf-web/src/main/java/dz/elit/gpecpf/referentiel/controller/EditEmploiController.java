@@ -1,5 +1,6 @@
 package dz.elit.gpecpf.referentiel.controller;
 
+import dz.elit.gpecpf.administration.service.AdminPrefixCodificationFacade;
 import dz.elit.gpecpf.poste.service.EmploiFacade;
 import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
@@ -22,54 +23,68 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class EditEmploiController extends AbstractController implements Serializable {
 
-    @EJB
-    private EmploiFacade emploiFacade;
+	@EJB
+	private EmploiFacade emploiFacade;
 	@EJB
 	private PosteFacade posteFacade;
-	
-	private List<Poste> listPostes;
-	
-    private Emploi emploi;
+	@EJB
+	private AdminPrefixCodificationFacade prefixFacade;
 
-    private String code;
-    private String libelle;
+	private List<Poste> listPostes;
+
+	private Emploi emploi;
+
+	private String code;
+	private String libelle;
 	private String description;
 
-    /**
-     * Creates a new instance of AddProfilController
-     */
-    public EditEmploiController() {
-    }
+	private String codePrefix;
 
-    @Override//@PostConstruct
-    protected void initController() {
-        initAddEmploi();
-        emploi = new Emploi();
-        String id = MyUtil.getRequestParameter("id");
-        if (id != null) {
-            emploi = emploiFacade.find(Integer.parseInt(id));
+	public EditEmploiController() {
+	}
+
+	@Override//@PostConstruct
+	protected void initController() {
+		try {
+			codePrefix = prefixFacade.chercherPrefix().getEmploi();
+		} catch (Exception e) {
+			codePrefix = "";
+		}
+		initAddEmploi();
+		String id = MyUtil.getRequestParameter("id");
+		if (id != null) {
+			emploi = emploiFacade.find(Integer.parseInt(id));
 			listPostes = posteFacade.postesForEmploi(emploi);
-        }
-    }
-	
-    public void edit() {
-        try {
-            emploiFacade.edit(emploi);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-            initAddEmploi();
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+		}
+	}
 
-    private void initAddEmploi() {
-        emploi = new Emploi();
+	public void edit() {
+		try {
+			checkCode();
+			emploiFacade.edit(emploi);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+			initAddEmploi();
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
+
+	public void checkCode() throws MyException {
+		if (!codePrefix.equals("")) {
+			if (!emploi.getCode().startsWith(codePrefix) || emploi.getCode().equals(codePrefix)) {
+				throw new MyException("Le code doit commencer avec le prefix: " + codePrefix + " et suivi d'une chaine.");
+			}
+		}
+	}
+
+	private void initAddEmploi() {
+		emploi = new Emploi();
 		listPostes = new ArrayList<>();
-    }
+	}
 
 	public Emploi getEmploi() {
 		return emploi;
@@ -102,7 +117,7 @@ public class EditEmploiController extends AbstractController implements Serializ
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public EmploiFacade getEmploiFacade() {
 		return emploiFacade;
 	}
@@ -126,7 +141,21 @@ public class EditEmploiController extends AbstractController implements Serializ
 	public void setListPostes(List<Poste> listPostes) {
 		this.listPostes = listPostes;
 	}
-	
-	
-	
+
+	public AdminPrefixCodificationFacade getPrefixFacade() {
+		return prefixFacade;
+	}
+
+	public void setPrefixFacade(AdminPrefixCodificationFacade prefixFacade) {
+		this.prefixFacade = prefixFacade;
+	}
+
+	public String getCodePrefix() {
+		return codePrefix;
+	}
+
+	public void setCodePrefix(String codePrefix) {
+		this.codePrefix = codePrefix;
+	}
+
 }

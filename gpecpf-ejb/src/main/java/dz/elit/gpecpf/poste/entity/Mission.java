@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dz.elit.gpecpf.poste.entity;
 
 import java.io.Serializable;
@@ -26,54 +21,57 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author N
+ * @author Nadir Ben Mohand
  */
 @Entity
-@Table(name = "mission",schema = StaticUtil.POSTE_SCHEMA)
+@Table(name = "mission", schema = StaticUtil.POSTE_SCHEMA)
 @NamedQueries({
-    @NamedQuery(name = "Mission.findByCodeWithoutCurrentId", query = "SELECT a FROM Mission a WHERE a.code =:code AND a.id != :id ORDER BY a.code  "),})
+	@NamedQuery(name = "Mission.findByCodeWithoutCurrentId", query = "SELECT a FROM Mission a WHERE a.code =:code AND a.id != :id ORDER BY a.code  ")
+	,
+	@NamedQuery(name = "Mission.findByActivite", query = "SELECT a FROM Mission a WHERE :activite MEMBER OF a.listActivites "),})
 public class Mission implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)    
-    @Column(name = "id")
-    private Integer id;
-    @Size(min = 1, max = 20)
-    @Column(name = "code",nullable=false,unique=true,length = 20)
-    @NotNull
-    private String code;
-    @Size(min = 1, max = 30)
-    @Column(name = "libelle",nullable=false,unique=true,length = 30)
-    @NotNull
-    private String libelle;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id")
+	private Integer id;
+	@Size(min = 1, max = 20)
+	@Column(name = "code", nullable = false, unique = true, length = 20)
+	@NotNull
+	private String code;
+	@Size(min = 1, max = 30)
+	@Column(name = "libelle", nullable = false, unique = true, length = 30)
+	@NotNull
+	private String libelle;
 	@Size(max = 255)
-    @Column(name = "description")
-    private String description;
-	
+	@Column(name = "description")
+	private String description;
+
 	@ManyToMany
 	@JoinTable(
-		name = "mission_activite",
-		joinColumns = {
-			@JoinColumn(name = "id_mission", referencedColumnName = "id")
-		}, inverseJoinColumns = {
-			@JoinColumn(name = "id_activite", referencedColumnName = "id")
-		}, schema = StaticUtil.POSTE_SCHEMA
+			name = "mission_activite",
+			joinColumns = {
+				@JoinColumn(name = "id_mission", referencedColumnName = "id")
+			}, inverseJoinColumns = {
+				@JoinColumn(name = "id_activite", referencedColumnName = "id")
+			}, schema = StaticUtil.POSTE_SCHEMA
 	)
 	private List<Activite> listActivites = new ArrayList<>();
-    
-    public Mission() {
-    }
 
-    public Mission(Integer id) {
-        this.id = id;
-    }
+	public Mission() {
+	}
 
-	public Mission(Integer id, String code, String libelle, List<Activite> listActivites) {
+	public Mission(Integer id) {
+		this.id = id;
+	}
+
+	public Mission(Integer id, String code, String libelle, String description, List<Activite> listActivites) {
 		this.id = id;
 		this.code = code;
 		this.libelle = libelle;
+		this.description = description;
 		this.listActivites = listActivites;
 	}
 
@@ -116,44 +114,44 @@ public class Mission implements Serializable {
 	public void setListActivites(List<Activite> listActivites) {
 		this.listActivites = listActivites;
 	}
-	
+
 	public void addActivite(Activite activite) {
 		this.getListActivites().add(activite);
 	}
-	
+
 	public void removeActivite(Activite activite) {
 		this.getListActivites().remove(activite);
 	}
-	
+
 	public void addListActivites(List<Activite> activites) {
 		for (Activite activite : activites) {
 			addActivite(activite);
 		}
 	}
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Mission)) {
-            return false;
-        }
-        Mission other = (Mission) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "dz.elit.gpecpf.poste.entity.Mission[ id=" + id + " ]";
-    }
-    
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof Mission)) {
+			return false;
+		}
+		Mission other = (Mission) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "dz.elit.gpecpf.poste.entity.Mission[ id=" + id + " ]";
+	}
+
 }

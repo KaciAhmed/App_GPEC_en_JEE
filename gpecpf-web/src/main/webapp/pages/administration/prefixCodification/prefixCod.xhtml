@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateAdmin.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleAdmin.titre_gestion_pref_codification}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb rendered="true">
+            <a:menuitem value="#{bundleAdmin.titre_gestion_pref_codification}" />
+            <a:menuitem value="#{bundleAdmin.titre_fiche_pref_codification}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="#{bundleAdmin.titre_fiche_pref_codification}" />   
+            <p:messages id="msgs" showDetail="true" closable="true"/>
+            <p:panel id="panel" styleClass="no-border">
+                <p:focus context="panel"/>                
+                <p:tabView  id="tabView">
+                    <p:tab title="#{bundleAdmin.titre_codification}">    
+                         <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_domComp}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="domComp" value="#{acceuilPrefixCodificationController.codif.domcomp}" label="#{bundleAdmin.lbl_domComp}" size="40" />
+                                    <p:message for="domComp" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_typeComp}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="typeComp" value="#{acceuilPrefixCodificationController.codif.typecomp}" label="#{bundleAdmin.lbl_typeComp}" size="40" />
+                                    <p:message for="typeComp" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_comp}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="comp" value="#{acceuilPrefixCodificationController.codif.comp}" label="#{bundleAdmin.lbl_comp}" size="40" />
+                                    <p:message for="comp" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_comport}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="comport" value="#{acceuilPrefixCodificationController.codif.comport}" label="#{bundleAdmin.lbl_comport}" size="40" />
+                                    <p:message for="comport" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_employe}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="employe" value="#{acceuilPrefixCodificationController.codif.employe}" label="#{bundleAdmin.lbl_employe}" size="40" />
+                                    <p:message for="employe" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_notif}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="notif" value="#{acceuilPrefixCodificationController.codif.notif}" label="#{bundleAdmin.lbl_notif}" size="40" />
+                                    <p:message for="notif" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_unitO}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="unitO" value="#{acceuilPrefixCodificationController.codif.unito}" label="#{bundleAdmin.lbl_unitO}" size="40" />
+                                    <p:message for="unitO" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_emploi}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="emploi" value="#{acceuilPrefixCodificationController.codif.emploi}" label="#{bundleAdmin.lbl_emploi}" size="40" />
+                                    <p:message for="emploi" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_typePoste}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="typePoste" value="#{acceuilPrefixCodificationController.codif.typeposte}" label="#{bundleAdmin.lbl_typePoste}" size="40" />
+                                    <p:message for="typePoste" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_poste}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="poste" value="#{acceuilPrefixCodificationController.codif.poste}" label="#{bundleAdmin.lbl_poste}" size="40" />
+                                    <p:message for="poste" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_form}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="form" value="#{acceuilPrefixCodificationController.codif.form}" label="#{bundleAdmin.lbl_form}" size="40" />
+                                    <p:message for="form" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_cond}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="cond" value="#{acceuilPrefixCodificationController.codif.cond}" label="#{bundleAdmin.lbl_cond}" size="40" />
+                                    <p:message for="cond" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_moy}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="moy" value="#{acceuilPrefixCodificationController.codif.moy}" label="#{bundleAdmin.lbl_moy}" size="40" />
+                                    <p:message for="moy" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_miss}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="miss" value="#{acceuilPrefixCodificationController.codif.miss}" label="#{bundleAdmin.lbl_miss}" size="40" />
+                                    <p:message for="miss" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_act}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="act" value="#{acceuilPrefixCodificationController.codif.act}" label="#{bundleAdmin.lbl_act}" size="40" />
+                                    <p:message for="act" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_tache}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="tache" value="#{acceuilPrefixCodificationController.codif.tache}" label="#{bundleAdmin.lbl_tache}" size="40" />
+                                    <p:message for="tache" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleAdmin.lbl_compEva}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="compEva" value="#{acceuilPrefixCodificationController.codif.compeva}" label="#{bundleAdmin.lbl_compEva}" size="40" />
+                                    <p:message for="compEva" />                                        
+                                </a:column>                                
+                            </a:column>
+                           <a:column span="6" >                                
+                               <a:label value="#{bundleAdmin.lbl_eva}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="eva" value="#{acceuilPrefixCodificationController.codif.eva}" label="#{bundleAdmin.lbl_eva}" size="40" />
+                                    <p:message for="eva" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>    
+                    </p:tab>
+                </p:tabView>                
+            </p:panel> 
+            <a:row >
+                <p:commandButton value="#{bundleCommun.btn_enregistrer}" action="#{acceuilPrefixCodificationController.valider()}" icon="fa  fa-check-square-o" update="panel msgs"/>
+            </a:row>
+        </h:form> 
+    </ui:define>
+</ui:composition>

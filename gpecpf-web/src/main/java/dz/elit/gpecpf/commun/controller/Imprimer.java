@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package dz.elit.gpecpf.commun.controller;
 
 import dz.elit.gpecpf.administration.service.AdminHistoriqueFacade;
@@ -15,9 +11,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import net.sf.jasperreports.engine.JRException;
-//import net.sf.jasperreports.engine.JRException;
+
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-//import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -27,89 +22,89 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @ViewScoped
 public class Imprimer implements Serializable {
 
-    @EJB
-    private AdminHistoriqueFacade adminHistoriqueFacade;
-    private String methodeImp;
+	@EJB
+	private AdminHistoriqueFacade adminHistoriqueFacade;
+	private String methodeImp;
 
-    private static InputStream rapport;
-    private static Map parametres;
-    private static JRBeanCollectionDataSource data;
+	private static InputStream rapport;
+	private static Map parametres;
+	private static JRBeanCollectionDataSource data;
 
-    public Imprimer() {
-    }
+	public Imprimer() {
+	}
 
-    @PostConstruct
-    public void initParam() {
-        methodeImp = "1";
-    }
+	@PostConstruct
+	public void initParam() {
+		methodeImp = "1";
+	}
 
-    public InputStream getRapport() {
-        return rapport;
-    }
+	public InputStream getRapport() {
+		return rapport;
+	}
 
-    public void setRapport(InputStream rapport) {
+	public void setRapport(InputStream rapport) {
 
-        System.out.println("rapport -----s-------->= " + rapport);
+		System.out.println("rapport -----s-------->= " + rapport);
 
-        this.rapport = rapport;
-    }
+		this.rapport = rapport;
+	}
 
-    public Map getParametres() {
-        return parametres;
-    }
+	public Map getParametres() {
+		return parametres;
+	}
 
-    public void setParametres(Map parametres) {
+	public void setParametres(Map parametres) {
 
-        System.out.println("parametres -----s--------------->= " + parametres);
+		System.out.println("parametres -----s--------------->= " + parametres);
 
-        this.parametres = parametres;
-    }
+		this.parametres = parametres;
+	}
 
-    public JRBeanCollectionDataSource getData() {
-        return data;
-    }
+	public JRBeanCollectionDataSource getData() {
+		return data;
+	}
 
-    public void setData(JRBeanCollectionDataSource data) {
+	public void setData(JRBeanCollectionDataSource data) {
 
-        System.out.println("data ------s--------------->= " + data);
-        this.data = data;
-    }
+		System.out.println("data ------s--------------->= " + data);
+		this.data = data;
+	}
 
-    public void downloadEtat() throws JRException, FileNotFoundException {
+	public void downloadEtat() throws JRException, FileNotFoundException {
 
-        System.out.println("rapport ------------->= " + rapport);
+		System.out.println("rapport ------------->= " + rapport);
 
-        System.out.println("parametres -------------------->= " + parametres);
-        System.out.println("data --------------------->= " + data);
+		System.out.println("parametres -------------------->= " + parametres);
+		System.out.println("data --------------------->= " + data);
 
-        switch (methodeImp) {
-            case "1":
-                Reporting.downloadReportPdf(rapport, data, parametres);
-                ;
-                break;
-            case "2":
-                Reporting.downloadReportExel(rapport, data, parametres);
-                ;
-                break;
-            case "3":
-                Reporting.downloadReportExcelx(rapport, data, parametres);
-                ;
-                break;
-            case "4":
-                Reporting.downloadReportCsv(rapport, data, parametres);
-                ;
-                break;
+		switch (methodeImp) {
+			case "1":
+				Reporting.downloadReportPdf(rapport, data, parametres);
+				;
+				break;
+			case "2":
+				Reporting.downloadReportExel(rapport, data, parametres);
+				;
+				break;
+			case "3":
+				Reporting.downloadReportExcelx(rapport, data, parametres);
+				;
+				break;
+			case "4":
+				Reporting.downloadReportCsv(rapport, data, parametres);
+				;
+				break;
 
-        }
+		}
 
-    }
+	}
 
-    public String getMethodeImp() {
-        return methodeImp;
-    }
+	public String getMethodeImp() {
+		return methodeImp;
+	}
 
-    public void setMethodeImp(String methodeImp) {
-        this.methodeImp = methodeImp;
-    }
+	public void setMethodeImp(String methodeImp) {
+		this.methodeImp = methodeImp;
+	}
 
 }

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/templateRefer.xhtml"
+                template="/templates/templateReferEmp.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui" 
                 xmlns:a="http://elit.dz/ui"
@@ -28,7 +28,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
                         <a:column span="8" >
-                            <p:inputText id="cod"  value="#{editConditionController.condition.code}" /> 
+                            <p:inputText id="cod"  value="#{editConditionController.condition.code}" disabled="true" /> 
                         </a:column>
                     </a:column> 
                 </a:row>
@@ -36,7 +36,7 @@
                     <a:column span="6" >
                         <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
                         <a:column span="8" >
-                            <p:inputTextarea id="desc" cols="60" value="#{editConditionController.condition.description}" autoResize="false" />
+                            <p:inputTextarea id="desc" cols="60" value="#{editConditionController.condition.description}" autoResize="false" disabled="true" />
                         </a:column>
                     </a:column>
                 </a:row>

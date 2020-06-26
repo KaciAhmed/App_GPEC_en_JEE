@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/templateRefer.xhtml"
+                template="/templates/templateReferEmp.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -44,7 +44,33 @@
                             <p:message for="desc"/>                                    
                         </a:column>
                     </a:column>
-                </a:row>              
+                </a:row> 
+                
+                <a:row >
+                    <a:column span="12" >
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.lbl_activites}">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_activite}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">                                            
+                                        <p:commandButton title="#{bundleReferentiel.titre_ajouter_activite}"  icon="fa fa-plus" value="#{bundleCommun.btn_ajouter}" immediate="true" onclick="PF('dialogActivites').show();"/> 
+                                    </f:facet>
+                                    <p:dataTable  id="tableActivites" value="#{addTacheController.listActivitesTache}" var="activite" rowKey="#{activite.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleReferentiel.lbl_code}">
+                                            <h:outputText value="#{activite.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_libelle}">
+                                            <h:outputText value="#{activite.libelle}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_actions}" width="60">
+                                            <p:commandButton icon="fa fa-times" actionListener="#{addTacheController.removeActiviteForTache(activite)}" update=":form:tabView:tableActivites :FormDialog:tableActivitesSeect" process="@this"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>
+                    </a:column>
+                </a:row>
+                
             </p:panel>
             <a:row>
                 <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addTacheController.create()}" icon="fa fa-check-square-o" ajax="false" />
@@ -52,4 +78,35 @@
             </a:row>
         </h:form>
     </ui:define>
+      
+    <ui:define name="MyDialog">
+        <h:form id="FormDialog">
+            <p:dialog widgetVar="dialogActivites" header="#{bundleReferentiel.titre_ajouter_activite}" modal="true"   responsive="true">
+                <p:dataTable id="tableActivitesSeect" value="#{addTacheController.listActivites}" rowKey="#{activite.id}" selection="#{addTacheController.listActivitesSelected}" reflow="true" rows="8" var="activite" emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false" >
+                    <p:column selectionMode="multiple" width="10"/>
+                    <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{activite.code}" filterMatchMode="contains">
+                        <h:outputText value="#{activite.code}"/>
+                    </p:column>
+                    <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{activite.libelle}" filterMatchMode="contains">
+                        <h:outputText value="#{activite.libelle}"/>
+                    </p:column>
+                    <f:facet name="footer" >
+                        <div class="form-actions">
+                            <a:row nomargin="true">
+                                <a:column span="6">
+                                    <a:row nomargin="true">
+                                        <a:column  span="9" id="pgbtndlg">
+                                            <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tableActivitesSeect" actionListener="#{addTacheController.addActivitesForTache()}" update=":form:tabView:tableActivites :FormDialog:tableActivitesSeect" oncomplete="PF('dialogActivites').hide();" />                                          
+                                            <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogActivites').hide()" />
+                                        </a:column>
+                                    </a:row>   
+                                </a:column>
+                            </a:row>
+                        </div>
+                    </f:facet>
+                </p:dataTable>
+            </p:dialog>
+        </h:form>
+    </ui:define>  
+     
 </ui:composition>

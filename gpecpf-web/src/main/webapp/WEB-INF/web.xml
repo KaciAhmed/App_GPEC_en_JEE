@@ -15,12 +15,12 @@
     <context-param>
         <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
-    </context-param> 
+    </context-param>
     <mime-mapping>
         <extension>eot</extension>
         <mime-type>application/vnd.ms-fontobject</mime-type>
     </mime-mapping>
-      <mime-mapping>
+    <mime-mapping>
         <extension>ttf</extension>
         <mime-type>application/octet-stream</mime-type>
     </mime-mapping>
@@ -31,11 +31,11 @@
     <mime-mapping>
         <extension>woff2</extension>
         <mime-type>application/font-woff2</mime-type>
-    </mime-mapping>  
+    </mime-mapping>
     <mime-mapping>
         <extension>svg</extension>
         <mime-type>image/svg+xml</mime-type>
-    </mime-mapping>  
+    </mime-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -50,13 +50,525 @@
             30
         </session-timeout>
         <!--pour utiliser le meme cookies pour plusieur app-->
-<!--    <cookie-config>
+        <!--    <cookie-config>
             <path>/</path>
         </cookie-config>-->
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <security-constraint>
+        <display-name>REFER_001_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_001_006</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/type/listType.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Liste des compétence</description>
+            <role-name>REFER_001_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_002_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_002_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/domaine/addDom.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Créer un domaine de compétence</description>
+            <role-name>REFER_002_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_003_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_003_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/competence/addComp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Créer une compétence</description>
+            <role-name>REFER_003_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_003_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_003_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/competence/listComp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Lister les compétences</description>
+            <role-name>REFER_003_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_002_005_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_002_005_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/domaine/showDom.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_002_005</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_001_005_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_001_005_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/type/showType.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_001_005</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_002_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_002_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/domaine/listDom</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_002_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_009_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_009_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/comportement/addComp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_009_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_009_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_009_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/comportement/editComp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_009_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_009_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_009_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/comportement/listComp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_009_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_004_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_004_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/tache/addTac.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_004_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_004_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_004_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/tache/editTac.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_004_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_004_005_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_004_005_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/tache/showTac.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_004_005</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_004_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_004_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/tache/listTac.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_004_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_005_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_005_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/activite/addAct.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_005_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_005_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_005_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/activite/editAct.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_005_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_005_005_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_005_005_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/activite/showAct.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_005_005</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_005_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_005_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/activite/listAct.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_005_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_006_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_006_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/mission/addMiss.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_006_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_006_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_006_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/mission/editMiss.xhtml</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_006_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_006_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/mission/listMiss.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_006_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_007_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_007_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/emploi/addEmp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_007_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_007_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_007_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/emploi/editEmp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_007_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_007_005_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_007_005_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/emploi/showEmp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_007_005</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_007_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_007_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/emploi/listEmp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_007_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_008_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_008_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/poste/addPos.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_008_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_008_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_008_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/poste/addPos.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_008_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_008_005_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_008_005_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/poste/showPos.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_008_005</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_008_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_008_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/poste/listPos.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_008_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_010_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_010_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/condition/addCond.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_010_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_010_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_010_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/condition/editCond.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_010_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_010_005_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_010_005_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/condition/showCond.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_010_005</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_010_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_010_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/condition/listCond.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_010_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_011_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_011_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/moyen/addMoy.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_011_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_011_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_011_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/moyen/editMoy.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_011_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_011_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_011_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/moyen/listMoy.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_011_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_012_001_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_012_001_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/formation/addForm.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_012_001</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_012_005_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_012_005_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/formation/showForm.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_012_005</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_012_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_012_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/formation/listForm.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_012_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>REFER_012_002_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>REFER_012_002_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/referentiel/formation/editForm.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>REFER_012_002</role-name>
+        </auth-constraint>
+    </security-constraint>
+	<security-constraint>
+        <display-name>DRH_001_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>DRH_001_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/drh/employe/listEmp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>DRH_001_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>DRH_004_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>DRH_004_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/drh/reporting/listRep.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>DRH_004_006</role-name>
+        </auth-constraint>
+    </security-constraint>
+	<security-constraint>
+        <display-name>DRH_005_006_Constraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>DRH_005_006_Constraint</web-resource-name>
+            <description/>
+            <url-pattern>/pages/drh/emploi/listEmp.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>DRH_005_006</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>gpecpfRealm</realm-name>
@@ -292,5 +804,425 @@
     <security-role>
         <description/>
         <role-name>PAS_ENCORS_ACTIF</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un type de compétence</description>
+        <role-name>REFER_001_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister les type de compétence </description>
+        <role-name>REFER_001_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer un domaine de compétence</description>
+        <role-name>REFER_002_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un domaine de compétence</description>
+        <role-name>REFER_002_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un domaine de compétence </description>
+        <role-name>REFER_002_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un domaine de compétence</description>
+        <role-name>REFER_002_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un domaine de compétence</description>
+        <role-name>REFER_002_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister les domaine de compétence </description>
+        <role-name>REFER_002_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une compétence</description>
+        <role-name>REFER_003_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une compétence</description>
+        <role-name>REFER_003_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une compétence</description>
+        <role-name>REFER_003_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une compétence </description>
+        <role-name>REFER_003_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une compétence</description>
+        <role-name>REFER_003_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister les compétences</description>
+        <role-name>REFER_003_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une tâche</description>
+        <role-name>REFER_004_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une tâche </description>
+        <role-name>REFER_004_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une tâche</description>
+        <role-name>REFER_004_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une tâche </description>
+        <role-name>REFER_004_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une tâche</description>
+        <role-name>REFER_004_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister les tâches </description>
+        <role-name>REFER_004_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer un comportement de compétence</description>
+        <role-name>REFER_009_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un comportement de compétence </description>
+        <role-name>REFER_009_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un comportement de compétence </description>
+        <role-name>REFER_009_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un comportement de compétence</description>
+        <role-name>REFER_009_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un comportement de compétence </description>
+        <role-name>REFER_009_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister les comportements de compétence </description>
+        <role-name>REFER_009_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une activité</description>
+        <role-name>REFER_005_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une activité</description>
+        <role-name>REFER_005_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une activité </description>
+        <role-name>REFER_005_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une activité </description>
+        <role-name>REFER_005_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une activité</description>
+        <role-name>REFER_005_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une activité </description>
+        <role-name>REFER_005_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une mission </description>
+        <role-name>REFER_006_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une mission </description>
+        <role-name>REFER_006_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une mission </description>
+        <role-name>REFER_006_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une mission </description>
+        <role-name>REFER_006_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une mission </description>
+        <role-name>REFER_006_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une mission </description>
+        <role-name>REFER_006_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer un emploi </description>
+        <role-name>REFER_007_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un emploi </description>
+        <role-name>REFER_007_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un emploi </description>
+        <role-name>REFER_007_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un emploi </description>
+        <role-name>REFER_007_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un emploi </description>
+        <role-name>REFER_007_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un emploi </description>
+        <role-name>REFER_007_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer un poste </description>
+        <role-name>REFER_008_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un poste </description>
+        <role-name>REFER_008_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un poste </description>
+        <role-name>REFER_008_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un poste </description>
+        <role-name>REFER_008_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un poste </description>
+        <role-name>REFER_008_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un poste </description>
+        <role-name>REFER_008_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une condition </description>
+        <role-name>REFER_010_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une condition </description>
+        <role-name>REFER_010_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une condition </description>
+        <role-name>REFER_010_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une condition </description>
+        <role-name>REFER_010_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une condition </description>
+        <role-name>REFER_010_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une condition </description>
+        <role-name>REFER_010_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer un moyen </description>
+        <role-name>REFER_011_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un moyen </description>
+        <role-name>REFER_011_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un moyen </description>
+        <role-name>REFER_011_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un moyen </description>
+        <role-name>REFER_011_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un moyen </description>
+        <role-name>REFER_011_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un moyen </description>
+        <role-name>REFER_011_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une formation </description>
+        <role-name>REFER_012_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une formation </description>
+        <role-name>REFER_012_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une formation </description>
+        <role-name>REFER_012_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une formation </description>
+        <role-name>REFER_012_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une formation </description>
+        <role-name>REFER_012_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une formation </description>
+        <role-name>REFER_012_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un type de poste </description>
+        <role-name>REFER_013_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un type de poste </description>
+        <role-name>REFER_013_006</role-name>
+    </security-role>
+	<security-role>
+        <description>Céer un employé</description>
+        <role-name>GESEMP_001_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un employé</description>
+        <role-name>GESEMP_001_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un employé </description>
+        <role-name>GESEMP_001_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un employé</description>
+        <role-name>GESEMP_001_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un employé </description>
+        <role-name>GESEMP_001_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un employé </description>
+        <role-name>GESEMP_001_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un employé</description>
+        <role-name>DRH_001_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un employé</description>
+        <role-name>DRH_001_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un employé</description>
+        <role-name>DRH_001_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un poste</description>
+        <role-name>DRH_002_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un poste</description>
+        <role-name>DRH_002_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un poste</description>
+        <role-name>DRH_002_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une compagne</description>
+        <role-name>DRH_003_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une compagne</description>
+        <role-name>DRH_003_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une compagne </description>
+        <role-name>DRH_003_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une compagne </description>
+        <role-name>DRH_003_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une compagne</description>
+        <role-name>DRH_003_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une compagne </description>
+        <role-name>DRH_003_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer un reporting </description>
+        <role-name>DRH_004_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier un reporting </description>
+        <role-name>DRH_004_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer un reporting </description>
+        <role-name>DRH_004_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher un reporting </description>
+        <role-name>DRH_004_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un reporting </description>
+        <role-name>DRH_004_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un reporting </description>
+        <role-name>DRH_004_006</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un poste </description>
+        <role-name>EMP_001_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un employé </description>
+        <role-name>EMP_002_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Créer une évaluation </description>
+        <role-name>EMP_003_001</role-name>
+    </security-role>
+    <security-role>
+        <description>Modifier une évaluation </description>
+        <role-name>EMP_003_002</role-name>
+    </security-role>
+    <security-role>
+        <description>Supprimer une évaluation </description>
+        <role-name>EMP_003_003</role-name>
+    </security-role>
+    <security-role>
+        <description>Rechercher une évaluation </description>
+        <role-name>EMP_003_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter une évaluation </description>
+        <role-name>EMP_003_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister une évaluation </description>
+        <role-name>EMP_003_006</role-name>
+    </security-role>
+	<security-role>
+        <description>Rechercher un emploi </description>
+        <role-name>DRH_005_004</role-name>
+    </security-role>
+    <security-role>
+        <description>Consulter un emploi </description>
+        <role-name>DRH_005_005</role-name>
+    </security-role>
+    <security-role>
+        <description>Lister un emploi </description>
+        <role-name>DRH_005_006</role-name>
     </security-role>
 </web-app>

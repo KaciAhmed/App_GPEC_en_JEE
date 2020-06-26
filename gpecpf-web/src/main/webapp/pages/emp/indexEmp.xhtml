@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/templateEmp.xhtml"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleEmp.titre_accueil_module_emp}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+
+        <a:breadcrumb rendered="true">
+
+            <a:menuitem icon="fa fa-home" value=" #{bundleEmp.titre_accueil_module_emp}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <a:column span="10" offset="1" style="margin-top: 5%;margin-left: 25%;"  >
+            <a:tiles >
+                <a:tilesitem href="/pages/emp/employe/showEmp.xhtml" value="Fiche employé" icon="fa fa-fw fa-male" bg-color="green" description=" Consulter votre fiche employé "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('EMP_002_005')}" />  
+                <a:tilesitem href="/pages/emp/poste/showPos.xhtml" value="Fiche de poste" icon="fa fa-fw fa-file-powerpoint-o" bg-color="green" description=" Consulter votre fiche de poste "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('EMP_001_005')}" />  
+                <a:tilesitem href="/pages/emp/evaluation/listEval.xhtml" value="évaluation personnelle" icon="fa fa-fw fa-edit" bg-color="green" description="gestion des évaluation personnelle"   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('EMP_003_006')}" />  
+                <a:tilesitem href="/pages/emp/evaluateur/listEval.xhtml" value="gestion des évaluation des employés " icon="fa fa-fw fa-file-text-o" bg-color="green" description="gestion des évaluations des employés"   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('EMP_003_006')}" />  
+                <a:tilesitem href="/pages/emp/verification/listEval.xhtml" value="vérification des évaluation " icon="fa fa-fw fa-files-o" bg-color="green" description="vérification des évaluations des employés"   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('EMP_003_006')}" />  
+            </a:tiles>
+        </a:column> 
+
+    </ui:define>
+</ui:composition>

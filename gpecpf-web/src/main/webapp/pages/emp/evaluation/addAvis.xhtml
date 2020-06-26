@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateEmp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleEmp.titre_nouveau_avis}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>   
+            <a:menuitem value="#{bundleEmp.titre_gestion_evaluation}" />
+            <a:menuitem value="#{bundleEmp.lien_liste_employe_evaluation}" href="listEval.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_nouveau}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+    <ui:param name="aa" value="aaaaaaaaaaaaa" />
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row nomargin="true">
+                <a:pagetitle value="Fiche Avis" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
+            </a:row>
+            <p:panel id="panel" styleClass="no-border row">
+                <a:column span="12">
+                    <a:panel header=" #{bundleEmp.lien_liste_competences}" iconheader="fa fa-list-ul">
+                        <p:dataTable id="tableEvaluations" value="#{addAvisController.listNotes}" var="note" rowKey="#{note.id}" rows="10" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{bundleEmp.lbl_competence}">
+                                <h:outputText value="#{note.competence.libelle}"/>
+                                <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showEval" ajax="false" rendered="#{mySessionController.isUserInRole('EMP_003_005')}">  
+                                    <f:param name="id" value="#{evaluation.id}" />
+                                </p:commandButton>  
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_note_emp}">
+                                <h:outputText value="#{note.noteEmploye}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_note_sup}">
+                                <h:outputText value="#{note.noteSuperieure}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </a:panel>
+                    <a:panel header=" #{bundleEmp.lien_liste_avis}" iconheader="fa fa-list-ul">
+                        <p:dataTable value="#{addAvisController.listAvis}" var="avis" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
+                            <p:column headerText="#{bundleEmp.lbl_type_avis}">
+                                <h:outputText value="#{addAvisController.getTypeAvis(avis.type)}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_nom}">
+                                <h:outputText value="#{addAvisController.getNameAvis(avis.type)}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_prenom}">
+                                <h:outputText value="#{addAvisController.getPrenomAvis(avis.type)}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_commentaire}">
+                                <h:outputText value="#{avis.avis}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_type_comment}">
+                                <h:outputText value="#{addAvisController.getPositivity(avis.positif)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </a:panel>
+                </a:column>
+                <a:row>
+                    <a:column span="12" >
+                        <a:label value="#{bundleEmp.lbl_commentaire}" span="2" />
+                        <a:column span="10" >
+                            <p:inputTextarea id="av" required="true"  cols="60" value="#{addAvisController.avis.avis}" autoResize="false" />
+                            <p:message for="av"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+            </p:panel>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addAvisController.create(1)}" disabled="#{addAvisController.done}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_rejeter}" action="#{addAvisController.create(0)}" disabled="#{addAvisController.done}" icon="fa fa-times" styleClass="RedButton" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listEval" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

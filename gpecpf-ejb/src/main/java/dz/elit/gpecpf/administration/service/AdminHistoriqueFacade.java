@@ -1,5 +1,3 @@
-
-
 package dz.elit.gpecpf.administration.service;
 
 import dz.elit.gpecpf.administration.entity.AdminHistorique;
@@ -16,17 +14,16 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class AdminHistoriqueFacade extends AbstractFacade<AdminHistorique> {
 
+	@PersistenceContext(unitName = StaticUtil.UNIT_NAME)
+	private EntityManager em;
 
-    @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
-    private EntityManager em;
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
 
-  @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+	public AdminHistoriqueFacade() {
+		super(AdminHistorique.class);
+	}
 
-    public AdminHistoriqueFacade() {
-        super(AdminHistorique.class);
-    }
-    
- }
+}

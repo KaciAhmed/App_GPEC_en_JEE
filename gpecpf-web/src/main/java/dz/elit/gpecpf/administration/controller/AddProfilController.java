@@ -1,5 +1,3 @@
-
-
 package dz.elit.gpecpf.administration.controller;
 
 import dz.elit.gpecpf.administration.entity.AdminModule;
@@ -27,183 +25,176 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class AddProfilController extends AbstractController implements Serializable {
-    
-    @EJB
-    private AdminProfilFacade profilFacade;
-    @EJB
-    private AdminUtilisateurFacade utilisateurFacade;
-    @EJB
-    private AdminPrivilegeFacade privilegeFacade;
-    @EJB
-    private AdminModuleFacade moduleFacade;
 
-    private AdminProfil profil;
-    private AdminModule module;
+	@EJB
+	private AdminProfilFacade profilFacade;
+	@EJB
+	private AdminUtilisateurFacade utilisateurFacade;
+	@EJB
+	private AdminPrivilegeFacade privilegeFacade;
+	@EJB
+	private AdminModuleFacade moduleFacade;
 
-    private List<AdminUtilisateur> listUtilisateurs;
-    private List<AdminPrivilege> listPrivileges;
-    private List<AdminPrivilege> listPrivilegesSelected;
-    private List<AdminUtilisateur> listUtilisateursSelected;
-    private List<AdminModule> listModules;
+	private AdminProfil profil;
+	private AdminModule module;
 
-    private String code;
-    private String description;
+	private List<AdminUtilisateur> listUtilisateurs;
+	private List<AdminPrivilege> listPrivileges;
+	private List<AdminPrivilege> listPrivilegesSelected;
+	private List<AdminUtilisateur> listUtilisateursSelected;
+	private List<AdminModule> listModules;
 
-    /**
-     * Creates a new instance of AddProfilController
-     */
-    public AddProfilController() {
-    }
+	private String code;
+	private String description;
 
-    @Override//@PostConstruct
-    protected void initController() {
-        initAddProfil();
-        module = new AdminModule();
-        listUtilisateurs = utilisateurFacade.findAllOrderByAttribut("login");
-        listModules = moduleFacade.findAllOrderByAttribut("code");
-        //charger la liste des privileges
-        rechercher();
-    }
+	/**
+	 * Creates a new instance of AddProfilController
+	 */
+	public AddProfilController() {
+	}
 
-//    public void updateListPrivileges() {
-//        if (module != null && module.getId() != null) {
-//            listPrivileges = privilegeFacade.getListPrivilegeByModule(module.getId());
-//        } else {
-//            listPrivileges = new ArrayList();
-//        }
-//    }
-    public void rechercher() {
-        listPrivileges = privilegeFacade.findByCodeDescModule(code, description, module);
-        if (profil != null && !profil.getListAdminPrivilege().isEmpty()) {
-            listPrivileges.removeAll(profil.getListAdminPrivilege());
-        }
-    }
+	@Override//@PostConstruct
+	protected void initController() {
+		initAddProfil();
+		module = new AdminModule();
+		listUtilisateurs = utilisateurFacade.findAllOrderByAttribut("login");
+		listModules = moduleFacade.findAllOrderByAttribut("code");
+		//charger la liste des privileges
+		rechercher();
+	}
 
-    public void create() {
-        try {
-            profilFacade.create(profil);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Profil crée avec succès
-            initAddProfil();
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+	public void rechercher() {
+		listPrivileges = privilegeFacade.findByCodeDescModule(code, description, module);
+		if (profil != null && !profil.getListAdminPrivilege().isEmpty()) {
+			listPrivileges.removeAll(profil.getListAdminPrivilege());
+		}
+	}
 
-    public void addPrivilegesForProfil() {
-        if (!listPrivilegesSelected.isEmpty()) {
-            //profil.getListAdminPrivilege().addAll(listPrivilegesSelected);
-            profil.addListPrivileges(listPrivilegesSelected);
-            listPrivileges.removeAll(listPrivilegesSelected);
-            listPrivilegesSelected = new ArrayList<>();
-        }
-    }
+	public void create() {
+		try {
+			profilFacade.create(profil);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//Profil crée avec succès
+			initAddProfil();
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
 
-    public void addUtilisateursForProfil() {
-        if (!listUtilisateursSelected.isEmpty()) {
-            // profil.getListAdminUtilisateurs().addAll(listUtilisateursSelected);
-            profil.addListUtilisateurs(listUtilisateursSelected);
-            listUtilisateurs.removeAll(listUtilisateursSelected);
-            listUtilisateursSelected = new ArrayList<>();
-        }
-    }
+	public void addPrivilegesForProfil() {
+		if (!listPrivilegesSelected.isEmpty()) {
+			//profil.getListAdminPrivilege().addAll(listPrivilegesSelected);
+			profil.addListPrivileges(listPrivilegesSelected);
+			listPrivileges.removeAll(listPrivilegesSelected);
+			listPrivilegesSelected = new ArrayList<>();
+		}
+	}
 
-    private void initAddProfil() {
-        profil = new AdminProfil();
-        listPrivilegesSelected = new ArrayList<>();
-        listUtilisateursSelected = new ArrayList<>();
-        listPrivileges = new ArrayList();
-        listUtilisateurs = new ArrayList();
-    }
+	public void addUtilisateursForProfil() {
+		if (!listUtilisateursSelected.isEmpty()) {
+			// profil.getListAdminUtilisateurs().addAll(listUtilisateursSelected);
+			profil.addListUtilisateurs(listUtilisateursSelected);
+			listUtilisateurs.removeAll(listUtilisateursSelected);
+			listUtilisateursSelected = new ArrayList<>();
+		}
+	}
 
-    public void removePrivilegesForProfil(AdminPrivilege privilege) {
-        if (privilege != null) {
-            profil.removePrivilege(privilege);
-            listPrivileges.add(privilege);
-        }
-    }
+	private void initAddProfil() {
+		profil = new AdminProfil();
+		listPrivilegesSelected = new ArrayList<>();
+		listUtilisateursSelected = new ArrayList<>();
+		listPrivileges = new ArrayList();
+		listUtilisateurs = new ArrayList();
+	}
 
-    public void removeUtilisateurForProfil(AdminUtilisateur utilisateur) {
-        if (utilisateur != null) {
-            profil.removeUtilisateur(utilisateur);
-            listUtilisateurs.add(utilisateur);
-        }
-    }
+	public void removePrivilegesForProfil(AdminPrivilege privilege) {
+		if (privilege != null) {
+			profil.removePrivilege(privilege);
+			listPrivileges.add(privilege);
+		}
+	}
 
-    // Getter and setter
-    public AdminProfil getProfil() {
-        return profil;
-    }
+	public void removeUtilisateurForProfil(AdminUtilisateur utilisateur) {
+		if (utilisateur != null) {
+			profil.removeUtilisateur(utilisateur);
+			listUtilisateurs.add(utilisateur);
+		}
+	}
 
-    public void setProfil(AdminProfil profil) {
-        this.profil = profil;
-    }
+	// Getter and setter
+	public AdminProfil getProfil() {
+		return profil;
+	}
 
-    public List<AdminUtilisateur> getListUtilisateurs() {
-        return listUtilisateurs;
-    }
+	public void setProfil(AdminProfil profil) {
+		this.profil = profil;
+	}
 
-    public void setListUtilisateurs(List<AdminUtilisateur> listUtilisateurs) {
-        this.listUtilisateurs = listUtilisateurs;
-    }
+	public List<AdminUtilisateur> getListUtilisateurs() {
+		return listUtilisateurs;
+	}
 
-    public List<AdminPrivilege> getListPrivileges() {
-        return listPrivileges;
-    }
+	public void setListUtilisateurs(List<AdminUtilisateur> listUtilisateurs) {
+		this.listUtilisateurs = listUtilisateurs;
+	}
 
-    public void setListPrivileges(List<AdminPrivilege> listPrivileges) {
-        this.listPrivileges = listPrivileges;
-    }
+	public List<AdminPrivilege> getListPrivileges() {
+		return listPrivileges;
+	}
 
-    public List<AdminPrivilege> getListPrivilegesSelected() {
-        return listPrivilegesSelected;
-    }
+	public void setListPrivileges(List<AdminPrivilege> listPrivileges) {
+		this.listPrivileges = listPrivileges;
+	}
 
-    public void setListPrivilegesSelected(List<AdminPrivilege> listPrivilegesSelected) {
-        this.listPrivilegesSelected = listPrivilegesSelected;
-    }
+	public List<AdminPrivilege> getListPrivilegesSelected() {
+		return listPrivilegesSelected;
+	}
 
-    public List<AdminUtilisateur> getListUtilisateursSelected() {
-        return listUtilisateursSelected;
-    }
+	public void setListPrivilegesSelected(List<AdminPrivilege> listPrivilegesSelected) {
+		this.listPrivilegesSelected = listPrivilegesSelected;
+	}
 
-    public void setListUtilisateursSelected(List<AdminUtilisateur> listUtilisateursSelected) {
-        this.listUtilisateursSelected = listUtilisateursSelected;
-    }
+	public List<AdminUtilisateur> getListUtilisateursSelected() {
+		return listUtilisateursSelected;
+	}
 
-    public List<AdminModule> getListModules() {
-        return listModules;
-    }
+	public void setListUtilisateursSelected(List<AdminUtilisateur> listUtilisateursSelected) {
+		this.listUtilisateursSelected = listUtilisateursSelected;
+	}
 
-    public void setListModules(List<AdminModule> listModules) {
-        this.listModules = listModules;
-    }
+	public List<AdminModule> getListModules() {
+		return listModules;
+	}
 
-    public AdminModule getModule() {
-        return module;
-    }
+	public void setListModules(List<AdminModule> listModules) {
+		this.listModules = listModules;
+	}
 
-    public void setModule(AdminModule module) {
-        this.module = module;
-    }
+	public AdminModule getModule() {
+		return module;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public void setModule(AdminModule module) {
+		this.module = module;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

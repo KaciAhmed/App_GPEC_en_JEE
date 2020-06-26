@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dz.elit.gpecpf.administration.controller;
 
 import dz.elit.gpecpf.administration.entity.AdminConnexionEncours;
@@ -21,24 +16,24 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class ListConnexionEnCours {
 
-    @EJB
-    private AdminConnexionEncoursFacade connexionEncoursFacade;
-    
-    private List<AdminConnexionEncours> listeConnexionEncours;
-    
-    @PostConstruct
-    public void init(){
-        listeConnexionEncours = connexionEncoursFacade.findAll();
-    }
-    
-    public ListConnexionEnCours() {
-    }
+	@EJB
+	private AdminConnexionEncoursFacade connexionEncoursFacade;
 
-    public List<AdminConnexionEncours> getListeConnexionEncours() {
-        return listeConnexionEncours;
-    }
+	private List<AdminConnexionEncours> listeConnexionEncours;
 
-    public void setListeConnexionEncours(List<AdminConnexionEncours> listeConnexionEncours) {
-        this.listeConnexionEncours = listeConnexionEncours;
-    }
+	@PostConstruct
+	public void init() {
+		listeConnexionEncours = connexionEncoursFacade.findAll();
+	}
+
+	public ListConnexionEnCours() {
+	}
+
+	public List<AdminConnexionEncours> getListeConnexionEncours() {
+		return listeConnexionEncours;
+	}
+
+	public void setListeConnexionEncours(List<AdminConnexionEncours> listeConnexionEncours) {
+		this.listeConnexionEncours = listeConnexionEncours;
+	}
 }

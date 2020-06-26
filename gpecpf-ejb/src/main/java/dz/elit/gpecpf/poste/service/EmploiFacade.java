@@ -16,26 +16,26 @@ import javax.persistence.Query;
 @Stateless
 public class EmploiFacade extends AbstractFacade<Emploi> {
 
-    @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
-    private EntityManager em;
+	@PersistenceContext(unitName = StaticUtil.UNIT_NAME)
+	private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
-    public EmploiFacade() {
-        super(Emploi.class);
-    }
-	
 	@Override
-    public void create(Emploi emploi) throws MyException, Exception {
-        if (isCodeEmploiExiste(emploi)) {
-            throw new MyException("Le code existe déjà");
-        }
-        super.create(emploi);
-    }
-	
+	protected EntityManager getEntityManager() {
+		return em;
+	}
+
+	public EmploiFacade() {
+		super(Emploi.class);
+	}
+
+	@Override
+	public void create(Emploi emploi) throws MyException, Exception {
+		if (isCodeEmploiExiste(emploi)) {
+			throw new MyException("Le code existe déjà");
+		}
+		super.create(emploi);
+	}
+
 	@Override
 	public void edit(Emploi emploi) throws MyException, Exception {
 		if (isCodeEmploiExiste(emploi)) {
@@ -43,11 +43,11 @@ public class EmploiFacade extends AbstractFacade<Emploi> {
 		}
 		super.edit(emploi);
 	}
-	
+
 	private boolean isCodeEmploiExiste(Emploi emploi) {
 		Query q = em.createNamedQuery("Emploi.findByCodeWithoutCurrentId");
-        q.setParameter("code", emploi.getCode());
-        q.setParameter("id", emploi.getId());
-        return !q.getResultList().isEmpty();
-    }
+		q.setParameter("code", emploi.getCode());
+		q.setParameter("id", emploi.getId());
+		return !q.getResultList().isEmpty();
+	}
 }

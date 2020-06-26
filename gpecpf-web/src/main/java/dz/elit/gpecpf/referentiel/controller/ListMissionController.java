@@ -23,85 +23,85 @@ import org.primefaces.model.SortOrder;
 @ViewScoped
 public class ListMissionController extends AbstractController implements Serializable {
 
-    @EJB
-    private MissionFacade missionFacade;
+	@EJB
+	private MissionFacade missionFacade;
 
-    private Mission mission;
+	private Mission mission;
 
-    private LazyDataModel<Mission> lazyMission;
-    private List<FieldValueMatchMode> fieldValueMatchMode;
-    private DataTable dataTable;
+	private LazyDataModel<Mission> lazyMission;
+	private List<FieldValueMatchMode> fieldValueMatchMode;
+	private DataTable dataTable;
 
-    /**
-     * Creates a new instance of ListProfilController
-     */
-    public ListMissionController() {
-    }
+	/**
+	 * Creates a new instance of ListProfilController
+	 */
+	public ListMissionController() {
+	}
 
-    @Override // @PstConstruct
-    protected void initController() {
-        lazyMission = new LazyDataModel<Mission>() {
-            @Override
-            public List<Mission> load(int first, int pageSize, String sortField, SortOrder sortOrder,
-                    Map<String, Object> filters) {
-                fieldValueMatchMode = getFilter(filters, dataTable);
-                lazyMission.setRowCount(missionFacade.count(fieldValueMatchMode));
-                return missionFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
-            }
-        };
-    }
+	@Override // @PstConstruct
+	protected void initController() {
+		lazyMission = new LazyDataModel<Mission>() {
+			@Override
+			public List<Mission> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+				fieldValueMatchMode = getFilter(filters, dataTable);
+				lazyMission.setRowCount(missionFacade.count(fieldValueMatchMode));
+				return missionFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
+			}
+		};
+	}
 
-    public void initNewMission() {
-        mission = new Mission();
-    }
+	public void initNewMission() {
+		mission = new Mission();
+	}
 
-    public void remove(Mission mission) {
-        try {
-            missionFacade.remove(mission);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-        } catch (Exception ex) {
+	public void remove(Mission mission) {
+		try {
+			missionFacade.remove(mission);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+		} catch (Exception ex) {
 			MyUtil.addErrorMessage("La mission est relié à des postes.");
-        }
-    }
+		}
+	}
 
-    public DataTable getDataTable() {
-        return dataTable;
-    }
+	public DataTable getDataTable() {
+		return dataTable;
+	}
 
-    public List<FieldValueMatchMode> getFieldValueMatchMode() {
-        return fieldValueMatchMode;
-    }
+	public List<FieldValueMatchMode> getFieldValueMatchMode() {
+		return fieldValueMatchMode;
+	}
 
-    public Mission getMission() {
-        return mission;
-    }
+	public Mission getMission() {
+		return mission;
+	}
 
-    public LazyDataModel<Mission> getLazyMission() {
-        return lazyMission;
-    }
+	public LazyDataModel<Mission> getLazyMission() {
+		return lazyMission;
+	}
 
-    public MissionFacade getMissionFacade() {
-        return missionFacade;
-    }
+	public MissionFacade getMissionFacade() {
+		return missionFacade;
+	}
 
-    public void setDataTable(DataTable dataTable) {
-        this.dataTable = dataTable;
-    }
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
 
-    public void setFieldValueMatchMode(List<FieldValueMatchMode> fieldValueMatchMode) {
-        this.fieldValueMatchMode = fieldValueMatchMode;
-    }
+	public void setFieldValueMatchMode(List<FieldValueMatchMode> fieldValueMatchMode) {
+		this.fieldValueMatchMode = fieldValueMatchMode;
+	}
 
-    public void setLazyMission(LazyDataModel<Mission> lazyMission) {
-        this.lazyMission = lazyMission;
-    }
+	public void setLazyMission(LazyDataModel<Mission> lazyMission) {
+		this.lazyMission = lazyMission;
+	}
 
-    public void setMission(Mission mission) {
-        this.mission = mission;
-    }
+	public void setMission(Mission mission) {
+		this.mission = mission;
+	}
 
-    public void setMissionFacade(MissionFacade missionFacade) {
-        this.missionFacade = missionFacade;
-    }
+	public void setMissionFacade(MissionFacade missionFacade) {
+		this.missionFacade = missionFacade;
+	}
 
 }

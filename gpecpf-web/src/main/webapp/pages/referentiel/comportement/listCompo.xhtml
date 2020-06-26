@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateReferComp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui" >
+
+    <ui:define name="Title">
+        #{bundleReferentiel.lien_liste_comportement_competence}
+    </ui:define>
+    
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_comportement_competence}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_comportement_competence}"  href="listCompo.xhtml" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+    
+        <ui:define name="MyContent">
+         <h:form id="form">
+            <a:row >
+                <a:pagetitle value="#{bundleReferentiel.titre_liste_comportement_competence}" />                
+                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" title="#{bundleReferentiel.titre_nouveau_comportement_competence}" outcome="addCompo" rendered="#{mySessionController.isUserInRole('REFER_009_001')}" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            </a:row>
+            <a:panel isPadding="true" >              
+                <a:label value="#{bundleReferentiel.lbl_code}" span="1" />
+                <a:column span="2" >                    
+                    <p:inputText id="code" value="#{listComportementCompetenceController.code}" label="#{bundleReferentiel.lbl_code}" />                               
+                </a:column>
+                <a:label value="#{bundleReferentiel.lbl_description}" span="1" />
+                <a:column span="2" >
+                    <p:inputText id="description" value="#{listComportementCompetenceController.description}" label="#{bundleReferentiel.lbl_description}" />                                    
+                </a:column>
+                <a:column span="2" >
+                    <p:commandButton value="#{bundleCommun.btn_chercher}" styleClass="CyanButton" icon="fa fa-search" action="#{listComportementCompetenceController.rechercher()}" ajax="false" />  
+                </a:column>              
+            </a:panel>            
+
+            <a:row>
+                <a:panel header=" #{bundleReferentiel.lien_liste_comportement_competence}"  iconheader="fa fa-list-ul">
+                    <f:facet name="header" >
+                    </f:facet>
+                    <p:dataTable value="#{listComportementCompetenceController.listComportement}" var="comportement" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
+                        <p:column headerText="#{bundleReferentiel.lbl_code}">
+                            <h:outputText value="#{comportement.code}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleReferentiel.lbl_description}">
+                            <h:outputText value="#{comportement.description}"/>                           
+                        </p:column>
+                        <p:column headerText="#{bundleCommun.lbl_actions}" width="150">
+                            <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showCompo" ajax="false" rendered="#{mySessionController.isUserInRole('REFER_009_005')}">  
+                                <f:param name="id" value="#{comportement.id}" />
+                            </p:commandButton>  
+                            <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="editCompo" ajax="false" rendered="#{mySessionController.isUserInRole('REFER_009_002')}">
+                                <f:param name="id" value="#{comportement.id}"></f:param>
+                            </p:commandButton>  
+                            <p:commandButton icon="fa fa-times" actionListener="#{listComportementCompetenceController.remove(comportement)}" title="#{bundleCommun.lbl_suppression}" update=":form" rendered="#{mySessionController.isUserInRole('REFER_009_003')}">
+                                <p:confirm header="#{bundleCommun.lbl_confirmation}" message="#{bundleCommun.msg_confirm_vs_suppr_enregistrement}" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable> 
+                </a:panel>
+            </a:row>
+        </h:form>        
+    </ui:define>
+</ui:composition>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dz.elit.gpecpf.administration.entity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
@@ -23,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,106 +29,110 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "admin_groupe", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdminGroupe.findAll", query = "SELECT a FROM AdminGroupe a"),
-    @NamedQuery(name = "AdminGroupe.findById", query = "SELECT a FROM AdminGroupe a WHERE a.id = :id"),
-    @NamedQuery(name = "AdminGroupe.findByLibelle", query = "SELECT a FROM AdminGroupe a WHERE a.libelle = :libelle"),
-    @NamedQuery(name = "AdminGroupe.findByDescription", query = "SELECT a FROM AdminGroupe a WHERE a.description = :description"),
+	@NamedQuery(name = "AdminGroupe.findAll", query = "SELECT a FROM AdminGroupe a")
+	,
+    @NamedQuery(name = "AdminGroupe.findById", query = "SELECT a FROM AdminGroupe a WHERE a.id = :id")
+	,
+    @NamedQuery(name = "AdminGroupe.findByLibelle", query = "SELECT a FROM AdminGroupe a WHERE a.libelle = :libelle")
+	,
+    @NamedQuery(name = "AdminGroupe.findByDescription", query = "SELECT a FROM AdminGroupe a WHERE a.description = :description")
+	,
     @NamedQuery(name = "AdminGroupe.findByLibelleWithoutCurrentId", query = "SELECT g FROM AdminGroupe g WHERE g.libelle =:libelle AND g.id != :id ORDER BY g.libelle")})
 public class AdminGroupe implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id")
+	private Integer id;
 
-    @Column(name = "libelle")
-    private String libelle;
-    
-    @Column(name = "description")
-    private String description;
+	@Column(name = "libelle")
+	private String libelle;
 
-    @JoinTable(schema = StaticUtil.ADMINISTRATION_SCHEMA, name = "admin_groupe_utilisateur", joinColumns = {
-        @JoinColumn(name = "groupe", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "utilisateur", referencedColumnName = "id")})
-    @ManyToMany(cascade = CascadeType.MERGE)
-    private List<AdminUtilisateur> listMembre = new ArrayList();
+	@Column(name = "description")
+	private String description;
 
-    @OneToMany(mappedBy = "idGroupe", cascade = CascadeType.ALL)
-    private List<AdminDroitVisibilite> adminDroitVisibiliteList = new ArrayList();
+	@JoinTable(schema = StaticUtil.ADMINISTRATION_SCHEMA, name = "admin_groupe_utilisateur", joinColumns = {
+		@JoinColumn(name = "groupe", referencedColumnName = "id")}, inverseJoinColumns = {
+		@JoinColumn(name = "utilisateur", referencedColumnName = "id")})
+	@ManyToMany(cascade = CascadeType.MERGE)
+	private List<AdminUtilisateur> listMembre = new ArrayList();
 
-    public AdminGroupe() {
-    }
+	@OneToMany(mappedBy = "idGroupe", cascade = CascadeType.ALL)
+	private List<AdminDroitVisibilite> adminDroitVisibiliteList = new ArrayList();
 
-    public AdminGroupe(Integer id) {
-        this.id = id;
-    }
+	public AdminGroupe() {
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public AdminGroupe(Integer id) {
+		this.id = id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getLibelle() {
-        return libelle;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
+	public String getLibelle() {
+		return libelle;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public List<AdminUtilisateur> getListMembre() {
-        return listMembre;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setListMembre(List<AdminUtilisateur> listMembre) {
-        this.listMembre = listMembre;
-    }
+	public List<AdminUtilisateur> getListMembre() {
+		return listMembre;
+	}
 
-    @XmlTransient
-    public List<AdminDroitVisibilite> getAdminDroitVisibiliteList() {
-        return adminDroitVisibiliteList;
-    }
+	public void setListMembre(List<AdminUtilisateur> listMembre) {
+		this.listMembre = listMembre;
+	}
 
-    public void setAdminDroitVisibiliteList(List<AdminDroitVisibilite> adminDroitVisibiliteList) {
-        this.adminDroitVisibiliteList = adminDroitVisibiliteList;
-    }
+	@XmlTransient
+	public List<AdminDroitVisibilite> getAdminDroitVisibiliteList() {
+		return adminDroitVisibiliteList;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public void setAdminDroitVisibiliteList(List<AdminDroitVisibilite> adminDroitVisibiliteList) {
+		this.adminDroitVisibiliteList = adminDroitVisibiliteList;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AdminGroupe)) {
-            return false;
-        }
-        AdminGroupe other = (AdminGroupe) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "re.AdminGroupe[ id=" + id + " ]";
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof AdminGroupe)) {
+			return false;
+		}
+		AdminGroupe other = (AdminGroupe) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "re.AdminGroupe[ id=" + id + " ]";
+	}
 
 }

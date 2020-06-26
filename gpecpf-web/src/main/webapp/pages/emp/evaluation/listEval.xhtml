@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateEmp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui" >
+
+    <ui:define name="Title">
+        #{bundleEmp.lien_liste_evaluation}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleEmp.titre_gestion_evaluation}" />
+            <a:menuitem value="#{bundleEmp.lien_liste_evaluation}"  href="listEval.xhtml" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row >
+                <a:pagetitle value="Mes Evaluations" />                
+                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" disabled="#{listEvaluationController.canEvaluate()}" title="#{bundleEmp.titre_nouveau_evaluation}" outcome="addEval" rendered="#{mySessionController.isUserInRole('EMP_003_001')}" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            </a:row>       
+
+            <a:row>
+                <a:panel header=" #{bundleEmp.lien_liste_evaluation}"  iconheader="fa fa-list-ul">
+                    <p:dataTable value="#{listEvaluationController.evaluations}" var="evaluation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
+                        <p:column headerText="#{bundleEmp.lbl_code_compagne}">
+                            <h:outputText value="#{evaluation.compagne.code}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleEmp.lbl_date_evaluation}">
+                            <h:outputText value="#{listEvaluationController.showDate(evaluation)}"/>  
+                            <p:commandButton action="#{listEvaluationController.confirmation(evaluation, -3)}" rendered="#{listEvaluationController.canConfirm(evaluation)}" icon="fa fa-check" ajax="false" />
+                            <p:commandButton action="#{listEvaluationController.confirmation(evaluation, -2)}" rendered="#{listEvaluationController.canConfirm(evaluation)}" icon="fa fa-times" ajax="false" />
+                        </p:column>
+                        <p:column headerText="Etat">
+                            <h:outputText value="#{listEvaluationController.whatEtat(evaluation.etat)}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleCommun.lbl_actions}" width="150">
+                            <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showEval" ajax="false" rendered="#{mySessionController.isUserInRole('EMP_003_005')}">  
+                                <f:param name="id" value="#{evaluation.id}" />
+                            </p:commandButton>  
+                            <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="editEval" ajax="false" rendered="#{listEvaluationController.canEdit(mySessionController.isUserInRole('EMP_003_002'), evaluation)}">
+                                <f:param name="id" value="#{evaluation.id}"></f:param>
+                            </p:commandButton>  
+                            <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="addAvis" ajax="false" rendered="#{listEvaluationController.canAvis(evaluation)}">
+                                <f:param name="id" value="#{evaluation.id}"></f:param>
+                            </p:commandButton>  
+                        </p:column>
+                    </p:dataTable> 
+                </a:panel>
+            </a:row>
+        </h:form>        
+    </ui:define>
+</ui:composition>

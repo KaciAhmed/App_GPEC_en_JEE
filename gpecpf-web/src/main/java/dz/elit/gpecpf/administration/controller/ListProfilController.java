@@ -26,79 +26,82 @@ import org.primefaces.model.SortOrder;
 @ViewScoped
 public class ListProfilController extends AbstractController implements Serializable {
 
-    @EJB
-    private AdminProfilFacade adminProfilFacade;
-    @EJB
-    private AdminPrivilegeFacade adminPrivilegeFacade;
+	@EJB
+	private AdminProfilFacade adminProfilFacade;
+	@EJB
+	private AdminPrivilegeFacade adminPrivilegeFacade;
 
-    private AdminProfil adminProfil;
+	private AdminProfil adminProfil;
 
-    private List<AdminPrivilege> listPrivileges;
-    private LazyDataModel<AdminProfil> lazyAdminProfil;
-    private List<FieldValueMatchMode> fieldValueMatchMode;
-    private DataTable dataTable;
+	private List<AdminPrivilege> listPrivileges;
+	private LazyDataModel<AdminProfil> lazyAdminProfil;
+	private List<FieldValueMatchMode> fieldValueMatchMode;
+	private DataTable dataTable;
 
-    /**
-     * Creates a new instance of ListProfilController
-     */
-    public ListProfilController() {
-    }
+	/**
+	 * Creates a new instance of ListProfilController
+	 */
+	public ListProfilController() {
+	}
 
-    @Override  //@PstConstruct
-    protected void initController() {
-        listPrivileges = adminPrivilegeFacade.findAllOrderById();
-        lazyAdminProfil = new LazyDataModel<AdminProfil>() {
-            @Override
-            public List<AdminProfil> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                fieldValueMatchMode = getFilter(filters, dataTable);
-                lazyAdminProfil.setRowCount(adminProfilFacade.count(fieldValueMatchMode));
-                return adminProfilFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
-            } 
-        };
-    }
+	@Override // @PstConstruct
+	protected void initController() {
+		listPrivileges = adminPrivilegeFacade.findAllOrderById();
+		lazyAdminProfil = new LazyDataModel<AdminProfil>() {
+			@Override
+			public List<AdminProfil> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+				fieldValueMatchMode = getFilter(filters, dataTable);
+				lazyAdminProfil.setRowCount(adminProfilFacade.count(fieldValueMatchMode));
+				return adminProfilFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(),
+						fieldValueMatchMode);
+			}
+		};
+	}
 
-    public void initNewProfil() {
-        adminProfil = new AdminProfil();
-    }
+	public void initNewProfil() {
+		adminProfil = new AdminProfil();
+	}
 
-    public void remove(AdminProfil adminProfil) {
-        try {
-            adminProfilFacade.remove(adminProfil);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Profil supprimé avec succès");
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+	public void remove(AdminProfil adminProfil) {
+		try {
+			adminProfilFacade.remove(adminProfil);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));// "Profil supprimé avec
+			// succès");
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));// Erreur inconu
+		}
+	}
 
-    public List<AdminPrivilege> getListPrivileges() {
-        return listPrivileges;
-    }
+	public List<AdminPrivilege> getListPrivileges() {
+		return listPrivileges;
+	}
 
-    public AdminProfil getAdminProfil() {
-        return adminProfil;
-    }
+	public AdminProfil getAdminProfil() {
+		return adminProfil;
+	}
 
-    public void setAdminProfil(AdminProfil adminProfil) {
-        this.adminProfil = adminProfil;
-    }
+	public void setAdminProfil(AdminProfil adminProfil) {
+		this.adminProfil = adminProfil;
+	}
 
-    public LazyDataModel<AdminProfil> getLazyAdminProfil() {
-        return lazyAdminProfil;
-    }
+	public LazyDataModel<AdminProfil> getLazyAdminProfil() {
+		return lazyAdminProfil;
+	}
 
-    public void setLazyAdminProfil(LazyDataModel<AdminProfil> lazyAdminProfil) {
-        this.lazyAdminProfil = lazyAdminProfil;
-    }
+	public void setLazyAdminProfil(LazyDataModel<AdminProfil> lazyAdminProfil) {
+		this.lazyAdminProfil = lazyAdminProfil;
+	}
 
-    public DataTable getDataTable() {
-        return dataTable;
-    }
+	public DataTable getDataTable() {
+		return dataTable;
+	}
 
-    public void setDataTable(DataTable dataTable) {
-        this.dataTable = dataTable;
-    }
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
 }

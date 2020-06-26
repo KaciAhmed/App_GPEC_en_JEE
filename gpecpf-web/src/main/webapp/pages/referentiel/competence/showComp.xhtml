@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateReferComp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_consulter_competence}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>           
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_competence}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_competence}" href="listComp.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+      
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row nomargin="true">
+                <a:pagetitle value="#{bundleReferentiel.titre_fiche_competence}" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
+            </a:row>
+            <p:panel id="panel" styleClass="no-border row">
+                 <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="code" required="true" value="#{editCompetenceController.comp.code}" disabled="false" /> 
+                            <p:message for="code"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="lib" required="true" value="#{editCompetenceController.comp.libelle}" disabled="false"/> 
+                            <p:message for="lib"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+
+                <a:row style="margin-bottom: 5%;">
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
+                        <a:column span="8" >
+                            <p:inputTextarea id="desc" required="true"  cols="60" value="#{editCompetenceController.comp.description}" autoResize="false"  disabled="false"/>
+                            <p:message for="desc"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+                
+                <a:row >
+                    <a:column span="12" >
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.titre_domaine_competence}">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_domaine_competence}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">                                            
+                                    </f:facet>
+                                    <p:dataTable  id="tableDomaine" value="#{editCompetenceController.comp.iddomcom}" var="domaine" rowKey="#{domaine.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleCommun.lbl_code}" >
+                                            <h:outputText value="#{domaine.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_liblle}" >
+                                            <h:outputText value="#{domaine.libelle}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                            <p:tab title="#{bundleReferentiel.titre_type_competence}">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_type_competence}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">      
+                                        
+                                    </f:facet>
+                                    <p:dataTable id="tableTypeComp" value="#{editCompetenceController.comp.idtypcom}" var="type" rowKey="#{type.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                       <p:column headerText="#{bundleCommun.lbl_code}" >
+                                            <h:outputText value="#{type.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_liblle}" >
+                                            <h:outputText value="#{type.libelle}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                             <p:tab title="#{bundleReferentiel.titre_comportement_competence}">
+                                <a:panel header=" #{bundleReferentiel.titre_liste_comportement_competence}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">      
+                                        
+                                    </f:facet>
+                                    <p:dataTable id="tableComportement" value="#{editCompetenceController.comp.listComportement}" var="comportement" rowKey="#{comportement.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                       <p:column headerText="#{bundleCommun.lbl_code}"  filterBy="#{comportement.code}" filterMatchMode="contains">
+                                            <h:outputText value="#{comportement.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_description}" filterBy="#{comportement.description}" filterMatchMode="contains" >
+                                            <h:outputText value="#{comportement.description}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                            <p:tab id="tabPostes" title="#{bundleReferentiel.lbl_postes}">
+                                <a:row>
+                                    <a:panel header=" #{bundleReferentiel.lbl_postes}" iconheader="fa fa-list-ul">
+                                           <f:facet name="header">  
+                                           </f:facet>
+                                        <p:dataTable  id="tablePoste" value="#{editCompetenceController.listPostesCompetence}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                                   <p:column headerText="#{bundleCommun.lbl_code}" >
+                                                       <h:outputText value="#{poste.code}"/>
+                                                   </p:column>
+                                                   <p:column headerText="#{bundleGesemp.lbl_denomination}">
+                                                       <h:outputText value="#{poste.denomination}"/>
+                                                   </p:column>
+                                            </p:dataTable>
+                                         </a:panel>
+                                     </a:row>
+                                 </p:tab>
+                        </p:tabView>
+                    </a:column>
+                </a:row>     
+            </p:panel>
+              <a:row>
+                    <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listComp" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+              </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>

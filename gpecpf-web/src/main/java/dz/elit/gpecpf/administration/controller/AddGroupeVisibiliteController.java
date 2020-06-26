@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dz.elit.gpecpf.administration.controller;
 
 import dz.elit.gpecpf.administration.entity.AdminDroitVisibilite;
@@ -22,10 +17,8 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 /**
  *
@@ -35,160 +28,160 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 public class AddGroupeVisibiliteController {
 
-    @EJB
-    private AdminGroupeFacade adminGroupeFacade;
-    @EJB
-    private AdminUtilisateurFacade utilisateurFacade;
-    @EJB
-    private AdminUniteOrganisationnelleFacade uniteOrganisationnelleFacade;
-    @EJB
-    private AdminObjetVisibiliteFacade adminObjetVisibiliteFacade;
+	@EJB
+	private AdminGroupeFacade adminGroupeFacade;
+	@EJB
+	private AdminUtilisateurFacade utilisateurFacade;
+	@EJB
+	private AdminUniteOrganisationnelleFacade uniteOrganisationnelleFacade;
+	@EJB
+	private AdminObjetVisibiliteFacade adminObjetVisibiliteFacade;
 
-    List<AdminUniteOrganisationnelle> listeUnite;
-    List<AdminObjetVisibilite> listeObjet;
+	List<AdminUniteOrganisationnelle> listeUnite;
+	List<AdminObjetVisibilite> listeObjet;
 
-    private List<AdminUtilisateur> listUtilisateurs;
-    private List<AdminUtilisateur> listUtilisateursSelected;
-    private AdminUtilisateur utilisateur;
+	private List<AdminUtilisateur> listUtilisateurs;
+	private List<AdminUtilisateur> listUtilisateursSelected;
+	private AdminUtilisateur utilisateur;
 
-    private List<AdminGroupe> listeGroupe;
-    private AdminGroupe groupe;
+	private List<AdminGroupe> listeGroupe;
+	private AdminGroupe groupe;
 
-    private Map<String, List<UniteOrganisationnelleObjetVisibilite>> listeDroitVisibilite;
+	private Map<String, List<UniteOrganisationnelleObjetVisibilite>> listeDroitVisibilite;
 
-    @PostConstruct
-    public void init() {
-        groupe = new AdminGroupe();
-        listUtilisateurs = utilisateurFacade.findAllOrderByAttribut("login");
-        listUtilisateursSelected = new ArrayList<>();
-        //Find unité que j'ai le droit
-        listeUnite = uniteOrganisationnelleFacade.findAllOrderByTrie();
-        listeObjet = adminObjetVisibiliteFacade.findAll();
+	@PostConstruct
+	public void init() {
+		groupe = new AdminGroupe();
+		listUtilisateurs = utilisateurFacade.findAllOrderByAttribut("login");
+		listUtilisateursSelected = new ArrayList<>();
+		//Find unité que j'ai le droit
+		listeUnite = uniteOrganisationnelleFacade.findAllOrderByTrie();
+		listeObjet = adminObjetVisibiliteFacade.findAll();
 
-        //Construire une liste qui contien la liste des unite organization et liste de objet
-        UniteOrganisationnelleObjetVisibilite construire = new UniteOrganisationnelleObjetVisibilite();
+		//Construire une liste qui contien la liste des unite organization et liste de objet
+		UniteOrganisationnelleObjetVisibilite construire = new UniteOrganisationnelleObjetVisibilite();
 
-        listeDroitVisibilite = construire.construireListUOV(listeUnite, listeObjet);
-        listeGroupe = adminGroupeFacade.findAll();
+		listeDroitVisibilite = construire.construireListUOV(listeUnite, listeObjet);
+		listeGroupe = adminGroupeFacade.findAll();
 
-    }
+	}
 
-    public void removeUtilisateur(AdminUtilisateur utilisateur) {
-        if (utilisateur != null) {
-            groupe.getListMembre().remove(utilisateur);
-        }
-    }
+	public void removeUtilisateur(AdminUtilisateur utilisateur) {
+		if (utilisateur != null) {
+			groupe.getListMembre().remove(utilisateur);
+		}
+	}
 
-    public void create() {
-        List<AdminDroitVisibilite> listeDroits = new ArrayList<>();
-        for (Map.Entry<String, List<UniteOrganisationnelleObjetVisibilite>> block : listeDroitVisibilite.entrySet()) {
-            for (UniteOrganisationnelleObjetVisibilite piece : block.getValue()) {
-                if (piece.isSelected()) {
-                    //Construire une liste des droit de visibilité
-                    AdminDroitVisibilite droit = new AdminDroitVisibilite(piece.getEntite(), piece.getUnite(), groupe);
-                    listeDroits.add(droit);
-                }
-            }
-        }
+	public void create() {
+		List<AdminDroitVisibilite> listeDroits = new ArrayList<>();
+		for (Map.Entry<String, List<UniteOrganisationnelleObjetVisibilite>> block : listeDroitVisibilite.entrySet()) {
+			for (UniteOrganisationnelleObjetVisibilite piece : block.getValue()) {
+				if (piece.isSelected()) {
+					//Construire une liste des droit de visibilité
+					AdminDroitVisibilite droit = new AdminDroitVisibilite(piece.getEntite(), piece.getUnite(), groupe);
+					listeDroits.add(droit);
+				}
+			}
+		}
 
-        groupe.setAdminDroitVisibiliteList(listeDroits);
-        try {
-            adminGroupeFacade.creer(groupe);
-            MyUtil.addInfoMessage("Opération effectué avec success");
-        } catch (Exception e) {
-            MyUtil.addErrorMessage("Echec d'operation");
-        }
-    }
+		groupe.setAdminDroitVisibiliteList(listeDroits);
+		try {
+			adminGroupeFacade.creer(groupe);
+			MyUtil.addInfoMessage("Opération effectué avec success");
+		} catch (Exception e) {
+			MyUtil.addErrorMessage("Echec d'operation");
+		}
+	}
 
-    public void remove(AdminGroupe groupe) {
-        try {
-            adminGroupeFacade.delete(groupe);
-            this.listeGroupe = adminGroupeFacade.findAll();
-            MyUtil.addInfoMessage("Opération effectué avec success");
-        } catch (Exception e) {
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));
-        }
-    }
+	public void remove(AdminGroupe groupe) {
+		try {
+			adminGroupeFacade.delete(groupe);
+			this.listeGroupe = adminGroupeFacade.findAll();
+			MyUtil.addInfoMessage("Opération effectué avec success");
+		} catch (Exception e) {
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));
+		}
+	}
 
-    public Map<String, String> construireListeDroit(AdminGroupe groupe) {
-        Map<String, String> listeDroit = new HashMap<>();
-        if (groupe != null) {
-            for (AdminDroitVisibilite droit : groupe.getAdminDroitVisibiliteList()) {
-                if (listeDroit.containsKey(droit.getIdObjetVisibilite().getLibelle())) {
-                    listeDroit.put(droit.getIdObjetVisibilite().getLibelle(), listeDroit.get(droit.getIdObjetVisibilite().getLibelle()) + " | " + droit.getIdUniteOrganisationnelle().getCode());
-                } else {
-                    listeDroit.put(droit.getIdObjetVisibilite().getLibelle(), droit.getIdUniteOrganisationnelle().getCode());
-                }
-            }
-        }
-        return listeDroit;
-    }
+	public Map<String, String> construireListeDroit(AdminGroupe groupe) {
+		Map<String, String> listeDroit = new HashMap<>();
+		if (groupe != null) {
+			for (AdminDroitVisibilite droit : groupe.getAdminDroitVisibiliteList()) {
+				if (listeDroit.containsKey(droit.getIdObjetVisibilite().getLibelle())) {
+					listeDroit.put(droit.getIdObjetVisibilite().getLibelle(), listeDroit.get(droit.getIdObjetVisibilite().getLibelle()) + " | " + droit.getIdUniteOrganisationnelle().getCode());
+				} else {
+					listeDroit.put(droit.getIdObjetVisibilite().getLibelle(), droit.getIdUniteOrganisationnelle().getCode());
+				}
+			}
+		}
+		return listeDroit;
+	}
 
-    public AddGroupeVisibiliteController() {
-    }
+	public AddGroupeVisibiliteController() {
+	}
 
-    public List<AdminUniteOrganisationnelle> getListeUnite() {
-        return listeUnite;
-    }
+	public List<AdminUniteOrganisationnelle> getListeUnite() {
+		return listeUnite;
+	}
 
-    public void setListeUnite(List<AdminUniteOrganisationnelle> listeUnite) {
-        this.listeUnite = listeUnite;
-    }
+	public void setListeUnite(List<AdminUniteOrganisationnelle> listeUnite) {
+		this.listeUnite = listeUnite;
+	}
 
-    public List<AdminObjetVisibilite> getListeObjet() {
-        return listeObjet;
-    }
+	public List<AdminObjetVisibilite> getListeObjet() {
+		return listeObjet;
+	}
 
-    public void setListeObjet(List<AdminObjetVisibilite> listeObjet) {
-        this.listeObjet = listeObjet;
-    }
+	public void setListeObjet(List<AdminObjetVisibilite> listeObjet) {
+		this.listeObjet = listeObjet;
+	}
 
-    public List<AdminUtilisateur> getListUtilisateurs() {
-        return listUtilisateurs;
-    }
+	public List<AdminUtilisateur> getListUtilisateurs() {
+		return listUtilisateurs;
+	}
 
-    public void setListUtilisateurs(List<AdminUtilisateur> listUtilisateurs) {
-        this.listUtilisateurs = listUtilisateurs;
-    }
+	public void setListUtilisateurs(List<AdminUtilisateur> listUtilisateurs) {
+		this.listUtilisateurs = listUtilisateurs;
+	}
 
-    public List<AdminUtilisateur> getListUtilisateursSelected() {
-        return listUtilisateursSelected;
-    }
+	public List<AdminUtilisateur> getListUtilisateursSelected() {
+		return listUtilisateursSelected;
+	}
 
-    public void setListUtilisateursSelected(List<AdminUtilisateur> listUtilisateursSelected) {
-        this.listUtilisateursSelected = listUtilisateursSelected;
-    }
+	public void setListUtilisateursSelected(List<AdminUtilisateur> listUtilisateursSelected) {
+		this.listUtilisateursSelected = listUtilisateursSelected;
+	}
 
-    public AdminUtilisateur getUtilisateur() {
-        return utilisateur;
-    }
+	public AdminUtilisateur getUtilisateur() {
+		return utilisateur;
+	}
 
-    public void setUtilisateur(AdminUtilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
+	public void setUtilisateur(AdminUtilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
 
-    public List<AdminGroupe> getListeGroupe() {
-        return listeGroupe;
-    }
+	public List<AdminGroupe> getListeGroupe() {
+		return listeGroupe;
+	}
 
-    public void setListeGroupe(List<AdminGroupe> listeGroupe) {
-        this.listeGroupe = listeGroupe;
-    }
+	public void setListeGroupe(List<AdminGroupe> listeGroupe) {
+		this.listeGroupe = listeGroupe;
+	}
 
-    public AdminGroupe getGroupe() {
-        return groupe;
-    }
+	public AdminGroupe getGroupe() {
+		return groupe;
+	}
 
-    public void setGroupe(AdminGroupe groupe) {
-        this.groupe = groupe;
-    }
+	public void setGroupe(AdminGroupe groupe) {
+		this.groupe = groupe;
+	}
 
-    public Map<String, List<UniteOrganisationnelleObjetVisibilite>> getListeDroitVisibilite() {
-        return listeDroitVisibilite;
-    }
+	public Map<String, List<UniteOrganisationnelleObjetVisibilite>> getListeDroitVisibilite() {
+		return listeDroitVisibilite;
+	}
 
-    public void setListeDroitVisibilite(Map<String, List<UniteOrganisationnelleObjetVisibilite>> listeDroitVisibilite) {
-        this.listeDroitVisibilite = listeDroitVisibilite;
-    }
+	public void setListeDroitVisibilite(Map<String, List<UniteOrganisationnelleObjetVisibilite>> listeDroitVisibilite) {
+		this.listeDroitVisibilite = listeDroitVisibilite;
+	}
 
 }

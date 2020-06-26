@@ -6,20 +6,14 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:a="http://elit.dz/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-
     <ui:component >
         <h:form id="header">
-            <a:menubar href="#{request.contextPath}/accueil.xhtml" logo="#{request.contextPath}/resources/images/images-header/logo.png" logostyle="height:40px;margin-top:5px;" >
+            <a:menubar href="#{request.contextPath}/accueil.xhtml" logo="#{request.contextPath}/resources/images/images-header/logo5.png" logostyle="height:40px;margin-top:5px; border-radius: 8px;" >
                 <a:menucontainer pull="right" position="right" >
-                    <a:notificationmenu number="3"  value="View all"  label="10 pending notifications" >
-                        <f:facet name="header" >
-                            <a:menuitem value="View all" href="#{request.contextPath}/pages/administration/profil/listProfil.xhtml"  button="true"/>
-                        </f:facet> 
-                        <a:menuitem value="new message "  time="just now"  />
-                        <a:menuitem value="new user"  time="3 min"/>
-                        <a:menuitem value="new client registred"  time="10 min"/>
-                        <a:menuitem value="new user"  time="15 min"/>
-                        <a:menuitem value="new client registred"  time="20 min"/>
+                    <a:notificationmenu number="#{accueilEmployeController.nbrUnseen}" rendered="#{accueilEmployeController.isEmploye}">
+                        <c:forEach items="#{accueilEmployeController.notifications}" var="notification">
+                            <a:menuitem stage="#{accueilEmployeController.newNotif(notification)}" value="#{notification.libelle}" time="#{accueilEmployeController.oldTime(notification.dateNotification)}" action="#{accueilEmployeController.seen(notification)}" />
+                        </c:forEach>
                     </a:notificationmenu>
 
                     <a:menuitems value="#{mySessionController.libelleUser}">
@@ -33,10 +27,11 @@
                         <a:menuitem value="Aide"   iconAwesome="fa fa-question-circle" />
                         <a:menuitem value="A propos"   iconAwesome="fa fa-info-circle" />
                     </a:menuitems>
-
-
+                    
                 </a:menucontainer>
+                
                 <a:menucontainer pull="right"  position="left" >
+                    <a:menuitem href="/accueil.xhtml" value="Accueil"   icon="fa fa-fw fa fa-home" />
                     <c:forEach items="#{mySessionController.listModules}" var="module"  begin="0" end="3">
                         <a:menuitem href="#{module.urlModule}" value="#{module.libelle}"   />
                     </c:forEach>
@@ -53,9 +48,6 @@
             </a:menubar>
 
         </h:form>
-
-
-
-    </ui:component>
+ </ui:component>
 </html>
 

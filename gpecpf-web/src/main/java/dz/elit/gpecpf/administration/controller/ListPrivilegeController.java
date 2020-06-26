@@ -1,4 +1,3 @@
-
 package dz.elit.gpecpf.administration.controller;
 
 import dz.elit.gpecpf.administration.entity.AdminModule;
@@ -21,83 +20,72 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class ListPrivilegeController extends AbstractController implements Serializable {
 
-    @EJB
-    private AdminPrivilegeFacade adminPrivilegeFacade;
-    @EJB
-    private AdminModuleFacade moduleFacade;
-    
-    private List<AdminPrivilege> listPrivileges;
-    private List<AdminModule>    listModules;
-    private AdminModule module;
-    
-    private String code;
-    private String description;    
+	@EJB
+	private AdminPrivilegeFacade adminPrivilegeFacade;
+	@EJB
+	private AdminModuleFacade moduleFacade;
 
-    /**
-     * Creates a new instance of ListProfilController
-     */
-    public ListPrivilegeController() {
-    }
+	private List<AdminPrivilege> listPrivileges;
+	private List<AdminModule> listModules;
+	private AdminModule module;
 
-    @Override  //@PstConstruct
-    protected void initController() {
-        listPrivileges = adminPrivilegeFacade.findAllOrderById();
-        module = new AdminModule();
-        listModules = moduleFacade.findAllOrderByAttribut("code");
-    }
-        
-//    public void search(){
-//        if (module != null && module.getId() != null) {
-//            listPrivileges = adminPrivilegeFacade.getListPrivilegeByModule(module.getId());
-//        } else {
-//            listPrivileges = adminPrivilegeFacade.findAllOrderById();
-//        }
-//        if(listPrivileges.isEmpty() || listPrivileges.size()<1){
-//            MyUtil.addInfoMessage(MyUtil.getReseurceBundle("msg_resultat_recherche_null"));
-//        }
-//    }
-    public void rechercher(){
-        listPrivileges = adminPrivilegeFacade.findByCodeDescModule(code, description, module);
-        if(listPrivileges.isEmpty() || listPrivileges.size()<1){
-            MyUtil.addInfoMessage(MyUtil.getBundleAdmin("msg_resultat_recherche_null"));
-        }
-    }
+	private String code;
+	private String description;
 
-    public List<AdminPrivilege> getListPrivileges() {
-        return listPrivileges;
-    }
+	/**
+	 * Creates a new instance of ListProfilController
+	 */
+	public ListPrivilegeController() {
+	}
 
-    public String getCode() {
-        return code;
-    }
+	@Override  //@PstConstruct
+	protected void initController() {
+		listPrivileges = adminPrivilegeFacade.findAllOrderById();
+		module = new AdminModule();
+		listModules = moduleFacade.findAllOrderByAttribut("code");
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public void rechercher() {
+		listPrivileges = adminPrivilegeFacade.findByCodeDescModule(code, description, module);
+		if (listPrivileges.isEmpty() || listPrivileges.size() < 1) {
+			MyUtil.addInfoMessage(MyUtil.getBundleAdmin("msg_resultat_recherche_null"));
+		}
+	}
 
-    public List<AdminModule> getListModules() {
-        return listModules;
-    }
+	public List<AdminPrivilege> getListPrivileges() {
+		return listPrivileges;
+	}
 
-    public void setListModules(List<AdminModule> listModules) {
-        this.listModules = listModules;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public AdminModule getModule() {
-        return module;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void setModule(AdminModule module) {
-        this.module = module;
-    }  
+	public List<AdminModule> getListModules() {
+		return listModules;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setListModules(List<AdminModule> listModules) {
+		this.listModules = listModules;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    
+	public AdminModule getModule() {
+		return module;
+	}
+
+	public void setModule(AdminModule module) {
+		this.module = module;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

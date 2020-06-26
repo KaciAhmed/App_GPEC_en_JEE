@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateDrh.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:a="http://elit.dz/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <script type="text/javascript">
+        function skinRadarChart() {
+            Chart.defaults.global.startAngle = 36;
+            Chart.defaults.global.tooltips.cornerRadius = 3;
+            Chart.defaults.global.tooltips.enabled = true;
+            Chart.defaults.global.tooltips.mode = 'point';
+            Chart.defaults.global.tooltips.position = 'nearest';
+        }
+    </script>
+    <ui:define name="Title">
+        Candidature au Poste
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleDrh.titre_candidature}" />
+            <a:menuitem value="#{bundleReferentiel.lien_liste_poste}" href="listGpec.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_consulter}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="Candidature au Poste" />
+            <a href="../tache/showTac.xhtml"></a>
+            <p:messages id="msgs" globalOnly="true" showDetail="true"/>
+            <p:panel id="panel" styleClass="no-border row">
+                <a:row>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="3" />
+                        <a:column span="9" >
+                            <p:inputText id="cod"  value="#{candidatsController.poste.code}" disabled="true"/> 
+                        </a:column>
+                    </a:column>
+                    <a:column span="6" >
+                        <a:label value="#{bundleReferentiel.lbl_denomination}" span="3" />
+                        <a:column span="9" >
+                            <p:inputText id="den"  value="#{candidatsController.poste.denomination}" disabled="true"/> 
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <p:tabView id="tabModels">
+                    <p:tab title="Basé par total de points">
+                        <a:row style="margin-bottom:2%;margin-top: 2%">
+                            <c:forEach var="model" items="#{candidatsController.models}">
+                                <a:column span="12" >
+                                    <p:chart type="donut" model="#{model}" />
+                                </a:column>
+                            </c:forEach>
+                        </a:row>
+                    </p:tab>
+                    <p:tab title="Basé par total de compétences">
+                        <a:row style="margin-bottom:2%;margin-top: 2%">
+                            <c:forEach var="model" items="#{candidatsController.models2}">
+                                <a:column span="12" >
+                                    <p:chart type="donut" model="#{model}" />
+                                </a:column>
+                            </c:forEach>
+                        </a:row>
+                    </p:tab>
+                </p:tabView>
+            </p:panel>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listGpec" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+</ui:composition>

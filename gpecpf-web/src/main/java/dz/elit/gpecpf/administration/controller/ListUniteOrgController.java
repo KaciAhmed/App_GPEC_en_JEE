@@ -1,5 +1,3 @@
-
-
 package dz.elit.gpecpf.administration.controller;
 
 import dz.elit.gpecpf.administration.entity.AdminUniteOrganisationnelle;
@@ -20,57 +18,56 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class ListUniteOrgController extends AbstractController implements Serializable {
 
-    @EJB
-    private AdminUniteOrganisationnelleFacade societeFacade;
-    
-    private AdminUniteOrganisationnelle societe;
-    
-    private List<AdminUniteOrganisationnelle> listUniteOrgs;
+	@EJB
+	private AdminUniteOrganisationnelleFacade societeFacade;
 
-    public ListUniteOrgController() {
-    }
+	private AdminUniteOrganisationnelle societe;
 
-    @Override
-    protected void initController() {
-        societe = new AdminUniteOrganisationnelle();
-        listUniteOrgs = societeFacade.findAllOrderByTrie();
-    }
+	private List<AdminUniteOrganisationnelle> listUniteOrgs;
 
-    public void remove(AdminUniteOrganisationnelle uniteOrganisationnelle) {
-        try {
-            if (!uniteOrganisationnelle.getAdminUniteOrganisationnelleList().isEmpty()) {
-                MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_vous_pouvez_pas_supprimer_cette_unite"));
-            } else {
-                if(uniteOrganisationnelle.getUniteParent()!=null){
-                    uniteOrganisationnelle.getUniteParent().getAdminUniteOrganisationnelleList().remove(uniteOrganisationnelle);
-                    societeFacade.edit(uniteOrganisationnelle.getUniteParent());
-                }
-                societeFacade.remove(uniteOrganisationnelle);
-                listUniteOrgs = societeFacade.findAllOrderByTrie();
-                MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Unité organisationnelle  supprimé");
-            }
+	public ListUniteOrgController() {
+	}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
-    
-    // Getter and setter
+	@Override
+	protected void initController() {
+		societe = new AdminUniteOrganisationnelle();
+		listUniteOrgs = societeFacade.findAllOrderByTrie();
+	}
 
-    public AdminUniteOrganisationnelle getSociete() {
-        return societe;
-    }
+	public void remove(AdminUniteOrganisationnelle uniteOrganisationnelle) {
+		try {
+			if (!uniteOrganisationnelle.getAdminUniteOrganisationnelleList().isEmpty()) {
+				MyUtil.addWarnMessage(MyUtil.getBundleCommun("msg_vous_pouvez_pas_supprimer_cette_unite"));
+			} else {
+				if (uniteOrganisationnelle.getUniteParent() != null) {
+					uniteOrganisationnelle.getUniteParent().getAdminUniteOrganisationnelleList().remove(uniteOrganisationnelle);
+					societeFacade.edit(uniteOrganisationnelle.getUniteParent());
+				}
+				societeFacade.remove(uniteOrganisationnelle);
+				listUniteOrgs = societeFacade.findAllOrderByTrie();
+				MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Unité organisationnelle  supprimé");
+			}
 
-    public void setSociete(AdminUniteOrganisationnelle societe) {
-        this.societe = societe;
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
 
-    public List<AdminUniteOrganisationnelle> getListUniteOrgs() {
-        return listUniteOrgs;
-    }
+	// Getter and setter
+	public AdminUniteOrganisationnelle getSociete() {
+		return societe;
+	}
 
-    public void setListUniteOrgs(List<AdminUniteOrganisationnelle> listUniteOrgs) {
-        this.listUniteOrgs = listUniteOrgs;
-    }
+	public void setSociete(AdminUniteOrganisationnelle societe) {
+		this.societe = societe;
+	}
+
+	public List<AdminUniteOrganisationnelle> getListUniteOrgs() {
+		return listUniteOrgs;
+	}
+
+	public void setListUniteOrgs(List<AdminUniteOrganisationnelle> listUniteOrgs) {
+		this.listUniteOrgs = listUniteOrgs;
+	}
 }

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateEmp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleEmp.titre_modifier_evaluation}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>   
+            <a:menuitem value="#{bundleEmp.titre_gestion_evaluation}" />
+            <a:menuitem value="#{bundleEmp.lien_liste_evaluation}" href="listEval.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_modifier}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+      <ui:param name="aa" value="aaaaaaaaaaaaa" />
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row nomargin="true">
+                <a:pagetitle value="Fiche Evaluation" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
+            </a:row>
+            <p:panel id="panel" styleClass="no-border row">
+                <a:column span="12">
+                    <a:panel header=" #{bundleEmp.lien_liste_competences}" iconheader="fa fa-list-ul">
+                        <p:dataTable id="tableEvaluations" value="#{editEvaluationController.listNotes}" var="note" rowKey="#{note.id}" rows="10" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{bundleEmp.lbl_competence}">
+                                <h:outputText value="#{note.competence.libelle}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_note_emp}">
+                                <p:selectOneMenu required="true" styleClass="form-control" value="#{note.noteEmploye}">
+                                    <f:selectItem  itemLabel="0" itemValue="0" />
+                                    <f:selectItem  itemLabel="1" itemValue="1" />
+                                    <f:selectItem  itemLabel="2" itemValue="2" />
+                                    <f:selectItem  itemLabel="3" itemValue="3" />
+                                    <f:selectItem  itemLabel="4" itemValue="4" />
+                                    <f:selectItem  itemLabel="5" itemValue="5" />
+                                </p:selectOneMenu>                                
+                            </p:column>
+                        </p:dataTable>
+                    </a:panel>
+                </a:column>
+            </p:panel>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{editEvaluationController.create()}" disabled="#{editEvaluationController.done}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listEval" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+     
+</ui:composition>

@@ -1,5 +1,3 @@
-
-
 package dz.elit.gpecpf.administration.service;
 
 import dz.elit.gpecpf.administration.entity.AdminWilaya;
@@ -14,17 +12,18 @@ import javax.persistence.PersistenceContext;
  * @author chekor.samir
  */
 @Stateless
-public class AdminWilayaFacade extends  AbstractFacade<AdminWilaya> {
-    @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
-    private EntityManager em;
+public class AdminWilayaFacade extends AbstractFacade<AdminWilaya> {
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+	@PersistenceContext(unitName = StaticUtil.UNIT_NAME)
+	private EntityManager em;
 
-    public AdminWilayaFacade() {
-        super(AdminWilaya.class);
-    }
-    
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
+
+	public AdminWilayaFacade() {
+		super(AdminWilaya.class);
+	}
+
 }

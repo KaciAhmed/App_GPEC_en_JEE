@@ -34,6 +34,7 @@
             }
             .EstimationTotale{
                 background-color: #47FF5D;
+               
             }
 
             .hide-content-names table { width: auto; }
@@ -48,7 +49,9 @@
             <a:sidebar   toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200" >
 
                 <a:submenu start="true"  value="#{bundleAdmin.titre_gestion_utilisateur}" icon="fa fa-users">
-                    <a:menuitem value="#{bundleAdmin.titre_liste_utilisateur}" icon="fa fa-file"   outcome="/pages/administration/utilisateur/listUtilisateur.xhtml" rendered="#{mySessionController.isUserInRole('ADMIN_002_006')}" />
+                    <a:menuitem value="#{bundleAdmin.titre_liste_utilisateur}" icon="fa fa-file"  
+                                outcome="/pages/administration/utilisateur/listUtilisateur.xhtml" 
+                                rendered="#{mySessionController.isUserInRole('ADMIN_002_006')}" />
                 </a:submenu>
                 <a:submenu value="#{bundleAdmin.titre_gestion_profil}" icon="fa fa-hospital-o">
                     <a:menuitem value="#{bundleAdmin.titre_liste_profils}" icon="fa fa-file" outcome="/pages/administration/profil/listProfil.xhtml" rendered="#{mySessionController.isUserInRole('ADMIN_003_006')}" />
@@ -68,13 +71,17 @@
                     <a:menuitem value="#{bundleAdmin.titre_visibilite_groupe}" icon="fa fa-inbox" outcome="/pages/administration/visibilite/listDroitVisibiliteGroupe.xhtml" rendered="true" />
                     <a:menuitem value="#{bundleAdmin.titre_visibilite_utilisateur}" icon="fa fa-inbox" outcome="/pages/administration/visibilite/showDroitVisibiliteUtilisateur.xhtml" rendered="true" />
                 </a:submenu>
+                <a:submenu value="#{bundleAdmin.titre_gestion_pref_codification}" icon="fa fa-tasks">
+                    <a:menuitem value="#{bundleAdmin.titre_accueil_prefix}" icon="fa fa-file" outcome="/pages/administration/prefixCodification/prefixCod.xhtml" rendered="true" />
+                </a:submenu>
             </a:sidebar>
             <a:pagecontent>
 
                 <div class="page-bar">
                     <ui:insert name="breadCrumb" />
                     <div class="info"  >
-                        Zone variables métier
+                        <p:button outcome="/pages/administration/indexAdmin.xhtml" value="Acceuil Administration" icon="fa fa-home" style="margin-right:0px;background-color: #26a69a">
+                        </p:button>
                     </div>
                 </div> 
 

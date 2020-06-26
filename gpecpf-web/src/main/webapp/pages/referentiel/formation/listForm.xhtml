@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/templateRefer.xhtml"
+                template="/templates/templateReferEmp.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -30,7 +30,7 @@
                     <p:dataTable binding="#{listFormationController.dataTable}" value="#{listFormationController.lazyFormation}" var="formation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" lazy="true" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="true" rows="10">
                         <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{formation.code}" filterMatchMode="contains" width="200" >
                             <h:outputText value="#{formation.code}"/>
-                      </p:column>
+                        </p:column>
                         <p:column headerText="#{bundleReferentiel.lbl_description}" filterBy="#{formation.description}" filterMatchMode="contains">
                             <h:outputText value="#{formation.description}"/>
                         </p:column>

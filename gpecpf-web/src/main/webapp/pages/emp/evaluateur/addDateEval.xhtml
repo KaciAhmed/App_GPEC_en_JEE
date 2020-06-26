@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateEmp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleEmp.titre_nouveau_date_evaluation}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>   
+            <a:menuitem value="Gestion des évaluation des employés" />
+            <a:menuitem value="#{bundleEmp.titre_liste_employe_evaluation}"  href="listEval.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_nouveau}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+      <ui:param name="aa" value="aaaaaaaaaaaaa" />
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row nomargin="true">
+                <a:pagetitle value="Fixer date d'évaluation" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
+            </a:row>
+            <a:panel header=" #{bundleEmp.lien_information_evalution}" >
+                <p:dataTable value="#{addDateEvaluationController.evaluation}" var="evaluation" reflow="true" >
+                    <p:column headerText="#{bundleEmp.lbl_code_compagne}">
+                        <h:outputText value="#{evaluation.compagne.code}"/>
+                    </p:column>
+                    <p:column headerText="#{bundleEmp.lbl_date_debut}">
+                        <h:outputText value="#{addDateEvaluationController.formatDate(evaluation.compagne.datedeb)}"/>
+                    </p:column>
+                    <p:column headerText="#{bundleEmp.lbl_date_fin}">
+                        <h:outputText value="#{addDateEvaluationController.formatDate(evaluation.compagne.datefin)}"/>
+                    </p:column>
+                    <p:column headerText="#{bundleEmp.lbl_matricule_employe}">
+                        <h:outputText value="#{evaluation.employe.matricule}"/>
+                    </p:column>
+                    <p:column headerText="#{bundleEmp.lbl_nom}">
+                        <h:outputText value="#{evaluation.employe.nom}"/>
+                    </p:column>
+                    <p:column headerText="#{bundleEmp.lbl_prenom}">
+                        <h:outputText value="#{evaluation.employe.prenom}"/>
+                    </p:column>
+                </p:dataTable> 
+            </a:panel>
+            <a:row>
+                <a:column span="12" >                               
+                    <a:label value="#{bundleEmp.lbl_date_evaluation}" span="2" />
+                    <a:column span="8" >
+                        <p:calendar  id="dateEva" value="#{addDateEvaluationController.evaluation.dateEvaluation}" pattern="dd/MM/yyyy" required="true" label="#{bundleEmp.lbl_date_evaluation}" locale="fr" navigator="true"> 
+                        </p:calendar>
+                        <p:message for="dateEva" />                                        
+                    </a:column>                                
+                </a:column>
+            </a:row>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addDateEvaluationController.create()}" disabled="#{addDateEvaluationController.canDate()}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listEval" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+     
+</ui:composition>

@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateDrh.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleGesemp.titre_consulter_employe}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb rendered="true">
+            <a:menuitem value="#{bundleGesemp.titre_gestion_employe}" />
+            <a:menuitem value="#{bundleGesemp.lien_liste_employe}" outcome="listEmp.xhtml" />
+            <a:menuitem value="#{bundleGesemp.lien_fiche_employe}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:pagetitle value="#{bundleGesemp.titre_fiche_employe}" />   
+            <p:messages id="msgs" showDetail="true" closable="true"/>
+            <p:panel id="panel" styleClass="no-border">
+                <p:focus context="panel"/>                
+                <p:tabView  id="tabView">
+                    <p:tab title="#{bundleGesemp.titre_information_generale}">    
+                         <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_matricule}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="matriculeEmp" value="#{editEmployeController.emp.matricule}" required="true" label="#{bundleGesemp.lbl_matricule}" size="40" disabled="true"/>
+                                    <p:message for="matriculeEmp" />                                        
+                                </a:column>                                
+                            </a:column>
+                            <a:column span="6" >   
+                                <a:label value="#{bundleGesemp.lbl_typeContrat}" span="4" />
+                               <a:column span="8" >
+                                   <p:inputText id="typeContrat" value="#{editEmployeController.emp.typeContrat}" required="true" label="#{bundleGesemp.lbl_typeContrat}" size="40" disabled="true"/>
+                                   <p:message for="typeContrat" />
+                               </a:column>     
+                            </a:column> 
+                        </a:row>
+                         <a:row>
+                           <a:column span="6" >                               
+                               <a:label value="#{bundleGesemp.lbl_date_recrutement}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="dateRec" value="#{editEmployeController.dtRec}"   label="#{bundleGesemp.lbl_date_recrutement}" disabled="true"/>
+                                    <p:message for="dateRec" />                                        
+                                </a:column>                                
+                            </a:column>
+                            <a:column span="6" >                               
+                               <a:label value="#{bundleGesemp.lbl_date_depart}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText  id="dateDep" value="#{editEmployeController.dtDep}"  label="#{bundleGesemp.lbl_date_depart}" disabled="true"/>  
+                                    <p:message for="dateDep" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleGesemp.lbl_classement}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="classement" value="#{editEmployeController.emp.classement}" label="#{bundleGesemp.lbl_classement}" disabled="true" />
+                                    <p:message for="classement" />                                        
+                                </a:column>                                
+                            </a:column>  
+                            <a:column span="6" >
+                                <a:label value="#{bundleGesemp.lbl_userName}" span="4" />
+                                <a:column span="8" >
+                                    <h:outputText id="out" />
+                                    <p:inputText id="userName" value="#{editEmployeController.emp.userName}" required="true" label="#{bundleGesemp.lbl_userName}" disabled="true" />
+                                    <p:message for="userName" />                                        
+                                </a:column>                               
+                            </a:column>
+                        </a:row>
+                        <a:row style="margin-bottom:2%;margin-top: 2%">
+                            <a:column span="6" >
+                                <h:outputText value="#{bundleGesemp.lbl_information_personnel}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                              </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleGesemp.lbl_nom}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="nom" value="#{editEmployeController.emp.nom}"  label="#{bundleGesemp.lbl_nom}" disabled="true"/>
+                                    <p:message for="nom" />                                        
+                                </a:column>                                
+                            </a:column>  
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_prenom}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="prenom" value="#{editEmployeController.emp.prenom}"  label="#{bundleGesemp.lbl_prenom}" size="40" disabled="true"/>
+                                    <p:message for="prenom" />                                        
+                                </a:column>                                
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >   
+                                <a:label value="#{bundleGesemp.lbl_sexe}" span="4" />
+                               <a:column span="8" >
+                                   <p:inputText id="sexe" value="#{editEmployeController.emp.sexe}"  label="#{bundleGesemp.lbl_sexe}"  disabled="true"/>
+                                    <p:message for="sexe" /> 
+                               </a:column>     
+                            </a:column> 
+                           <a:column span="6" >                               
+                               <a:label value="#{bundleGesemp.lbl_date_naissance}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="dateNaiss" value="#{editEmployeController.dtNaiss}"  label="#{bundleGesemp.lbl_dateNaiss}"  disabled="true"/>
+                                    <p:message for="dateNaiss" />                                        
+                                </a:column>                                
+                            </a:column>
+                         </a:row>
+                         <a:row>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_adresse}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputTextarea cols="120" id="Adresse" value="#{editEmployeController.emp.adresse}" label="#{bundleGesemp.lbl_adresse}" disabled="true"/>
+                                </a:column>  
+                            </a:column>
+                        </a:row>
+                         <a:row>
+                            <a:column span="6" >   
+                            <a:label value="#{bundleGesemp.lbl_wilaya}" span="4" />
+                              <a:column span="8" >
+                                  <p:inputText id="wilaya" value="#{editEmployeController.wil.nom}"  label="#{bundleGesemp.lbl_wilaya}"  disabled="true"/>
+                                   
+                               </a:column>
+                            </a:column> 
+                            <a:column span="6" >   
+                                <a:label value="#{bundleGesemp.lbl_commune}" span="4" />
+                               <a:column span="8" >
+                                   <p:inputText id="commune" value="#{editEmployeController.emp.idcommune.nom}"  label="#{bundleGesemp.lbl_commune}"  disabled="true"/>     
+                               </a:column>     
+                            </a:column> 
+                        </a:row>
+                        <a:row style="margin:2%;font-style: italic">
+                            <a:column span="6" >
+                                <h:outputText value="#{bundleAdmin.lbl_contact}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium" />
+                              </a:column>
+                        </a:row>
+                         <a:row>
+                            <a:column span="6" >                                
+                                 <a:label value="#{bundleGesemp.lbl_email}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText  id="email" value="#{editEmployeController.emp.email}" label="#{bundleGesemp.lbl_email}"   disabled="true"/>    
+                                </a:column>                                
+                            </a:column>
+                            <a:column span="6" >                                
+                                <a:label value="#{bundleGesemp.lbl_telephone}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="tel" value="#{editEmployeController.emp.tel}" disabled="true" label="#{bundleGesemp.lbl_telephone}"/>                                       
+                                </a:column>                                
+                            </a:column> 
+                        </a:row>
+                    </p:tab>
+                    <p:tab id="tabformations" title="#{bundleGesemp.lbl_formation_employe}">
+                        <a:row>
+
+                            <a:panel header="#{bundleGesemp.lien_liste_formation}"  >
+                                <f:facet name="header" >
+                                </f:facet>
+                                <p:dataTable id="tableformations" value="#{editEmployeController.emp.listFormation}" var="formation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" >
+                                    <p:column headerText="#{bundleGesemp.lbl_code}" >
+                                        <h:outputText value="#{formation.code}"/>
+                                    </p:column>
+                                    <p:column headerText="#{bundleGesemp.lbl_description}">
+                                        <h:outputText value="#{formation.description}"/>
+                                    </p:column>
+                                    <p:column headerText="#{bundleGesemp.lbl_exigence}">
+                                        <h:outputText value="#{formation.exigence}"/>
+                                    </p:column>
+                                    <p:column headerText="#{bundleGesemp.lbl_type}">
+                                        <h:outputText value="#{formation.type}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </a:panel>
+                        </a:row>
+                    </p:tab>
+                    <p:tab title="#{bundleGesemp.lbl_poste_employe}">
+                        <a:panel header=" #{bundleGesemp.lien_poste_employe}" iconheader="fa fa-list-ul">
+                           <f:facet name="header">                                            
+                           </f:facet>
+                            <p:dataTable  id="tablePoste" value="#{editEmployeController.posteEmp}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                <p:column headerText="#{bundleCommun.lbl_code}" style="width: 10%" >
+                                    <h:outputText value="#{poste.code}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_denomination}" style="width: 30%">
+                                    <h:outputText value="#{poste.denomination}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_definition_somaire}" style="width: 60%">
+                                    <h:outputText value="#{poste.defSommaire}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </a:panel>
+                     </p:tab>
+                    <p:tab title="#{bundleGesemp.lien_historique_poste_employe}">
+                        <a:panel header=" #{bundleGesemp.lien_historique_poste_employe}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">                                            
+                                    </f:facet>
+                            <p:dataTable id="tableHistorique" value="#{editEmployeController.listHistEmpOrdone}" var="hist" rowKey="#{hist.historiqueemployepostePK.datedeb}" rows="8" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                <p:column headerText="#{bundleGesemp.lbl_date_debut}" filterBy="#{editEmployeController.recupDateFormat(hist.historiqueemployepostePK.datedeb)}" filterMatchMode="contains">
+                                    <h:outputText value="#{editEmployeController.recupDateFormat(hist.historiqueemployepostePK.datedeb)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_date_fin}" filterBy="#{editEmployeController.recupDateFormat(hist.datefin)}" filterMatchMode="contains">
+                                    <h:outputText value="#{editEmployeController.recupDateFormat(hist.datefin)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_code}" filterBy="#{hist.poste.code}" filterMatchMode="contains">
+                                    <h:outputText value="#{hist.poste.code}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleGesemp.lbl_denomination}" filterBy="#{hist.poste.denomination}" filterMatchMode="contains">
+                                    <h:outputText value="#{hist.poste.denomination}"/>
+                                </p:column>
+                                        
+                                    </p:dataTable>
+                                </a:panel>
+                     </p:tab>
+                </p:tabView>                
+            </p:panel> 
+            <a:row >
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" icon="fa fa-reply" action="listEmp" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form> 
+    </ui:define>
+</ui:composition>

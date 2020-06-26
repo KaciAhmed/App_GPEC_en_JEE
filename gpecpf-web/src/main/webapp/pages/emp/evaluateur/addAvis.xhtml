@@ -1,0 +1,357 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateEmp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleEmp.titre_nouveau_avis}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>   
+            <a:menuitem value="Gestion des évaluation des employés" />
+            <a:menuitem value="#{bundleEmp.titre_liste_employe_evaluation}"  href="listEval.xhtml" />
+            <a:menuitem value="#{bundleCommun.btn_nouveau}" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+    <ui:param name="aa" value="aaaaaaaaaaaaa" />
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row nomargin="true">
+                <a:pagetitle value="Fiche Avis" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
+            </a:row>
+            <p:panel id="panel" styleClass="no-border row">
+                <p:tabView id="tabView">
+                    <p:tab title="Données Evaluation">
+                        <a:panel header=" #{bundleEmp.lien_liste_competences}" iconheader="fa fa-list-ul">
+                            <p:dataTable id="tableEvaluations" value="#{addAvisController.listNotes}" var="note" rowKey="#{note.id}" rows="10" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                <p:column headerText="#{bundleEmp.lbl_competence}">
+                                    <h:outputText value="#{note.competence.libelle}"/>
+                                    <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showEval" ajax="false" rendered="#{mySessionController.isUserInRole('EMP_003_005')}">  
+                                        <f:param name="id" value="#{evaluation.id}" />
+                                    </p:commandButton>  
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_note_emp}">
+                                    <h:outputText value="#{note.noteEmploye}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_note_sup}">
+                                    <h:outputText value="#{note.noteSuperieure}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </a:panel>
+                        <a:panel header=" #{bundleEmp.lien_liste_avis}" iconheader="fa fa-list-ul">
+                            <p:dataTable value="#{addAvisController.listAvis}" var="avis" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
+                                <p:column headerText="#{bundleEmp.lbl_type_avis}">
+                                    <h:outputText value="#{addAvisController.getTypeAvis(avis.type)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_nom}">
+                                    <h:outputText value="#{addAvisController.getNameAvis(avis.type)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_prenom}">
+                                    <h:outputText value="#{addAvisController.getPrenomAvis(avis.type)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_commentaire}">
+                                    <h:outputText value="#{avis.avis}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_type_comment}">
+                                    <h:outputText value="#{addAvisController.getPositivity(avis.positif)}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </a:panel>
+                    </p:tab>
+                    <p:tab title="Fiche Employé">
+                        <p:tabView  id="tabView">
+                            <p:tab title="#{bundleEmp.titre_information_generale}">    
+                                <a:row>
+                                    <a:column span="6" >                                
+                                        <a:label value="#{bundleEmp.lbl_matricule}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="matriculeEmp" value="#{addAvisController.monEmploye.matricule}" required="true" label="#{bundleEmp.lbl_matricule}" size="40" disabled="true"/>
+                                            <p:message for="matriculeEmp" />                                        
+                                        </a:column>                                
+                                    </a:column>
+                                    <a:column span="6" >   
+                                        <a:label value="#{bundleEmp.lbl_typeContrat}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="typeContrat" value="#{addAvisController.monEmploye.typeContrat}" required="true" label="#{bundleEmp.lbl_typeContrat}" size="40" disabled="true"/>
+                                            <p:message for="typeContrat" />
+                                        </a:column>     
+                                    </a:column> 
+                                </a:row>
+                                <a:row>
+                                    <a:column span="6" >                               
+                                        <a:label value="#{bundleEmp.lbl_date_recrutement}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="dateRec" value="#{addAvisController.formatDate(addAvisController.monEmploye.date_recrutement)}"   label="#{bundleEmp.lbl_date_recrutement}" disabled="true"/>
+                                            <p:message for="dateRec" />                                        
+                                        </a:column>                                
+                                    </a:column>
+                                </a:row>
+                                <a:row>
+                                    <a:column span="6" >
+                                        <a:label value="#{bundleEmp.lbl_classement}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="classement" value="#{addAvisController.monEmploye.classement}" label="#{bundleEmp.lbl_classement}" disabled="true" />
+                                            <p:message for="classement" />                                        
+                                        </a:column>                                
+                                    </a:column>  
+                                    <a:column span="6" >
+                                        <a:label value="#{bundleEmp.lbl_userName}" span="4" />
+                                        <a:column span="8" >
+                                            <h:outputText id="out" />
+                                            <p:inputText id="userName" value="#{addAvisController.monEmploye.userName}" required="true" label="#{bundleEmp.lbl_userName}" disabled="true" />
+                                            <p:message for="userName" />                                        
+                                        </a:column>                               
+                                    </a:column>
+                                </a:row>
+                                <a:row style="margin-bottom:2%;margin-top: 2%">
+                                    <a:column span="6" >
+                                        <h:outputText value="#{bundleEmp.lbl_information_personnel}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium;font-style: italic" />
+                                    </a:column>
+                                </a:row>
+                                <a:row>
+                                    <a:column span="6" >
+                                        <a:label value="#{bundleEmp.lbl_nom}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="nom" value="#{addAvisController.monEmploye.nom}"  label="#{bundleEmp.lbl_nom}" disabled="true"/>
+                                            <p:message for="nom" />                                        
+                                        </a:column>                                
+                                    </a:column>  
+                                    <a:column span="6" >                                
+                                        <a:label value="#{bundleEmp.lbl_prenom}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="prenom" value="#{addAvisController.monEmploye.prenom}"  label="#{bundleEmp.lbl_prenom}" size="40" disabled="true"/>
+                                            <p:message for="prenom" />                                        
+                                        </a:column>                                
+                                    </a:column>
+                                </a:row>
+                                <a:row>
+                                    <a:column span="6" >   
+                                        <a:label value="#{bundleEmp.lbl_sexe}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="sexe" value="#{addAvisController.monEmploye.sexe}"  label="#{bundleEmp.lbl_sexe}"  disabled="true"/>
+                                            <p:message for="sexe" /> 
+                                        </a:column>     
+                                    </a:column> 
+                                    <a:column span="6" >                               
+                                        <a:label value="#{bundleEmp.lbl_date_naissance}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="dateNaiss" value="#{addAvisController.formatDate(addAvisController.monEmploye.dtNaissance)}"  label="#{bundleEmp.lbl_dateNaiss}"  disabled="true"/>
+                                            <p:message for="dateNaiss" />                                        
+                                        </a:column>                                
+                                    </a:column>
+                                </a:row>
+                                <a:row>
+                                    <a:column span="6" >                                
+                                        <a:label value="#{bundleEmp.lbl_adresse}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputTextarea cols="120" id="Adresse" value="#{addAvisController.monEmploye.adresse}" label="#{bundleEmp.lbl_adresse}" disabled="true"/>
+                                        </a:column>  
+                                    </a:column>
+                                </a:row>
+                                <a:row>
+                                    <a:column span="6" >   
+                                        <a:label value="#{bundleEmp.lbl_wilaya}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="wilaya" value="#{addAvisController.monEmploye.idcommune.idwilaya.nom}"  label="#{bundleEmp.lbl_wilaya}"  disabled="true"/>
+
+                                        </a:column>
+                                    </a:column> 
+                                    <a:column span="6" >   
+                                        <a:label value="#{bundleEmp.lbl_commune}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="commune" value="#{addAvisController.monEmploye.idcommune.nom}"  label="#{bundleEmp.lbl_commune}"  disabled="true"/>     
+                                        </a:column>     
+                                    </a:column> 
+                                </a:row>
+                                <a:row style="margin:2%;font-style: italic">
+                                    <a:column span="6" >
+                                        <h:outputText value="#{bundleAdmin.lbl_contact}" style="color: rgb(28,175,154);font-weight: bold;font-size: medium" />
+                                    </a:column>
+                                </a:row>
+                                <a:row>
+                                    <a:column span="6" >                                
+                                        <a:label value="#{bundleEmp.lbl_email}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText  id="email" value="#{addAvisController.monEmploye.email}" label="#{bundleEmp.lbl_email}"   disabled="true"/>    
+                                        </a:column>                                
+                                    </a:column>
+                                    <a:column span="6" >                                
+                                        <a:label value="#{bundleEmp.lbl_tel}" span="4" />
+                                        <a:column span="8" >
+                                            <p:inputText id="tel" value="#{addAvisController.monEmploye.tel}" disabled="true" label="#{bundleEmp.lbl_telephone}"/>                                       
+                                        </a:column>                                
+                                    </a:column> 
+                                </a:row>
+                            </p:tab>
+                            <p:tab id="tabformations" title="#{bundleEmp.lbl_formation_employe}">
+                                <a:row>
+
+                                    <a:panel header="#{bundleEmp.lien_liste_formation}"  >
+                                        <f:facet name="header" >
+                                        </f:facet>
+                                        <p:dataTable id="tableformations" value="#{addAvisController.monEmploye.listFormation}" var="formation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" >
+                                            <p:column headerText="#{bundleEmp.lbl_description}">
+                                                <h:outputText value="#{formation.description}"/>
+                                            </p:column>
+                                            <p:column headerText="#{bundleEmp.lbl_exigence}">
+                                                <h:outputText value="#{formation.exigence}"/>
+                                            </p:column>
+                                            <p:column headerText="#{bundleEmp.lbl_type}">
+                                                <h:outputText value="#{formation.type}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </a:panel>
+                                </a:row>
+                            </p:tab>
+                            <p:tab title="#{bundleEmp.lien_historique_poste_employe}">
+                                <a:panel header=" #{bundleEmp.lien_historique_poste_employe}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">                                            
+                                    </f:facet>
+                                    <p:dataTable id="tableHistorique" value="#{addAvisController.ordonerListHistEmp()}" var="hist" rowKey="#{hist.historiqueemployepostePK.datedeb}" rows="8" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleEmp.lbl_date_debut}" filterBy="#{addAvisController.formatDate(hist.historiqueemployepostePK.datedeb)}" filterMatchMode="contains">
+                                            <h:outputText value="#{addAvisController.formatDate(hist.historiqueemployepostePK.datedeb)}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleEmp.lbl_date_fin}" filterBy="#{addAvisController.formatDate(hist.datefin)}" filterMatchMode="contains">
+                                            <h:outputText value="#{addAvisController.formatDate(hist.datefin)}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleEmp.lbl_code}" filterBy="#{hist.poste.code}" filterMatchMode="contains">
+                                            <h:outputText value="#{hist.poste.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleEmp.lbl_denomination}" filterBy="#{hist.poste.denomination}" filterMatchMode="contains">
+                                            <h:outputText value="#{hist.poste.denomination}"/>
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>
+                    </p:tab>
+                    <p:tab title="Fiche Poste">
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleEmp.lbl_code}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="cod"  value="#{addAvisController.poste.code}" disabled="true"/> 
+                                </a:column>
+                            </a:column>
+                            <a:column span="6" >
+                                <a:label value="#{bundleEmp.lbl_denomination}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="den"  value="#{addAvisController.poste.denomination}" disabled="true"/> 
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="6" >
+                                <a:label value="#{bundleEmp.lbl_classement}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="classement"  value="#{addAvisController.poste.classement}" disabled="true"/> 
+                                </a:column>
+                            </a:column> 
+                            <a:column span="6" >
+                                <a:label value="#{bundleEmp.lbl_annee_exp}" span="4" />
+                                <a:column span="8" >
+                                    <p:inputText id="annExp"  value="#{addAvisController.poste.anneeExperience}" disabled="true"/> 
+                                </a:column>
+                            </a:column>
+                        </a:row>
+                        <a:row>
+                            <a:column span="12" >
+                                <a:label value="#{bundleEmp.lbl_def_som}" span="2" />
+                                <a:column span="10" >
+                                    <p:inputTextarea id="defSom" cols="60" value="#{addAvisController.poste.defSommaire}" autoResize="false" disabled="true"/>
+                                </a:column>
+                            </a:column>
+                        </a:row>  
+                        <p:tabView  id="tabViewList">
+                            <p:tab title="#{bundleEmp.lbl_missions}">
+                                <a:panel header=" #{bundleEmp.titre_liste_mission}" iconheader="fa fa-list-ul">
+                                    <p:dataTable  id="tableMissions" value="#{addAvisController.poste.listMissions}" var="mission" rowKey="#{mission.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleEmp.lbl_libelle}">
+                                            <h:outputText value="#{mission.libelle}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleEmp.lbl_description}">
+                                            <h:outputText value="#{mission.description}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+
+                            <p:tab title="#{bundleEmp.lbl_conditions}">
+                                <a:panel header=" #{bundleEmp.titre_liste_condition}" iconheader="fa fa-list-ul">
+                                    <p:dataTable  id="tableConditions" value="#{addAvisController.poste.listConditions}" var="condition" rowKey="#{condition.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleEmp.lbl_description}">
+                                            <h:outputText value="#{condition.description}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+
+                            <p:tab title="#{bundleEmp.lbl_moyens}">
+                                <a:panel header=" #{bundleEmp.titre_liste_moyen}" iconheader="fa fa-list-ul">
+                                    <p:dataTable  id="tableMoyens" value="#{addAvisController.poste.listMoyens}" var="moyen" rowKey="#{moyen.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleEmp.lbl_description}">
+                                            <h:outputText value="#{moyen.description}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+
+                            <p:tab title="#{bundleEmp.lbl_formations}">
+                                <a:panel header=" #{bundleEmp.titre_liste_formation}" iconheader="fa fa-list-ul">
+                                    <p:dataTable  id="tableFormations" value="#{addAvisController.poste.listFormations}" var="formation" rowKey="#{formation.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleEmp.lbl_description}">
+                                            <h:outputText value="#{formation.description}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleEmp.lbl_type}">
+                                            <h:outputText value="#{formation.type}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleEmp.lbl_exigence}">
+                                            <h:outputText value="#{formation.exigence}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+
+                            <p:tab title="#{bundleEmp.lbl_competences}">
+                                <a:panel header=" #{bundleEmp.titre_liste_competence}" iconheader="fa fa-list-ul">
+                                    <p:dataTable  id="tableCompetences" value="#{addAvisController.poste.listCompetences}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleEmp.lbl_libelle}">
+                                            <h:outputText value="#{competence.libelle}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleEmp.lbl_type}">
+                                            <h:outputText value="#{competence.idtypcom.libelle}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleEmp.lbl_domaine}">
+                                            <h:outputText value="#{competence.iddomcom.libelle}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>
+                    </p:tab>
+                </p:tabView>
+                <a:row>
+                    <a:column span="12" >
+                        <a:label value="#{bundleEmp.lbl_commentaire}" span="2" />
+                        <a:column span="10" >
+                            <p:inputTextarea id="av" required="true"  cols="60" value="#{addAvisController.avis.avis}" autoResize="false" />
+                            <p:message for="av"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+            </p:panel>
+            <a:row>
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{addAvisController.create(1)}" disabled="#{addAvisController.done}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" action="listEval" icon="fa fa-reply" styleClass="GrayButton" ajax="false" />
+            </a:row>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

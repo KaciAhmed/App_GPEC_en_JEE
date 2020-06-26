@@ -1,6 +1,3 @@
-
-
-
 package dz.elit.gpecpf.administration.service;
 
 import dz.elit.gpecpf.administration.entity.AdminCommune;
@@ -16,16 +13,17 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class AdminCommuneFacade extends AbstractFacade<AdminCommune> {
-    @PersistenceContext(unitName = StaticUtil.UNIT_NAME)
-    private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+	@PersistenceContext(unitName = StaticUtil.UNIT_NAME)
+	private EntityManager em;
 
-    public AdminCommuneFacade() {
-        super(AdminCommune.class);
-    }
-    
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
+
+	public AdminCommuneFacade() {
+		super(AdminCommune.class);
+	}
+
 }

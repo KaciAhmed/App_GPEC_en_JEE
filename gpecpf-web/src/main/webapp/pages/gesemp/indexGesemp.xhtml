@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/templateGes.xhtml"
+    xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleGesemp.titre_accueil_module_gesemp}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+
+        <a:breadcrumb rendered="true">
+
+            <a:menuitem icon="fa fa-home" value=" #{bundleGesemp.titre_accueil_module_gesemp}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <a:column span="10" offset="1"  >
+            <a:tiles >
+                <a:tilesitem href="/pages/gesemp/employe/listEmp.xhtml" value="Gestion des employés " icon="fa fa-fw fa-male" id="tilesitem" bg-color="green" description=" gestion des employé "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('GESEMP_001_006')}" />  
+            </a:tiles>
+        </a:column> 
+    </ui:define>
+</ui:composition>

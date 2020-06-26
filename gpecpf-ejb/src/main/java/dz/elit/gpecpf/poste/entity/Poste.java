@@ -50,8 +50,10 @@ import javax.validation.constraints.Size;
 	,
 	@NamedQuery(name = "Poste.findByFormation", query = "SELECT p FROM Poste p WHERE :formation MEMBER OF p.listFormations ")
 	,
-	@NamedQuery(name = "Poste.findByMission", query = "SELECT p FROM Poste p WHERE :mission MEMBER OF p.listMissions "),})
-public class Poste implements Serializable {
+	@NamedQuery(name = "Poste.findByMission", query = "SELECT p FROM Poste p WHERE :mission MEMBER OF p.listMissions ")
+	,
+	@NamedQuery(name = "Poste.findByCompetence", query = "SELECT p FROM Poste p WHERE :competence MEMBER OF p.listCompetences "),})
+public class Poste implements Comparable, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -450,6 +452,12 @@ public class Poste implements Serializable {
 	@Override
 	public String toString() {
 		return "dz.elit.gpecpf.poste.entity.Poste[ id=" + id + " ]";
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		Poste poste = (Poste) o;
+		return this.code.compareToIgnoreCase(poste.getCode());
 	}
 
 }

@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateEmp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui" >
+
+    <ui:define name="Title">
+        Liste des évaluations
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="Vérification des évaluations" />
+            <a:menuitem value="Liste des évaluations"  href="listEval.xhtml" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row >
+                <a:pagetitle value="Liste Evaluations" />                
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            </a:row>       
+
+            <a:row>
+                <p:tabView id="tabView">
+                    <p:tab title="Evaluations N+2">
+                        <a:panel>
+                            <p:dataTable value="#{listEmployeEvaluationController.evaluationsN2}" var="evaluation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
+                                <p:column headerText="#{bundleEmp.lbl_code_compagne}">
+                                    <h:outputText value="#{evaluation.compagne.code}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_matricule_employe}">
+                                    <h:outputText value="#{evaluation.employe.matricule}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_nom}">
+                                    <h:outputText value="#{evaluation.employe.nom}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_prenom}">
+                                    <h:outputText value="#{evaluation.employe.prenom}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_date_evaluation}">
+                                    <h:outputText value="#{listEmployeEvaluationController.formatDate(evaluation.dateEvaluation)}"/>                           
+                                </p:column>
+                                <p:column headerText="Etat">
+                                    <h:outputText value="#{listEmployeEvaluationController.whatEtat(evaluation.etat)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleCommun.lbl_actions}" width="150">
+                                    <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showEval" ajax="false" rendered="#{mySessionController.isUserInRole('EMP_003_005')}">  
+                                        <f:param name="id" value="#{evaluation.id}" />
+                                    </p:commandButton>  
+                                    <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="addAvis" ajax="false" rendered="#{listEmployeEvaluationController.canEdit(evaluation)}">
+                                        <f:param name="id" value="#{evaluation.id}"></f:param>
+                                    </p:commandButton>  
+                                </p:column>
+                            </p:dataTable> 
+                        </a:panel>
+                    </p:tab>
+                    <p:tab title="Evaluations N+3">
+                        <a:panel>
+                            <p:dataTable value="#{listEmployeEvaluationController.evaluationsN3}" var="evaluation" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
+                                <p:column headerText="#{bundleEmp.lbl_code_compagne}">
+                                    <h:outputText value="#{evaluation.compagne.code}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_matricule_employe}">
+                                    <h:outputText value="#{evaluation.employe.matricule}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_nom}">
+                                    <h:outputText value="#{evaluation.employe.nom}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_prenom}">
+                                    <h:outputText value="#{evaluation.employe.prenom}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleEmp.lbl_date_evaluation}">
+                                    <h:outputText value="#{listEmployeEvaluationController.formatDate(evaluation.dateEvaluation)}"/>                           
+                                </p:column>
+                                <p:column headerText="Etat">
+                                    <h:outputText value="#{listEmployeEvaluationController.whatEtat(evaluation.etat)}"/>
+                                </p:column>
+                                <p:column headerText="#{bundleCommun.lbl_actions}" width="150">
+                                    <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showEval" ajax="false" rendered="#{mySessionController.isUserInRole('EMP_003_005')}">  
+                                        <f:param name="id" value="#{evaluation.id}" />
+                                    </p:commandButton>  
+                                    <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="addAvis" ajax="false" rendered="#{listEmployeEvaluationController.canEdit(evaluation)}">
+                                        <f:param name="id" value="#{evaluation.id}"></f:param>
+                                    </p:commandButton>  
+                                </p:column>
+                            </p:dataTable> 
+                        </a:panel>
+                    </p:tab>
+                </p:tabView>
+            </a:row>
+        </h:form>        
+    </ui:define>
+</ui:composition>

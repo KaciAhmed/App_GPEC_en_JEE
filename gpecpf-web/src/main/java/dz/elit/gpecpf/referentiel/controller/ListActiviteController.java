@@ -24,85 +24,89 @@ import org.primefaces.model.SortOrder;
 @ViewScoped
 public class ListActiviteController extends AbstractController implements Serializable {
 
-    @EJB
-    private ActiviteFacade activiteFacade;
+	@EJB
+	private ActiviteFacade activiteFacade;
 
-    private Activite activite;
+	private Activite activite;
 
-    private LazyDataModel<Activite> lazyActivite;
-    private List<FieldValueMatchMode> fieldValueMatchMode;
-    private DataTable dataTable;
+	private LazyDataModel<Activite> lazyActivite;
+	private List<FieldValueMatchMode> fieldValueMatchMode;
+	private DataTable dataTable;
 
-    /**
-     * Creates a new instance of ListProfilController
-     */
-    public ListActiviteController() {
-    }
+	/**
+	 * Creates a new instance of ListProfilController
+	 */
+	public ListActiviteController() {
+	}
 
-    @Override // @PstConstruct
-    protected void initController() {
-        lazyActivite = new LazyDataModel<Activite>() {
-            @Override
-            public List<Activite> load(int first, int pageSize, String sortField, SortOrder sortOrder,
-                    Map<String, Object> filters) {
-                fieldValueMatchMode = getFilter(filters, dataTable);
-                lazyActivite.setRowCount(activiteFacade.count(fieldValueMatchMode));
-                return activiteFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
-            }
-        };
-    }
+	@Override // @PstConstruct
+	protected void initController() {
+		lazyActivite = new LazyDataModel<Activite>() {
+			@Override
+			public List<Activite> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+				fieldValueMatchMode = getFilter(filters, dataTable);
+				lazyActivite.setRowCount(activiteFacade.count(fieldValueMatchMode));
+				return activiteFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
+			}
+		};
+	}
 
-    public void initNewActivite() {
-        activite = new Activite();
-    }
+	public void initNewActivite() {
+		activite = new Activite();
+	}
 
-    public void remove(Activite activite) {
-        try {
-            activiteFacade.remove(activite);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-        } catch (Exception ex) {
-			MyUtil.addErrorMessage("L'activité est relié à des missions.");
-        }
-    }
+	public void remove(Activite activite) {
+		try {
+			activiteFacade.remove(activite);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));// Erreur inconu
+		}
+	}
 
-    public DataTable getDataTable() {
-        return dataTable;
-    }
+	public DataTable getDataTable() {
+		return dataTable;
+	}
 
-    public List<FieldValueMatchMode> getFieldValueMatchMode() {
-        return fieldValueMatchMode;
-    }
+	public List<FieldValueMatchMode> getFieldValueMatchMode() {
+		return fieldValueMatchMode;
+	}
 
-    public Activite getActivite() {
-        return activite;
-    }
+	public Activite getActivite() {
+		return activite;
+	}
 
-    public LazyDataModel<Activite> getLazyActivite() {
-        return lazyActivite;
-    }
+	public LazyDataModel<Activite> getLazyActivite() {
+		return lazyActivite;
+	}
 
-    public ActiviteFacade getActiviteFacade() {
-        return activiteFacade;
-    }
+	public ActiviteFacade getActiviteFacade() {
+		return activiteFacade;
+	}
 
-    public void setDataTable(DataTable dataTable) {
-        this.dataTable = dataTable;
-    }
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
 
-    public void setFieldValueMatchMode(List<FieldValueMatchMode> fieldValueMatchMode) {
-        this.fieldValueMatchMode = fieldValueMatchMode;
-    }
+	public void setFieldValueMatchMode(List<FieldValueMatchMode> fieldValueMatchMode) {
+		this.fieldValueMatchMode = fieldValueMatchMode;
+	}
 
-    public void setLazyActivite(LazyDataModel<Activite> lazyActivite) {
-        this.lazyActivite = lazyActivite;
-    }
+	public void setLazyActivite(LazyDataModel<Activite> lazyActivite) {
+		this.lazyActivite = lazyActivite;
+	}
 
-    public void setActivite(Activite activite) {
-        this.activite = activite;
-    }
+	public void setActivite(Activite activite) {
+		this.activite = activite;
+	}
 
-    public void setActiviteFacade(ActiviteFacade activiteFacade) {
-        this.activiteFacade = activiteFacade;
-    }
+	public void setActiviteFacade(ActiviteFacade activiteFacade) {
+		this.activiteFacade = activiteFacade;
+	}
 
 }

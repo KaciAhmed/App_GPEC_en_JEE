@@ -19,85 +19,85 @@ import javax.validation.constraints.Size;
  * @author Nadir Ben Mohand
  */
 @Entity
-@Table(name = "type_poste",schema = StaticUtil.POSTE_SCHEMA)
+@Table(name = "type_poste", schema = StaticUtil.POSTE_SCHEMA)
 @NamedQueries({
-    @NamedQuery(name = "TypePoste.findByCodeWithoutCurrentId", query = "SELECT t FROM TypePoste t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
+	@NamedQuery(name = "TypePoste.findByCodeWithoutCurrentId", query = "SELECT t FROM TypePoste t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
 public class TypePoste implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)    
-    @Column(name = "id")
-    private Integer id;
-    @Size(min = 1, max = 20)
-    @Column(name = "code",nullable=false,unique=true,length = 20)
-    @NotNull
-    private String code;
-    @Size(max = 255)
-    @Column(name = "libelle")
-    private String libelle;
-    
-    public TypePoste() {
-    }
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id")
+	private Integer id;
+	@Size(min = 1, max = 20)
+	@Column(name = "code", nullable = false, unique = true, length = 20)
+	@NotNull
+	private String code;
+	@Size(max = 255)
+	@Column(name = "libelle")
+	private String libelle;
 
-    public TypePoste(Integer id) {
-        this.id = id;
-    }
-    
-    public TypePoste(Integer id, String code, String libelle) {
-        this.id = id;
-        this.code = code;
-        this.libelle = libelle;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
+	public TypePoste() {
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public TypePoste(Integer id) {
+		this.id = id;
+	}
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
+	public TypePoste(Integer id, String code, String libelle) {
+		this.id = id;
+		this.code = code;
 		this.libelle = libelle;
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TypePoste)) {
-            return false;
-        }
-        TypePoste other = (TypePoste) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    @Override
-    public String toString() {
-        return "dz.elit.gpecpf.poste.entity.TypePoste[ id=" + id + " ]";
-    }
-    
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof TypePoste)) {
+			return false;
+		}
+		TypePoste other = (TypePoste) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "dz.elit.gpecpf.poste.entity.TypePoste[ id=" + id + " ]";
+	}
+
 }

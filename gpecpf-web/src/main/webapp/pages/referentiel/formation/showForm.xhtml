@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/templateRefer.xhtml"
+                template="/templates/templateReferEmp.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui" 
                 xmlns:a="http://elit.dz/ui"
@@ -55,6 +55,27 @@
                             <p:inputText id="exi"  value="#{editFormationController.formation.exigence}" /> 
                         </a:column>
                     </a:column> 
+                </a:row>
+                <a:row style="height: 300px">
+                    <a:column span="12">
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.lbl_postes}">
+                                <a:panel header=" #{bundleReferentiel.lien_liste_poste}" iconheader="fa fa-list-ul">
+                                    <p:dataTable id="tablePostes" value="#{editFormationController.listPostesFormation}" var="poste" rowKey="#{poste.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{poste.code}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_denomination}" filterBy="#{poste.libelle}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.denomination}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleReferentiel.lbl_classement}" filterBy="#{poste.libelle}" filterMatchMode="contains">
+                                            <h:outputText value="#{poste.classement}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>  
+                    </a:column>
                 </a:row>
             </p:panel>
 

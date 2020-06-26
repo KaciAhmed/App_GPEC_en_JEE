@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dz.elit.gpecpf.administration.entity;
 
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,123 +23,128 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "admin_droit_visibilite", schema = StaticUtil.ADMINISTRATION_SCHEMA)
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdminDroitVisibilite.findAll", query = "SELECT a FROM AdminDroitVisibilite a"),
-    @NamedQuery(name = "AdminDroitVisibilite.findById", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.id = :id"),
-    @NamedQuery(name = "AdminDroitVisibilite.findByUtilisateur", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.idUtilisateur.id = :utilisateur"),
-    @NamedQuery(name = "AdminDroitVisibilite.findByUtilisateurEntity", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.idUtilisateur.id = :utilisateur AND a.idObjetVisibilite.id =:entity"),
-    @NamedQuery(name = "AdminDroitVisibilite.findByGroupe", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.idGroupe.id = :groupe"),
+	@NamedQuery(name = "AdminDroitVisibilite.findAll", query = "SELECT a FROM AdminDroitVisibilite a")
+	,
+    @NamedQuery(name = "AdminDroitVisibilite.findById", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.id = :id")
+	,
+    @NamedQuery(name = "AdminDroitVisibilite.findByUtilisateur", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.idUtilisateur.id = :utilisateur")
+	,
+    @NamedQuery(name = "AdminDroitVisibilite.findByUtilisateurEntity", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.idUtilisateur.id = :utilisateur AND a.idObjetVisibilite.id =:entity")
+	,
+    @NamedQuery(name = "AdminDroitVisibilite.findByGroupe", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.idGroupe.id = :groupe")
+	,
     @NamedQuery(name = "AdminDroitVisibilite.findByGroupeEntity", query = "SELECT a FROM AdminDroitVisibilite a WHERE a.idGroupe.id = :groupe AND a.idObjetVisibilite.id =:entity")
 })
 public class AdminDroitVisibilite implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @JoinColumn(name = "id_objet_visibilite", referencedColumnName = "id")
-    @ManyToOne
-    private AdminObjetVisibilite idObjetVisibilite;
-    @JoinColumn(name = "id_unite_organisationnelle", referencedColumnName = "id")
-    @ManyToOne
-    private AdminUniteOrganisationnelle idUniteOrganisationnelle;
-    @JoinColumn(name = "id_utilisateur", referencedColumnName = "id")
-    @ManyToOne
-    private AdminUtilisateur idUtilisateur;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name = "id")
+	private Integer id;
+	@JoinColumn(name = "id_objet_visibilite", referencedColumnName = "id")
+	@ManyToOne
+	private AdminObjetVisibilite idObjetVisibilite;
+	@JoinColumn(name = "id_unite_organisationnelle", referencedColumnName = "id")
+	@ManyToOne
+	private AdminUniteOrganisationnelle idUniteOrganisationnelle;
+	@JoinColumn(name = "id_utilisateur", referencedColumnName = "id")
+	@ManyToOne
+	private AdminUtilisateur idUtilisateur;
 
-    @JoinColumn(name = "id_groupe", referencedColumnName = "id")
-    @ManyToOne
-    private AdminGroupe idGroupe;
+	@JoinColumn(name = "id_groupe", referencedColumnName = "id")
+	@ManyToOne
+	private AdminGroupe idGroupe;
 
-    public AdminDroitVisibilite() {
-    }
+	public AdminDroitVisibilite() {
+	}
 
-    public AdminDroitVisibilite(AdminObjetVisibilite idObjetVisibilite, AdminUniteOrganisationnelle idUniteOrganisationnelle, AdminUtilisateur idUtilisateur) {
-        this.idObjetVisibilite = idObjetVisibilite;
-        this.idUniteOrganisationnelle = idUniteOrganisationnelle;
-        this.idUtilisateur = idUtilisateur;
-    }
+	public AdminDroitVisibilite(AdminObjetVisibilite idObjetVisibilite, AdminUniteOrganisationnelle idUniteOrganisationnelle, AdminUtilisateur idUtilisateur) {
+		this.idObjetVisibilite = idObjetVisibilite;
+		this.idUniteOrganisationnelle = idUniteOrganisationnelle;
+		this.idUtilisateur = idUtilisateur;
+	}
 
-    public AdminDroitVisibilite(AdminObjetVisibilite idObjetVisibilite, AdminUniteOrganisationnelle idUniteOrganisationnelle,
-            AdminGroupe idGroupe) {
-        this.idObjetVisibilite = idObjetVisibilite;
-        this.idUniteOrganisationnelle = idUniteOrganisationnelle;
-        this.idGroupe = idGroupe;
-    }
-    
-    public AdminDroitVisibilite(AdminObjetVisibilite idObjetVisibilite, AdminUniteOrganisationnelle idUniteOrganisationnelle) {
-        this.idObjetVisibilite = idObjetVisibilite;
-        this.idUniteOrganisationnelle = idUniteOrganisationnelle;
-    }
+	public AdminDroitVisibilite(AdminObjetVisibilite idObjetVisibilite, AdminUniteOrganisationnelle idUniteOrganisationnelle,
+			AdminGroupe idGroupe) {
+		this.idObjetVisibilite = idObjetVisibilite;
+		this.idUniteOrganisationnelle = idUniteOrganisationnelle;
+		this.idGroupe = idGroupe;
+	}
 
-    public AdminDroitVisibilite(Integer id) {
-        this.id = id;
-    }
+	public AdminDroitVisibilite(AdminObjetVisibilite idObjetVisibilite, AdminUniteOrganisationnelle idUniteOrganisationnelle) {
+		this.idObjetVisibilite = idObjetVisibilite;
+		this.idUniteOrganisationnelle = idUniteOrganisationnelle;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public AdminDroitVisibilite(Integer id) {
+		this.id = id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public AdminObjetVisibilite getIdObjetVisibilite() {
-        return idObjetVisibilite;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setIdObjetVisibilite(AdminObjetVisibilite idObjetVisibilite) {
-        this.idObjetVisibilite = idObjetVisibilite;
-    }
+	public AdminObjetVisibilite getIdObjetVisibilite() {
+		return idObjetVisibilite;
+	}
 
-    public AdminUniteOrganisationnelle getIdUniteOrganisationnelle() {
-        return idUniteOrganisationnelle;
-    }
+	public void setIdObjetVisibilite(AdminObjetVisibilite idObjetVisibilite) {
+		this.idObjetVisibilite = idObjetVisibilite;
+	}
 
-    public void setIdUniteOrganisationnelle(AdminUniteOrganisationnelle idUniteOrganisationnelle) {
-        this.idUniteOrganisationnelle = idUniteOrganisationnelle;
-    }
+	public AdminUniteOrganisationnelle getIdUniteOrganisationnelle() {
+		return idUniteOrganisationnelle;
+	}
 
-    public AdminUtilisateur getIdUtilisateur() {
-        return idUtilisateur;
-    }
+	public void setIdUniteOrganisationnelle(AdminUniteOrganisationnelle idUniteOrganisationnelle) {
+		this.idUniteOrganisationnelle = idUniteOrganisationnelle;
+	}
 
-    public void setIdUtilisateur(AdminUtilisateur idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
-    }
+	public AdminUtilisateur getIdUtilisateur() {
+		return idUtilisateur;
+	}
 
-    public AdminGroupe getIdGroupe() {
-        return idGroupe;
-    }
+	public void setIdUtilisateur(AdminUtilisateur idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
+	}
 
-    public void setIdGroupe(AdminGroupe idGroupe) {
-        this.idGroupe = idGroupe;
-    }
+	public AdminGroupe getIdGroupe() {
+		return idGroupe;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+	public void setIdGroupe(AdminGroupe idGroupe) {
+		this.idGroupe = idGroupe;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AdminDroitVisibilite)) {
-            return false;
-        }
-        AdminDroitVisibilite other = (AdminDroitVisibilite) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public String toString() {
-        return "re.AdminDroitVisibilite[ id=" + id + " ]";
-    }
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof AdminDroitVisibilite)) {
+			return false;
+		}
+		AdminDroitVisibilite other = (AdminDroitVisibilite) object;
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "re.AdminDroitVisibilite[ id=" + id + " ]";
+	}
 
 }

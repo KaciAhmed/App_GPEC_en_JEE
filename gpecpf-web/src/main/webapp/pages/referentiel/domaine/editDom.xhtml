@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateReferComp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleReferentiel.titre_modifier_domaine_competence}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>         
+            <a:menuitem value="#{bundleReferentiel.titre_gestion_domaine_competence }" />
+            <a:menuitem value="#{bundleReferentiel.titre_liste_domaine_competence}" outcome="listDom" />
+            <a:menuitem value="#{bundleCommun.btn_modifier}" outcome="#" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row nomargin="true">
+                <a:pagetitle value="#{bundleReferentiel.titre_modifier_domaine_competence}" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>            
+            </a:row>
+            
+            <p:panel id="panel" styleClass="no-border">
+                <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_code}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="code" required="true" value="#{editDomaineCompetenceController.domaine.code}" /> 
+                            <p:message for="code"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+                <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_libelle}" span="4" />
+                        <a:column span="8" >
+                            <p:inputText id="lib" required="true" value="#{editDomaineCompetenceController.domaine.libelle}" /> 
+                            <p:message for="lib"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+                 <a:row>
+                    <a:column span="7" >
+                        <a:label value="#{bundleReferentiel.lbl_description}" span="4" />
+                        <a:column span="8" >
+                            <p:inputTextarea id="desc" required="true"  cols="60" value="#{editDomaineCompetenceController.domaine.description}" autoResize="false" />
+                            <p:message for="desc"/>                                    
+                        </a:column>
+                    </a:column>
+                </a:row>
+                 <a:row >
+                    <a:column span="12" >
+                        <p:tabView id="tabView">
+                            <p:tab title="#{bundleReferentiel.titre_domaine_pere}">
+                                <a:panel header=" #{bundleReferentiel.titre_domaine_pere}" iconheader="fa fa-list-ul">
+                                    <f:facet name="header">  
+                                        <p:commandButton title="#{bundleReferentiel.titre_MAJ_domaine_pere}"  icon="fa fa-pencil-square-o" value="#{bundleCommun.btn_modifier}" immediate="true" onclick="PF('dialogDomainePere').show();"/> 
+                                    </f:facet>
+                                    <p:dataTable  id="tableDomaine" value="#{editDomaineCompetenceController.domPereSelected}" var="domaine" rowKey="#{domaine.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column headerText="#{bundleCommun.lbl_code}" >
+                                            <h:outputText value="#{domaine.code}"/>
+                                        </p:column>
+                                        <p:column headerText="#{bundleCommun.lbl_liblle}" >
+                                            <h:outputText value="#{domaine.libelle}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </a:panel>
+                            </p:tab>
+                        </p:tabView>
+                    </a:column>
+                </a:row> 
+            </p:panel>
+            <a:row id="pgbtn">
+                <p:commandButton value="#{bundleCommun.btn_valider}" action="#{editDomaineCompetenceController.edit()}" icon="fa fa-check-square-o" ajax="false" />
+                <p:commandButton value="#{bundleCommun.btn_retour}" immediate="true" icon="fa fa-reply" action="listDom" styleClass="GrayButton" ajax="false" />
+            </a:row>
+
+        </h:form>
+    </ui:define>
+     <ui:define name="MyDialog">
+        <h:form id="FormDialog">
+            <p:dialog widgetVar="dialogDomainePere" header="#{bundleReferentiel.titre_MAJ_domaine_pere}" modal="true"  width="60%" responsive="true">
+                    <a:row style="background-color: #FFF;padding-top:10px; padding-bottom: 10px;">
+                        <div style="" >
+                            <a:label value="#{bundleReferentiel.lbl_code}" span="2" />
+                            <a:column span="4" >
+                                <p:inputText id="code" value="#{editDomaineCompetenceController.codePere}" label="#{bundleReferentiel.lbl_code}"   >                                    
+                                    <p:ajax event="keyup" update=":FormDialog:tableDomainePere" listener="#{editDomaineCompetenceController.chercherDomPere()}" />
+                                </p:inputText>    
+                            </a:column>
+                            <a:label value="#{bundleReferentiel.lbl_libelle}" span="2" />
+                            <a:column span="4" >
+                                <p:inputText id="libelle" value="#{editDomaineCompetenceController.libPere}" label="#{bundleReferentiel.lbl_libelle}" > 
+                                    <p:ajax event="keyup" update=":FormDialog:tableDomainePere" listener="#{editDomaineCompetenceController.chercherDomPere()}" />
+                                </p:inputText>
+                            </a:column>
+                        </div>
+                    </a:row>
+                    <a:row>
+                        <p:dataTable id="tableDomainePere" value="#{editDomaineCompetenceController.lstDomPere}" var="domPere" rowKey="#{domPere.code}" selection="#{editDomaineCompetenceController.domPereSelected}" reflow="true" rows="8"  emptyMessage="#{bundleCommun.msg_list_vide}" paginatorPosition="bottom" paginator="true" paginatorAlwaysVisible="false"  widgetVar="myWidgetVar">
+                            <p:column selectionMode="single" width="10"/>
+                            <p:column headerText="#{bundleReferentiel.lbl_code}" >
+                                <h:outputText value="#{domPere.code}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleReferentiel.lbl_libelle}" >
+                                <h:outputText value="#{domPere.libelle}"/>
+                            </p:column>
+                            <f:facet name="footer" >
+                                <div class="form-actions">
+                                    <a:row nomargin="true">
+                                        <a:column span="9">
+                                            <a:row nomargin="true">
+                                                <a:column  span="9" id="pgbtndlg">
+                                                    <p:commandButton title="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" value="#{bundleCommun.btn_valider}" process=":FormDialog:tableDomainePere" actionListener="#{editDomaineCompetenceController.editDomPereForDom()}" 
+                                                                  update=":FormDialog:tableDomainePere :form:tabView:tableDomaine"      oncomplete="PF('dialogDomainePere').hide();"/> 
+                                                    <p:commandButton value="#{bundleCommun.btn_retour}"  icon="fa fa-reply" styleClass="GrayButton" onclick="PF('dialogDomainePere').hide()" />
+                                                    <p:commandButton value="Reset"  icon="fa fa-times" styleClass="RedButton" actionListener="#{editDomaineCompetenceController.viderDompere()}" update=":FormDialog:tableDomainePere :form:tabView:tableDomaine"/>
+                                                </a:column>
+                                            </a:row>   
+                                        </a:column>
+                                    </a:row>
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </a:row>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/templateDrh.xhtml"
+    xmlns:a="http://elit.dz/ui">
+
+    <ui:define name="Title">
+        #{bundleDrh.titre_accueil_module_drh}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+
+        <a:breadcrumb rendered="true">
+
+            <a:menuitem icon="fa fa-home" value=" #{bundleDrh.titre_accueil_module_drh}" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <a:column span="12" style="margin-top: 10%" >
+            <a:tiles >
+                <a:tilesitem href="/pages/drh/compagne/listCom.xhtml" value="Compagnes d'évaluation " icon="fa fa-fw fa-calendar"  bg-color="green" description=" Gestion des compagnes d'évaluation "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('DRH_003_006')}" />
+                <a:tilesitem href="/pages/drh/poste/listPos.xhtml" value="Consultation postes " icon="fa fa-fw fa-list-alt"  bg-color="green" description=" Consultation des postes "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('DRH_002_006')}" />
+               <a:tilesitem href="/pages/drh/emploi/listEmp.xhtml" value="Consultation emplois" icon="fa fa-fw fa-list"  bg-color="green" description=" Consultation des emplois "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('DRH_005_006')}" />
+               <a:tilesitem href="/pages/drh/employe/listEmp.xhtml" value="Consultation employés" icon="fa fa-fw fa-male"  bg-color="green" description=" Consultation des employés "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('DRH_001_006')}" />
+               <a:tilesitem href="/pages/drh/gpec/listGpec.xhtml" value="Sélection de candidats basées sur la GPEC" icon="fa fa-fw fa-ioxhost"  bg-color="green" description=" Sélection de candidats basées sur la GPEC "   slide="down" tile-wide="false"  />
+               <a:tilesitem href="/pages/drh/reporting/listRep.xhtml" value="Reporting" icon="fa fa-fw fa-bar-chart"  bg-color="green" description=" Reporting "   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('DRH_004_006')}" />
+            </a:tiles>
+        </a:column> 
+
+    </ui:define>
+</ui:composition>

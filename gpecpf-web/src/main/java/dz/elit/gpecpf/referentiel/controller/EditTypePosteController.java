@@ -22,54 +22,54 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class EditTypePosteController extends AbstractController implements Serializable {
 
-    @EJB
-    private TypePosteFacade typePosteFacade;
-	
+	@EJB
+	private TypePosteFacade typePosteFacade;
+
 	@EJB
 	private PosteFacade posteFacade;
-	
+
 	private List<Poste> listPostes;
 
-    private TypePoste typePoste;
+	private TypePoste typePoste;
 
-    private String code;
-    private String libelle;
+	private String code;
+	private String libelle;
 
-    /**
-     * Creates a new instance of AddProfilController
-     */
-    public EditTypePosteController() {
-    }
+	/**
+	 * Creates a new instance of AddProfilController
+	 */
+	public EditTypePosteController() {
+	}
 
-    @Override//@PostConstruct
-    protected void initController() {
-        initAddTypePoste();
-        typePoste = new TypePoste();
-        String id = MyUtil.getRequestParameter("id");
-        if (id != null) {
-            typePoste = typePosteFacade.find(Integer.parseInt(id));
+	@Override//@PostConstruct
+	protected void initController() {
+		initAddTypePoste();
+		typePoste = new TypePoste();
+		String id = MyUtil.getRequestParameter("id");
+		if (id != null) {
+			typePoste = typePosteFacade.find(Integer.parseInt(id));
 			listPostes = posteFacade.postesForType(typePoste);
-        }
-    }
+		}
+	}
 
-    public void edit() {
-        try {
-            typePosteFacade.edit(typePoste);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-            initAddTypePoste();
-        } catch (MyException ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(ex.getMessage());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+	public void edit() {
+		try {
+			typePosteFacade.edit(typePoste);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+			initAddTypePoste();
+		} catch (MyException ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(ex.getMessage());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
 
-    private void initAddTypePoste() {
-        typePoste = new TypePoste();
+	private void initAddTypePoste() {
+		typePoste = new TypePoste();
 		listPostes = new ArrayList<>();
-    }
+	}
 
 	public void setCode(String code) {
 		this.code = code;
@@ -118,6 +118,5 @@ public class EditTypePosteController extends AbstractController implements Seria
 	public void setListPostes(List<Poste> listPostes) {
 		this.listPostes = listPostes;
 	}
-	
-	
+
 }

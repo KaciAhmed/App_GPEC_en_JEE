@@ -23,85 +23,85 @@ import org.primefaces.model.SortOrder;
 @ViewScoped
 public class ListEmploiController extends AbstractController implements Serializable {
 
-    @EJB
-    private EmploiFacade emploiFacade;
+	@EJB
+	private EmploiFacade emploiFacade;
 
-    private Emploi emploi;
+	private Emploi emploi;
 
-    private LazyDataModel<Emploi> lazyEmploi;
-    private List<FieldValueMatchMode> fieldValueMatchMode;
-    private DataTable dataTable;
+	private LazyDataModel<Emploi> lazyEmploi;
+	private List<FieldValueMatchMode> fieldValueMatchMode;
+	private DataTable dataTable;
 
-    /**
-     * Creates a new instance of ListProfilController
-     */
-    public ListEmploiController() {
-    }
+	/**
+	 * Creates a new instance of ListProfilController
+	 */
+	public ListEmploiController() {
+	}
 
-    @Override // @PstConstruct
-    protected void initController() {
-        lazyEmploi = new LazyDataModel<Emploi>() {
-            @Override
-            public List<Emploi> load(int first, int pageSize, String sortField, SortOrder sortOrder,
-                    Map<String, Object> filters) {
-                fieldValueMatchMode = getFilter(filters, dataTable);
-                lazyEmploi.setRowCount(emploiFacade.count(fieldValueMatchMode));
-                return emploiFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
-            }
-        };
-    }
+	@Override // @PstConstruct
+	protected void initController() {
+		lazyEmploi = new LazyDataModel<Emploi>() {
+			@Override
+			public List<Emploi> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+				fieldValueMatchMode = getFilter(filters, dataTable);
+				lazyEmploi.setRowCount(emploiFacade.count(fieldValueMatchMode));
+				return emploiFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
+			}
+		};
+	}
 
-    public void initNewEmploi() {
-        emploi = new Emploi();
-    }
+	public void initNewEmploi() {
+		emploi = new Emploi();
+	}
 
-    public void remove(Emploi emploi) {
-        try {
-            emploiFacade.remove(emploi);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-        } catch (Exception ex) {
+	public void remove(Emploi emploi) {
+		try {
+			emploiFacade.remove(emploi);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+		} catch (Exception ex) {
 			MyUtil.addErrorMessage("Des postes sont reliés à cet emploi");
-        }
-    }
+		}
+	}
 
-    public DataTable getDataTable() {
-        return dataTable;
-    }
+	public DataTable getDataTable() {
+		return dataTable;
+	}
 
-    public List<FieldValueMatchMode> getFieldValueMatchMode() {
-        return fieldValueMatchMode;
-    }
+	public List<FieldValueMatchMode> getFieldValueMatchMode() {
+		return fieldValueMatchMode;
+	}
 
-    public Emploi getEmploi() {
-        return emploi;
-    }
+	public Emploi getEmploi() {
+		return emploi;
+	}
 
-    public LazyDataModel<Emploi> getLazyEmploi() {
-        return lazyEmploi;
-    }
+	public LazyDataModel<Emploi> getLazyEmploi() {
+		return lazyEmploi;
+	}
 
-    public EmploiFacade getEmploiFacade() {
-        return emploiFacade;
-    }
+	public EmploiFacade getEmploiFacade() {
+		return emploiFacade;
+	}
 
-    public void setDataTable(DataTable dataTable) {
-        this.dataTable = dataTable;
-    }
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
 
-    public void setFieldValueMatchMode(List<FieldValueMatchMode> fieldValueMatchMode) {
-        this.fieldValueMatchMode = fieldValueMatchMode;
-    }
+	public void setFieldValueMatchMode(List<FieldValueMatchMode> fieldValueMatchMode) {
+		this.fieldValueMatchMode = fieldValueMatchMode;
+	}
 
-    public void setLazyEmploi(LazyDataModel<Emploi> lazyEmploi) {
-        this.lazyEmploi = lazyEmploi;
-    }
+	public void setLazyEmploi(LazyDataModel<Emploi> lazyEmploi) {
+		this.lazyEmploi = lazyEmploi;
+	}
 
-    public void setEmploi(Emploi emploi) {
-        this.emploi = emploi;
-    }
+	public void setEmploi(Emploi emploi) {
+		this.emploi = emploi;
+	}
 
-    public void setEmploiFacade(EmploiFacade emploiFacade) {
-        this.emploiFacade = emploiFacade;
-    }
+	public void setEmploiFacade(EmploiFacade emploiFacade) {
+		this.emploiFacade = emploiFacade;
+	}
 
 }

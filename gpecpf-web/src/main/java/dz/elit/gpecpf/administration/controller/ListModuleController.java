@@ -1,5 +1,3 @@
-
-
 package dz.elit.gpecpf.administration.controller;
 
 import dz.elit.gpecpf.administration.entity.AdminModule;
@@ -23,80 +21,80 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 public class ListModuleController extends AbstractController implements Serializable {
 
-    @EJB
-    private AdminModuleFacade moduleFacade;
-    
-    @ManagedProperty(value = "#{mySessionController}")
-    private MySessionController mySessionController;
-    
-    private List<AdminModule> listModules;
-    private AdminModule module = new AdminModule();
+	@EJB
+	private AdminModuleFacade moduleFacade;
 
-    /**
-     * Creates a new instance of ListModuleController
-     */
-    public ListModuleController() {
-    }
+	@ManagedProperty(value = "#{mySessionController}")
+	private MySessionController mySessionController;
 
-    @Override //PostConstruct
-    protected void initController() {
-        findList();
-    }
+	private List<AdminModule> listModules;
+	private AdminModule module = new AdminModule();
 
-    private void findList() {
-        listModules = moduleFacade.findAllOrderByAttribut("ordre");
-    }
+	/**
+	 * Creates a new instance of ListModuleController
+	 */
+	public ListModuleController() {
+	}
 
-    public void moveToTop() {
-        try {
-            String id = MyUtil.getRequestParameter("id");
-            if (id != null) {
-                module = moduleFacade.find(Integer.parseInt(id));
-            }
-            moduleFacade.moveToTop(module);
-            findList();
-            mySessionController.initInterfaceUser(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Module modifie avec succès");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+	@Override //PostConstruct
+	protected void initController() {
+		findList();
+	}
 
-    public void moveToBottom() {
-        try {
-            String id = MyUtil.getRequestParameter("id");
-            if (id != null) {
-                module = moduleFacade.find(Integer.parseInt(id));
-            }
-            moduleFacade.moveToBottom(module);
-            findList();
-            mySessionController.initInterfaceUser(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Module modifie avec succès");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
-        }
-    }
+	private void findList() {
+		listModules = moduleFacade.findAllOrderByAttribut("ordre");
+	}
 
-    public List<AdminModule> getListModules() {
-        return listModules;
-    }
+	public void moveToTop() {
+		try {
+			String id = MyUtil.getRequestParameter("id");
+			if (id != null) {
+				module = moduleFacade.find(Integer.parseInt(id));
+			}
+			moduleFacade.moveToTop(module);
+			findList();
+			mySessionController.initInterfaceUser(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Module modifie avec succès");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
 
-    public AdminModule getModule() {
-        return module;
-    }
+	public void moveToBottom() {
+		try {
+			String id = MyUtil.getRequestParameter("id");
+			if (id != null) {
+				module = moduleFacade.find(Integer.parseInt(id));
+			}
+			moduleFacade.moveToBottom(module);
+			findList();
+			mySessionController.initInterfaceUser(FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName());
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));//"Module modifie avec succès");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
+		}
+	}
 
-    public void setModule(AdminModule module) {
-        this.module = module;
-    }
+	public List<AdminModule> getListModules() {
+		return listModules;
+	}
 
-    public MySessionController getMySessionController() {
-        return mySessionController;
-    }
+	public AdminModule getModule() {
+		return module;
+	}
 
-    public void setMySessionController(MySessionController mySessionController) {
-        this.mySessionController = mySessionController;
-    }
+	public void setModule(AdminModule module) {
+		this.module = module;
+	}
+
+	public MySessionController getMySessionController() {
+		return mySessionController;
+	}
+
+	public void setMySessionController(MySessionController mySessionController) {
+		this.mySessionController = mySessionController;
+	}
 
 }

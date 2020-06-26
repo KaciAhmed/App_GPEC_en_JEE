@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateEmp.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:a="http://elit.dz/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:define name="Title">
+        #{bundleEmp.titre_consulter_poste}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleEmp.titre_consultation_personnelle}" />
+            <a:menuitem value="#{bundleEmp.lien_consulter_poste}" href="showPos.xhtml" last="true"/>
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <a:pagetitle value="Mon Poste" />
+        <p:panel id="panel" styleClass="no-border row">
+            <a:row>
+                <a:column span="6" >
+                    <a:label value="#{bundleEmp.lbl_code}" span="4" />
+                    <a:column span="8" >
+                        <p:inputText id="cod"  value="#{listEmployeInfosController.poste.code}" disabled="true"/> 
+                    </a:column>
+                </a:column>
+                <a:column span="6" >
+                    <a:label value="#{bundleEmp.lbl_denomination}" span="4" />
+                    <a:column span="8" >
+                        <p:inputText id="den"  value="#{listEmployeInfosController.poste.denomination}" disabled="true"/> 
+                    </a:column>
+                </a:column>
+            </a:row>
+            <a:row>
+                <a:column span="6" >
+                    <a:label value="#{bundleEmp.lbl_classement}" span="4" />
+                    <a:column span="8" >
+                        <p:inputText id="classement"  value="#{listEmployeInfosController.poste.classement}" disabled="true"/> 
+                    </a:column>
+                </a:column> 
+                <a:column span="6" >
+                    <a:label value="#{bundleEmp.lbl_annee_exp}" span="4" />
+                    <a:column span="8" >
+                        <p:inputText id="annExp"  value="#{listEmployeInfosController.poste.anneeExperience}" disabled="true"/> 
+                    </a:column>
+                </a:column>
+            </a:row>
+            <a:row>
+                <a:column span="12" >
+                    <a:label value="#{bundleEmp.lbl_def_som}" span="2" />
+                    <a:column span="10" >
+                        <p:inputTextarea id="defSom" cols="60" value="#{listEmployeInfosController.poste.defSommaire}" autoResize="false" disabled="true"/>
+                    </a:column>
+                </a:column>
+            </a:row>  
+            <p:tabView  id="tabViewList">
+                <p:tab title="#{bundleEmp.lbl_missions}">
+                    <a:panel header=" #{bundleEmp.titre_liste_mission}" iconheader="fa fa-list-ul">
+                        <p:dataTable  id="tableMissions" value="#{listEmployeInfosController.poste.listMissions}" var="mission" rowKey="#{mission.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{bundleEmp.lbl_libelle}">
+                                <h:outputText value="#{mission.libelle}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_description}">
+                                <h:outputText value="#{mission.description}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </a:panel>
+                </p:tab>
+
+                <p:tab title="#{bundleEmp.lbl_conditions}">
+                    <a:panel header=" #{bundleEmp.titre_liste_condition}" iconheader="fa fa-list-ul">
+                        <p:dataTable  id="tableConditions" value="#{listEmployeInfosController.poste.listConditions}" var="condition" rowKey="#{condition.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{bundleEmp.lbl_description}">
+                                <h:outputText value="#{condition.description}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </a:panel>
+                </p:tab>
+
+                <p:tab title="#{bundleEmp.lbl_moyens}">
+                    <a:panel header=" #{bundleEmp.titre_liste_moyen}" iconheader="fa fa-list-ul">
+                        <p:dataTable  id="tableMoyens" value="#{listEmployeInfosController.poste.listMoyens}" var="moyen" rowKey="#{moyen.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{bundleEmp.lbl_description}">
+                                <h:outputText value="#{moyen.description}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </a:panel>
+                </p:tab>
+
+                <p:tab title="#{bundleEmp.lbl_formations}">
+                    <a:panel header=" #{bundleEmp.titre_liste_formation}" iconheader="fa fa-list-ul">
+                        <p:dataTable  id="tableFormations" value="#{listEmployeInfosController.poste.listFormations}" var="formation" rowKey="#{formation.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{bundleEmp.lbl_description}">
+                                <h:outputText value="#{formation.description}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_type}">
+                                <h:outputText value="#{formation.type}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_exigence}">
+                                <h:outputText value="#{formation.exigence}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </a:panel>
+                </p:tab>
+
+                <p:tab title="#{bundleEmp.lbl_competences}">
+                    <a:panel header=" #{bundleEmp.titre_liste_competence}" iconheader="fa fa-list-ul">
+                        <p:dataTable  id="tableCompetences" value="#{listEmployeInfosController.poste.listCompetences}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                            <p:column headerText="#{bundleEmp.lbl_libelle}">
+                                <h:outputText value="#{competence.libelle}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_type}">
+                                <h:outputText value="#{competence.idtypcom.libelle}"/>
+                            </p:column>
+                            <p:column headerText="#{bundleEmp.lbl_domaine}">
+                                <h:outputText value="#{competence.iddomcom.libelle}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </a:panel>
+                </p:tab>
+            </p:tabView>
+        </p:panel>
+    </ui:define>
+</ui:composition>

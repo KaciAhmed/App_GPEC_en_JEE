@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/templateDrh.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://elit.dz/ui" >
+
+    <ui:define name="Title">
+        #{bundleDrh.lien_liste_compagne_evaluation}
+    </ui:define>
+
+    <ui:define name="breadCrumb">
+        <a:breadcrumb>
+            <a:menuitem value="#{bundleDrh.titre_gestion_compagne}" />
+            <a:menuitem value="#{bundleDrh.lien_liste_compagne_evaluation}"  href="listCom.xhtml" last="true" />
+        </a:breadcrumb>
+    </ui:define>
+
+    <ui:define name="MyContent">
+        <h:form id="form">
+            <a:row >
+                <a:pagetitle value="#{bundleDrh.titre_compagne_evaluation}" />                
+                <p:button value="#{bundleCommun.btn_nouveau}" icon="fa fa-plus " styleClass="GreenButton" disabled="#{listCompagneEvaluationController.noNew}" title="#{bundleDrh.titre_nouveau_compagne}" outcome="addCom" rendered="#{mySessionController.isUserInRole('DRH_003_001')}" />
+                <p:messages id="msgs" globalOnly="true" showDetail="true" closable="true"/>
+            </a:row>
+            <a:panel isPadding="true" >   
+                <a:row>
+                    <a:label value="#{bundleCommun.lbl_code}" span="1" />
+                    <a:column span="2" >                    
+                        <p:inputText id="code" value="#{listCompagneEvaluationController.code}" label="#{bundleCommun.lbl_code}" />                               
+                    </a:column>
+                    <a:label value="#{bundleDrh.lbl_date_debut}" span="1" style="padding: 0px;" />
+                    <a:column span="2" >                                 
+                        <p:calendar  id="dateDeb" value="#{listCompagneEvaluationController.dateDeb}" pattern="dd/MM/yyyy"  label="#{bundleDrh.lbl_date_debut}" 
+                                     locale="fr" navigator="true"> 
+                        </p:calendar>
+                    </a:column>
+                    <a:label value="#{bundleDrh.lbl_date_fin}" span="1" style="padding: 0px;" />
+                    <a:column span="2" >
+                        <p:calendar  id="dateFin" value="#{listCompagneEvaluationController.dateFin}" pattern="dd/MM/yyyy" label="#{bundleDrh.lbl_date_fin}" 
+                                     locale="fr" navigator="true"> 
+                        </p:calendar>                                   
+                    </a:column>
+                    <a:column span="2" >
+                        <p:commandButton value="#{bundleCommun.btn_chercher}" styleClass="CyanButton" icon="fa fa-search" action="#{listCompagneEvaluationController.rechercher()}" ajax="false" />  
+                    </a:column>  
+                </a:row>
+            </a:panel>            
+
+            <a:row>
+                <a:panel header=" #{bundleDrh.lien_liste_compagne_evaluation}"  iconheader="fa fa-list-ul">
+                    <f:facet name="header" >
+                        <a:dropButton value="Outils"  icon="fa-cogs" >
+                            <a:menuitem iconAwesome="fa fa-file-pdf-o" value="PDF"  />
+                            <a:menuitem  iconAwesome="fa fa-file-excel-o " value="EXCEL" />
+                            <a:menuitem iconAwesome="fa fa-file-code-o" value="CSV"  />
+                        </a:dropButton>
+                    </f:facet>
+                    <p:dataTable value="#{listCompagneEvaluationController.listCompagne}" var="compagne" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="true" rows="8" >
+                        <p:column headerText="#{bundleCommun.lbl_code}">
+                            <h:outputText value="#{compagne.code}"/>
+                        </p:column>
+                        <p:column headerText="#{bundleDrh.lbl_date_debut}">
+                            <h:outputText value="#{listCompagneEvaluationController.formaterDate(compagne.datedeb)}"/>                           
+                        </p:column>
+                        <p:column headerText="#{bundleDrh.lbl_date_fin}">
+                            <h:outputText value="#{listCompagneEvaluationController.formaterDate(compagne.datefin)}"/>                           
+                        </p:column>
+                        <p:column headerText="#{bundleCommun.lbl_actions}" width="150">
+                            <p:commandButton   icon="fa fa-info" title="#{bundleCommun.lbl_visualisation_detail}" action="showCom" ajax="false" rendered="#{mySessionController.isUserInRole('DRH_003_005')}">  
+                                <f:param name="id" value="#{compagne.id}" />
+                            </p:commandButton>  
+                            <p:commandButton icon="fa fa-pencil-square-o" title="#{bundleCommun.lbl_modification}" action="editCom" ajax="false" rendered="#{mySessionController.isUserInRole('DRH_003_002')}">
+                                <f:param name="id" value="#{compagne.id}"></f:param>
+                            </p:commandButton>  
+                            <p:commandButton icon="fa fa-times" actionListener="#{listCompagneEvaluationController.remove(compagne)}" title="#{bundleCommun.lbl_suppression}" update=":form" rendered="#{mySessionController.isUserInRole('DRH_003_003')}">
+                                <p:confirm header="#{bundleCommun.lbl_confirmation}" message="#{bundleCommun.msg_confirm_vs_suppr_enregistrement}" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable> 
+                </a:panel>
+            </a:row>
+            <a:row>
+                <p:commandButton   icon="fa fa-download" onclick="this.form.target = '_blank';" ajax="false" actionListener="#{listCompagneEvaluationController.telecharger()}" value="#{bundleCommun.lbl_telecharger}"/>
+                <p:commandButton icon="fa fa-file-archive-o" actionListener="#{listCompagneEvaluationController.download}" value="#{bundleCommun.lbl_exporter}"/>
+            </a:row>
+        </h:form>        
+    </ui:define>
+</ui:composition>

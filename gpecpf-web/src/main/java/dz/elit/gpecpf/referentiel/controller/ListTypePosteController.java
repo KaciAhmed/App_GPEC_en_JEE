@@ -23,85 +23,85 @@ import org.primefaces.model.SortOrder;
 @ViewScoped
 public class ListTypePosteController extends AbstractController implements Serializable {
 
-    @EJB
-    private TypePosteFacade typePosteFacade;
+	@EJB
+	private TypePosteFacade typePosteFacade;
 
-    private TypePoste typePoste;
+	private TypePoste typePoste;
 
-    private LazyDataModel<TypePoste> lazyTypePoste;
-    private List<FieldValueMatchMode> fieldValueMatchMode;
-    private DataTable dataTable;
+	private LazyDataModel<TypePoste> lazyTypePoste;
+	private List<FieldValueMatchMode> fieldValueMatchMode;
+	private DataTable dataTable;
 
-    /**
-     * Creates a new instance of ListProfilController
-     */
-    public ListTypePosteController() {
-    }
+	/**
+	 * Creates a new instance of ListProfilController
+	 */
+	public ListTypePosteController() {
+	}
 
-    @Override // @PstConstruct
-    protected void initController() {
-        lazyTypePoste = new LazyDataModel<TypePoste>() {
-            @Override
-            public List<TypePoste> load(int first, int pageSize, String sortField, SortOrder sortOrder,
-                    Map<String, Object> filters) {
-                fieldValueMatchMode = getFilter(filters, dataTable);
-                lazyTypePoste.setRowCount(typePosteFacade.count(fieldValueMatchMode));
-                return typePosteFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
-            }
-        };
-    }
+	@Override // @PstConstruct
+	protected void initController() {
+		lazyTypePoste = new LazyDataModel<TypePoste>() {
+			@Override
+			public List<TypePoste> load(int first, int pageSize, String sortField, SortOrder sortOrder,
+					Map<String, Object> filters) {
+				fieldValueMatchMode = getFilter(filters, dataTable);
+				lazyTypePoste.setRowCount(typePosteFacade.count(fieldValueMatchMode));
+				return typePosteFacade.lazyFilter(first, pageSize, sortField, sortOrder.toString(), fieldValueMatchMode);
+			}
+		};
+	}
 
-    public void initNewTypePoste() {
-        typePoste = new TypePoste();
-    }
+	public void initNewTypePoste() {
+		typePoste = new TypePoste();
+	}
 
-    public void remove(TypePoste typePoste) {
-        try {
-            typePosteFacade.remove(typePoste);
-            MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-        } catch (Exception ex) {
-            MyUtil.addErrorMessage("La typePoste est relié à des activités.");
-        }
-    }
+	public void remove(TypePoste typePoste) {
+		try {
+			typePosteFacade.remove(typePoste);
+			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
+		} catch (Exception ex) {
+			MyUtil.addErrorMessage("La typePoste est relié à des activités.");
+		}
+	}
 
-    public DataTable getDataTable() {
-        return dataTable;
-    }
+	public DataTable getDataTable() {
+		return dataTable;
+	}
 
-    public List<FieldValueMatchMode> getFieldValueMatchMode() {
-        return fieldValueMatchMode;
-    }
+	public List<FieldValueMatchMode> getFieldValueMatchMode() {
+		return fieldValueMatchMode;
+	}
 
-    public TypePoste getTypePoste() {
-        return typePoste;
-    }
+	public TypePoste getTypePoste() {
+		return typePoste;
+	}
 
-    public LazyDataModel<TypePoste> getLazyTypePoste() {
-        return lazyTypePoste;
-    }
+	public LazyDataModel<TypePoste> getLazyTypePoste() {
+		return lazyTypePoste;
+	}
 
-    public TypePosteFacade getTypePosteFacade() {
-        return typePosteFacade;
-    }
+	public TypePosteFacade getTypePosteFacade() {
+		return typePosteFacade;
+	}
 
-    public void setDataTable(DataTable dataTable) {
-        this.dataTable = dataTable;
-    }
+	public void setDataTable(DataTable dataTable) {
+		this.dataTable = dataTable;
+	}
 
-    public void setFieldValueMatchMode(List<FieldValueMatchMode> fieldValueMatchMode) {
-        this.fieldValueMatchMode = fieldValueMatchMode;
-    }
+	public void setFieldValueMatchMode(List<FieldValueMatchMode> fieldValueMatchMode) {
+		this.fieldValueMatchMode = fieldValueMatchMode;
+	}
 
-    public void setLazyTypePoste(LazyDataModel<TypePoste> lazyTypePoste) {
-        this.lazyTypePoste = lazyTypePoste;
-    }
+	public void setLazyTypePoste(LazyDataModel<TypePoste> lazyTypePoste) {
+		this.lazyTypePoste = lazyTypePoste;
+	}
 
-    public void setTypePoste(TypePoste typePoste) {
-        this.typePoste = typePoste;
-    }
+	public void setTypePoste(TypePoste typePoste) {
+		this.typePoste = typePoste;
+	}
 
-    public void setTypePosteFacade(TypePosteFacade typePosteFacade) {
-        this.typePosteFacade = typePosteFacade;
-    }
+	public void setTypePosteFacade(TypePosteFacade typePosteFacade) {
+		this.typePosteFacade = typePosteFacade;
+	}
 
 }
