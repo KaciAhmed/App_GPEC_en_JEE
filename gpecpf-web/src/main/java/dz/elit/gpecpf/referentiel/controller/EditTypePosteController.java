@@ -1,7 +1,6 @@
 package dz.elit.gpecpf.referentiel.controller;
 
 import dz.elit.gpecpf.poste.service.TypePosteFacade;
-import dz.elit.gpecpf.commun.exception.MyException;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.poste.entity.Poste;
@@ -49,20 +48,6 @@ public class EditTypePosteController extends AbstractController implements Seria
 		if (id != null) {
 			typePoste = typePosteFacade.find(Integer.parseInt(id));
 			listPostes = posteFacade.postesForType(typePoste);
-		}
-	}
-
-	public void edit() {
-		try {
-			typePosteFacade.edit(typePoste);
-			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-			initAddTypePoste();
-		} catch (MyException ex) {
-			ex.printStackTrace();
-			MyUtil.addErrorMessage(ex.getMessage());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			MyUtil.addErrorMessage(MyUtil.getBundleCommun("msg_erreur_inconu"));//Erreur inconu
 		}
 	}
 

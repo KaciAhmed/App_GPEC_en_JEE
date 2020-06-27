@@ -26,8 +26,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "mission", schema = StaticUtil.POSTE_SCHEMA)
 @NamedQueries({
-	@NamedQuery(name = "Mission.findByCodeWithoutCurrentId", query = "SELECT a FROM Mission a WHERE a.code =:code AND a.id != :id ORDER BY a.code  ")
-	,
+	@NamedQuery(name = "Mission.findByCodeWithoutCurrentId", query = "SELECT a FROM Mission a WHERE a.code =:code AND a.id != :id ORDER BY a.code  "),
+	@NamedQuery(name = "Mission.findByCode", query = "SELECT a FROM Mission a WHERE a.code =:code"),
+	@NamedQuery(name = "Mission.findByLibelle", query = "SELECT a FROM Mission a WHERE a.libelle =:libelle"),
+	@NamedQuery(name = "Mission.findByLibelleWithoutCurrentId", query = "SELECT a FROM Mission a WHERE a.libelle =:libelle AND a.id != :id"),
 	@NamedQuery(name = "Mission.findByActivite", query = "SELECT a FROM Mission a WHERE :activite MEMBER OF a.listActivites "),})
 public class Mission implements Serializable {
 

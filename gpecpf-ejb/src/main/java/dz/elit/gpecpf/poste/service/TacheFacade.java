@@ -32,7 +32,7 @@ public class TacheFacade extends AbstractFacade<Tache> {
 
 	@Override
 	public void create(Tache tache) throws MyException, Exception {
-		if (isCodeTacheExiste(tache)) {
+		if (isCodeTacheExiste2(tache)) {
 			throw new MyException("Le code existe déjà");
 		}
 		super.create(tache);
@@ -57,6 +57,12 @@ public class TacheFacade extends AbstractFacade<Tache> {
 		Query q = em.createNamedQuery("Tache.findByCodeWithoutCurrentId");
 		q.setParameter("code", tache.getCode());
 		q.setParameter("id", tache.getId());
+		return !q.getResultList().isEmpty();
+	}
+	
+	private boolean isCodeTacheExiste2(Tache tache) {
+		Query q = em.createNamedQuery("Tache.findByCode");
+		q.setParameter("code", tache.getCode());
 		return !q.getResultList().isEmpty();
 	}
 

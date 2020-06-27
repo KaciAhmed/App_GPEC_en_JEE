@@ -38,6 +38,9 @@ import javax.validation.constraints.Size;
 @NamedQueries({
 	@NamedQuery(name = "Poste.findByCodeWithoutCurrentId", query = "SELECT p FROM Poste p WHERE p.code =:code AND p.id != :id ORDER BY p.code  ")
 	,
+	@NamedQuery(name = "Poste.findByCode", query = "SELECT p FROM Poste p WHERE p.code =:code"),
+	@NamedQuery(name = "Poste.findByDenomination", query = "SELECT p FROM Poste p WHERE p.denomination =:denomination"),
+	@NamedQuery(name = "Poste.findByDenominationWithoutCurrentId", query = "SELECT p FROM Poste p WHERE p.denomination =:denomination AND p.id != :id"),
 	@NamedQuery(name = "Poste.findByType", query = "SELECT p FROM Poste p WHERE p.typePoste =:typePoste ")
 	,
 	@NamedQuery(name = "Poste.findByEmploi", query = "SELECT p FROM Poste p WHERE p.emploi =:emploi ")

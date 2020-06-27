@@ -38,8 +38,11 @@ public class PosteFacade extends AbstractFacade<Poste> {
 
 	@Override
 	public void create(Poste poste) throws MyException, Exception {
-		if (isCodePosteExiste(poste)) {
+		if (isCodePosteExiste2(poste)) {
 			throw new MyException("Le code existe déjà");
+		}
+		if (isDenominationPosteExiste2(poste)) {
+			throw new MyException("La dénomination existe déjà");
 		}
 		super.create(poste);
 	}
@@ -48,6 +51,9 @@ public class PosteFacade extends AbstractFacade<Poste> {
 	public void edit(Poste poste) throws MyException, Exception {
 		if (isCodePosteExiste(poste)) {
 			throw new MyException("Le code existe déjà");
+		}
+		if (isDenominationPosteExiste(poste)) {
+			throw new MyException("La dénomination existe déjà");
 		}
 		super.edit(poste);
 	}
@@ -100,6 +106,25 @@ public class PosteFacade extends AbstractFacade<Poste> {
 		Query q = em.createNamedQuery("Poste.findByCodeWithoutCurrentId");
 		q.setParameter("code", poste.getCode());
 		q.setParameter("id", poste.getId());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isCodePosteExiste2(Poste poste) {
+		Query q = em.createNamedQuery("Poste.findByCode");
+		q.setParameter("code", poste.getCode());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isDenominationPosteExiste(Poste poste) {
+		Query q = em.createNamedQuery("Poste.findByDenominationWithoutCurrentId");
+		q.setParameter("denomination", poste.getDenomination());
+		q.setParameter("id", poste.getId());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isDenominationPosteExiste2(Poste poste) {
+		Query q = em.createNamedQuery("Poste.findByDenomination");
+		q.setParameter("denomination", poste.getDenomination());
 		return !q.getResultList().isEmpty();
 	}
 

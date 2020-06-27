@@ -54,25 +54,25 @@
         <ui:include src="header.xhtml"></ui:include>
         <a:pagecontainer>
             <a:sidebar toggler="true" dataautoscroll="true" datakeepexpanded="true" dataslidespeed="200">
-                <a:submenu start="true" value="#{bundleEmp.titre_consultation_personnelle}" icon="">
-                    <a:menuitem value="#{bundleEmp.titre_consulter_employe}" icon=""
+                <a:submenu start="true" value="#{bundleEmp.titre_consultation_personnelle}" icon="fa fa-tasks">
+                    <a:menuitem value="#{bundleEmp.titre_consulter_employe}" icon="fa fa-file"
                                 outcome="/pages/emp/employe/showEmp.xhtml"
                                 rendered="#{accueilEmployeController.roleEmploye(mySessionController.isUserInRole('EMP_002_005'))}" />
-                    <a:menuitem value="#{bundleEmp.titre_consulter_poste}" icon=""
+                    <a:menuitem value="#{bundleEmp.titre_consulter_poste}" icon="fa fa-file"
                                 outcome="/pages/emp/poste/showPos.xhtml"
                                 rendered="#{accueilEmployeController.roleEmploye(mySessionController.isUserInRole('EMP_001_005'))}" />
                 </a:submenu>
-                <a:submenu value="#{bundleEmp.titre_gestion_evaluation}" icon="" rendered="#{accueilEmployeController.roleEmploye(true)}">
-                    <a:menuitem value="#{bundleEmp.titre_liste_evaluation}" icon=""
+                <a:submenu value="#{bundleEmp.titre_gestion_evaluation}" icon="fa fa-tasks" rendered="#{accueilEmployeController.roleEmploye(true)}">
+                    <a:menuitem value="#{bundleEmp.titre_liste_evaluation}" icon="fa fa-file"
                                 outcome="/pages/emp/evaluation/listEval.xhtml"
                                 rendered="#{accueilEmployeController.roleEmploye(mySessionController.isUserInRole('EMP_003_006'))}" />
                 </a:submenu>
-                <a:submenu value="Gestion des évaluation des employés" icon="">
-                    <a:menuitem value="#{bundleEmp.titre_liste_employe_evaluation}" icon=""
+                <a:submenu value="Gestion des évaluation des employés" icon="fa fa-tasks">
+                    <a:menuitem value="#{bundleEmp.titre_liste_employe_evaluation}" icon="fa fa-file"
                                 outcome="/pages/emp/evaluateur/listEval.xhtml" />
                 </a:submenu>
-                <a:submenu value="Vérification des évaluations" icon="">
-                    <a:menuitem value="Liste des évaluations" icon="" outcome="/pages/emp/verification/listEval.xhtml" />  
+                <a:submenu value="Vérification des évaluations" icon="fa fa-tasks">
+                    <a:menuitem value="Liste des évaluations" icon="fa fa-file" outcome="/pages/emp/verification/listEval.xhtml" />  
                 </a:submenu>
             </a:sidebar>
             <a:pagecontent>

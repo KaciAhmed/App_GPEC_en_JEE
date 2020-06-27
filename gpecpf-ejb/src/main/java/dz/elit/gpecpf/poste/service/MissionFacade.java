@@ -36,8 +36,11 @@ public class MissionFacade extends AbstractFacade<Mission> {
 
 	@Override
 	public void create(Mission mission) throws MyException, Exception {
-		if (isCodeMissionExiste(mission)) {
+		if (isCodeMissionExiste2(mission)) {
 			throw new MyException("Le code existe déjà");
+		}
+		if (isLibelleMissionExiste2(mission)) {
+			throw new MyException("La libellé existe déjà");
 		}
 		super.create(mission);
 		for (Activite activite : mission.getListActivites()) {
@@ -49,6 +52,9 @@ public class MissionFacade extends AbstractFacade<Mission> {
 	public void edit(Mission mission) throws MyException, Exception {
 		if (isCodeMissionExiste(mission)) {
 			throw new MyException("Le code existe déjà");
+		}
+		if (isLibelleMissionExiste(mission)) {
+			throw new MyException("La libellé existe déjà");
 		}
 		super.edit(mission);
 	}
@@ -76,6 +82,25 @@ public class MissionFacade extends AbstractFacade<Mission> {
 		Query q = em.createNamedQuery("Mission.findByCodeWithoutCurrentId");
 		q.setParameter("code", mission.getCode());
 		q.setParameter("id", mission.getId());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isCodeMissionExiste2(Mission mission) {
+		Query q = em.createNamedQuery("Mission.findByCode");
+		q.setParameter("code", mission.getCode());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isLibelleMissionExiste(Mission mission) {
+		Query q = em.createNamedQuery("Mission.findByLibelleWithoutCurrentId");
+		q.setParameter("libelle", mission.getLibelle());
+		q.setParameter("id", mission.getId());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isLibelleMissionExiste2(Mission mission) {
+		Query q = em.createNamedQuery("Mission.findByLibelle");
+		q.setParameter("libelle", mission.getLibelle());
 		return !q.getResultList().isEmpty();
 	}
 

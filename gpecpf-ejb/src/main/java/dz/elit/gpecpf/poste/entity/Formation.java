@@ -25,7 +25,9 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "formation", schema = StaticUtil.POSTE_SCHEMA)
 @NamedQueries({
-	@NamedQuery(name = "Formation.findByCodeWithoutCurrentId", query = "SELECT t FROM Formation t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
+	@NamedQuery(name = "Formation.findByCodeWithoutCurrentId", query = "SELECT t FROM Formation t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "), 
+	@NamedQuery(name = "Formation.findByCode", query = "SELECT t FROM Formation t WHERE t.code =:code"),
+})
 public class Formation implements Serializable {
 
 	private static final long serialVersionUID = 1L;

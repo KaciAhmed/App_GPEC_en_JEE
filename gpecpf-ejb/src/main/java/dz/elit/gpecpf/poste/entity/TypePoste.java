@@ -9,8 +9,6 @@ import javax.persistence.Table;
 import dz.elit.gpecpf.commun.util.StaticUtil;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,8 +18,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "type_poste", schema = StaticUtil.POSTE_SCHEMA)
-@NamedQueries({
-	@NamedQuery(name = "TypePoste.findByCodeWithoutCurrentId", query = "SELECT t FROM TypePoste t WHERE t.code =:code AND t.id != :id ORDER BY t.code  "),})
 public class TypePoste implements Serializable {
 
 	private static final long serialVersionUID = 1L;

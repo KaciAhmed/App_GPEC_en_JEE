@@ -92,60 +92,6 @@
                                         </a:column>
                                     </a:row>
                                 </p:tab>
-                                <p:tab title="#{bundleAdmin.lbl_contact}">
-                                    <a:row>
-                                        <a:column span="6">
-                                            <a:label value="#{bundleAdmin.lbl_telphone_de_buireau} " span="4"/>  
-                                            <a:column span="8">
-                                                <p:inputText id="telephone" value="#{editUtilisateurController.utilisateur.telephoneBureau}" label="#{bundleAdmin.lbl_telphone_de_buireau}" size="40" />
-                                                <p:message for="telephone" />
-                                            </a:column>
-                                        </a:column>
-                                        <a:column span="6">
-                                            <a:label  value="#{bundleAdmin.lbl_telephone_mobile} " span="4"/>  
-                                            <a:column span="8">
-                                                <p:inputText id="mobile" value="#{editUtilisateurController.utilisateur.telephoneMobile}" label="#{bundleAdmin.lbl_telephone_mobile}" size="40" />
-                                                <p:message for="mobile" />
-                                            </a:column>
-                                        </a:column>
-                                    </a:row>
-
-                                    <a:row>
-                                        <a:column span="6">
-                                            <a:label  value="#{bundleAdmin.lbl_fax} " span="4"/>  
-                                            <a:column span="8">
-                                                <p:inputText id="fax" value="#{editUtilisateurController.utilisateur.fax}" label="#{bundleAdmin.lbl_fax}" size="40" />
-                                                <p:message for="fax" />
-                                            </a:column>
-                                        </a:column>
-                                        <a:column span="6">
-                                            <a:label  value="#{bundleAdmin.lbl_email} " span="4"/>  
-                                            <a:column span="8">
-                                                <p:inputText  id="email" value="#{editUtilisateurController.utilisateur.email}" label="#{bundleAdmin.lbl_email}" size="40" /> 
-                                            </a:column>
-                                        </a:column>
-                                    </a:row>
-
-                                    <a:row>
-                                        <a:column span="6">
-                                            <a:label  value="#{bundleAdmin.lbl_adresse1} " span="4"/>  
-                                            <a:column span="8">
-                                                <p:inputTextarea id="Adresse1" value="#{editUtilisateurController.utilisateur.telephoneMobile}" 
-                                                                 label="#{bundleAdmin.lbl_adresse1}" cols="60" />
-                                            </a:column>
-                                        </a:column>
-                                        <a:column span="6">
-                                            <a:label  value="#{bundleAdmin.lbl_adresse2} " span="4"/>  
-                                            <a:column span="8">
-                                                <p:inputTextarea id="Adresse2" value="#{editUtilisateurController.utilisateur.telephoneMobile}" 
-                                                                 label="#{bundleAdmin.lbl_adresse2}" cols="60" />
-                                            </a:column>
-                                        </a:column>
-                                    </a:row>
-                                    <a:row>
-                                        <p:commandButton value="#{bundleCommun.btn_valider}" icon="fa fa-check-square-o" action="#{editUtilisateurController.edit()}" ajax="false" disabled="#{editUtilisateurController.disabled}"/> 
-                                    </a:row>
-                                </p:tab>
                                 <p:tab id="tabModifierPwd" title="Changer le mot de passe">
                                     <h:form id="formPass">
                                         <a:row>

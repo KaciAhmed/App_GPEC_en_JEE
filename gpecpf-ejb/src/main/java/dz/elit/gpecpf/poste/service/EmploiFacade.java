@@ -30,8 +30,11 @@ public class EmploiFacade extends AbstractFacade<Emploi> {
 
 	@Override
 	public void create(Emploi emploi) throws MyException, Exception {
-		if (isCodeEmploiExiste(emploi)) {
+		if (isCodeEmploiExiste2(emploi)) {
 			throw new MyException("Le code existe déjà");
+		}
+		if (isLibelleEmploiExiste2(emploi)) {
+			throw new MyException("La libellé existe déjà");
 		}
 		super.create(emploi);
 	}
@@ -41,6 +44,9 @@ public class EmploiFacade extends AbstractFacade<Emploi> {
 		if (isCodeEmploiExiste(emploi)) {
 			throw new MyException("Le code existe déjà");
 		}
+		if (isLibelleEmploiExiste(emploi)) {
+			throw new MyException("La libellé existe déjà");
+		}
 		super.edit(emploi);
 	}
 
@@ -48,6 +54,25 @@ public class EmploiFacade extends AbstractFacade<Emploi> {
 		Query q = em.createNamedQuery("Emploi.findByCodeWithoutCurrentId");
 		q.setParameter("code", emploi.getCode());
 		q.setParameter("id", emploi.getId());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isCodeEmploiExiste2(Emploi emploi) {
+		Query q = em.createNamedQuery("Emploi.findByCode");
+		q.setParameter("code", emploi.getCode());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isLibelleEmploiExiste(Emploi emploi) {
+		Query q = em.createNamedQuery("Emploi.findByLibelleWithoutCurrentId");
+		q.setParameter("libelle", emploi.getLibelle());
+		q.setParameter("id", emploi.getId());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isLibelleEmploiExiste2(Emploi emploi) {
+		Query q = em.createNamedQuery("Emploi.findByLibelle");
+		q.setParameter("libelle", emploi.getLibelle());
 		return !q.getResultList().isEmpty();
 	}
 }

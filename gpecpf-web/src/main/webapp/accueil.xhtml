@@ -31,7 +31,7 @@
                 <a:tilesitem href="/pages/gesemp/employe/listEmp.xhtml" value="Module Gest. Personnel" bg-color="green"  description=" Gestion des employés "  icon="fa fa-fw fa-users"   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('GESEMP_001_006')}" />
                 <a:tilesitem href="pages/referentiel/indexReferEmp.xhtml" value="Module Réf. Emplois" bg-color="green"  description=" Gestion du référentiel emploi "  icon="fa fa-fw fa-briefcase"   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_007_006')}" />
                 <a:tilesitem href="pages/referentiel/indexReferComp.xhtml" value="Module Réf. Compétences" bg-color="green"  description=" Gestion du référentiel de compétence " icon="fa fa-fw fa-university"   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('REFER_001_006')}" />
-                <a:tilesitem href="pages/emp/indexEmp.xhtml" value="Module employé " bg-color="green"  description=" informations personnelles et évaluations"  icon="fa fa-fw fa-street-view"   slide="down" tile-wide="false"  />
+                <a:tilesitem href="pages/emp/indexEmp.xhtml" value="Module employé " bg-color="green"  description=" informations personnelles et évaluations"  icon="fa fa-fw fa-street-view"   slide="down" tile-wide="false" rendered="#{mySessionController.isUserInRole('EMP_001_005')}" />
             </a:tiles>
         </a:column> 
     </ui:define>  

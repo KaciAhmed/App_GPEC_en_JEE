@@ -2,7 +2,6 @@ package dz.elit.gpecpf.referentiel.controller;
 
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.FieldValueMatchMode;
-import dz.elit.gpecpf.commun.util.MyUtil;
 import dz.elit.gpecpf.poste.entity.TypePoste;
 import dz.elit.gpecpf.poste.service.TypePosteFacade;
 import java.io.Serializable;
@@ -53,15 +52,6 @@ public class ListTypePosteController extends AbstractController implements Seria
 
 	public void initNewTypePoste() {
 		typePoste = new TypePoste();
-	}
-
-	public void remove(TypePoste typePoste) {
-		try {
-			typePosteFacade.remove(typePoste);
-			MyUtil.addInfoMessage(MyUtil.getBundleCommun("msg_operation_effectue_avec_succes"));
-		} catch (Exception ex) {
-			MyUtil.addErrorMessage("La typePoste est relié à des activités.");
-		}
 	}
 
 	public DataTable getDataTable() {

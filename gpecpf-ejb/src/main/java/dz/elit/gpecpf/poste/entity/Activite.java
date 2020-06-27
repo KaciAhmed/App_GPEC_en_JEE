@@ -26,6 +26,12 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "activite", schema = StaticUtil.POSTE_SCHEMA)
 @NamedQueries({
+	@NamedQuery(name = "Activite.findByCode", query = "SELECT a FROM Activite a WHERE a.code =:code")
+	,
+	@NamedQuery(name = "Activite.findByLibelle", query = "SELECT a FROM Activite a WHERE a.libelle =:libelle")
+	,
+	@NamedQuery(name = "Activite.findByLibelleWithoutCurrentId", query = "SELECT a FROM Activite a WHERE a.libelle =:libelle AND a.id != :id")
+	,
 	@NamedQuery(name = "Activite.findByCodeWithoutCurrentId", query = "SELECT a FROM Activite a WHERE a.code =:code AND a.id != :id ORDER BY a.code  ")
 	,
 	@NamedQuery(name = "Activite.findByTache", query = "SELECT a FROM Activite a WHERE :tache MEMBER OF a.listTaches "),})

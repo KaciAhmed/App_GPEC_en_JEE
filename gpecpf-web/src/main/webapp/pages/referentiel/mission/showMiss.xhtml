@@ -54,12 +54,27 @@
                             <p:tab title="#{bundleReferentiel.lbl_activites}">
                                 <a:panel header=" #{bundleReferentiel.lien_liste_activite}" iconheader="fa fa-list-ul">
                                     <p:dataTable id="tableActivites" value="#{editMissionController.mission.listActivites}" var="activite" rowKey="#{activite.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column width="35">
+                                            <p:rowToggler />
+                                        </p:column>
                                         <p:column headerText="#{bundleReferentiel.lbl_code}" filterBy="#{activite.code}" filterMatchMode="contains">
                                             <h:outputText value="#{activite.code}"/>
                                         </p:column>
                                         <p:column headerText="#{bundleReferentiel.lbl_libelle}" filterBy="#{activite.libelle}" filterMatchMode="contains">
                                             <h:outputText value="#{activite.libelle}"/>
                                         </p:column>
+                                        <p:rowExpansion>
+                                            <a:panel header=" #{bundleReferentiel.lien_liste_tache}" iconheader="fa fa-list-ul">
+                                                <p:dataTable id="tableTaches" value="#{activite.listTaches}" var="tache" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                                    <p:column headerText="#{bundleReferentiel.lbl_code}">
+                                                        <h:outputText value="#{tache.code}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{bundleReferentiel.lbl_description}">
+                                                        <h:outputText value="#{tache.description}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </a:panel>
+                                        </p:rowExpansion>
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>

@@ -33,8 +33,11 @@ public class ActiviteFacade extends AbstractFacade<Activite> {
 
 	@Override
 	public void create(Activite activite) throws MyException, Exception {
-		if (isCodeActiviteExiste(activite)) {
+		if (isCodeActiviteExiste2(activite)) {
 			throw new MyException("Le code existe déjà");
+		}
+		if (isLibelleActiviteExiste2(activite)) {
+			throw new MyException("La libelle existe déjà");
 		}
 		super.create(activite);
 	}
@@ -42,6 +45,9 @@ public class ActiviteFacade extends AbstractFacade<Activite> {
 	public void edit(Activite activite) throws MyException, Exception {
 		if (isCodeActiviteExiste(activite)) {
 			throw new MyException("Le code existe déjà");
+		}
+		if (isLibelleActiviteExiste(activite)) {
+			throw new MyException("La libelle existe déjà");
 		}
 		super.edit(activite);
 	}
@@ -69,6 +75,25 @@ public class ActiviteFacade extends AbstractFacade<Activite> {
 		Query q = em.createNamedQuery("Activite.findByCodeWithoutCurrentId");
 		q.setParameter("code", activite.getCode());
 		q.setParameter("id", activite.getId());
+		return !q.getResultList().isEmpty();
+	}
+	
+	private boolean isCodeActiviteExiste2(Activite activite) {
+		Query q = em.createNamedQuery("Activite.findByCode");
+		q.setParameter("code", activite.getCode());
+		return !q.getResultList().isEmpty();
+	}
+	
+	private boolean isLibelleActiviteExiste(Activite activite) {
+		Query q = em.createNamedQuery("Activite.findByLibelleWithoutCurrentId");
+		q.setParameter("libelle", activite.getLibelle());
+		q.setParameter("id", activite.getId());
+		return !q.getResultList().isEmpty();
+	}
+	
+	private boolean isLibelleActiviteExiste2(Activite activite) {
+		Query q = em.createNamedQuery("Activite.findByLibelle");
+		q.setParameter("libelle", activite.getLibelle());
 		return !q.getResultList().isEmpty();
 	}
 

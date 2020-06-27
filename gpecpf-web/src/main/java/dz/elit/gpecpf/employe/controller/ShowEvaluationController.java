@@ -4,7 +4,6 @@ import dz.elit.gpecpf.administration.entity.AdminUtilisateur;
 import dz.elit.gpecpf.administration.service.AdminUtilisateurFacade;
 import dz.elit.gpecpf.commun.util.AbstractController;
 import dz.elit.gpecpf.commun.util.MyUtil;
-import dz.elit.gpecpf.competence.entity.Competence;
 import dz.elit.gpecpf.competence.service.CompetenceFacade;
 import dz.elit.gpecpf.employe.entity.Employe;
 import dz.elit.gpecpf.evaluation.entity.Avis;
@@ -61,9 +60,6 @@ public class ShowEvaluationController extends AbstractController implements Seri
 	private List<Avis> listAvis;
 
 	private final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-	private int idCompetence;
-	private Competence competence;
 
 	@Override
 	protected void initController() {
@@ -155,10 +151,6 @@ public class ShowEvaluationController extends AbstractController implements Seri
 			default:
 				return "";
 		}
-	}
-
-	public void getDetails() {
-		competence = competenceFacade.find(idCompetence);
 	}
 
 	public List<Historiqueemployeposte> ordonerListHistEmp() {
@@ -274,28 +266,12 @@ public class ShowEvaluationController extends AbstractController implements Seri
 		this.listAvis = listAvis;
 	}
 
-	public int getIdCompetence() {
-		return idCompetence;
-	}
-
-	public void setIdCompetence(int idCompetence) {
-		this.idCompetence = idCompetence;
-	}
-
 	public CompetenceFacade getCompetenceFacade() {
 		return competenceFacade;
 	}
 
 	public void setCompetenceFacade(CompetenceFacade competenceFacade) {
 		this.competenceFacade = competenceFacade;
-	}
-
-	public Competence getCompetence() {
-		return competence;
-	}
-
-	public void setCompetence(Competence competence) {
-		this.competence = competence;
 	}
 
 	public Employe getMonEmploye() {

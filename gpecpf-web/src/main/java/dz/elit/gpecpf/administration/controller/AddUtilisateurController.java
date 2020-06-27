@@ -83,7 +83,20 @@ public class AddUtilisateurController extends AbstractController implements Seri
 						break;
 				}
 				utilisateur.setPwd(StaticUtil.getDefaultEncryptPassword());
-				utilisateur.setLogin(utilisateur.getNom().toLowerCase() + "." + utilisateur.getPrenom().toLowerCase());
+				boolean notValid = true;
+				String user = utilisateur.getNom().toLowerCase() + "." + utilisateur.getPrenom().toLowerCase();
+				String t = "";
+				int x = 2;
+				while (notValid) {
+					if (!utilisateurFacade.isExisteLogin(user + t)) {
+						user += t;
+						notValid = false;
+					} else {
+						t = "" + x;
+						x++;
+					}
+				}
+				utilisateur.setLogin(user);
 				if (uniteOrganisationnelleSelected != null && uniteOrganisationnelleSelected.getId() != null) {
 					//utilisateur.setAdminUniteOrganisationnelle(uniteOrganisationnelleSelected);
 				}

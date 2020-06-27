@@ -28,19 +28,4 @@ public class TypePosteFacade extends AbstractFacade<TypePoste> {
 		super(TypePoste.class);
 	}
 
-	@Override
-	public void create(TypePoste typePoste) throws MyException, Exception {
-		if (isCodeTypePosteExiste(typePoste)) {
-			throw new MyException("Le code existe déjà");
-		}
-		super.create(typePoste);
-	}
-
-	private boolean isCodeTypePosteExiste(TypePoste typePoste) {
-		Query q = em.createNamedQuery("TypePoste.findByCodeWithoutCurrentId");
-		q.setParameter("code", typePoste.getCode());
-		q.setParameter("id", typePoste.getId());
-		return !q.getResultList().isEmpty();
-	}
-
 }

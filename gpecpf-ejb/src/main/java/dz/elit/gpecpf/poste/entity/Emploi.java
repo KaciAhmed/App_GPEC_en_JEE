@@ -21,7 +21,11 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "emploi", schema = StaticUtil.POSTE_SCHEMA)
 @NamedQueries({
-	@NamedQuery(name = "Emploi.findByCodeWithoutCurrentId", query = "SELECT a FROM Emploi a WHERE a.code =:code AND a.id != :id ORDER BY a.code  "),})
+	@NamedQuery(name = "Emploi.findByCodeWithoutCurrentId", query = "SELECT a FROM Emploi a WHERE a.code =:code AND a.id != :id ORDER BY a.code  "),
+	@NamedQuery(name = "Emploi.findByCode", query = "SELECT a FROM Emploi a WHERE a.code =:code"),
+	@NamedQuery(name = "Emploi.findByLibelle", query = "SELECT a FROM Emploi a WHERE a.libelle =:libelle"),
+	@NamedQuery(name = "Emploi.findByLibelleWithoutCurrentId", query = "SELECT a FROM Emploi a WHERE a.libelle =:libelle AND a.id != :id"),
+})
 public class Emploi implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -30,11 +30,11 @@
                     <p:tab title="Données Evaluation">
                         <a:panel header=" #{bundleEmp.lien_liste_competences}" iconheader="fa fa-list-ul">
                             <p:dataTable value="#{showEvaluationController.listNotes}" var="note" rowKey="#{note.id}" rows="10" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                <p:column width="35">
+                                    <p:rowToggler />
+                                </p:column>
                                 <p:column headerText="#{bundleEmp.lbl_competence}">
                                     <h:outputText value="#{note.competence.libelle}"/>
-                                    <p:commandButton icon="fa fa-info" iconPos="center" action="#{showEvaluationController.getDetails()}" oncomplete="PF('editCustomerDialog').show()">
-                                        <f:setPropertyActionListener id="detail" target="#{showEvaluationController.idCompetence}" value="#{note.competence.id}" />
-                                    </p:commandButton>
                                 </p:column>
                                 <p:column headerText="#{bundleEmp.lbl_note_emp}">
                                     <h:outputText value="#{note.noteEmploye}"/>
@@ -42,6 +42,15 @@
                                 <p:column headerText="#{bundleEmp.lbl_note_sup}">
                                     <h:outputText value="#{note.noteSuperieure}"/>
                                 </p:column>
+                                <p:rowExpansion>
+                                    <a:panel header=" #{bundleReferentiel.titre_liste_comportement_competence}" iconheader="fa fa-list-ul">
+                                        <p:dataTable id="tableComportement" value="#{note.competence.listComportement}" var="comportement" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                            <p:column headerText="#{bundleCommun.lbl_description}">
+                                                <h:outputText value="#{comportement.description}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </a:panel>
+                                </p:rowExpansion>
                             </p:dataTable>
                         </a:panel>
                         <a:panel header=" #{bundleEmp.lien_liste_avis}" iconheader="fa fa-list-ul">
@@ -273,12 +282,36 @@
                             <p:tab title="#{bundleEmp.lbl_missions}">
                                 <a:panel header=" #{bundleEmp.titre_liste_mission}" iconheader="fa fa-list-ul">
                                     <p:dataTable  id="tableMissions" value="#{showEvaluationController.poste.listMissions}" var="mission" rowKey="#{mission.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column width="35">
+                                            <p:rowToggler />
+                                        </p:column>
                                         <p:column headerText="#{bundleEmp.lbl_libelle}">
                                             <h:outputText value="#{mission.libelle}"/>
                                         </p:column>
                                         <p:column headerText="#{bundleEmp.lbl_description}">
                                             <h:outputText value="#{mission.description}"/>
                                         </p:column>
+                                        <p:rowExpansion>
+                                            <a:panel header=" #{bundleReferentiel.lien_liste_activite}" iconheader="fa fa-list-ul">
+                                                <p:dataTable id="tableActivites" value="#{mission.listActivites}" var="activite" rowKey="#{activite.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                                    <p:column width="35">
+                                                        <p:rowToggler />
+                                                    </p:column>
+                                                    <p:column headerText="#{bundleReferentiel.lbl_libelle}">
+                                                        <h:outputText value="#{activite.libelle}"/>
+                                                    </p:column>
+                                                    <p:rowExpansion>
+                                                        <a:panel header=" #{bundleReferentiel.lien_liste_tache}" iconheader="fa fa-list-ul">
+                                                            <p:dataTable id="tableTaches" value="#{activite.listTaches}" var="tache" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                                                <p:column headerText="#{bundleReferentiel.lbl_description}">
+                                                                    <h:outputText value="#{tache.description}"/>
+                                                                </p:column>
+                                                            </p:dataTable>
+                                                        </a:panel>
+                                                    </p:rowExpansion>
+                                                </p:dataTable>
+                                            </a:panel>
+                                        </p:rowExpansion>
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>
@@ -322,6 +355,9 @@
                             <p:tab title="#{bundleEmp.lbl_competences}">
                                 <a:panel header=" #{bundleEmp.titre_liste_competence}" iconheader="fa fa-list-ul">
                                     <p:dataTable  id="tableCompetences" value="#{showEvaluationController.poste.listCompetences}" var="competence" rowKey="#{competence.id}" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" reflow="true" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >
+                                        <p:column width="35">
+                                            <p:rowToggler />
+                                        </p:column>
                                         <p:column headerText="#{bundleEmp.lbl_libelle}">
                                             <h:outputText value="#{competence.libelle}"/>
                                         </p:column>
@@ -331,6 +367,15 @@
                                         <p:column headerText="#{bundleEmp.lbl_domaine}">
                                             <h:outputText value="#{competence.iddomcom.libelle}"/>
                                         </p:column>
+                                        <p:rowExpansion>
+                                            <a:panel header=" #{bundleReferentiel.titre_liste_comportement_competence}" iconheader="fa fa-list-ul">
+                                                <p:dataTable id="tableComportement" value="#{competence.listComportement}" var="comportement" rows="4" emptyMessage="#{bundleCommun.msg_list_vide}" paginator="true" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                                                    <p:column headerText="#{bundleCommun.lbl_description}">
+                                                        <h:outputText value="#{comportement.description}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </a:panel>
+                                        </p:rowExpansion>
                                     </p:dataTable>
                                 </a:panel>
                             </p:tab>

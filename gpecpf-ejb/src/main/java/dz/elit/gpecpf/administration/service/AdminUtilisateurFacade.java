@@ -79,7 +79,7 @@ le container EJB va instancier et initialiser automatiquement.*/
 	}
 // vérifier si un login éxiste
 
-	private boolean isExisteLogin(String login) {
+	public boolean isExisteLogin(String login) {
 		AdminUtilisateur utilisateur = findByLogin(login);
 		if (utilisateur == null) {
 			return false;

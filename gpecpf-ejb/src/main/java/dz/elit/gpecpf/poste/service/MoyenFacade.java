@@ -30,7 +30,7 @@ public class MoyenFacade extends AbstractFacade<Moyen> {
 
 	@Override
 	public void create(Moyen moyen) throws MyException, Exception {
-		if (isCodeMoyenExiste(moyen)) {
+		if (isCodeMoyenExiste2(moyen)) {
 			throw new MyException("Le code existe déjà");
 		}
 		super.create(moyen);
@@ -48,6 +48,12 @@ public class MoyenFacade extends AbstractFacade<Moyen> {
 		Query q = em.createNamedQuery("Moyen.findByCodeWithoutCurrentId");
 		q.setParameter("code", moyen.getCode());
 		q.setParameter("id", moyen.getId());
+		return !q.getResultList().isEmpty();
+	}
+
+	private boolean isCodeMoyenExiste2(Moyen moyen) {
+		Query q = em.createNamedQuery("Moyen.findByCode");
+		q.setParameter("code", moyen.getCode());
 		return !q.getResultList().isEmpty();
 	}
 

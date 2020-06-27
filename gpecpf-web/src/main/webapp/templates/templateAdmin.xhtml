@@ -67,10 +67,6 @@
                     <a:menuitem value="#{bundleAdmin.titre_liste_connexion_en_cours}" icon="fa fa-inbox" outcome="/pages/administration/historique/listConnexionEnCours.xhtml"  rendered="true" />
                     <a:menuitem value="#{bundleAdmin.titre_liste_historique_connexion}" icon="fa fa-inbox" outcome="/pages/administration/historique/listConnecxionHistorique.xhtml"  rendered="true" />
                 </a:submenu>
-                <a:submenu value="#{bundleAdmin.titre_visibilite}" icon="fa fa-history">
-                    <a:menuitem value="#{bundleAdmin.titre_visibilite_groupe}" icon="fa fa-inbox" outcome="/pages/administration/visibilite/listDroitVisibiliteGroupe.xhtml" rendered="true" />
-                    <a:menuitem value="#{bundleAdmin.titre_visibilite_utilisateur}" icon="fa fa-inbox" outcome="/pages/administration/visibilite/showDroitVisibiliteUtilisateur.xhtml" rendered="true" />
-                </a:submenu>
                 <a:submenu value="#{bundleAdmin.titre_gestion_pref_codification}" icon="fa fa-tasks">
                     <a:menuitem value="#{bundleAdmin.titre_accueil_prefix}" icon="fa fa-file" outcome="/pages/administration/prefixCodification/prefixCod.xhtml" rendered="true" />
                 </a:submenu>
@@ -99,17 +95,6 @@
         <a:footer label="#{mySessionController.libelleAnnee} © ELIT"   />
 
         <ui:insert name="MyDialog"/>
-        <h:form id="formDialog">
-            <p:dialog id="themDlg" header="#{bundleCommun.lbl_modification_theme}"   widgetVar="themeDialog"  height="90" width="300">
-                <p:panel >                    
-                    <p:outputLabel value="#{bundleCommun.msg_choisir_theme}"  />                    
-                    <p:selectOneMenu value="#{mySessionController.theme}" onchange="$('#formDialog').submit()"  >  
-                        <f:selectItems value="#{myApplicationController.themes}" />  
-                    </p:selectOneMenu> 
-                    <p:commandButton id="btn"  actionListener="#{mySessionController.updateUtilisateur()}"  ajax="false"  style="display: none"/>
-                </p:panel>
-            </p:dialog>
-        </h:form>
 
     </h:body>
 </html>

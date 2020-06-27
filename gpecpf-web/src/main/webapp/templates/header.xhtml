@@ -20,12 +20,8 @@
                         <a:menuitem  value="Mon Compte" outcome="/pages/administration/utilisateur/compteUtilisateur" iconAwesome="fa fa-user"  >
                             <f:param name="compte" value="compte"></f:param> 
                         </a:menuitem>
-                        <a:menuitem value="Préference" onclick="PrimeFaces.ab({s:&quot;header&quot;,onco:function(xhr, status, args){PF('themeDialog').show(); ; }}); return false;" iconAwesome="fa fa-cog fa-spin"  />
-                        <a:menuitem></a:menuitem>
                         <a:menuitem value="Déconnexion" action="#{mySessionController.logout()}"  iconAwesome="fa fa-sign-out" />
                         <a:menuitem></a:menuitem>
-                        <a:menuitem value="Aide"   iconAwesome="fa fa-question-circle" />
-                        <a:menuitem value="A propos"   iconAwesome="fa fa-info-circle" />
                     </a:menuitems>
                     
                 </a:menucontainer>

@@ -30,7 +30,7 @@ public class FormationFacade extends AbstractFacade<Formation> {
 
 	@Override
 	public void create(Formation formation) throws MyException, Exception {
-		if (isCodeFormationExiste(formation)) {
+		if (isCodeFormationExiste2(formation)) {
 			throw new MyException("Le code existe déjà");
 		}
 		super.create(formation);
@@ -51,4 +51,9 @@ public class FormationFacade extends AbstractFacade<Formation> {
 		return !q.getResultList().isEmpty();
 	}
 
+	private boolean isCodeFormationExiste2(Formation formation) {
+		Query q = em.createNamedQuery("Formation.findByCode");
+		q.setParameter("code", formation.getCode());
+		return !q.getResultList().isEmpty();
+	}
 }
